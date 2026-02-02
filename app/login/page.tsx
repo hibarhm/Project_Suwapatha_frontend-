@@ -1,0 +1,263 @@
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    usernameOrEmail: '',
+    password: '',
+    rememberMe: false,
+    role: 'Patient',
+    language: 'English',
+    useLocation: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Login submitted:', formData);
+    
+    // Handle login logic here
+    // After successful login, redirect to dashboard
+    // TODO: Add actual authentication API call
+    
+    // For now, redirect immediately (remove this after adding real auth)
+    router.push('/dashboard/patient');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
+    setFormData({
+      ...formData,
+      [e.target.name]: value,
+    });
+  };
+
+  const handleRoleSelect = (role: string) => {
+    setFormData({
+      ...formData,
+      role: role,
+    });
+  };
+
+  const handleLocationSelect = (choice: string) => {
+    setFormData({
+      ...formData,
+      useLocation: choice,
+    });
+  };
+
+  return (
+    <main className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <span className="text-xl font-bold text-gray-900">Suwapatha</span>
+          </Link>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-gray-600 hover:text-indigo-700 transition-colors">
+              Home
+            </Link>
+            <Link href="/about" className="text-gray-600 hover:text-indigo-700 transition-colors">
+              About
+            </Link>
+            <Link href="/contact" className="text-gray-600 hover:text-indigo-700 transition-colors">
+              Contact
+            </Link>
+          </div>
+
+          <Link href="/" className="bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-indigo-800 transition-colors shadow-sm">
+            Get Started
+          </Link>
+        </div>
+      </nav>
+
+      {/* Login Section */}
+      <section className="pt-24 pb-12 px-6 min-h-screen">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-6 items-start">
+            {/* Left side - Image */}
+            <div className="relative h-[500px] lg:h-[700px] rounded-xl overflow-hidden border-4 border-indigo-300">
+              <Image
+                src="/doctor-patient.jpg"
+                alt="Doctor holding patient's hand"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+
+            {/* Right side - Login Form */}
+            <div className="bg-white rounded-xl border-2 border-gray-200 p-6 lg:p-8 shadow-lg">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-11 h-11 bg-indigo-700 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </div>
+                <h1 className="text-2xl font-bold text-indigo-700">Suwapatha</h1>
+              </div>
+
+              <h2 className="text-xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
+              <p className="text-sm text-gray-600 mb-6">Login to access your Suwapatha account.</p>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Username/Email */}
+                <div>
+                  <label htmlFor="usernameOrEmail" className="block text-sm font-semibold text-gray-900 mb-1.5">
+                    Username / Email
+                  </label>
+                  <input
+                    type="text"
+                    id="usernameOrEmail"
+                    name="usernameOrEmail"
+                    value={formData.usernameOrEmail}
+                    onChange={handleChange}
+                    placeholder="Enter your username or email"
+                    className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                    required
+                  />
+                </div>
+
+                {/* Password */}
+                <div>
+                  <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-1.5">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                    required
+                  />
+                </div>
+
+                {/* Remember Me & Forgot Password */}
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    />
+                    <span className="text-sm text-gray-700">Remember me</span>
+                  </label>
+                  <Link href="/forgot-password" className="text-sm text-indigo-700 hover:text-indigo-800 font-medium">
+                    Forgot Password?
+                  </Link>
+                </div>
+
+                {/* Select Your Role */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Select Your Role
+                  </label>
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleRoleSelect('Patient')}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+                        formData.role === 'Patient'
+                          ? 'bg-indigo-700 text-white'
+                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-indigo-700'
+                      }`}
+                    >
+                      Patient
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRoleSelect('Doctor')}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+                        formData.role === 'Doctor'
+                          ? 'bg-indigo-700 text-white'
+                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-indigo-700'
+                      }`}
+                    >
+                      Doctor
+                    </button>
+                  </div>
+                </div>
+
+                {/* Language */}
+                <div>
+                  <label htmlFor="language" className="block text-sm font-semibold text-gray-900 mb-1.5">
+                    Language
+                  </label>
+                  <select
+                    id="language"
+                    name="language"
+                    value={formData.language}
+                    onChange={handleChange}
+                    className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all appearance-none bg-white cursor-pointer"
+                  >
+                    <option value="English">English</option>
+                    <option value="Sinhala">Sinhala</option>
+                    <option value="Tamil">Tamil</option>
+                  </select>
+                </div>
+
+                {/* Use my location */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+                    Use my location?
+                  </label>
+                  <p className="text-xs text-gray-600 mb-2">
+                    Allowing location access helps find nearby hospitals.
+                  </p>
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleLocationSelect('Yes')}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+                        formData.useLocation === 'Yes'
+                          ? 'bg-white text-gray-900 border-2 border-gray-400'
+                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleLocationSelect('No')}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+                        formData.useLocation === 'No'
+                          ? 'bg-white text-gray-900 border-2 border-gray-400'
+                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+
+                {/* Login Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-indigo-700 text-white py-3 rounded-lg font-semibold hover:bg-indigo-800 transition-colors shadow-md hover:shadow-lg text-sm mt-4"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
