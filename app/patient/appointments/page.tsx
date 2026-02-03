@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 export default function AppointmentBookingPage() {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
   const [selectedHospital, setSelectedHospital] = useState('');
   const [selectedDate, setSelectedDate] = useState('2026-01-18');
 
+  // Sample medical records data
   // Sample medical records data
   const medicalRecords = [
     {
@@ -58,20 +60,26 @@ export default function AppointmentBookingPage() {
       time: '2 hours ago'
     }
   ];
+   const handleLogout = () => {
+    // Redirect to homepage
+    router.push('/');
+  };
 
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
       <aside className={`${sidebarOpen ? 'w-64' : 'w-0'} bg-white border-r border-gray-200 flex flex-col transition-all duration-300 overflow-hidden`}>
         <div className="p-6 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
+          <Link href="/">
+            <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <span className="text-lg font-bold text-indigo-700 whitespace-nowrap">Suwapatha</span>
             </div>
-            <span className="text-lg font-bold text-indigo-700 whitespace-nowrap">Suwapatha</span>
-          </div>
+          </Link>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -111,16 +119,21 @@ export default function AppointmentBookingPage() {
               <span className="whitespace-nowrap">Settings</span>
             </button>
           </Link>
-
-          <Link href="/patient/help">
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors text-gray-700 hover:bg-gray-100">
-              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="whitespace-nowrap">Help & Support</span>
-            </button>
-          </Link>
         </nav>
+
+         {/* Logout Button */}
+        <div className="p-4 border-t border-gray-200">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span className="whitespace-nowrap">Log Out</span>
+          </button>
+        </div>
+
 
         <div className="p-4 flex gap-1">
           <div className="w-2 h-2 rounded-full bg-gray-300"></div>
