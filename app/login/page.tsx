@@ -25,7 +25,7 @@ export default function LoginPage() {
     // TODO: Add actual authentication API call
     
     // For now, redirect immediately (remove this after adding real auth)
-    router.push('/dashboard/patient');
+    router.push('/patient/dashboard');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
