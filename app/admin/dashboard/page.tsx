@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import AdminLayout from '@/app/components/adminLayout'; // Adjust path if needed
 
@@ -7,12 +6,49 @@ export default function AdminDashboard() {
   const [autoAssignment, setAutoAssignment] = useState(true);
   const [expandedAlerts, setExpandedAlerts] = useState<number[]>([0]);
 
-  // Stats data – unchanged
+  // Stats data – updated colors
   const stats = [
-    { title: 'Total Patients Today', value: '250', change: '+5% from yesterday', icon: '👥', color: 'indigo' },
-    { title: 'Active Queues', value: '8', change: '3 in progress', icon: '📋', color: 'orange' },
-    { title: 'Avg. Waiting Time', value: '45 min', change: 'Last 24 hours', icon: '⏱️', color: 'gray' },
-    { title: 'Doctors Available', value: '12', change: 'Currently online', icon: '🩺', color: 'purple' }
+    {
+      title: 'Total Patients Today',
+      value: '250',
+      change: '+5% from yesterday',
+      icon: (
+        <img width="24"
+         height="24" 
+         src="https://img.icons8.com/ios-filled/50/crowd.png"
+         alt="crowd"/>
+      ),
+      color: '#94B4C1'
+    },
+    { 
+      title: 'Active Queues', 
+      value: '8', 
+      change: '3 in progress', 
+      icon: (
+         <img
+          width="24"
+          height="24"
+          src="https://img.icons8.com/material-outlined/24/queue.png"
+          alt="queue"
+          className="text-[#94B4C1]" // optional: you can try tinting via filter if needed
+        />
+      ) ,
+      color: '#f97316' }, 
+
+    { title: 'Avg. Waiting Time', 
+      value: '45 min', 
+      change: 'Last 24 hours', 
+      icon: (
+        <img width="20" height="20" src="https://img.icons8.com/ios/50/time_2.png" alt="time_2"/>
+      ), 
+      color: '#6b7280' },
+       
+    { title: 'Doctors Available',
+       value: '12', 
+       change: 'Currently online',
+        icon: (
+   <img width="23" height="23" src="https://img.icons8.com/ios-glyphs/30/stethoscope.png" alt="stethoscope"/>        ),
+        color: '#8b5cf6' } 
   ];
 
   const alerts = [
@@ -69,10 +105,10 @@ export default function AdminDashboard() {
             {/* OPD Session Management */}
             <div className="bg-white rounded-xl border p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-900">OPD Session Management</h2>
-              <button className="w-full bg-indigo-700 text-white py-3 rounded-lg mb-3 hover:bg-indigo-800">
+              <button className="w-full bg-[#94B4C1] text-white py-3 rounded-lg mb-3 hover:bg-[#7fa8b8] transition-colors">
                 Create New Session
               </button>
-              <button className="w-full bg-indigo-100 text-indigo-700 py-3 rounded-lg hover:bg-indigo-200 mb-3">
+              <button className="w-full bg-[#94B4C1]/10 text-[#94B4C1] py-3 rounded-lg hover:bg-[#94B4C1]/20 transition-colors">
                 View All Sessions
               </button>
             </div>
@@ -98,7 +134,7 @@ export default function AdminDashboard() {
                         </span>
                       </td>
                       <td className="py-4">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${d.availability === 'available' ? 'bg-indigo-700 text-white' : 'bg-gray-200 text-gray-700'}`}>
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${d.availability === 'available' ? 'bg-[#94B4C1] text-white' : 'bg-gray-200 text-gray-700'}`}>
                           {d.availability}
                         </span>
                       </td>
@@ -144,7 +180,7 @@ export default function AdminDashboard() {
                 {patientVolume.map((d, i) => (
                   <div key={i} className="flex-1 flex flex-col items-center gap-2">
                     <div
-                      className="w-full bg-indigo-700 rounded-t-lg hover:bg-indigo-800 transition-all"
+                      className="w-full bg-[#94B4C1] rounded-t-lg hover:bg-[#7fa8b8] transition-all"
                       style={{ height: `${(d.patients / maxPatients) * 200}px` }}
                     />
                     <span className="text-xs text-gray-800">{d.day.split(' ')[1]}</span>
@@ -152,7 +188,7 @@ export default function AdminDashboard() {
                 ))}
               </div>
               <div className="flex justify-center items-center gap-2 mt-4">
-                <div className="w-3 h-3 bg-indigo-700 rounded-sm" />
+                <div className="w-3 h-3 bg-[#94B4C1] rounded-sm" />
                 <span className="text-xs text-gray-800">Patients</span>
               </div>
             </div>

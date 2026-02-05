@@ -1,6 +1,6 @@
 'use client';
-
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import AdminLayout from '@/app/components/adminLayout'; // Adjust path as needed
 
 export default function DoctorRegistrationReview() {
@@ -27,8 +27,9 @@ export default function DoctorRegistrationReview() {
 
   // Filter doctors
   const filteredDoctors = doctors.filter((doc) => {
-    const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doc.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'All Statuses' || doc.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -56,17 +57,14 @@ export default function DoctorRegistrationReview() {
             <div className="text-sm text-gray-600">Total Registered</div>
             <div className="text-2xl font-bold text-gray-900 mt-1">{stats.total}</div>
           </div>
-
           <div className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50">
             <div className="text-sm text-gray-600">Pending Review</div>
             <div className="text-2xl font-bold text-orange-600 mt-1">{stats.pending}</div>
           </div>
-
           <div className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50">
             <div className="text-sm text-gray-600">Approved Today</div>
             <div className="text-2xl font-bold text-green-600 mt-1">{stats.approvedToday}</div>
           </div>
-
           <div className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50">
             <div className="text-sm text-gray-600">On Hold</div>
             <div className="text-2xl font-bold text-red-600 mt-1">{stats.onHold}</div>
@@ -80,13 +78,12 @@ export default function DoctorRegistrationReview() {
             placeholder="Search by name or ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-900"
+            className="w-full sm:w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400"
           />
-
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
             <option>All Statuses</option>
             <option>Pending Review</option>
@@ -136,7 +133,7 @@ export default function DoctorRegistrationReview() {
                           doctor.status === 'Approved'
                             ? 'bg-green-100 text-green-800'
                             : doctor.status === 'Pending Review'
-                            ? 'bg-yellow-100 text-yellow-800'
+                            ? 'bg-[#94B4C1]/10 text-[#94B4C1]'
                             : 'bg-red-100 text-red-800'
                         }`}
                       >

@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,27 +9,33 @@ export default function AboutPage() {
       <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#94B4C1] rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">Suwapatha</span>
+            <span className="text-xl font-bold text-[#94B4C1]">Suwapatha</span>
           </Link>
-          
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-600 hover:text-indigo-700 transition-colors">
+            <Link href="/" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
               Home
             </Link>
-            <Link href="/about" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+            <Link href="/about" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
               About
             </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-indigo-700 transition-colors">
+            <Link href="/contact" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
               Contact
             </Link>
           </div>
-
-          <Link href="/" className="bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-indigo-800 transition-colors shadow-sm">
+          <Link
+            href="/"
+            className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
+          >
             Get Started
           </Link>
         </div>
@@ -37,18 +44,16 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="border-4 border-indigo-300 rounded-3xl p-12 lg:p-16 bg-white">
+          <div className="border-4 border-[#94B4C1]/30 rounded-3xl p-12 lg:p-16 bg-white">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left side - Text */}
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-5xl lg:text-6xl font-bold text-[#04090a] leading-tight">
                   Suwapatha
                 </h1>
-                
                 <p className="text-lg text-gray-600 leading-relaxed">
                   Empowering citizens with seamless digital healthcare, connecting you to government health services efficiently and securely.
                 </p>
-
                 <div className="flex gap-2 pt-4">
                   <div className="w-2 h-2 rounded-full bg-gray-400"></div>
                   <div className="w-2 h-2 rounded-full bg-gray-400"></div>
@@ -77,9 +82,8 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
-            What is Suwapatha?
+            What is <span className="text-[#94B4C1]">Suwapatha ? </span>
           </h2>
-
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-16">
             Suwapatha is Sri Lanka's pioneering digital health platform, designed to revolutionize access to public healthcare services. We seamlessly connect citizens with government hospitals and health professionals, making healthcare more accessible, efficient, and patient-centric than ever before. Our platform simplifies everything from appointments to medical records, all while upholding the highest standards of data security and privacy.
           </p>
@@ -89,8 +93,8 @@ export default function AboutPage() {
             {/* Feature 1 */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -105,8 +109,8 @@ export default function AboutPage() {
             {/* Feature 2 */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -121,8 +125,8 @@ export default function AboutPage() {
             {/* Feature 3 */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -137,8 +141,8 @@ export default function AboutPage() {
             {/* Feature 4 */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -159,13 +163,12 @@ export default function AboutPage() {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-16">
             Key Features
           </h2>
-
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Feature 1 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -181,8 +184,8 @@ export default function AboutPage() {
             {/* Feature 2 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -198,8 +201,8 @@ export default function AboutPage() {
             {/* Feature 3 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
@@ -215,8 +218,8 @@ export default function AboutPage() {
             {/* Feature 4 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                   </svg>
                 </div>
@@ -232,8 +235,8 @@ export default function AboutPage() {
             {/* Feature 5 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
                 </div>
@@ -249,8 +252,8 @@ export default function AboutPage() {
             {/* Feature 6 */}
             <div className="bg-white rounded-2xl p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-2xl flex items-center justify-center">
+                  <svg className="w-10 h-10 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
@@ -272,7 +275,6 @@ export default function AboutPage() {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
             Governance & Data Privacy
           </h2>
-
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-12">
             At Suwapatha, safeguarding your personal and health information is our utmost priority. We are committed to maintaining the highest standards of privacy and security, adhering strictly to all national regulations and international best practices for data protection. Your trust is paramount, and we employ robust measures to ensure your data remains confidential and secure.
           </p>
@@ -281,8 +283,8 @@ export default function AboutPage() {
           <div className="space-y-6">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-6 h-6 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -294,8 +296,8 @@ export default function AboutPage() {
 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-6 h-6 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -307,8 +309,8 @@ export default function AboutPage() {
 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-6 h-6 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -320,8 +322,8 @@ export default function AboutPage() {
 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-6 h-6 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -333,8 +335,8 @@ export default function AboutPage() {
 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-indigo-700" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-6 h-6 rounded-full bg-[#94B4C1]/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#94B4C1]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -348,12 +350,12 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-blue-50 py-12 px-6">
+      <footer className="bg-[#A1C2BD]/10 py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-12">
             {/* Left - Brand */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">Suwapatha</h3>
+              <h3 className="text-xl font-bold text-[#94B4C1]">Suwapatha</h3>
               <p className="text-sm text-gray-600">
                 © 2026 Government of Sri Lanka. All rights reserved.
               </p>
@@ -362,19 +364,19 @@ export default function AboutPage() {
             {/* Middle - Links */}
             <div className="space-y-4">
               <nav className="flex flex-col space-y-3">
-                <Link href="/" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+                <Link href="/" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
                   Home
                 </Link>
-                <Link href="/about" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+                <Link href="/about" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
                   About Us
                 </Link>
-                <Link href="#" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+                <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
                   Services
                 </Link>
-                <Link href="#" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+                <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
                   FAQ
                 </Link>
-                <Link href="/contact" className="text-gray-900 font-medium hover:text-indigo-700 transition-colors">
+                <Link href="/contact" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
                   Contact Us
                 </Link>
               </nav>
@@ -386,9 +388,17 @@ export default function AboutPage() {
               <p className="text-sm text-gray-600 leading-relaxed">
                 Committed to providing an accessible online experience.
               </p>
-              <Link href="#" className="inline-flex items-center gap-2 text-indigo-700 hover:text-indigo-800 font-medium transition-colors">
+              <Link
+                href="#"
+                className="inline-flex items-center gap-2 text-[#94B4C1] hover:text-[#7fa8b8] font-medium transition-colors"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  />
                 </svg>
                 Learn More
               </Link>

@@ -1,12 +1,11 @@
 'use client';
-
 import { useState, ReactNode } from 'react';
 import PatientSidebar from './patientSidebar';
 
 // Updated interface to accept onLogout (this fixes the TS error)
 interface PatientLayoutProps {
   children: ReactNode;
-  onLogout: () => void;  // ← Added this line
+  onLogout: () => void; // ← Added this line
 }
 
 export default function PatientLayout({ children, onLogout }: PatientLayoutProps) {
@@ -15,13 +14,13 @@ export default function PatientLayout({ children, onLogout }: PatientLayoutProps
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Pass onLogout to PatientSidebar so the logout button can use it */}
-      <PatientSidebar 
-        sidebarOpen={sidebarOpen} 
+      <PatientSidebar
+        sidebarOpen={sidebarOpen}
         onLogout={onLogout}
       />
 
       <main className="flex-1 overflow-auto">
-        {/* Top Bar - unchanged */}
+        {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -43,7 +42,7 @@ export default function PatientLayout({ children, onLogout }: PatientLayoutProps
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#94B4C1] to-[#A1C2BD] flex items-center justify-center text-white font-semibold text-sm">
                 JD
               </div>
             </div>

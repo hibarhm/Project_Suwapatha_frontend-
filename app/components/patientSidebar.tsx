@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -10,7 +9,6 @@ interface PatientSidebarProps {
 
 export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebarProps) {
   const pathname = usePathname();
-
   const isActive = (path: string) => pathname === path;
 
   const menuItems = [
@@ -60,7 +58,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
       {/* Logo */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-indigo-700 rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 bg-[#94B4C1] rounded-lg flex items-center justify-center flex-shrink-0">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -70,7 +68,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
               />
             </svg>
           </div>
-          <span className="text-lg font-bold text-indigo-700 whitespace-nowrap">Suwapatha</span>
+          <span className="text-lg font-bold text-[#94B4C1] whitespace-nowrap">Suwapatha</span>
         </div>
       </div>
 
@@ -80,7 +78,9 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
           <Link key={item.path} href={item.path}>
             <button
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                isActive(item.path) ? 'bg-indigo-700 text-white' : 'text-gray-700 hover:bg-gray-100'
+                isActive(item.path)
+                  ? 'bg-[#94B4C1] text-white'
+                  : 'text-gray-700 hover:bg-gray-100 hover:text-[#94B4C1]'
               }`}
             >
               {item.icon}

@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PatientLayout from '@/app/components/patientLayout';
@@ -104,29 +103,26 @@ export default function MedicalRecordsPage() {
               className="outline-none bg-transparent text-gray-700 min-w-[160px]"
             />
           </div>
-
           <select
             value={selectedHospital}
             onChange={(e) => setSelectedHospital(e.target.value)}
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
             <option value="">Select Hospital</option>
             <option value="central">Central Hospital</option>
             <option value="district">District Clinic</option>
             <option value="general">General Hospital</option>
           </select>
-
           <select
             value={selectedVisitType}
             onChange={(e) => setSelectedVisitType(e.target.value)}
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
             <option value="">Select Visit Type</option>
             <option value="routine">Routine Check-up</option>
             <option value="followup">Follow-up</option>
             <option value="emergency">Emergency</option>
           </select>
-
           <button
             onClick={clearFilters}
             className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
@@ -144,16 +140,14 @@ export default function MedicalRecordsPage() {
             <h1 className="text-2xl font-bold text-gray-900">Amara Fernando</h1>
             <p className="text-sm text-gray-600">Patient ID: SF8765432</p>
           </div>
-
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors text-sm font-medium">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Download All PDF
             </button>
-
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors text-sm font-medium">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
               </svg>
@@ -168,7 +162,7 @@ export default function MedicalRecordsPage() {
             <div
               key={visit.id}
               className={`bg-white rounded-xl border-2 overflow-hidden transition-all ${
-                expandedVisit === visit.id ? 'border-indigo-300' : 'border-gray-200'
+                expandedVisit === visit.id ? 'border-[#94B4C1] shadow-md' : 'border-gray-200'
               }`}
             >
               {/* Visit Header */}
@@ -180,30 +174,26 @@ export default function MedicalRecordsPage() {
                   <div className="flex items-center gap-2">
                     {expandedVisit === visit.id && (
                       <>
-                        <div className="w-2 h-2 rounded-full bg-indigo-600"></div>
-                        <div className="w-2 h-2 rounded-full bg-indigo-600"></div>
-                        <div className="w-2 h-2 rounded-full bg-indigo-600"></div>
+                        <div className="w-2 h-2 rounded-full bg-[#94B4C1]"></div>
+                        <div className="w-2 h-2 rounded-full bg-[#94B4C1]"></div>
+                        <div className="w-2 h-2 rounded-full bg-[#94B4C1]"></div>
                       </>
                     )}
                   </div>
-                  
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">{visit.date}</h3>
                     <p className="text-sm text-gray-600">{visit.time}</p>
                   </div>
-
                   <div>
                     <h3 className="text-base font-semibold text-gray-900">{visit.hospital}</h3>
                     <p className="text-sm text-gray-600">{visit.doctor}</p>
                   </div>
-
                   {visit.followUpRequired && (
                     <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
                       Follow-up Required
                     </span>
                   )}
                 </div>
-
                 <button>
                   <svg
                     className={`w-5 h-5 text-gray-600 transition-transform ${
@@ -257,8 +247,7 @@ export default function MedicalRecordsPage() {
                         </div>
                       ))}
                     </div>
-
-                    <button className="mt-4 flex items-center gap-2 px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors text-sm font-medium">
+                    <button className="mt-4 flex items-center gap-2 px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>

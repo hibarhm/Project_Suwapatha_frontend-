@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import AdminSidebar from './adminSidebar';
 
 interface AdminLayoutProps {
@@ -8,14 +9,24 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleLogout = () => {
+    // Clear any authentication tokens/session data here
+    // localStorage.removeItem('authToken');
+    // sessionStorage.clear();
+    
+    // Redirect to homepage
+    router.push('/');
+  };
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <AdminSidebar sidebarOpen={sidebarOpen} />
+      <AdminSidebar sidebarOpen={sidebarOpen} onLogout={handleLogout} />
       
       <main className="flex-1 overflow-auto">
-        {/* Top Bar - integrated here */}
+        {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <button 
             onClick={() => setSidebarOpen(!sidebarOpen)}

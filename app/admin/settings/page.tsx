@@ -1,17 +1,17 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import PatientLayout from '@/app/components/patientLayout';
+import AdminLayout from '@/app/components/adminLayout'; // Adjust path as needed
 
 export default function PatientSettingsPage() {
   const router = useRouter();
 
   const [profileData, setProfileData] = useState({
-    fullName: 'Jane Doe',
-    username: 'janedoe'
+    fullName: 'Adnan Chandrasekara',
+    username: 'adnan.chandra'
   });
 
-  const [email, setEmail] = useState('jane.doe@example.com');
+  const [email, setEmail] = useState('adnan.chandra@example.com');
 
   const [passwords, setPasswords] = useState({
     current: '',
@@ -31,7 +31,7 @@ export default function PatientSettingsPage() {
   };
 
   return (
-    <PatientLayout onLogout={handleLogout}>
+    <AdminLayout>
       <div className="p-8 max-w-5xl mx-auto space-y-8">
         {/* Profile Information */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
@@ -43,7 +43,7 @@ export default function PatientSettingsPage() {
           {/* Profile Photo */}
           <div className="flex items-start gap-6 mb-8">
             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#94B4C1] to-[#A1C2BD] flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
-              JD
+              AC
             </div>
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-1">Profile Photo</h3>
@@ -290,6 +290,6 @@ export default function PatientSettingsPage() {
           </button>
         </div>
       </div>
-    </PatientLayout>
+    </AdminLayout>
   );
 }
