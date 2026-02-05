@@ -181,7 +181,7 @@ export default function ContactPage() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-gray-900">Suwapatha</h3>
               <p className="text-sm text-gray-600">
-                © 2024 Government of Sri Lanka. All rights reserved.
+                © 2026 Government of Sri Lanka. All rights reserved.
               </p>
             </div>
 
