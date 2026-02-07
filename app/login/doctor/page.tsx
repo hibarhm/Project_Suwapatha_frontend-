@@ -15,7 +15,9 @@ export default function DoctorLoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Doctor login submitted:', formData);
-    // Handle login logic here
+    
+    // Redirect to doctor dashboard
+    router.push('/doctor/dashboard');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
