@@ -97,7 +97,6 @@ export default function DoctorRegisterPage() {
     try {
       await authApi.registerDoctor(formData);
       // Registration successful - token is automatically stored by authApi
-      // Redirect directly to doctor dashboard
       router.push('/doctor/pendingApproval');
     } catch (error) {
       if (error instanceof ApiError) {

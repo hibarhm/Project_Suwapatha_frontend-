@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
             });
 
             // Redirect to doctor registration review page on success
-            router.push('/admin/doctorRegistration');
+            router.push('/admin/dashboard');
         } catch (err: any) {
             if (err instanceof ApiError) {
                 setError(err.message);

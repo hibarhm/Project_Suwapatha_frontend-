@@ -89,8 +89,7 @@ export default function PatientRegisterPage() {
 
     try {
       await authApi.registerPatient(formData);
-      // Registration successful - token is automatically stored by authApi
-      // Redirect directly to patient dashboard
+      // Registration successful
       router.push('/patient/dashboard');
     } catch (error) {
       if (error instanceof ApiError) {

@@ -96,7 +96,7 @@ export default function DoctorRegistrationReview() {
     } catch (err) {
       console.error('Error rejecting doctor:', err);
       alert('Failed to reject doctor. Please try again.');
-      throw err; // Re-throw to let modal handle loading state
+      throw err;
     }
   };
 
@@ -256,7 +256,7 @@ export default function DoctorRegistrationReview() {
           )}
         </div>
 
-        {/* Updated Modal - Using New DoctorReviewModal Component */}
+        {/* Updated Modal */}
         {selectedDoctor && (
           <DoctorReviewModal
             doctor={selectedDoctor}
