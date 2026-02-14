@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css'; // ← default style (you can override)
-import { cn } from '@/lib/utils'; // ← shadcn cn helper (create if missing)
+import { cn } from '@/app/lib/utils'; // ← shadcn cn helper (create if missing)
 
 interface CreateSessionModalProps {
   isOpen: boolean;

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { authApi, ApiError } from '../api/auth/authApi';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,15 +15,44 @@ export default function LoginPage() {
     language: 'English',
     useLocation: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
-    // Handle login logic here
-    // After successful login, redirect to dashboard
-    // TODO: Add actual authentication API call
-    // For now, redirect immediately (remove this after adding real auth)
-    router.push('/patient/dashboard');
+    setLoading(true);
+    setError('');
+
+    try {
+      if (formData.role === 'Patient') {
+        // Call patient login API
+        const response = await authApi.loginPatient({
+          email: formData.usernameOrEmail,
+          password: formData.password,
+        });
+
+        // Redirect to patient dashboard on success
+        router.push('/patient/dashboard');
+      } else if (formData.role === 'Doctor') {
+        // Call doctor login API
+        const response = await authApi.loginDoctor({
+          doctorId: formData.usernameOrEmail,
+          password: formData.password,
+        });
+
+        // Redirect to doctor dashboard on success
+        router.push('/doctor/dashboard');
+      }
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
+      console.error('Login error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -119,6 +149,12 @@ export default function LoginPage() {
               <h2 className="text-xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
               <p className="text-sm text-gray-600 mb-6">Login to access your Suwapatha account.</p>
 
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Username/Email */}
                 <div>
@@ -180,22 +216,20 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => handleRoleSelect('Patient')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-                        formData.role === 'Patient'
-                          ? 'bg-[#94B4C1] text-white'
-                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                      }`}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.role === 'Patient'
+                        ? 'bg-[#94B4C1] text-white'
+                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
+                        }`}
                     >
                       Patient
                     </button>
                     <button
                       type="button"
                       onClick={() => handleRoleSelect('Doctor')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-                        formData.role === 'Doctor'
-                          ? 'bg-[#94B4C1] text-white'
-                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                      }`}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.role === 'Doctor'
+                        ? 'bg-[#94B4C1] text-white'
+                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
+                        }`}
                     >
                       Doctor
                     </button>
@@ -232,22 +266,20 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => handleLocationSelect('Yes')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-                        formData.useLocation === 'Yes'
-                          ? 'bg-[#94B4C1] text-white'
-                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                      }`}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.useLocation === 'Yes'
+                        ? 'bg-[#94B4C1] text-white'
+                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
+                        }`}
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => handleLocationSelect('No')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-                        formData.useLocation === 'No'
-                          ? 'bg-[#94B4C1] text-white'
-                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                      }`}
+                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.useLocation === 'No'
+                        ? 'bg-[#94B4C1] text-white'
+                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
+                        }`}
                     >
                       No
                     </button>
@@ -257,9 +289,10 @@ export default function LoginPage() {
                 {/* Login Button */}
                 <button
                   type="submit"
-                  className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-4"
+                  disabled={loading}
+                  className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Login
+                  {loading ? 'Logging in...' : 'Login'}
                 </button>
               </form>
             </div>
