@@ -1,5 +1,5 @@
 'use client';
-import { useState, ReactNode } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import PatientSidebar from './patientSidebar';
 
 // Updated interface to accept onLogout (this fixes the TS error)
@@ -10,6 +10,23 @@ interface PatientLayoutProps {
 
 export default function PatientLayout({ children, onLogout }: PatientLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [initials, setInitials] = useState('?');
+  const [fullName, setFullName] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const raw = localStorage.getItem('user');
+      if (raw) {
+        try {
+          const u = JSON.parse(raw);
+          const first = u.firstName ?? '';
+          const last = u.lastName ?? '';
+          setInitials(`${first.charAt(0)}${last.charAt(0)}`.toUpperCase() || '?');
+          setFullName(`${first} ${last}`.trim());
+        } catch { /* ignore */ }
+      }
+    }
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -42,8 +59,11 @@ export default function PatientLayout({ children, onLogout }: PatientLayoutProps
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#94B4C1] to-[#A1C2BD] flex items-center justify-center text-white font-semibold text-sm">
-                JD
+              <div
+                title={fullName}
+                className="w-9 h-9 rounded-full bg-gradient-to-br from-[#94B4C1] to-[#A1C2BD] flex items-center justify-center text-white font-semibold text-sm cursor-default select-none"
+              >
+                {initials}
               </div>
             </div>
           </div>

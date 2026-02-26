@@ -70,11 +70,10 @@ export default function DoctorSidebar({ sidebarOpen, onLogout }: DoctorSidebarPr
         {menuItems.map((item) => (
           <Link key={item.path} href={item.path}>
             <button
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                isActive(item.path)
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive(item.path)
                   ? 'bg-[#94B4C1] text-white'
                   : 'text-gray-700 hover:bg-gray-100 hover:text-[#94B4C1]'
-              }`}
+                }`}
             >
               {item.icon}
               <span className="whitespace-nowrap">{item.name}</span>

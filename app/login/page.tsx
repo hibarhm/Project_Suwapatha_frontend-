@@ -206,35 +206,7 @@ export default function LoginPage() {
                     Forgot Password?
                   </Link>
                 </div>
-
-                {/* Select Your Role */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Select Your Role
-                  </label>
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => handleRoleSelect('Patient')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.role === 'Patient'
-                        ? 'bg-[#94B4C1] text-white'
-                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                        }`}
-                    >
-                      Patient
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleRoleSelect('Doctor')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors ${formData.role === 'Doctor'
-                        ? 'bg-[#94B4C1] text-white'
-                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
-                        }`}
-                    >
-                      Doctor
-                    </button>
-                  </div>
-                </div>
+              
 
                 {/* Language */}
                 <div>

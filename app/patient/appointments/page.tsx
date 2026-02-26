@@ -1,278 +1,466 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import PatientLayout from '@/app/components/patientLayout';
+import { appointmentApi } from '@/app/api/appointment/appointmentApi';
+import {
+  HospitalResponse,
+  OpdSessionResponse,
+  AppointmentResponse,
+} from '@/app/api/appointment/appointmentTypes';
 
+/* ── helpers ──────────────────────────────────────────────────────────────── */
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
+    CANCELLED: 'bg-red-100 text-red-700',
+    COMPLETED: 'bg-green-100 text-green-700',
+  };
+  return (
+    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+      ${map[status] ?? 'bg-gray-100 text-gray-600'}`}>
+      {status.charAt(0) + status.slice(1).toLowerCase()}
+    </span>
+  );
+}
+
+function Spinner() {
+  return (
+    <div className="flex justify-center py-10">
+      <div className="w-8 h-8 border-4 border-[#94B4C1] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
+
+/* ── main component ───────────────────────────────────────────────────────── */
 export default function AppointmentBookingPage() {
   const router = useRouter();
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
-  const [selectedHospital, setSelectedHospital] = useState('');
-  const [selectedDate, setSelectedDate] = useState('2026-01-18');
 
-  // Logout handler
+  // ── state: hospital search ──────────────────────────────────────────────
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hospitals, setHospitals] = useState<HospitalResponse[]>([]);
+  const [loadingHospitals, setLoadingHospitals] = useState(false);
+
+  // ── state: selected hospital + sessions ────────────────────────────────
+  const [selectedHospital, setSelectedHospital] = useState<HospitalResponse | null>(null);
+  const [sessions, setSessions] = useState<OpdSessionResponse[]>([]);
+  const [loadingSessions, setLoadingSessions] = useState(false);
+
+  // ── state: booking ──────────────────────────────────────────────────────
+  const [booking, setBooking] = useState(false);
+  const [bookError, setBookError] = useState('');
+  const [bookSuccess, setBookSuccess] = useState('');
+
+  // ── state: active appointment (queue card) ──────────────────────────────
+  const [activeAppt, setActiveAppt] = useState<AppointmentResponse | null>(null);
+  const [loadingActive, setLoadingActive] = useState(true);
+
+  // ── state: appointment history ──────────────────────────────────────────
+  const [history, setHistory] = useState<AppointmentResponse[]>([]);
+  const [loadingHistory, setLoadingHistory] = useState(true);
+  const [cancelling, setCancelling] = useState<string | null>(null);
+
+  /* ── data fetching ──────────────────────────────────────────────────────── */
+
+  // Load active appointment + history on mount
+  const refreshAppointments = useCallback(async () => {
+    setLoadingActive(true);
+    setLoadingHistory(true);
+    try {
+      const [active, all] = await Promise.all([
+        appointmentApi.getActive(),
+        appointmentApi.getAll(),
+      ]);
+      setActiveAppt(active);
+      setHistory(all);
+    } catch {
+      // Silently handle — user may not yet have any appointments
+    } finally {
+      setLoadingActive(false);
+      setLoadingHistory(false);
+    }
+  }, []);
+
+  useEffect(() => { refreshAppointments(); }, [refreshAppointments]);
+
+  // Hospital search with 400 ms debounce
+  useEffect(() => {
+    const t = setTimeout(async () => {
+      setLoadingHospitals(true);
+      try {
+        setHospitals(await appointmentApi.getHospitals(searchQuery));
+      } catch {
+        setHospitals([]);
+      } finally {
+        setLoadingHospitals(false);
+      }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
+
+  // Load sessions when a hospital is selected
+  useEffect(() => {
+    if (!selectedHospital) { setSessions([]); return; }
+    setLoadingSessions(true);
+    appointmentApi.getSessions(selectedHospital.id)
+      .then(setSessions)
+      .catch(() => setSessions([]))
+      .finally(() => setLoadingSessions(false));
+  }, [selectedHospital]);
+
+  /* ── actions ─────────────────────────────────────────────────────────────── */
+
+  const handleBook = async (sessionId: string) => {
+    setBooking(true);
+    setBookError('');
+    setBookSuccess('');
+    try {
+      await appointmentApi.book({ sessionId });
+      setBookSuccess('Booked! Your queue number has been assigned.');
+      // Refresh queue card, history, and sessions list
+      await Promise.all([
+        refreshAppointments(),
+        selectedHospital
+          ? appointmentApi.getSessions(selectedHospital.id).then(setSessions)
+          : Promise.resolve(),
+      ]);
+    } catch (e) {
+      setBookError(e instanceof Error ? e.message : 'Booking failed. Please try again.');
+    } finally {
+      setBooking(false);
+    }
+  };
+
+  const handleCancel = async (id: string) => {
+    setCancelling(id);
+    try {
+      await appointmentApi.cancel(id);
+      await refreshAppointments();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Failed to cancel appointment.');
+    } finally {
+      setCancelling(null);
+    }
+  };
+
   const handleLogout = () => {
-    // Add any logout logic here (clear tokens, session storage, etc.)
+    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     router.push('/');
   };
 
-  // Sample medical records data
-  const medicalRecords = [
-    {
-      date: '2023-11-20',
-      title: 'Routine Check-up',
-      doctor: 'Dr. Kamal Silva',
-      notes: 'Blood pressure normal, advised on diet.'
-    },
-    {
-      date: '2023-09-15',
-      title: 'Fever & Cold',
-      doctor: 'Dr. Priyantha Fernando',
-      notes: 'Prescribed antibiotics and rest. Follow-up in 3 days.'
-    },
-    {
-      date: '2023-06-01',
-      title: 'Vaccination',
-      doctor: 'Dr. Sumudu Kumari',
-      notes: 'Annual flu shot administered.'
-    },
-    {
-      date: '2023-03-10',
-      title: 'Allergy Consultation',
-      doctor: 'Dr. Nilmini Rajapaksha',
-      notes: 'Identified dust mite allergy. Prescribed antihistamines.'
-    }
-  ];
-
-  // Sample notifications
-  const notifications = [
-    {
-      type: 'info',
-      title: 'Your turn is approaching!',
-      message: 'Estimated 5 minutes remaining.',
-      time: 'Just now'
-    },
-    {
-      type: 'reminder',
-      title: 'Remember your follow-up',
-      message: 'appointment with Dr. Silva tomorrow at 10 AM.',
-      time: '1 hour ago'
-    },
-    {
-      type: 'info',
-      title: 'Queue number 10 has been called.',
-      message: 'Please proceed to Room 2.',
-      time: '2 hours ago'
-    }
-  ];
-
+  /* ── render ──────────────────────────────────────────────────────────────── */
   return (
     <PatientLayout onLogout={handleLogout}>
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Left Column - Main Booking Area */}
+
+        {/* ── Left Column ──────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Hospital Search */}
+
+          {/* ── Hospital Search ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Hospital Search</h2>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                    viewMode === 'list' 
-                      ? 'bg-[#94B4C1] text-white' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  List
-                </button>
-                <button
-                  onClick={() => setViewMode('map')}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                    viewMode === 'map' 
-                      ? 'bg-[#94B4C1] text-white' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Map
-                </button>
-              </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Hospital Search</h2>
+
+            <div className="relative mb-4">
+              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search hospitals by name…"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg
+                  focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]
+                  text-sm text-gray-900 placeholder-gray-400"
+              />
             </div>
-            <div className="space-y-4">
-              <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search for hospitals by name or location..."
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-sm text-gray-900 placeholder-gray-400"
-                />
+
+            {loadingHospitals && <Spinner />}
+
+            {!loadingHospitals && hospitals.length > 0 && (
+              <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                {hospitals.map(hosp => (
+                  <button
+                    key={hosp.id}
+                    onClick={() => {
+                      setSelectedHospital(hosp);
+                      setBookError('');
+                      setBookSuccess('');
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-colors border
+                      ${selectedHospital?.id === hosp.id
+                        ? 'bg-[#94B4C1] text-white border-[#94B4C1]'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#94B4C1] hover:text-[#94B4C1]'
+                      }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span className="font-medium">{hosp.name}</span>
+                      </div>
+                      <span className={`text-xs ${selectedHospital?.id === hosp.id ? 'text-white/70' : 'text-gray-400'}`}>
+                        {hosp.district}
+                      </span>
+                    </div>
+                  </button>
+                ))}
               </div>
-              <button className="w-full flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                Use my current location
-              </button>
-            </div>
+            )}
+
+            {!loadingHospitals && searchQuery && hospitals.length === 0 && (
+              <p className="text-sm text-gray-500 text-center py-6">No hospitals found for &quot;{searchQuery}&quot;</p>
+            )}
+
+            {!loadingHospitals && !searchQuery && hospitals.length === 0 && (
+              <p className="text-sm text-gray-400 text-center py-4">
+                Start typing to search Sri Lankan government hospitals…
+              </p>
+            )}
           </div>
 
-          {/* OPD Booking */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">OPD Booking</h2>
-            <div className="space-y-4">
-              <div>
-                <select
-                  value={selectedHospital}
-                  onChange={(e) => setSelectedHospital(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-sm text-gray-700"
+          {/* ── OPD Sessions / Booking ── */}
+          {selectedHospital && (
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">OPD Sessions</h2>
+                  <p className="text-sm text-gray-500">{selectedHospital.name}</p>
+                </div>
+                <button
+                  onClick={() => { setSelectedHospital(null); setSessions([]); }}
+                  className="text-xs text-gray-400 hover:text-gray-600 mt-1"
                 >
-                  <option value="">Select Hospital</option>
-                  <option value="general">General Hospital Colombo</option>
-                  <option value="national">National Hospital Sri Lanka</option>
-                </select>
+                  ✕ Clear
+                </button>
               </div>
-              <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-sm text-gray-700"
-                />
-              </div>
-              <button className="w-full bg-[#94B4C1] hover:bg-[#7fa8b8] text-white font-medium py-3 px-6 rounded-lg transition-colors">
-                Get Queue Number
-              </button>
-            </div>
-          </div>
 
-          {/* My Queue Status */}
+              {bookSuccess && (
+                <div className="mb-4 px-4 py-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm">
+                  {bookSuccess}
+                </div>
+              )}
+              {bookError && (
+                <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                  {bookError}
+                </div>
+              )}
+
+              {loadingSessions && <Spinner />}
+
+              {!loadingSessions && sessions.length === 0 && (
+                <div className="flex flex-col items-center py-10 text-center">
+                  <svg className="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-gray-500 text-sm font-medium">No upcoming sessions available</p>
+                  <p className="text-xs text-gray-400 mt-1">Sessions are added by the hospital admin</p>
+                </div>
+              )}
+
+              {!loadingSessions && sessions.length > 0 && (
+                <div className="space-y-3">
+                  {sessions.map(session => (
+                    <div key={session.id}
+                      className="border border-gray-200 rounded-xl p-4 hover:border-[#94B4C1]/40 transition-colors">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <span className="font-semibold text-gray-900 text-sm">{session.department}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium
+                              ${session.status === 'OPEN' ? 'bg-green-100 text-green-700'
+                                : session.status === 'FULL' ? 'bg-orange-100 text-orange-700'
+                                  : 'bg-gray-100 text-gray-500'}`}>
+                              {session.status}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 mb-2">
+                            {session.date} &nbsp;·&nbsp; {session.startTime}–{session.endTime}
+                            {session.doctorName && ` · ${session.doctorName}`}
+                            {session.room && ` · Room ${session.room}`}
+                          </p>
+                          {/* Queue progress bar */}
+                          <div className="flex items-center gap-3">
+                            <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all
+                                  ${session.availableSlots === 0 ? 'bg-orange-400'
+                                    : session.availableSlots <= 5 ? 'bg-yellow-400'
+                                      : 'bg-[#94B4C1]'}`}
+                                style={{ width: `${(session.currentQueueCount / session.maxQueueSize) * 100}%` }}
+                              />
+                            </div>
+                            <span className="text-xs text-gray-500 whitespace-nowrap">
+                              {session.currentQueueCount}/{session.maxQueueSize}
+                              &nbsp;·&nbsp;
+                              {session.availableSlots > 0
+                                ? `${session.availableSlots} slot${session.availableSlots !== 1 ? 's' : ''} left`
+                                : 'Full'}
+                            </span>
+                          </div>
+                        </div>
+
+                        <button
+                          disabled={session.status !== 'OPEN' || booking}
+                          onClick={() => handleBook(session.id)}
+                          className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg transition-colors
+                            ${session.status === 'OPEN'
+                              ? 'bg-[#94B4C1] hover:bg-[#7fa8b8] text-white'
+                              : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
+                        >
+                          {booking ? (
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                              Booking…
+                            </span>
+                          ) : session.status === 'OPEN' ? 'Book' : session.status}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Queue Status Card ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-6">My Queue Status</h2>
-            <div className="bg-gradient-to-br from-gray-50 to-[#94B4C1]/5 rounded-xl p-8 mb-6">
-              <div className="text-center mb-6">
-                <p className="text-sm text-gray-600 mb-2">Your Queue Number</p>
-                <p className="text-6xl font-bold text-[#94B4C1]">15</p>
+
+            {loadingActive ? <Spinner /> : activeAppt ? (
+              <>
+                <div className="bg-gradient-to-br from-gray-50 to-[#94B4C1]/5 rounded-xl p-8 mb-6">
+                  <div className="text-center mb-6">
+                    <p className="text-sm text-gray-600 mb-2">Your Queue Number</p>
+                    <p className="text-6xl font-bold text-[#94B4C1]">{activeAppt.queueNumber}</p>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {[
+                      {
+                        icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+                        label: 'Estimated Wait',
+                        value: activeAppt.estimatedWaitMinutes > 0
+                          ? `${activeAppt.estimatedWaitMinutes} min`
+                          : "You're next!",
+                      },
+                      {
+                        icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
+                        label: 'Hospital',
+                        value: activeAppt.hospitalName,
+                      },
+                      {
+                        icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+                        label: 'Doctor',
+                        value: activeAppt.doctorName || 'To be assigned',
+                      },
+                      {
+                        icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                        label: 'Status',
+                        value: null,
+                        badge: <StatusBadge status={activeAppt.status} />,
+                      },
+                    ].map(({ icon, label, value, badge }) => (
+                      <div key={label}>
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
+                          </svg>
+                          {label}
+                        </div>
+                        {badge ?? <p className="text-base font-semibold text-gray-900">{value}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleCancel(activeAppt.id)}
+                  disabled={!!cancelling}
+                  className="w-full flex items-center justify-center gap-2
+                    bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6
+                    rounded-lg transition-colors disabled:opacity-50"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  {cancelling ? 'Cancelling…' : 'Cancel Appointment'}
+                </button>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="w-16 h-16 bg-[#94B4C1]/10 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className="text-gray-900 font-medium mb-1">No active appointment</p>
+                <p className="text-sm text-gray-500">Search a hospital and book an OPD session above.</p>
               </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Estimated Wait Time
-                  </div>
-                  <p className="text-base font-semibold text-gray-900">25 min</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    Assigned Doctor
-                  </div>
-                  <p className="text-base font-semibold text-gray-900">Dr. Ayesha Perera</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                    Consultation Room
-                  </div>
-                  <p className="text-base font-semibold text-gray-900">OPD Room 3</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Status
-                  </div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#94B4C1]/10 text-[#94B4C1]">
-                    Waiting
-                  </span>
-                </div>
-              </div>
-            </div>
-            <button className="w-full flex items-center justify-center gap-2 bg-[#94B4C1] hover:bg-[#7fa8b8] text-white font-medium py-3 px-6 rounded-lg transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              Cancel Appointment
-            </button>
+            )}
           </div>
         </div>
 
-        {/* Right Column - Sidebar */}
+        {/* ── Right Column ──────────────────────────────────────────── */}
         <div className="space-y-6">
-          {/* My e-Medical Book */}
+
+          {/* ── Appointment History ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">My e-Medical Book</h3>
-            <div className="space-y-4 mb-4">
-              {medicalRecords.map((record, index) => (
-                <div key={index} className="border-l-4 border-[#94B4C1] pl-4 pb-4 border-b border-gray-100 last:border-b-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-[#94B4C1]/10 text-[#94B4C1]">
-                      {record.date}
-                    </span>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Appointment History</h3>
+
+            {loadingHistory ? <Spinner /> : history.length === 0 ? (
+              <div className="flex flex-col items-center py-8 text-center">
+                <svg className="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <p className="text-sm text-gray-500">No appointment history yet</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {history.map(apt => (
+                  <div key={apt.id}
+                    className="border border-gray-100 rounded-lg p-3 hover:border-[#94B4C1]/30 transition-colors">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <p className="text-sm font-semibold text-gray-900 leading-tight">{apt.hospitalName}</p>
+                      <StatusBadge status={apt.status} />
+                    </div>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {apt.appointmentDate} · Queue #{apt.queueNumber}
+                      {apt.doctorName ? ` · ${apt.doctorName}` : ''}
+                    </p>
+                    {apt.status === 'BOOKED' && (
+                      <button
+                        onClick={() => handleCancel(apt.id)}
+                        disabled={cancelling === apt.id}
+                        className="text-xs text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
+                      >
+                        {cancelling === apt.id ? 'Cancelling…' : 'Cancel'}
+                      </button>
+                    )}
                   </div>
-                  <h4 className="text-sm font-bold text-gray-900 mb-1">{record.title}</h4>
-                  <div className="flex items-center gap-1 text-xs text-gray-600 mb-2">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    {record.doctor}
-                  </div>
-                  <p className="text-xs text-gray-600">{record.notes}</p>
-                </div>
-              ))}
-            </div>
-            <button className="w-full flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Download PDF
-            </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Notifications */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Notifications</h3>
-            <div className="space-y-4">
-              {notifications.map((notif, index) => (
-                <div key={index} className="flex gap-3 pb-4 border-b border-gray-100 last:border-b-0 last:pb-0">
-                  <div className="flex-shrink-0">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      notif.type === 'info' ? 'bg-[#94B4C1]/10' : 'bg-orange-100'
-                    }`}>
-                      <svg className={`w-4 h-4 ${
-                        notif.type === 'info' ? 'text-[#94B4C1]' : 'text-orange-600'
-                      }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {notif.type === 'info' ? (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        ) : (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        )}
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 mb-1">
-                      {notif.title}
-                    </p>
-                    <p className="text-xs text-gray-600 mb-1">{notif.message}</p>
-                    <p className="text-xs text-gray-400">{notif.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* ── Tips ── */}
+          <div className="bg-[#94B4C1]/5 rounded-xl border border-[#94B4C1]/20 p-5">
+            <h3 className="text-sm font-bold text-[#94B4C1] mb-3">💡 Tips</h3>
+            <ul className="space-y-2 text-xs text-gray-600">
+              <li>• Arrive 10 minutes before your estimated wait time ends</li>
+              <li>• Bring your National ID card and any previous prescriptions</li>
+              <li>• Cancel at least 1 hour before if you cannot attend</li>
+              <li>• Sessions may have limited slots — book early</li>
+            </ul>
           </div>
         </div>
+
       </div>
     </PatientLayout>
   );

@@ -232,12 +232,11 @@ export default function DoctorDashboard() {
           <div className="space-y-4">
             {notifications.map((notification) => (
               <div key={notification.id} className="flex gap-3 pb-4 border-b border-gray-100 last:border-0">
-                <div className={`w-8 h-8 rounded flex items-center justify-center flex-shrink-0 ${
-                  notification.type === 'message' ? 'bg-[#94B4C1]/10' :
-                  notification.type === 'cancelled' ? 'bg-purple-100' :
-                  notification.type === 'lab' ? 'bg-[#94B4C1]/10' :
-                  'bg-[#94B4C1]/10'
-                }`}>
+                <div className={`w-8 h-8 rounded flex items-center justify-center flex-shrink-0 ${notification.type === 'message' ? 'bg-[#94B4C1]/10' :
+                    notification.type === 'cancelled' ? 'bg-purple-100' :
+                      notification.type === 'lab' ? 'bg-[#94B4C1]/10' :
+                        'bg-[#94B4C1]/10'
+                  }`}>
                   {notification.icon === 'mail' && (
                     <svg className="w-4 h-4 text-[#94B4C1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

@@ -33,6 +33,15 @@ async function handleResponse<T>(response: Response): Promise<T> {
     return response.json();
 }
 
+function persistAuth(result: AuthResponse) {
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('user', JSON.stringify(result));
+    // Convenience keys read by the dashboard
+    localStorage.setItem('userName', `${result.firstName} ${result.lastName}`);
+    localStorage.setItem('userEmail', result.email);
+    localStorage.setItem('userId', result.id);
+}
+
 export const authApi = {
     registerPatient: async (data: PatientRegisterRequest): Promise<AuthResponse> => {
         const response = await fetch(authEndpoints.REGISTER_PATIENT, {
@@ -41,8 +50,9 @@ export const authApi = {
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
+        // Flag so the dashboard can show a first-login welcome message
+        localStorage.setItem('isNewUser', 'true');
         return result;
     },
 
@@ -53,8 +63,8 @@ export const authApi = {
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
+        localStorage.setItem('isNewUser', 'true');
         return result;
     },
 
@@ -65,8 +75,7 @@ export const authApi = {
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
         return result;
     },
 
@@ -77,8 +86,7 @@ export const authApi = {
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
         return result;
     },
 
@@ -89,8 +97,7 @@ export const authApi = {
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
         return result;
     },
 
@@ -107,14 +114,17 @@ export const authApi = {
             throw new Error('Unauthorized: Access restricted to administrators.');
         }
 
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result));
+        persistAuth(result);
         return result;
     },
 
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isNewUser');
     },
 
     isAuthenticated: (): boolean => {

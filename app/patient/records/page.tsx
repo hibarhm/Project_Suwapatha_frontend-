@@ -161,9 +161,8 @@ export default function MedicalRecordsPage() {
           {medicalVisits.map((visit) => (
             <div
               key={visit.id}
-              className={`bg-white rounded-xl border-2 overflow-hidden transition-all ${
-                expandedVisit === visit.id ? 'border-[#94B4C1] shadow-md' : 'border-gray-200'
-              }`}
+              className={`bg-white rounded-xl border-2 overflow-hidden transition-all ${expandedVisit === visit.id ? 'border-[#94B4C1] shadow-md' : 'border-gray-200'
+                }`}
             >
               {/* Visit Header */}
               <div
@@ -196,9 +195,8 @@ export default function MedicalRecordsPage() {
                 </div>
                 <button>
                   <svg
-                    className={`w-5 h-5 text-gray-600 transition-transform ${
-                      expandedVisit === visit.id ? 'rotate-180' : ''
-                    }`}
+                    className={`w-5 h-5 text-gray-600 transition-transform ${expandedVisit === visit.id ? 'rotate-180' : ''
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
