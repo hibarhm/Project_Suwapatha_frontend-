@@ -14,8 +14,9 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
 
   const handleLogout = () => {
     // Clear any authentication tokens/session data here
-    // localStorage.removeItem('authToken');
-    // sessionStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    sessionStorage.clear();
 
     // Redirect to homepage
     router.push('/');

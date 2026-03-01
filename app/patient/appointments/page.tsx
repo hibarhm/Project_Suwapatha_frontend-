@@ -145,7 +145,6 @@ export default function AppointmentBookingPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('authToken');
     router.push('/');
   };
 

@@ -1,91 +1,354 @@
 'use client';
-import { useState } from 'react';
-import AdminLayout from '@/app/components/adminLayout'; // Adjust path if needed
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import AdminLayout from '@/app/components/adminLayout';
+import API_BASE_URL from '@/app/api/api';
+
+interface HospitalInfo {
+  id: string;
+  name: string;
+  location: string;
+  district: string;
+  province: string;
+  type: string;
+  address: string;
+  phone: string;
+}
+
+interface TodayStats {
+  totalPatients: number;
+  allocatedPatients: number;
+  unallocatedPatients: number;
+  activeDoctors: number;
+  totalDoctors: number;
+  activeSessions: number;
+}
+
+interface Doctor {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  status: string;
+  enabled: boolean;
+}
+
+interface Session {
+  id: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  doctorName: string;
+  room: string;
+  status: string;
+  currentQueueCount: number;
+  maxQueueSize: number;
+}
 
 export default function AdminDashboard() {
-  const [autoAssignment, setAutoAssignment] = useState(true);
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [expandedAlerts, setExpandedAlerts] = useState<number[]>([0]);
 
-  // Stats data – updated colors
+  // State for real data
+  const [hospitalInfo, setHospitalInfo] = useState<HospitalInfo | null>(null);
+  const [todayStats, setTodayStats] = useState<TodayStats>({
+    totalPatients: 0,
+    allocatedPatients: 0,
+    unallocatedPatients: 0,
+    activeDoctors: 0,
+    totalDoctors: 0,
+    activeSessions: 0
+  });
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [todaySessions, setTodaySessions] = useState<Session[]>([]);
+  const [alerts, setAlerts] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
+  const getAuthToken = () => {
+    return localStorage.getItem('token');
+  };
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    try {
+      await Promise.all([
+        fetchHospitalInfo(),
+        fetchTodayStats(),
+        fetchDoctors(),
+        fetchTodaySessions()
+      ]);
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+      setError('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchHospitalInfo = async () => {
+    try {
+      const token = getAuthToken();
+
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/admin/hospital-info`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 401) {
+        localStorage.clear();
+        router.push('/login');
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch hospital info');
+      }
+
+      const data = await response.json();
+      setHospitalInfo(data);
+    } catch (err) {
+      console.error('Error fetching hospital info:', err);
+    }
+  };
+
+  const fetchTodayStats = async () => {
+    try {
+      const token = getAuthToken();
+
+      const response = await fetch('http://localhost:8080/api/admin/opd/stats/today', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch today stats');
+      }
+
+      const data = await response.json();
+      setTodayStats(data);
+    } catch (err) {
+      console.error('Error fetching today stats:', err);
+    }
+  };
+
+  const fetchDoctors = async () => {
+    try {
+      const token = getAuthToken();
+
+      const response = await fetch('http://localhost:8080/api/admin/doctors', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch doctors');
+      }
+
+      const data = await response.json();
+      setDoctors(data);
+    } catch (err) {
+      console.error('Error fetching doctors:', err);
+    }
+  };
+
+  const fetchTodaySessions = async () => {
+    try {
+      const token = getAuthToken();
+
+      const response = await fetch('http://localhost:8080/api/admin/opd/sessions/today', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch today sessions');
+      }
+
+      const data = await response.json();
+      setTodaySessions(data);
+
+      // Generate alerts based on real data
+      generateAlerts(data);
+    } catch (err) {
+      console.error('Error fetching today sessions:', err);
+    }
+  };
+
+  const generateAlerts = (sessions: Session[]) => {
+    const newAlerts = [];
+
+    // Check for sessions without doctors
+    const sessionsWithoutDoctors = sessions.filter(
+      s => !s.doctorName || s.doctorName === 'Not Assigned'
+    );
+
+    if (sessionsWithoutDoctors.length > 0) {
+      newAlerts.push({
+        type: 'warning',
+        title: `${sessionsWithoutDoctors.length} Session(s) Without Doctor`,
+        description: 'Some OPD sessions do not have assigned doctors. Please assign doctors to these sessions.'
+      });
+    }
+
+    // Check for sessions without rooms
+    const sessionsWithoutRooms = sessions.filter(
+      s => !s.room || s.room === 'Not Assigned'
+    );
+
+    if (sessionsWithoutRooms.length > 0) {
+      newAlerts.push({
+        type: 'warning',
+        title: `${sessionsWithoutRooms.length} Session(s) Without Room`,
+        description: 'Some OPD sessions do not have assigned rooms. Please assign rooms to these sessions.'
+      });
+    }
+
+    // Check for high patient load
+    const highLoadSessions = sessions.filter(
+      s => (s.currentQueueCount / s.maxQueueSize) > 0.8
+    );
+
+    if (highLoadSessions.length > 0) {
+      newAlerts.push({
+        type: 'warning',
+        title: `High Patient Load in ${highLoadSessions.length} Session(s)`,
+        description: 'Some sessions are approaching maximum capacity. Consider creating additional sessions.'
+      });
+    }
+
+    // Check for unallocated patients
+    if (todayStats.unallocatedPatients > 0) {
+      newAlerts.push({
+        type: 'info',
+        title: `${todayStats.unallocatedPatients} Unallocated Patients`,
+        description: 'There are patients waiting to be assigned to OPD sessions.'
+      });
+    }
+
+    setAlerts(newAlerts.length > 0 ? newAlerts : [
+      {
+        type: 'info',
+        title: 'All Systems Normal',
+        description: 'No urgent alerts at this time. All OPD sessions are running smoothly.'
+      }
+    ]);
+  };
+
+  // Calculate average waiting time based on queue counts
+  const calculateAvgWaitingTime = () => {
+    if (todaySessions.length === 0) return '0 min';
+
+    const totalWaitTime = todaySessions.reduce((sum, session) => {
+      // Assuming 15 minutes per patient
+      return sum + (session.currentQueueCount * 15);
+    }, 0);
+
+    const avgTime = Math.round(totalWaitTime / todaySessions.length);
+    return `${avgTime} min`;
+  };
+
+  const handleCreateSession = () => {
+    router.push('/admin/opd-management');
+  };
+
+  const handleViewAllSessions = () => {
+    router.push('/admin/opd-management');
+  };
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="p-8 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
   const stats = [
     {
       title: 'Total Patients Today',
-      value: '250',
-      change: '+5% from yesterday',
+      value: todayStats.totalPatients.toString(),
+      change: `${todayStats.allocatedPatients} allocated, ${todayStats.unallocatedPatients} waiting`,
       icon: (
-        <img width="24"
-         height="24" 
-         src="https://img.icons8.com/ios-filled/50/crowd.png"
-         alt="crowd"/>
+        <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/crowd.png" alt="crowd" />
       ),
       color: '#94B4C1'
     },
-    { 
-      title: 'Active Queues', 
-      value: '8', 
-      change: '3 in progress', 
+    {
+      title: 'Active Queues',
+      value: todayStats.activeSessions.toString(),
+      change: `${todayStats.totalDoctors} total sessions today`,
       icon: (
-         <img
-          width="24"
-          height="24"
-          src="https://img.icons8.com/material-outlined/24/queue.png"
-          alt="queue"
-          className="text-[#94B4C1]" // optional: you can try tinting via filter if needed
-        />
-      ) ,
-      color: '#f97316' }, 
-
-    { title: 'Avg. Waiting Time', 
-      value: '45 min', 
-      change: 'Last 24 hours', 
+        <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/queue.png" alt="queue" />
+      ),
+      color: '#f97316'
+    },
+    {
+      title: 'Avg. Waiting Time',
+      value: calculateAvgWaitingTime(),
+      change: 'Estimated per session',
       icon: (
-        <img width="20" height="20" src="https://img.icons8.com/ios/50/time_2.png" alt="time_2"/>
-      ), 
-      color: '#6b7280' },
-       
-    { title: 'Doctors Available',
-       value: '12', 
-       change: 'Currently online',
-        icon: (
-   <img width="23" height="23" src="https://img.icons8.com/ios-glyphs/30/stethoscope.png" alt="stethoscope"/>        ),
-        color: '#8b5cf6' } 
+        <img width="20" height="20" src="https://img.icons8.com/ios/50/time_2.png" alt="time" />
+      ),
+      color: '#6b7280'
+    },
+    {
+      title: 'Doctors Available',
+      value: todayStats.activeDoctors.toString(),
+      change: `${todayStats.totalDoctors} total doctors today`,
+      icon: (
+        <img width="23" height="23" src="https://img.icons8.com/ios-glyphs/30/stethoscope.png" alt="stethoscope" />
+      ),
+      color: '#8b5cf6'
+    }
   ];
-
-  const alerts = [
-    { type: 'warning', title: 'Doctor Absence: Dr. Silva', description: 'Dr. Silva is unavailable for OPD Session 3 today due to an emergency.' },
-    { type: 'warning', title: 'High Patient Load: General OPD', description: '' },
-    { type: 'info', title: 'New System Update', description: '' }
-  ];
-
-  const doctors = [
-    { name: 'Dr. Priyantha Fernando', status: 'online', availability: 'available' },
-    { name: 'Dr. Anjali Perera', status: 'online', availability: 'available' },
-    { name: 'Dr. Nimal Gunawardena', status: 'offline', availability: 'unavailable' },
-    { name: 'Dr. Saman Wijesinghe', status: 'online', availability: 'available' },
-    { name: 'Dr. Kamani', status: 'online', availability: 'unavailable' }
-  ];
-
-  const patientVolume = [
-    { day: 'Nov 01', patients: 180 },
-    { day: 'Nov 02', patients: 210 },
-    { day: 'Nov 03', patients: 195 },
-    { day: 'Nov 04', patients: 155 },
-    { day: 'Nov 05', patients: 230 },
-    { day: 'Nov 06', patients: 245 },
-    { day: 'Nov 07', patients: 260 }
-  ];
-
-  const maxPatients = Math.max(...patientVolume.map(d => d.patients));
 
   return (
     <AdminLayout>
       <div className="p-8">
-        <h1 className="text-3xl font-bold mb-8 text-gray-900">Admin Dashboard Overview</h1>
+        {/* Hospital Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          {hospitalInfo && (
+            <p className="text-gray-600 mt-1">
+              {hospitalInfo.name} - {hospitalInfo.location}
+            </p>
+          )}
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
 
         {/* Stats Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((s, i) => (
-            <div key={i} className="bg-white rounded-xl border p-6">
+            <div key={i} className="bg-white rounded-xl border p-6 hover:shadow-md transition-shadow">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-sm text-gray-900">{s.title}</p>
@@ -105,43 +368,132 @@ export default function AdminDashboard() {
             {/* OPD Session Management */}
             <div className="bg-white rounded-xl border p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-900">OPD Session Management</h2>
-              <button className="w-full bg-[#94B4C1] text-white py-3 rounded-lg mb-3 hover:bg-[#7fa8b8] transition-colors">
+              <button
+                onClick={handleCreateSession}
+                className="w-full bg-[#94B4C1] text-white py-3 rounded-lg mb-3 hover:bg-[#7fa8b8] transition-colors font-medium"
+              >
                 Create New Session
               </button>
-              <button className="w-full bg-[#94B4C1]/10 text-[#94B4C1] py-3 rounded-lg hover:bg-[#94B4C1]/20 transition-colors">
+              <button
+                onClick={handleViewAllSessions}
+                className="w-full bg-[#94B4C1]/10 text-[#94B4C1] py-3 rounded-lg hover:bg-[#94B4C1]/20 transition-colors font-medium"
+              >
                 View All Sessions
               </button>
             </div>
 
             {/* Doctor Availability */}
             <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">Doctor Availability</h2>
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 text-xs font-semibold text-gray-900">Name</th>
-                    <th className="text-left py-3 text-xs font-semibold text-gray-900">Status</th>
-                    <th className="text-left py-3 text-xs font-semibold text-gray-900">Availability</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {doctors.map((d, i) => (
-                    <tr key={i} className="border-b last:border-0">
-                      <td className="py-4 text-sm font-medium text-gray-900">{d.name}</td>
-                      <td className="py-4">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${d.status === 'online' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                          {d.status}
-                        </span>
-                      </td>
-                      <td className="py-4">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${d.availability === 'available' ? 'bg-[#94B4C1] text-white' : 'bg-gray-200 text-gray-700'}`}>
-                          {d.availability}
-                        </span>
-                      </td>
-                    </tr>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Doctor Availability</h2>
+                <button
+                  onClick={fetchDoctors}
+                  className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
+                >
+                  Refresh
+                </button>
+              </div>
+
+              {doctors.length === 0 ? (
+                <div className="text-center py-8">
+                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                  <p className="text-gray-600 text-sm">No doctors registered yet</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Name</th>
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Email</th>
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {doctors.slice(0, 5).map((doctor) => (
+                        <tr key={doctor.id} className="border-b last:border-0">
+                          <td className="py-4 text-sm font-medium text-gray-900">
+                            {doctor.firstName} {doctor.lastName}
+                          </td>
+                          <td className="py-4 text-sm text-gray-600">
+                            {doctor.email}
+                          </td>
+                          <td className="py-4">
+                            <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${doctor.status === 'APPROVED'
+                              ? 'bg-green-100 text-green-800'
+                              : doctor.status === 'PENDING'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-red-100 text-red-800'
+                              }`}>
+                              {doctor.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {doctors.length > 5 && (
+                    <div className="mt-4 text-center">
+                      <button
+                        onClick={() => router.push('/admin/doctors')}
+                        className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
+                      >
+                        View all {doctors.length} doctors →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Today's Sessions Overview */}
+            <div className="bg-white rounded-xl border p-6">
+              <h2 className="text-xl font-bold mb-4 text-gray-900">Today's Sessions</h2>
+              {todaySessions.length === 0 ? (
+                <div className="text-center py-8">
+                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-gray-600 text-sm mb-4">No OPD sessions scheduled for today</p>
+                  <button
+                    onClick={handleCreateSession}
+                    className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium"
+                  >
+                    Create First Session
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {todaySessions.slice(0, 3).map((session) => (
+                    <div key={session.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-gray-900">
+                          {session.startTime} - {session.endTime}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          {session.doctorName} • {session.room}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-gray-900">
+                          {session.currentQueueCount}/{session.maxQueueSize}
+                        </p>
+                        <p className="text-xs text-gray-600">patients</p>
+                      </div>
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                  {todaySessions.length > 3 && (
+                    <button
+                      onClick={handleViewAllSessions}
+                      className="w-full text-center text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium py-2"
+                    >
+                      View all {todaySessions.length} sessions →
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -150,22 +502,22 @@ export default function AdminDashboard() {
             {/* Alerts & Notifications */}
             <div className="bg-white rounded-xl border p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-900">Alerts & Notifications</h2>
-              {alerts.map((a, i) => (
+              {alerts.map((alert, i) => (
                 <div key={i} className="border rounded-lg mb-3 last:mb-0">
                   <button
                     onClick={() => setExpandedAlerts(p => p.includes(i) ? p.filter(x => x !== i) : [...p, i])}
                     className="w-full flex items-start gap-3 p-4 hover:bg-gray-50"
                   >
-                    <svg className={`w-5 h-5 mt-0.5 ${a.type === 'warning' ? 'text-orange-600' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-5 h-5 mt-0.5 ${alert.type === 'warning' ? 'text-orange-600' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-semibold text-gray-900">{a.title}</p>
-                      {expandedAlerts.includes(i) && a.description && (
-                        <p className="text-xs text-gray-800 mt-1">{a.description}</p>
+                      <p className="text-sm font-semibold text-gray-900">{alert.title}</p>
+                      {expandedAlerts.includes(i) && alert.description && (
+                        <p className="text-xs text-gray-800 mt-1">{alert.description}</p>
                       )}
                     </div>
-                    <svg className={`w-5 h-5 text-gray-400 ${expandedAlerts.includes(i) ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-5 h-5 text-gray-400 transition-transform ${expandedAlerts.includes(i) ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
@@ -173,25 +525,56 @@ export default function AdminDashboard() {
               ))}
             </div>
 
-            {/* Daily Patient Volume */}
-            <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">Daily Patient Volume</h2>
-              <div className="h-64 flex items-end justify-between gap-2">
-                {patientVolume.map((d, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                    <div
-                      className="w-full bg-[#94B4C1] rounded-t-lg hover:bg-[#7fa8b8] transition-all"
-                      style={{ height: `${(d.patients / maxPatients) * 200}px` }}
-                    />
-                    <span className="text-xs text-gray-800">{d.day.split(' ')[1]}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-center items-center gap-2 mt-4">
-                <div className="w-3 h-3 bg-[#94B4C1] rounded-sm" />
-                <span className="text-xs text-gray-800">Patients</span>
+            {/* Quick Actions */}
+            <div className="bg-gradient-to-br from-[#94B4C1]/10 to-[#A1C2BD]/10 rounded-xl p-6">
+              <h3 className="text-lg font-bold mb-2 text-gray-900">Quick Actions</h3>
+              <p className="text-sm text-gray-700 mb-4">Manage your hospital operations</p>
+              <div className="space-y-2">
+                <button
+                  onClick={() => router.push('/admin/opd-management')}
+                  className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
+                >
+                  Manage OPD Sessions
+                </button>
+                <button
+                  onClick={() => router.push('/admin/doctors')}
+                  className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
+                >
+                  Manage Doctors
+                </button>
+                <button
+                  onClick={fetchAllData}
+                  className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
+                >
+                  Refresh Dashboard
+                </button>
               </div>
             </div>
+
+            {/* Hospital Info Card */}
+            {hospitalInfo && (
+              <div className="bg-white rounded-xl border p-6">
+                <h3 className="text-lg font-bold mb-3 text-gray-900">Hospital Information</h3>
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <p className="text-gray-600">Name</p>
+                    <p className="font-medium text-gray-900">{hospitalInfo.name}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Type</p>
+                    <p className="font-medium text-gray-900">{hospitalInfo.type}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Location</p>
+                    <p className="font-medium text-gray-900">{hospitalInfo.district}, {hospitalInfo.province}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Phone</p>
+                    <p className="font-medium text-gray-900">{hospitalInfo.phone}</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -10,7 +10,7 @@ import {
 function authHeaders(): HeadersInit {
     const token =
         typeof window !== 'undefined'
-            ? localStorage.getItem('token') ?? localStorage.getItem('authToken')
+            ? localStorage.getItem('token')
             : null;
     return {
         'Content-Type': 'application/json',

@@ -167,7 +167,7 @@ export default function PatientSettingsPage() {
 
   // ── logout ────────────────────────────────────────────────────────────────
   const handleLogout = () => {
-    ['token', 'authToken', 'user', 'userName', 'userEmail', 'userId', 'isNewUser', 'name', 'email']
+    ['token', 'user', 'userName', 'userEmail', 'userId', 'isNewUser', 'name', 'email']
       .forEach(k => localStorage.removeItem(k));
     router.push('/');
   };

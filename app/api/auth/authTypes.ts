@@ -27,6 +27,7 @@ export interface DoctorRegisterRequest {
     phone: string;
     gender: string;
     dateOfBirth: string;
+    hospitalId: string;
 }
 
 // Login types

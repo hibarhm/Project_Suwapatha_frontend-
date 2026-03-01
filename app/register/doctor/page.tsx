@@ -2,9 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { authApi, ApiError } from '../../api/auth/authApi';
+import { appointmentApi } from '../../api/appointment/appointmentApi';
+import { HospitalResponse } from '../../api/appointment/appointmentTypes';
+import SearchableSelect from '../../components/SearchableSelect';
 
 export default function DoctorRegisterPage() {
   const router = useRouter();
@@ -18,11 +21,30 @@ export default function DoctorRegisterPage() {
     phone: '',
     gender: 'Male',
     dateOfBirth: '',
+    hospitalId: '',
   });
+
+  const [hospitals, setHospitals] = useState<HospitalResponse[]>([]);
+  const [isLoadingHospitals, setIsLoadingHospitals] = useState(true);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState('');
+
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      try {
+        const data = await appointmentApi.getHospitals();
+        setHospitals(data);
+      } catch (error) {
+        console.error('Error fetching hospitals:', error);
+        setApiError('Failed to load hospitals. Please refresh the page.');
+      } finally {
+        setIsLoadingHospitals(false);
+      }
+    };
+    fetchHospitals();
+  }, []);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -78,6 +100,11 @@ export default function DoctorRegisterPage() {
     // Date of birth validation
     if (!formData.dateOfBirth) {
       newErrors.dateOfBirth = 'Date of birth is required';
+    }
+
+    // Hospital validation
+    if (!formData.hospitalId) {
+      newErrors.hospitalId = 'Please select a hospital';
     }
 
     setErrors(newErrors);
@@ -371,6 +398,26 @@ export default function DoctorRegisterPage() {
                   />
                   {errors.dateOfBirth && <p className="text-red-500 text-xs mt-1">{errors.dateOfBirth}</p>}
                 </div>
+
+                {/* Hospital Selection */}
+                <SearchableSelect
+                  label="Affiliated Hospital *"
+                  options={hospitals.map(h => ({
+                    id: h.id,
+                    name: h.name,
+                    subtitle: `${h.district}, ${h.province}`
+                  }))}
+                  value={formData.hospitalId}
+                  onChange={(value) => {
+                    setFormData({ ...formData, hospitalId: value });
+                    if (errors.hospitalId) {
+                      setErrors({ ...errors, hospitalId: '' });
+                    }
+                  }}
+                  placeholder="Select a hospital"
+                  loading={isLoadingHospitals}
+                  error={errors.hospitalId}
+                />
 
                 {/* Submit Button */}
                 <button

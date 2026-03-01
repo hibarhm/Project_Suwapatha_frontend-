@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PatientLayout from '@/app/components/patientLayout';
+import API_BASE_URL from '@/app/api/api';
 
 interface Prescription {
   name: string;
@@ -27,12 +28,12 @@ export default function MedicalRecordsPage() {
   const [dateRange, setDateRange] = useState('');
   const [selectedHospital, setSelectedHospital] = useState('');
   const [selectedVisitType, setSelectedVisitType] = useState('');
-  
+
   // State for medical records
   const [medicalVisits, setMedicalVisits] = useState<MedicalVisit[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  
+
   // State for patient info
   const [patientName, setPatientName] = useState('');
   const [patientId, setPatientId] = useState('');
@@ -46,9 +47,9 @@ export default function MedicalRecordsPage() {
   // Fetch patient info
   const fetchPatientInfo = async () => {
     try {
-      const token = localStorage.getItem('authToken');
-      
-      const response = await fetch('http://localhost:8080/api/users/me', {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(`${API_BASE_URL}/api/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -69,14 +70,14 @@ export default function MedicalRecordsPage() {
   const fetchMedicalRecords = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('authToken');
-      
+      const token = localStorage.getItem('token');
+
       if (!token) {
         router.push('/login');
         return;
       }
 
-      const response = await fetch('http://localhost:8080/api/medical-records', {
+      const response = await fetch(`${API_BASE_URL}/api/medical-records`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -85,7 +86,7 @@ export default function MedicalRecordsPage() {
 
       if (response.status === 401) {
         // Token expired or invalid
-        localStorage.removeItem('authToken');
+        localStorage.removeItem('token');
         router.push('/login');
         return;
       }
@@ -109,8 +110,8 @@ export default function MedicalRecordsPage() {
   const applyFilters = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('authToken');
-      
+      const token = localStorage.getItem('token');
+
       // Build query parameters
       const params = new URLSearchParams();
       if (dateRange) {
@@ -121,8 +122,8 @@ export default function MedicalRecordsPage() {
         params.append('hospital', selectedHospital);
       }
 
-      const url = `http://localhost:8080/api/medical-records/filter?${params.toString()}`;
-      
+      const url = `${API_BASE_URL}/api/medical-records/filter?${params.toString()}`;
+
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -164,7 +165,7 @@ export default function MedicalRecordsPage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     router.push('/');
   };
 
@@ -259,7 +260,7 @@ export default function MedicalRecordsPage() {
             <p className="text-sm text-gray-600">Patient ID: {patientId || 'Loading...'}</p>
           </div>
           <div className="flex items-center gap-3">
-            <button 
+            <button
               onClick={handleDownloadAllPDF}
               className="flex items-center gap-2 px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium"
             >
@@ -268,7 +269,7 @@ export default function MedicalRecordsPage() {
               </svg>
               Download All PDF
             </button>
-            <button 
+            <button
               onClick={handleShareLink}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors text-sm font-medium"
             >
@@ -296,9 +297,8 @@ export default function MedicalRecordsPage() {
           {medicalVisits.map((visit) => (
             <div
               key={visit.id}
-              className={`bg-white rounded-xl border-2 overflow-hidden transition-all ${
-                expandedVisit === visit.id ? 'border-[#94B4C1] shadow-md' : 'border-gray-200'
-              }`}
+              className={`bg-white rounded-xl border-2 overflow-hidden transition-all ${expandedVisit === visit.id ? 'border-[#94B4C1] shadow-md' : 'border-gray-200'
+                }`}
             >
               {/* Visit Header */}
               <div
@@ -331,9 +331,8 @@ export default function MedicalRecordsPage() {
                 </div>
                 <button>
                   <svg
-                    className={`w-5 h-5 text-gray-600 transition-transform ${
-                      expandedVisit === visit.id ? 'rotate-180' : ''
-                    }`}
+                    className={`w-5 h-5 text-gray-600 transition-transform ${expandedVisit === visit.id ? 'rotate-180' : ''
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -382,7 +381,7 @@ export default function MedicalRecordsPage() {
                         </div>
                       ))}
                     </div>
-                    <button 
+                    <button
                       onClick={() => handleDownloadVisitPDF(visit.id)}
                       className="mt-4 flex items-center gap-2 px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium"
                     >

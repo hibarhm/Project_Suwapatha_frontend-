@@ -14,9 +14,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const handleLogout = () => {
     // Clear any authentication tokens/session data here
-    // localStorage.removeItem('authToken');
-    // sessionStorage.clear();
-    
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    sessionStorage.clear();
+
     // Redirect to homepage
     router.push('/');
   };
@@ -24,11 +25,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <div className="flex h-screen bg-gray-50">
       <AdminSidebar sidebarOpen={sidebarOpen} onLogout={handleLogout} />
-      
+
       <main className="flex-1 overflow-auto">
         {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-          <button 
+          <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >

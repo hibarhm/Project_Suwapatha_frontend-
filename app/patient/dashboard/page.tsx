@@ -99,7 +99,7 @@ export default function PatientDashboard() {
 
   // ── logout ────────────────────────────────────────────────────────────────
   const handleLogout = () => {
-    ['token', 'authToken', 'userName', 'userEmail', 'name', 'email', 'user', 'userId', 'isNewUser'].forEach(
+    ['token', 'userName', 'userEmail', 'name', 'email', 'user', 'userId', 'isNewUser'].forEach(
       k => localStorage.removeItem(k)
     );
     router.push('/');
