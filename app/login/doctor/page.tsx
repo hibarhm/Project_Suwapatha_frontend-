@@ -3,21 +3,51 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { authApi, ApiError } from '@/app/api/auth/authApi';
 
 export default function DoctorLoginPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     doctorIdOrEmail: '',
     password: '',
     rememberMe: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Doctor login submitted:', formData);
-    
-    // Redirect to doctor dashboard
-    router.push('/doctor/dashboard');
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Determine if it's an email or doctor ID
+      const isEmail = formData.doctorIdOrEmail.includes('@');
+
+      if (isEmail) {
+        await authApi.login({
+          email: formData.doctorIdOrEmail,
+          password: formData.password
+        });
+      } else {
+        await authApi.loginDoctor({
+          doctorId: formData.doctorIdOrEmail,
+          password: formData.password
+        });
+      }
+
+      // Redirect to doctor dashboard
+      router.push('/doctor/dashboard');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError(err.message || 'Invalid credentials. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +130,15 @@ export default function DoctorLoginPage() {
               <h2 className="text-xl font-bold text-gray-900 mb-2">Doctor Login</h2>
               <p className="text-sm text-gray-600 mb-6">Access your healthcare professional account</p>
 
+              {error && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Doctor ID/Email */}
                 <div>
@@ -115,6 +154,7 @@ export default function DoctorLoginPage() {
                     placeholder="Enter your Doctor ID or email"
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
+                    disabled={loading}
                   />
                 </div>
 
@@ -132,6 +172,7 @@ export default function DoctorLoginPage() {
                     placeholder="Enter your password"
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
+                    disabled={loading}
                   />
                 </div>
 
@@ -144,6 +185,7 @@ export default function DoctorLoginPage() {
                       checked={formData.rememberMe}
                       onChange={handleChange}
                       className="w-4 h-4 text-[#94B4C1] border-gray-300 rounded focus:ring-[#94B4C1]"
+                      disabled={loading}
                     />
                     <span className="text-sm text-gray-700">Remember me</span>
                   </label>
@@ -155,9 +197,11 @@ export default function DoctorLoginPage() {
                 {/* Login Button */}
                 <button
                   type="submit"
-                  className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-4"
+                  disabled={loading}
+                  className={`w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg text-sm mt-4 ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#7fa8b8]'
+                    }`}
                 >
-                  Login as Doctor
+                  {loading ? 'Logging in...' : 'Login as Doctor'}
                 </button>
 
                 {/* Register Link */}

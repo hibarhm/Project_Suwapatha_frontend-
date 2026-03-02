@@ -10,6 +10,8 @@ export interface UserProfile {
     address?: string;
     emergencyContact?: string;
     createdAt?: string;
+    hospitalId?: string;
+    hospitalName?: string;
     status?: string;
 }
 

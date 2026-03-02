@@ -2,7 +2,7 @@ import API_BASE_URL from '@/app/api/api';
 import { UserProfile, UpdateProfileRequest, ChangePasswordRequest } from './userTypes';
 
 function getAuthHeaders(): HeadersInit {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || localStorage.getItem('authToken');
     return {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),

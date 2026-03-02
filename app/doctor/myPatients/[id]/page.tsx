@@ -1,71 +1,64 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import DoctorLayout from '@/app/components/doctorLayout';
+import { doctorApi, PatientDetails } from '@/app/api/doctor/doctorApi';
 
 export default function PatientDetailsPage() {
   const router = useRouter();
   const params = useParams();
-  const patientId = params.id;
+  const patientRecordId = params.id as string;
 
   const [activeTab, setActiveTab] = useState('overview'); // overview, history, prescriptions
   const [isEditing, setIsEditing] = useState(false);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
-
-  // Sample patient data - in real app, fetch based on patientId
-  const patientData = {
-    1: { id: 1, queueNo: 'Q001', name: 'Alice Johnson', age: 45, gender: 'Female', bloodType: 'O+', phone: '+94 77 123 4567', email: 'alice.johnson@email.com', address: '123 Main Street, Colombo 07', emergencyContact: 'Bob Johnson (+94 77 987 6543)', allergies: ['Penicillin', 'Peanuts'], chronicConditions: ['Hypertension', 'Type 2 Diabetes'] },
-    2: { id: 2, queueNo: 'Q002', name: 'Bob Williams', age: 52, gender: 'Male', bloodType: 'A+', phone: '+94 77 234 5678', email: 'bob.williams@email.com', address: '456 Lake Road, Colombo 05', emergencyContact: 'Sarah Williams (+94 77 876 5432)', allergies: ['Aspirin'], chronicConditions: ['Asthma'] },
-    3: { id: 3, queueNo: 'Q003', name: 'Charlie Brown', age: 38, gender: 'Male', bloodType: 'B+', phone: '+94 77 345 6789', email: 'charlie.brown@email.com', address: '789 Park Avenue, Colombo 03', emergencyContact: 'Lucy Brown (+94 77 765 4321)', allergies: [], chronicConditions: [] },
-  };
-
-  const patientKey = typeof patientId === 'string' ? Number(patientId) : Array.isArray(patientId) ? Number(patientId[0]) : 1;
-  const patient = patientData[patientKey as keyof typeof patientData] || patientData[1];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [patient, setPatient] = useState<PatientDetails | null>(null);
 
   const [currentNotes, setCurrentNotes] = useState('');
   const [currentDiagnosis, setCurrentDiagnosis] = useState('');
 
-  // Medical history
-  const medicalHistory = [
-    {
-      id: 1,
-      date: 'Jan 15, 2026',
-      doctor: 'Dr. Priyantha Fernando',
-      diagnosis: 'Hypertension - Follow up',
-      notes: 'Blood pressure stable at 130/85. Continue current medication. Patient reports good compliance with diet.',
-      prescriptions: [
-        { medicine: 'Amlodipine', dosage: '5mg', frequency: 'Once daily', duration: '30 days' }
-      ],
-      vitals: { bp: '130/85', temp: '98.6°F', pulse: '72 bpm', weight: '75 kg' }
-    },
-    {
-      id: 2,
-      date: 'Dec 10, 2025',
-      doctor: 'Dr. Priyantha Fernando',
-      diagnosis: 'Routine Check-up',
-      notes: 'All vitals normal. Patient reports feeling well. No complaints. Recommended annual blood work.',
-      prescriptions: [],
-      vitals: { bp: '128/82', temp: '98.4°F', pulse: '70 bpm', weight: '74 kg' }
-    },
-    {
-      id: 3,
-      date: 'Nov 20, 2025',
-      doctor: 'Dr. Sumudu Kumari',
-      diagnosis: 'Type 2 Diabetes Management',
-      notes: 'HbA1c levels improving from 7.2% to 6.8%. Continue diet and exercise plan. Blood sugar well controlled.',
-      prescriptions: [
-        { medicine: 'Metformin', dosage: '500mg', frequency: 'Twice daily', duration: '30 days' }
-      ],
-      vitals: { bp: '132/84', temp: '98.5°F', pulse: '74 bpm', weight: '76 kg' }
-    }
-  ];
+  // Vitals state
+  const [vitals, setVitals] = useState({
+    bp: '',
+    temp: '',
+    pulse: '',
+    weight: ''
+  });
 
-  // Current prescriptions
-  const [prescriptions, setPrescriptions] = useState([
-    { id: 1, medicine: 'Amlodipine', dosage: '5mg', frequency: 'Once daily', duration: '30 days', status: 'Active' },
-    { id: 2, medicine: 'Metformin', dosage: '500mg', frequency: 'Twice daily', duration: '30 days', status: 'Active' }
-  ]);
+  const [prescriptions, setPrescriptions] = useState<Array<{
+    id?: number | string;
+    medicine: string;
+    dosage: string;
+    frequency: string;
+    duration: string;
+    status: string;
+  }>>([]);
+
+  useEffect(() => {
+    if (patientRecordId) {
+      fetchPatientDetails();
+    }
+  }, [patientRecordId]);
+
+  const fetchPatientDetails = async () => {
+    try {
+      setLoading(true);
+      // In a real app, the patientRecordId might be the ID from the My Patients list
+      // which we should resolve to a real patient ID if it's an appointment ID
+      const data = await doctorApi.getPatientDetails(patientRecordId);
+      setPatient(data);
+      setPrescriptions(data.activePrescriptions || []);
+      setError(null);
+    } catch (err: any) {
+      console.error('Error fetching patient details:', err);
+      setError(err.message || 'Failed to load patient details.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [newPrescription, setNewPrescription] = useState({
     medicine: '',
@@ -82,25 +75,75 @@ export default function PatientDetailsPage() {
       ]);
       setNewPrescription({ medicine: '', dosage: '', frequency: '', duration: '' });
       setShowPrescriptionModal(false);
-      alert('Prescription added successfully!');
     }
   };
 
-  const handleSaveConsultation = () => {
+  const handleSaveConsultation = async () => {
     if (!currentDiagnosis || !currentNotes) {
       alert('Please enter diagnosis and consultation notes');
       return;
     }
-    // Save current consultation
-    alert('Consultation saved successfully!');
-    setIsEditing(false);
-    setCurrentDiagnosis('');
-    setCurrentNotes('');
+
+    if (!patient) return;
+
+    try {
+      setLoading(true);
+      await doctorApi.saveConsultation({
+        patientId: patient.id,
+        diagnosis: currentDiagnosis,
+        consultationNotes: currentNotes,
+        bp: vitals.bp,
+        temp: vitals.temp,
+        pulse: vitals.pulse,
+        weight: vitals.weight,
+        prescriptions: prescriptions.map(p => ({
+          medicine: p.medicine,
+          dosage: p.dosage,
+          frequency: p.frequency,
+          duration: p.duration,
+          status: 'Active'
+        })),
+        followUpRequired: false // Default
+      });
+
+      alert('Consultation saved successfully!');
+      setIsEditing(false);
+      setCurrentDiagnosis('');
+      setCurrentNotes('');
+      setVitals({ bp: '', temp: '', pulse: '', weight: '' });
+      fetchPatientDetails(); // Refresh history
+    } catch (err: any) {
+      console.error('Error saving consultation:', err);
+      alert(err.message || 'Failed to save consultation. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
+
+  if (loading && !patient) {
+    return (
+      <DoctorLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-400"></div>
+        </div>
+      </DoctorLayout>
+    );
+  }
+
+  if (error || !patient) {
+    return (
+      <DoctorLayout>
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
+          {error || 'Patient not found'}
+          <button onClick={() => router.back()} className="ml-4 underline">Go Back</button>
+        </div>
+      </DoctorLayout>
+    );
+  }
 
   return (
     <DoctorLayout>
@@ -121,7 +164,7 @@ export default function PatientDetailsPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">{patient.name}</h1>
-              <p className="text-sm text-gray-600">Patient ID: {patient.id} • Queue: {patient.queueNo}</p>
+              <p className="text-sm text-gray-600">Patient ID: {patient.id} {patient.queueNo ? `• Queue: ${patient.queueNo}` : ''}</p>
             </div>
           </div>
         </div>
@@ -178,31 +221,28 @@ export default function PatientDetailsPage() {
         <nav className="flex space-x-8">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === 'overview'
-                ? 'border-slate-400 text-slate-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'overview'
+              ? 'border-slate-400 text-slate-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
           >
             Overview
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === 'history'
-                ? 'border-slate-400 text-slate-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'history'
+              ? 'border-slate-400 text-slate-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
           >
             Medical History
           </button>
           <button
             onClick={() => setActiveTab('prescriptions')}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === 'prescriptions'
-                ? 'border-slate-400 text-slate-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'prescriptions'
+              ? 'border-slate-400 text-slate-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
           >
             Prescriptions
           </button>
@@ -218,8 +258,56 @@ export default function PatientDetailsPage() {
               {/* Current Consultation */}
               <div className="bg-white rounded-xl border border-gray-200 p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Current Consultation</h2>
-                
+
                 <div className="space-y-4">
+                  {/* Vitals Input */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">BP</label>
+                      <input
+                        type="text"
+                        value={vitals.bp}
+                        onChange={(e) => setVitals({ ...vitals, bp: e.target.value })}
+                        disabled={!isEditing}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50"
+                        placeholder="120/80"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Temp (°F)</label>
+                      <input
+                        type="text"
+                        value={vitals.temp}
+                        onChange={(e) => setVitals({ ...vitals, temp: e.target.value })}
+                        disabled={!isEditing}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50"
+                        placeholder="98.6"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Pulse</label>
+                      <input
+                        type="text"
+                        value={vitals.pulse}
+                        onChange={(e) => setVitals({ ...vitals, pulse: e.target.value })}
+                        disabled={!isEditing}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50"
+                        placeholder="72"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                      <input
+                        type="text"
+                        value={vitals.weight}
+                        onChange={(e) => setVitals({ ...vitals, weight: e.target.value })}
+                        disabled={!isEditing}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50"
+                        placeholder="70"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Diagnosis</label>
                     <textarea
@@ -262,7 +350,7 @@ export default function PatientDetailsPage() {
 
           {activeTab === 'history' && (
             <div className="space-y-4">
-              {medicalHistory.map((record) => (
+              {patient.medicalHistory.map((record: any) => (
                 <div key={record.id} className="bg-white rounded-xl border border-gray-200 p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div>
@@ -275,32 +363,32 @@ export default function PatientDetailsPage() {
                   <div className="grid grid-cols-4 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="text-xs text-gray-600">BP</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals.bp}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.bp || 'N/A'}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Temp</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals.temp}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.temp || 'N/A'}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Pulse</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals.pulse}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.pulse || 'N/A'}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Weight</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals.weight}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.weight || 'N/A'}</p>
                     </div>
                   </div>
 
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-700 mb-1">Notes:</p>
-                    <p className="text-sm text-gray-600">{record.notes}</p>
+                    <p className="text-sm text-gray-600">{record.consultationNotes}</p>
                   </div>
 
-                  {record.prescriptions.length > 0 && (
+                  {record.prescriptions && record.prescriptions.length > 0 && (
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-2">Prescriptions:</p>
                       <div className="space-y-2">
-                        {record.prescriptions.map((rx, index) => (
+                        {record.prescriptions.map((rx: any, index: number) => (
                           <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                             <div>
                               <p className="text-sm font-medium text-gray-900">{rx.medicine}</p>
@@ -356,7 +444,7 @@ export default function PatientDetailsPage() {
           {/* Patient Details */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Patient Details</h3>
-            
+
             <div className="space-y-3 text-sm">
               <div>
                 <p className="text-gray-600">Email</p>
@@ -414,7 +502,7 @@ export default function PatientDetailsPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Add Prescription</h2>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Medicine Name *</label>

@@ -61,6 +61,9 @@ export default function OPDSessionManagement() {
   const [todaySessions, setTodaySessions] = useState<Session[]>([]);
   const [scheduledSessions, setScheduledSessions] = useState<Session[]>([]);
   const [rooms, setRooms] = useState<string[]>([]);
+  const [selectedSessionPatients, setSelectedSessionPatients] = useState<any[]>([]);
+  const [viewingPatientsFor, setViewingPatientsFor] = useState<string | null>(null);
+  const [loadingPatients, setLoadingPatients] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -243,7 +246,16 @@ export default function OPDSessionManagement() {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          date: formData.date,
+          startTime: '08:00',
+          endTime: '12:00',
+          department: 'General Consultation',
+          doctorName: 'Pending Assignment',
+          room: 'Not Assigned',
+          maxQueueSize: formData.totalSlots,
+          slotDuration: formData.slotDuration
+        }),
       });
 
       if (!response.ok) {
@@ -358,6 +370,32 @@ export default function OPDSessionManagement() {
     } catch (err: any) {
       console.error('Error cancelling session:', err);
       alert(err.message || 'Failed to cancel session');
+    }
+  };
+
+  const fetchSessionPatients = async (sessionId: string) => {
+    setLoadingPatients(true);
+    setViewingPatientsFor(sessionId);
+    try {
+      const token = getAuthToken();
+      const response = await fetch(`http://localhost:8080/api/admin/sessions/${sessionId}/patients`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch patients');
+      }
+
+      const data = await response.json();
+      setSelectedSessionPatients(data);
+    } catch (err) {
+      console.error('Error fetching patients:', err);
+      setError('Failed to load patient list');
+    } finally {
+      setLoadingPatients(false);
     }
   };
 
@@ -529,9 +567,54 @@ export default function OPDSessionManagement() {
                               </p>
                             </div>
                           </div>
-                          <div className="mt-2">
-                            <p className="text-xs text-gray-600">Department: {session.department}</p>
+                          <div className="mt-4 flex gap-3">
+                            <button
+                              onClick={() => fetchSessionPatients(session.id)}
+                              className="px-4 py-1.5 text-sm font-medium text-[#94B4C1] border border-[#94B4C1] rounded-lg hover:bg-[#94B4C1] hover:text-white transition-colors"
+                            >
+                              View Patients
+                            </button>
+                            {session.status === 'OPEN' && (
+                              <button
+                                onClick={() => handleCancelSession(session.id)}
+                                className="px-4 py-1.5 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
+                              >
+                                Cancel Session
+                              </button>
+                            )}
                           </div>
+
+                          {/* Patient List Section */}
+                          {viewingPatientsFor === session.id && (
+                            <div className="mt-4 pt-4 border-t border-gray-100">
+                              <h4 className="text-sm font-bold text-gray-900 mb-3">Patient List</h4>
+                              {loadingPatients ? (
+                                <p className="text-sm text-gray-600">Loading patients...</p>
+                              ) : selectedSessionPatients.length === 0 ? (
+                                <p className="text-sm text-gray-500 italic">No patients booked yet.</p>
+                              ) : (
+                                <div className="space-y-2">
+                                  {selectedSessionPatients.map((apt) => (
+                                    <div key={apt.id} className="flex items-center justify-between p-2 bg-white rounded border border-gray-100 text-sm">
+                                      <div className="flex items-center gap-3">
+                                        <span className="w-6 h-6 flex items-center justify-center bg-[#94B4C1]/20 text-[#94B4C1] rounded-full text-xs font-bold">
+                                          {apt.queueNumber}
+                                        </span>
+                                        <span className="font-medium text-gray-900">{apt.patientName || 'Patient'}</span>
+                                        <span className="text-gray-500 text-xs">{apt.patientEmail}</span>
+                                      </div>
+                                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${apt.status === 'BOOKED' ? 'bg-blue-100 text-blue-700' :
+                                        apt.status === 'COMPLETED' ? 'bg-green-100 text-green-700' :
+                                          'bg-gray-100 text-gray-700'
+                                        }`}>
+                                        {apt.status}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -681,22 +764,62 @@ export default function OPDSessionManagement() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        // You can implement edit functionality here
-                        alert('Edit functionality coming soon');
-                      }}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] text-sm font-medium transition-colors"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleCancelSession(session.id)}
-                      className="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 text-sm font-medium"
-                    >
-                      Cancel
-                    </button>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => fetchSessionPatients(session.id)}
+                        className="px-4 py-2 border border-[#94B4C1] text-[#94B4C1] rounded-lg hover:bg-[#94B4C1] hover:text-white text-sm font-medium transition-colors"
+                      >
+                        View Patients
+                      </button>
+                      <button
+                        onClick={() => {
+                          // You can implement edit functionality here
+                          alert('Edit functionality coming soon');
+                        }}
+                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] text-sm font-medium transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleCancelSession(session.id)}
+                        className="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 text-sm font-medium"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+
+                    {/* Patient List Section */}
+                    {viewingPatientsFor === session.id && (
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <h4 className="text-sm font-bold text-gray-900 mb-3">Patient List</h4>
+                        {loadingPatients ? (
+                          <p className="text-sm text-gray-600">Loading patients...</p>
+                        ) : selectedSessionPatients.length === 0 ? (
+                          <p className="text-sm text-gray-500 italic">No patients booked yet.</p>
+                        ) : (
+                          <div className="space-y-2">
+                            {selectedSessionPatients.map((apt) => (
+                              <div key={apt.id} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100 text-sm">
+                                <div className="flex items-center gap-3">
+                                  <span className="w-6 h-6 flex items-center justify-center bg-[#94B4C1]/20 text-[#94B4C1] rounded-full text-xs font-bold">
+                                    {apt.queueNumber}
+                                  </span>
+                                  <span className="font-medium text-gray-900">{apt.patientName || 'Patient'}</span>
+                                  <span className="text-gray-500 text-xs">{apt.patientEmail}</span>
+                                </div>
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${apt.status === 'BOOKED' ? 'bg-blue-100 text-blue-700' :
+                                  apt.status === 'COMPLETED' ? 'bg-green-100 text-green-700' :
+                                    'bg-gray-100 text-gray-700'
+                                  }`}>
+                                  {apt.status}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
