@@ -36,14 +36,6 @@ export default function Home() {
                     </svg>
                   </button>
                 </Link>
-                <Link href="/login/admin">
-                  <button className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 px-5 py-2.5 rounded-lg font-medium text-gray-900 transition-colors border border-gray-200 text-sm">
-                    As Admin
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </button>
-                </Link>
               </div>
               <div className="flex gap-2 pt-2">
                 <div className="w-2 h-2 rounded-full bg-gray-400"></div>

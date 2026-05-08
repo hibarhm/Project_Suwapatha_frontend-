@@ -118,6 +118,22 @@ export const authApi = {
         return result;
     },
 
+    loginSuperAdmin: async (data: LoginRequest): Promise<AuthResponse> => {
+        const response = await fetch(authEndpoints.LOGIN, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await handleResponse<AuthResponse>(response);
+
+        if (result.role !== 'SUPER_ADMIN') {
+            throw new Error('Unauthorized: Access restricted to super administrators.');
+        }
+
+        persistAuth(result);
+        return result;
+    },
+
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
