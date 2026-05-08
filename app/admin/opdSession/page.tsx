@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/app/components/adminLayout';
 import CreateSessionModal from '@/app/components/CreateSessionModal';
+import { adminApi, DoctorAvailability } from '@/app/api/admin/adminApi';
 import API_BASE_URL from '@/app/api/api';
 
 interface HospitalInfo {
@@ -61,9 +62,11 @@ export default function OPDSessionManagement() {
   const [todaySessions, setTodaySessions] = useState<Session[]>([]);
   const [scheduledSessions, setScheduledSessions] = useState<Session[]>([]);
   const [rooms, setRooms] = useState<string[]>([]);
+  const [availableDoctors, setAvailableDoctors] = useState<DoctorAvailability[]>([]);
   const [selectedSessionPatients, setSelectedSessionPatients] = useState<any[]>([]);
   const [viewingPatientsFor, setViewingPatientsFor] = useState<string | null>(null);
   const [loadingPatients, setLoadingPatients] = useState(false);
+  const [allocatingSessionId, setAllocatingSessionId] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -94,7 +97,8 @@ export default function OPDSessionManagement() {
       await Promise.all([
         fetchHospitalInfo(),
         fetchRooms(),
-        fetchTodayData()
+        fetchTodayData(),
+        fetchAvailableDoctors()
       ]);
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -113,7 +117,7 @@ export default function OPDSessionManagement() {
         return;
       }
 
-      const response = await fetch('http://localhost:8080/api/admin/hospital-info', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/hospital-info`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -141,7 +145,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/stats/today', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/stats/today`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -163,7 +167,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/sessions/today', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/today`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -185,7 +189,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/sessions/upcoming', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/upcoming`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -207,7 +211,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/rooms', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/rooms`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -222,6 +226,38 @@ export default function OPDSessionManagement() {
       setRooms(data);
     } catch (err) {
       console.error('Error fetching rooms:', err);
+    }
+  };
+
+  const fetchAvailableDoctors = async () => {
+    try {
+      const data = await adminApi.getAvailableDoctorsToday();
+      setAvailableDoctors(data);
+    } catch (err) {
+      console.error('Error fetching available doctors:', err);
+    }
+  };
+
+  const handleUpdateDoctorRoom = async (availabilityId: string, room: string) => {
+    try {
+      await adminApi.assignDoctorRoom(availabilityId, room);
+      await fetchAvailableDoctors();
+      alert('Room assigned to doctor successfully!');
+    } catch (err: any) {
+      alert(err.message || 'Failed to assign room');
+    }
+  };
+
+  const handleAllocatePatients = async (sessionId: string) => {
+    setAllocatingSessionId(sessionId);
+    try {
+      await adminApi.allocatePatients(sessionId);
+      await fetchTodaySessions();
+      alert('Patients allocated successfully!');
+    } catch (err: any) {
+      alert(err.message || 'Failed to allocate patients');
+    } finally {
+      setAllocatingSessionId(null);
     }
   };
 
@@ -240,7 +276,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/sessions', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/sessions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -286,7 +322,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch(`http://localhost:8080/api/admin/sessions/${sessionId}/assign-room`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/sessions/${sessionId}/assign-room`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -314,7 +350,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch(`http://localhost:8080/api/admin/sessions/${sessionId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/sessions/${sessionId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -346,7 +382,7 @@ export default function OPDSessionManagement() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch(`http://localhost:8080/api/admin/sessions/${sessionId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/sessions/${sessionId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -378,7 +414,7 @@ export default function OPDSessionManagement() {
     setViewingPatientsFor(sessionId);
     try {
       const token = getAuthToken();
-      const response = await fetch(`http://localhost:8080/api/admin/sessions/${sessionId}/patients`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/sessions/${sessionId}/patients`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -490,6 +526,65 @@ export default function OPDSessionManagement() {
         </nav>
       </div>
 
+      {/* Room Assignment for Doctors */}
+      {activeTab === 'today' && (
+        <div className="mb-8 bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-gray-900">Today's Available Doctors</h2>
+            <button
+              onClick={fetchAvailableDoctors}
+              className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
+            >
+              Refresh Doctors
+            </button>
+          </div>
+          <p className="text-sm text-gray-600 mb-6">Assign rooms to doctors who are active today. Patients will be distributed among doctors with assigned rooms.</p>
+
+          {availableDoctors.length === 0 ? (
+            <div className="text-center py-6 bg-gray-50 rounded-lg">
+              <p className="text-gray-500 italic">No doctors have marked themselves as available for today yet.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {availableDoctors.map((doc) => (
+                <div key={doc.id} className="border border-gray-100 rounded-lg p-4 bg-gray-50/50 flex flex-col justify-between">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-[#94B4C1]/20 rounded-full flex items-center justify-center text-[#94B4C1] font-bold">
+                      {doc.doctorName.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">{doc.doctorName}</h4>
+                      <p className="text-xs text-gray-500 truncate max-w-[150px]">{doc.email}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-2">
+                    <label className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">Assigned Room</label>
+                    <div className="flex gap-2">
+                      <select
+                        value={doc.room || ''}
+                        onChange={(e) => handleUpdateDoctorRoom(doc.id, e.target.value)}
+                        className="flex-1 text-sm border border-gray-200 rounded px-2 py-1.5 focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
+                      >
+                        <option value="">Not Assigned</option>
+                        {rooms.map(room => (
+                          <option key={room} value={room}>{room}</option>
+                        ))}
+                      </select>
+                      {doc.room && (
+                        <span className="flex items-center justify-center px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* TODAY'S SESSIONS TAB */}
       {activeTab === 'today' && (
         <div className="grid lg:grid-cols-3 gap-6">
@@ -567,13 +662,32 @@ export default function OPDSessionManagement() {
                               </p>
                             </div>
                           </div>
-                          <div className="mt-4 flex gap-3">
+                          <div className="mt-4 flex flex-wrap gap-2">
                             <button
                               onClick={() => fetchSessionPatients(session.id)}
                               className="px-4 py-1.5 text-sm font-medium text-[#94B4C1] border border-[#94B4C1] rounded-lg hover:bg-[#94B4C1] hover:text-white transition-colors"
                             >
                               View Patients
                             </button>
+
+                            {session.status === 'OPEN' && session.currentQueueCount > 0 && (
+                              <button
+                                onClick={() => handleAllocatePatients(session.id)}
+                                disabled={allocatingSessionId === session.id}
+                                className={`px-4 py-1.5 text-sm font-medium text-white rounded-lg transition-colors flex items-center gap-2 ${allocatingSessionId === session.id ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                                  }`}
+                              >
+                                {allocatingSessionId === session.id ? (
+                                  <>
+                                    <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                    Allocating...
+                                  </>
+                                ) : (
+                                  'Allocate Patients'
+                                )}
+                              </button>
+                            )}
+
                             {session.status === 'OPEN' && (
                               <button
                                 onClick={() => handleCancelSession(session.id)}

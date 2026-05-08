@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import PatientLayout from '@/app/components/patientLayout';
 import { appointmentApi } from '@/app/api/appointment/appointmentApi';
@@ -10,6 +10,7 @@ import {
 } from '@/app/api/appointment/appointmentTypes';
 
 /* ── helpers ──────────────────────────────────────────────────────────────── */
+
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
     BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
@@ -30,6 +31,48 @@ function Spinner() {
       <div className="w-8 h-8 border-4 border-[#94B4C1] border-t-transparent rounded-full animate-spin" />
     </div>
   );
+}
+
+/**
+ * Computes the estimated UTC appointment time from session start + wait offset.
+ *
+ * sessionDate:      "yyyy-MM-dd"
+ * sessionStartTime: "HH:mm"
+ * estimatedWaitMinutes: number
+ *
+ * Returns a string like "14:30 UTC" (or null if inputs are invalid).
+ */
+function computeUtcAppointmentTime(
+  sessionDate: string,
+  sessionStartTime: string,
+  estimatedWaitMinutes: number,
+): string | null {
+  if (!sessionDate || !sessionStartTime) return null;
+  try {
+    // Parse as UTC: combine date + start time, then add wait minutes
+    const [h, m] = sessionStartTime.split(':').map(Number);
+    const base = new Date(`${sessionDate}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00Z`);
+    base.setUTCMinutes(base.getUTCMinutes() + estimatedWaitMinutes);
+    const hh = String(base.getUTCHours()).padStart(2, '0');
+    const mm = String(base.getUTCMinutes()).padStart(2, '0');
+    return `${hh}:${mm} UTC`;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Returns a Date object for the session start time in UTC,
+ * used to schedule the 10-minute alert.
+ */
+function getSessionStartUtc(sessionDate: string, sessionStartTime: string): Date | null {
+  if (!sessionDate || !sessionStartTime) return null;
+  try {
+    const [h, m] = sessionStartTime.split(':').map(Number);
+    return new Date(`${sessionDate}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00Z`);
+  } catch {
+    return null;
+  }
 }
 
 /* ── main component ───────────────────────────────────────────────────────── */
@@ -60,9 +103,11 @@ export default function AppointmentBookingPage() {
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
+  // ── ref: 10-min alert timer ────────────────────────────────────────────
+  const alertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   /* ── data fetching ──────────────────────────────────────────────────────── */
 
-  // Load active appointment + history on mount
   const refreshAppointments = useCallback(async () => {
     setLoadingActive(true);
     setLoadingHistory(true);
@@ -81,7 +126,12 @@ export default function AppointmentBookingPage() {
     }
   }, []);
 
-  useEffect(() => { refreshAppointments(); }, [refreshAppointments]);
+  // Load on mount + refresh every 60 s to keep queue live
+  useEffect(() => {
+    refreshAppointments();
+    const interval = setInterval(refreshAppointments, 60_000);
+    return () => clearInterval(interval);
+  }, [refreshAppointments]);
 
   // Hospital search with 400 ms debounce
   useEffect(() => {
@@ -108,6 +158,66 @@ export default function AppointmentBookingPage() {
       .finally(() => setLoadingSessions(false));
   }, [selectedHospital]);
 
+  /* ── 10-minute pre-appointment alert ──────────────────────────────────── */
+  useEffect(() => {
+    // Clear any existing timer whenever activeAppt changes
+    if (alertTimerRef.current) {
+      clearTimeout(alertTimerRef.current);
+      alertTimerRef.current = null;
+    }
+
+    if (!activeAppt || activeAppt.status !== 'BOOKED') return;
+
+    const sessionStart = getSessionStartUtc(
+      activeAppt.appointmentDate,
+      activeAppt.sessionStartTime,
+    );
+    if (!sessionStart) return;
+
+    // Fire the alert 10 minutes before session start
+    const alertAt = new Date(sessionStart.getTime() - 10 * 60 * 1000);
+    const msUntilAlert = alertAt.getTime() - Date.now();
+
+    if (msUntilAlert <= 0) return; // already past
+
+    alertTimerRef.current = setTimeout(async () => {
+      const msg = `⏰ Reminder: Your appointment at ${activeAppt.hospitalName} starts in 10 minutes!`;
+
+      if (typeof window !== 'undefined' && 'Notification' in window) {
+        if (Notification.permission === 'granted') {
+          new Notification('Appointment Reminder', { body: msg, icon: '/favicon.ico' });
+        } else if (Notification.permission !== 'denied') {
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            new Notification('Appointment Reminder', { body: msg, icon: '/favicon.ico' });
+          } else {
+            alert(msg);
+          }
+        } else {
+          alert(msg);
+        }
+      } else {
+        alert(msg);
+      }
+    }, msUntilAlert);
+
+    return () => {
+      if (alertTimerRef.current) clearTimeout(alertTimerRef.current);
+    };
+  }, [activeAppt]);
+
+  // Request notification permission proactively when a BOOKED appointment exists
+  useEffect(() => {
+    if (
+      activeAppt?.status === 'BOOKED' &&
+      typeof window !== 'undefined' &&
+      'Notification' in window &&
+      Notification.permission === 'default'
+    ) {
+      Notification.requestPermission();
+    }
+  }, [activeAppt]);
+
   /* ── actions ─────────────────────────────────────────────────────────────── */
 
   const handleBook = async (sessionId: string) => {
@@ -117,7 +227,6 @@ export default function AppointmentBookingPage() {
     try {
       await appointmentApi.book({ sessionId });
       setBookSuccess('Booked! Your queue number has been assigned.');
-      // Refresh queue card, history, and sessions list
       await Promise.all([
         refreshAppointments(),
         selectedHospital
@@ -147,6 +256,18 @@ export default function AppointmentBookingPage() {
     localStorage.removeItem('token');
     router.push('/');
   };
+
+  /* ── derived display values ───────────────────────────────────────────── */
+
+  const isNextInQueue = activeAppt && activeAppt.estimatedWaitMinutes === 0;
+
+  const utcAppointmentTime = activeAppt
+    ? computeUtcAppointmentTime(
+      activeAppt.appointmentDate,
+      activeAppt.sessionStartTime,
+      activeAppt.estimatedWaitMinutes,
+    )
+    : null;
 
   /* ── render ──────────────────────────────────────────────────────────────── */
   return (
@@ -338,15 +459,25 @@ export default function AppointmentBookingPage() {
                   <div className="text-center mb-6">
                     <p className="text-sm text-gray-600 mb-2">Your Queue Number</p>
                     <p className="text-6xl font-bold text-[#94B4C1]">{activeAppt.queueNumber}</p>
+
+                    {/* "You're next!" badge — only shown for the immediately next patient */}
+                    {isNextInQueue && (
+                      <div className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5
+                        bg-green-100 text-green-700 rounded-full text-sm font-semibold animate-pulse">
+                        <span className="w-2 h-2 bg-green-500 rounded-full" />
+                        You&apos;re next!
+                      </div>
+                    )}
                   </div>
+
                   <div className="grid md:grid-cols-2 gap-6">
                     {[
                       {
                         icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-                        label: 'Estimated Wait',
-                        value: activeAppt.estimatedWaitMinutes > 0
-                          ? `${activeAppt.estimatedWaitMinutes} min`
-                          : "You're next!",
+                        label: 'Est. Appointment (UTC)',
+                        value: isNextInQueue
+                          ? "You're next — please proceed!"
+                          : (utcAppointmentTime ?? `${activeAppt.estimatedWaitMinutes} min`),
                       },
                       {
                         icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
@@ -452,7 +583,8 @@ export default function AppointmentBookingPage() {
           <div className="bg-[#94B4C1]/5 rounded-xl border border-[#94B4C1]/20 p-5">
             <h3 className="text-sm font-bold text-[#94B4C1] mb-3">💡 Tips</h3>
             <ul className="space-y-2 text-xs text-gray-600">
-              <li>• Arrive 10 minutes before your estimated wait time ends</li>
+              <li>• Times shown in UTC — convert to your local time as needed</li>
+              <li>• You&apos;ll receive a browser alert 10 minutes before your session</li>
               <li>• Bring your National ID card and any previous prescriptions</li>
               <li>• Cancel at least 1 hour before if you cannot attend</li>
               <li>• Sessions may have limited slots — book early</li>

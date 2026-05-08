@@ -2,6 +2,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import DoctorSidebar from './doctorSidebar';
+import API_BASE_URL from '@/app/api/api';
 
 interface DoctorLayoutProps {
   children: ReactNode;
@@ -36,13 +37,13 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
   const fetchProfile = async () => {
     try {
       const token = getAuthToken();
-      
+
       if (!token) {
         router.push('/login');
         return;
       }
 
-      const response = await fetch('http://localhost:8080/api/users/me', {
+      const response = await fetch(`${API_BASE_URL}/api/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -69,8 +70,8 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
   const fetchNotificationCount = async () => {
     try {
       const token = getAuthToken();
-      
-      const response = await fetch('http://localhost:8080/api/doctor/notifications/unread-count', {
+
+      const response = await fetch(`${API_BASE_URL}/api/doctor/notifications/unread-count`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -121,7 +122,7 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
   return (
     <div className="flex h-screen bg-gray-50">
       <DoctorSidebar sidebarOpen={sidebarOpen} onLogout={handleLogout} />
-      
+
       <main className="flex-1 overflow-auto">
         {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
@@ -136,7 +137,7 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
 
           <div className="flex items-center gap-4">
             {/* Notification Bell */}
-            <button 
+            <button
               onClick={() => router.push('/doctor/notifications')}
               className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
               title="View notifications"

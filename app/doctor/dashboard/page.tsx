@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import DoctorLayout from '@/app/components/doctorLayout';
+import { doctorApi, DoctorAvailability } from '@/app/api/doctor/doctorApi';
+import API_BASE_URL from '@/app/api/api';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface DashboardStats {
@@ -49,7 +51,7 @@ export default function DoctorDashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // State for real data
   const [profile, setProfile] = useState<DoctorProfile | null>(null);
   const [stats, setStats] = useState<DashboardStats>({
@@ -63,6 +65,8 @@ export default function DoctorDashboard() {
   const [upcomingAppointments, setUpcomingAppointments] = useState<Appointment[]>([]);
   const [todayAppointments, setTodayAppointments] = useState<Appointment[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [availability, setAvailability] = useState<DoctorAvailability | null>(null);
+  const [isToggling, setIsToggling] = useState(false);
 
   useEffect(() => {
     fetchAllData();
@@ -95,7 +99,8 @@ export default function DoctorDashboard() {
         fetchProfile(),
         fetchTodayAppointments(),
         fetchUpcomingAppointments(),
-        fetchNotifications()
+        fetchNotifications(),
+        fetchAvailability()
       ]);
     } catch (err: any) {
       console.error('Error fetching dashboard data:', err);
@@ -108,8 +113,8 @@ export default function DoctorDashboard() {
   const fetchProfile = async () => {
     try {
       const token = getAuthToken();
-      
-      const response = await fetch('http://localhost:8080/api/users/me', {
+
+      const response = await fetch(`${API_BASE_URL}/api/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -136,8 +141,8 @@ export default function DoctorDashboard() {
   const fetchTodayAppointments = async () => {
     try {
       const token = getAuthToken();
-      
-      const response = await fetch('http://localhost:8080/api/doctor/appointments/today', {
+
+      const response = await fetch(`${API_BASE_URL}/api/doctor/appointments/today`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -152,7 +157,7 @@ export default function DoctorDashboard() {
 
       const data = await response.json();
       setTodayAppointments(data);
-      
+
       // Calculate stats from appointments
       calculateStats(data);
     } catch (err) {
@@ -164,8 +169,8 @@ export default function DoctorDashboard() {
   const fetchUpcomingAppointments = async () => {
     try {
       const token = getAuthToken();
-      
-      const response = await fetch('http://localhost:8080/api/doctor/appointments/upcoming', {
+
+      const response = await fetch(`${API_BASE_URL}/api/doctor/appointments/upcoming`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -189,8 +194,8 @@ export default function DoctorDashboard() {
   const fetchNotifications = async () => {
     try {
       const token = getAuthToken();
-      
-      const response = await fetch('http://localhost:8080/api/doctor/notifications', {
+
+      const response = await fetch(`${API_BASE_URL}/api/doctor/notifications`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -211,11 +216,36 @@ export default function DoctorDashboard() {
     }
   };
 
+  const fetchAvailability = async () => {
+    try {
+      const data = await doctorApi.getAvailabilityToday();
+      setAvailability(data);
+    } catch (err) {
+      console.error('Error fetching availability:', err);
+    }
+  };
+
+  const toggleAvailability = async () => {
+    if (!availability || isToggling) return;
+
+    setIsToggling(true);
+    try {
+      const newStatus = !availability.available;
+      const data = await doctorApi.setAvailabilityToday(newStatus, '');
+      setAvailability(data);
+    } catch (err) {
+      console.error('Error toggling availability:', err);
+      alert('Failed to update availability status.');
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
   const markNotificationAsRead = async (notificationId: string) => {
     try {
       const token = getAuthToken();
-      
-      await fetch(`http://localhost:8080/api/doctor/notifications/${notificationId}/read`, {
+
+      await fetch(`${API_BASE_URL}/api/doctor/notifications/${notificationId}/read`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -224,7 +254,7 @@ export default function DoctorDashboard() {
       });
 
       // Update local state
-      setNotifications(notifications.map(n => 
+      setNotifications(notifications.map(n =>
         n.id === notificationId ? { ...n, read: true } : n
       ));
     } catch (err) {
@@ -235,8 +265,8 @@ export default function DoctorDashboard() {
   const deleteNotification = async (notificationId: string) => {
     try {
       const token = getAuthToken();
-      
-      await fetch(`http://localhost:8080/api/doctor/notifications/${notificationId}`, {
+
+      await fetch(`${API_BASE_URL}/api/doctor/notifications/${notificationId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -253,7 +283,7 @@ export default function DoctorDashboard() {
 
   const calculateStats = (appointments: Appointment[]) => {
     const totalToday = appointments.length;
-    const avgWait = appointments.length > 0 
+    const avgWait = appointments.length > 0
       ? Math.round(appointments.reduce((sum, apt) => sum + apt.estimatedWaitMinutes, 0) / appointments.length)
       : 0;
 
@@ -367,6 +397,39 @@ export default function DoctorDashboard() {
           <p className="text-gray-600 mt-1">Here's what's happening with your patients today.</p>
         </div>
 
+        {/* Availability Toggle */}
+        <div className="mb-8 bg-white rounded-xl border border-[#94B4C1]/30 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className={`p-3 rounded-full ${availability?.available ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Today's Attendance</h2>
+              <p className="text-sm text-gray-600">
+                {availability?.available
+                  ? "You are marked as ACTIVE for today's OPD session."
+                  : "Mark yourself active to let the admin know you're here."}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={toggleAvailability}
+            disabled={isToggling}
+            className={`px-6 py-2.5 rounded-lg font-bold transition-all flex items-center gap-2 ${availability?.available
+              ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              : 'bg-[#94B4C1] text-white hover:bg-[#7fa8b8] shadow-md shadow-[#94B4C1]/20'
+              }`}
+          >
+            {isToggling ? (
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+            ) : null}
+            {availability?.available ? 'Mark as Out (End Session)' : 'Mark as Available'}
+          </button>
+        </div>
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Total Patients Today */}
@@ -418,7 +481,7 @@ export default function DoctorDashboard() {
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Patient Visits Over Time</h3>
-              <button 
+              <button
                 onClick={fetchAllData}
                 className="px-3 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors"
               >
@@ -458,7 +521,7 @@ export default function DoctorDashboard() {
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Consultations by Day</h3>
-              <button 
+              <button
                 onClick={fetchAllData}
                 className="px-3 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors"
               >
@@ -488,7 +551,7 @@ export default function DoctorDashboard() {
           <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Today's Appointments</h3>
-              <button 
+              <button
                 onClick={fetchTodayAppointments}
                 className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
               >
@@ -521,13 +584,12 @@ export default function DoctorDashboard() {
                         <td className="py-4 px-3 text-sm text-gray-900">#{appointment.queueNumber}</td>
                         <td className="py-4 px-3 text-sm text-gray-600">{appointment.hospitalName}</td>
                         <td className="py-4 px-3">
-                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                            appointment.status === 'BOOKED' 
-                              ? 'bg-blue-100 text-blue-800'
-                              : appointment.status === 'COMPLETED'
+                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${appointment.status === 'BOOKED'
+                            ? 'bg-blue-100 text-blue-800'
+                            : appointment.status === 'COMPLETED'
                               ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-800'
-                          }`}>
+                            }`}>
                             {appointment.status}
                           </span>
                         </td>
@@ -543,7 +605,7 @@ export default function DoctorDashboard() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
                             </button>
-                            <button 
+                            <button
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
                               title="View Details"
                             >
@@ -577,7 +639,7 @@ export default function DoctorDashboard() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Notifications</h3>
               {notifications.length > 0 && (
-                <button 
+                <button
                   onClick={fetchNotifications}
                   className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                 >
@@ -585,25 +647,23 @@ export default function DoctorDashboard() {
                 </button>
               )}
             </div>
-            
+
             <div className="space-y-3">
               {notifications.length > 0 ? (
                 notifications.map((notification) => (
-                  <div 
-                    key={notification.id} 
-                    className={`flex gap-3 p-3 rounded-lg border transition-colors ${
-                      notification.read 
-                        ? 'border-gray-100 bg-gray-50' 
-                        : 'border-[#94B4C1]/20 bg-[#94B4C1]/5'
-                    }`}
+                  <div
+                    key={notification.id}
+                    className={`flex gap-3 p-3 rounded-lg border transition-colors ${notification.read
+                      ? 'border-gray-100 bg-gray-50'
+                      : 'border-[#94B4C1]/20 bg-[#94B4C1]/5'
+                      }`}
                   >
-                    <div className={`w-8 h-8 rounded flex items-center justify-center flex-shrink-0 ${
-                      notification.type === 'appointment' 
-                        ? 'bg-[#94B4C1]/10' 
-                        : notification.type === 'message'
+                    <div className={`w-8 h-8 rounded flex items-center justify-center flex-shrink-0 ${notification.type === 'appointment'
+                      ? 'bg-[#94B4C1]/10'
+                      : notification.type === 'message'
                         ? 'bg-blue-100'
                         : 'bg-amber-100'
-                    }`}>
+                      }`}>
                       {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -615,7 +675,7 @@ export default function DoctorDashboard() {
                         {new Date(notification.createdAt).toLocaleString()}
                       </p>
                     </div>
-                    <button 
+                    <button
                       onClick={() => deleteNotification(notification.id)}
                       className="p-1 hover:bg-gray-200 rounded flex-shrink-0 h-6"
                     >

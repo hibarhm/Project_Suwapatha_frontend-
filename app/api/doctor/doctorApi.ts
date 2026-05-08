@@ -33,6 +33,17 @@ export interface DoctorDashboardData {
     }>;
 }
 
+export interface DoctorAvailability {
+    id: string;
+    doctorId: string;
+    doctorName: string;
+    email: string;
+    date: string;
+    available: boolean;
+    note: string;
+    updatedAt: string | null;
+}
+
 export interface DoctorPatient {
     id: string;
     queueNo: string;
@@ -195,5 +206,41 @@ export const doctorApi = {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.message || `Failed to save consultation (Status: ${response.status})`);
         }
+    },
+
+    getAvailabilityToday: async (): Promise<DoctorAvailability> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        if (!token) throw new Error('Authentication token not found.');
+
+        const response = await fetch(`${API_BASE_URL}/api/doctor/availability/today`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch availability status');
+        }
+        return response.json();
+    },
+
+    setAvailabilityToday: async (available: boolean, note: string = ''): Promise<DoctorAvailability> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        if (!token) throw new Error('Authentication token not found.');
+
+        const response = await fetch(`${API_BASE_URL}/api/doctor/availability/today`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ available, note }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update availability status');
+        }
+        return response.json();
     },
 };

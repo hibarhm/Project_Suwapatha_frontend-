@@ -35,6 +35,8 @@ export interface AppointmentResponse {
     room: string;
     status: string;       // BOOKED | CANCELLED | COMPLETED
     estimatedWaitMinutes: number;
+    sessionStartTime: string; // HH:mm, session start time from OpdSession
+    slotDuration: number;     // minutes per slot
     createdAt: string;
 }
 

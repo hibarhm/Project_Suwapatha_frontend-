@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/app/components/adminLayout';
 import API_BASE_URL from '@/app/api/api';
+import { adminApi, DoctorAvailability } from '@/app/api/admin/adminApi';
+import CreateSessionModal from '@/app/components/CreateSessionModal';
 
 interface HospitalInfo {
   id: string;
@@ -63,7 +65,16 @@ export default function AdminDashboard() {
   });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [todaySessions, setTodaySessions] = useState<Session[]>([]);
+  const [availableDoctors, setAvailableDoctors] = useState<DoctorAvailability[]>([]);
   const [alerts, setAlerts] = useState<any[]>([]);
+
+  // Create Session Modal state
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [sessionFormData, setSessionFormData] = useState({
+    date: '',
+    totalSlots: 30,
+    slotDuration: 15,
+  });
 
   useEffect(() => {
     fetchAllData();
@@ -80,7 +91,8 @@ export default function AdminDashboard() {
         fetchHospitalInfo(),
         fetchTodayStats(),
         fetchDoctors(),
-        fetchTodaySessions()
+        fetchTodaySessions(),
+        fetchAvailableDoctors()
       ]);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
@@ -127,7 +139,7 @@ export default function AdminDashboard() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/stats/today', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/stats/today`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -149,7 +161,7 @@ export default function AdminDashboard() {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/doctors', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/doctors`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -167,11 +179,20 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchAvailableDoctors = async () => {
+    try {
+      const data = await adminApi.getAvailableDoctorsToday();
+      setAvailableDoctors(data);
+    } catch (err) {
+      console.error('Error fetching available doctors:', err);
+    }
+  };
+
   const fetchTodaySessions = async () => {
     try {
       const token = getAuthToken();
 
-      const response = await fetch('http://localhost:8080/api/admin/opd/sessions/today', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/today`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -266,7 +287,26 @@ export default function AdminDashboard() {
   };
 
   const handleCreateSession = () => {
-    router.push('/admin/opd-management');
+    setShowCreateModal(true);
+  };
+
+  const handleCreateSessionSubmit = async () => {
+    try {
+      await adminApi.createSession({
+        date: sessionFormData.date,
+        startTime: '08:00',
+        endTime: '12:00',
+        department: 'General',
+        maxQueueSize: sessionFormData.totalSlots,
+        slotDuration: sessionFormData.slotDuration,
+      });
+      setShowCreateModal(false);
+      setSessionFormData({ date: '', totalSlots: 30, slotDuration: 15 });
+      // Refresh dashboard data to show the new session
+      await fetchAllData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to create session');
+    }
   };
 
   const handleViewAllSessions = () => {
@@ -385,15 +425,48 @@ export default function AdminDashboard() {
             {/* Doctor Availability */}
             <div className="bg-white rounded-xl border p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Doctor Availability</h2>
-                <button
-                  onClick={fetchDoctors}
-                  className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
-                >
-                  Refresh
-                </button>
+                <h2 className="text-xl font-bold text-gray-900">Doctor Attendance</h2>
+                <div className="flex gap-2">
+                  <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">
+                    {availableDoctors.length} PRESENT
+                  </span>
+                  <button
+                    onClick={async () => { await fetchDoctors(); await fetchAvailableDoctors(); }}
+                    className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
+                  >
+                    Refresh
+                  </button>
+                </div>
               </div>
 
+              {availableDoctors.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">Available Today</h3>
+                  <div className="space-y-3">
+                    {availableDoctors.map((doc) => (
+                      <div key={doc.id} className="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center text-green-700 font-bold">
+                            {doc.doctorName.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-gray-900">{doc.doctorName}</p>
+                            <p className="text-xs text-gray-600">{doc.email}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => router.push('/admin/opd-management')}
+                          className="text-xs bg-white px-2 py-1 rounded border border-green-200 text-green-700 hover:bg-green-100 font-medium"
+                        >
+                          Allocate
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">All Doctors</h3>
               {doctors.length === 0 ? (
                 <div className="text-center py-8">
                   <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -583,6 +656,15 @@ export default function AdminDashboard() {
           <p className="text-sm text-gray-800">© 2026 Suwapatha. All rights reserved.</p>
         </footer>
       </div>
+
+      {/* Create Session Modal */}
+      <CreateSessionModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        formData={sessionFormData}
+        setFormData={setSessionFormData}
+        onCreate={handleCreateSessionSubmit}
+      />
     </AdminLayout>
   );
 }

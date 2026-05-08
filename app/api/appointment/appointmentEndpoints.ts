@@ -1,4 +1,6 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080';
+import API_BASE_URL from '../api';
+
+const BASE = API_BASE_URL;
 
 export const APPOINTMENT_ENDPOINTS = {
     // Patient — hospitals
