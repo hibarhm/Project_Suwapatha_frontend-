@@ -1,11 +1,27 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import {NextIntlClientProvider} from 'next-intl'
+import {getLocale, getMessages} from 'next-intl/server'
+import {Noto_Sans_Sinhala, Noto_Sans_Tamil, Poppins} from 'next/font/google'
 import './globals.css'
 
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-poppins',
+  display: 'swap',
+})
+
+const sinhala = Noto_Sans_Sinhala({
+  subsets: ['sinhala'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sinhala',
+  display: 'swap',
+})
+
+const tamil = Noto_Sans_Tamil({
+  subsets: ['tamil'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-tamil',
   display: 'swap',
 })
 
@@ -21,15 +37,21 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang={locale} className={`${poppins.variable} ${sinhala.variable} ${tamil.variable}`}>
       <body className={poppins.className}>
-        {children}
+        {/* Translation provider is mounted at the root so existing route groups continue to work. */}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   )

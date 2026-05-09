@@ -1,0 +1,747 @@
+{
+  "common": {
+    "language": "භාෂාව"
+  },
+  "navbar": {
+    "home": "මුල් පිටුව",
+    "about": "අප ගැන",
+    "contact": "සම්බන්ධ වන්න",
+    "getStarted": "ආරම්භ කරන්න"
+  },
+  "home": {
+    "hero": {
+      "title": "නිරවද්‍ය සෞඛ්‍ය සේවාව,",
+      "titleHighlight": "ඔබ වෙනුවෙන් සරලව",
+      "subtitle": "රෝගීන්, වෛද්‍යවරුන් සහ පරිපාලකයින් එකමුතුවක්, කාර්යක්ෂම හා කරුණාවන්ත ඩිජිටල් සෞඛ්‍ය වේදිකාවකින් සම්බන්ධ කරයි.",
+      "asPatient": "රෝගියෙකු ලෙස",
+      "asDoctor": "වෛද්‍යවරයෙකු ලෙස",
+      "doctorsImageAlt": "වෛද්‍යවරු"
+    },
+    "features": {
+      "title": "ඔබ වෙනුවෙන් සැලසුම් කළ ප්‍රධාන විශේෂාංග",
+      "unified": {
+        "title": "එකීය OPD චැනලින්",
+        "description": "විවිධ රෝහල් සඳහා බාහිර රෝගී පත්වීම් පහසුවෙන් වෙන්කර ගැනීමට පද්ධතියක් භාවිතා කරන්න."
+      },
+      "queue": {
+        "title": "සජීවී පෝලිම් තත්ත්වය",
+        "description": "පෝලිම් කාලය සජීවීව දැනගෙන, බලාසිටිම් කාලය අඩු කර පහසුව වැඩි කරන්න."
+      },
+      "care": {
+        "title": "අඛණ්ඩ ප්‍රතිකාර",
+        "description": "ඔබගේ සෞඛ්‍ය වාර්තා ආරක්ෂිතව කළමනාකරණය කර විවිධ වෛද්‍යවරුන් අතර අඛණ්ඩ ප්‍රතිකාරය තහවුරු කරන්න."
+      },
+      "multilingual": {
+        "title": "බහුභාෂා සහය",
+        "description": "සියලු දෙනාටම ප්‍රවේශය ලබාදෙන සෞඛ්‍ය අත්දැකීමක් සඳහා සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවලින් වේදිකාව භාවිතා කරන්න."
+      }
+    },
+    "steps": {
+      "title": "පහසු OPD වෙන්කිරීම සඳහා පියවර 3",
+      "step1": {"label": "පියවර 1", "title": "රෝහල සොයන්න"},
+      "step2": {"label": "පියවර 2", "title": "දිනය තෝරන්න"},
+      "step3": {"label": "පියවර 3", "title": "පෝලිම් අංකය ලබාගන්න"}
+    },
+    "commitment": {
+      "title": "ඔබගේ සුවසනට අපගේ කැපවීම",
+      "government": "රජයේ අනුමැතිය ලැබූ",
+      "secure": "ආරක්ෂිත සහ පුද්ගලික",
+      "accessible": "සියලු දෙනාට ප්‍රවේශමය"
+    },
+    "contact": {
+      "title": "උදව් අවශ්‍යද? අප අමතන්න",
+      "supportText": "අපගේ සහාය කණ්ඩායම 24/7 ඔබට උදව් කිරීමට සූදානම්."
+    },
+    "footer": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "services": "සේවා",
+      "contact": "සම්බන්ධ වන්න",
+      "accessibilityTitle": "ප්‍රවේශතා ප්‍රකාශය",
+      "accessibilityDescription": "සියලු දෙනාට ප්‍රවේශමය මාර්ගගත අත්දැකීමක් ලබාදීමට අප කැපවී සිටිමු.",
+      "learnMore": "තවත් දැනගන්න"
+    }
+  },
+  "login": {
+    "title": "නැවත සාදරයෙන් පිළිගනිමු!",
+    "subtitle": "ඔබගේ Suwapatha ගිණුමට ප්‍රවේශ වීමට පිවිසෙන්න.",
+    "nav": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "contact": "සම්බන්ධ වන්න",
+      "getStarted": "ආරම්භ කරන්න"
+    },
+    "form": {
+      "usernameLabel": "පරිශීලක නාමය / ඊමේල්",
+      "usernamePlaceholder": "ඔබගේ පරිශීලක නාමය හෝ ඊමේල් ඇතුළත් කරන්න",
+      "passwordLabel": "මුරපදය",
+      "passwordPlaceholder": "ඔබගේ මුරපදය ඇතුළත් කරන්න",
+      "rememberMe": "මාව මතක තබා ගන්න",
+      "forgotPassword": "මුරපදය අමතකද?",
+      "locationQuestion": "මගේ ස්ථානය භාවිතා කරන්නද?",
+      "locationHelp": "ස්ථාන අවසරය ආසන්න රෝහල් සොයා ගැනීමට උපකාරී වේ.",
+      "yes": "ඔව්",
+      "no": "නැහැ",
+      "loggingIn": "පිවිසෙමින්...",
+      "login": "පිවිසෙන්න"
+    },
+    "errors": {
+      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+    }
+  },
+  "superAdminDashboard": {
+    "title": "සුපිරි පරිපාලක පුවරුව",
+    "subtitle": "තෝරාගත් රෝහලක් සඳහා රෝහල් පරිපාලක ගිණුම් තොරතුරු සෑදිය හැක්කේ සුපිරි පරිපාලකයාට පමණි.",
+    "createAdminTitle": "රෝහල් පරිපාලකයෙකු සාදන්න",
+    "createAdminDescription": "රෝහල් පිටුවට ගොස් රෝහලක් තෝරා, එහි පරිපාලකයා සඳහා පිවිසුම් තොරතුරු සාදන්න.",
+    "goToHospitals": "රෝහල් වෙත යන්න"
+  },
+  "doctorLogin": {
+    "brand": "Suwapatha",
+    "imageAlt": "Professional doctor",
+    "title": "Doctor Login",
+    "subtitle": "Access your healthcare professional account",
+    "nav": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "contact": "සම්බන්ධ වන්න",
+      "getStarted": "ආරම්භ කරන්න"
+    },
+    "form": {
+      "doctorIdOrEmailLabel": "Doctor ID / Email",
+      "doctorIdOrEmailPlaceholder": "Enter your Doctor ID or email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot Password?",
+      "loggingIn": "Logging in...",
+      "loginButton": "Login as Doctor",
+      "notRegistered": "Not registered yet?",
+      "registerLink": "Register as Doctor"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid credentials. Please try again."
+    }
+  },
+  "superAdminLogin": {
+    "brand": "Suwapatha",
+    "imageAlt": "Super Admin Dashboard",
+    "title": "Super Admin Login",
+    "subtitle": "Access the system administration panel",
+    "nav": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "contact": "සම්බන්ධ වන්න",
+      "getStarted": "ආරම්භ කරන්න"
+    },
+    "form": {
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot Password?",
+      "signingIn": "Signing in...",
+      "loginButton": "Login as Super Admin"
+    },
+    "errors": {
+      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+    }
+  },
+  "patientRegister": {
+    "brand": "Suwapatha",
+    "imageAlt": "Medical professionals in surgery",
+    "title": "Patient Registration",
+    "nav": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "contact": "සම්බන්ධ වන්න",
+      "getStarted": "ආරම්භ කරන්න"
+    },
+    "form": {
+      "firstName": "First Name *",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last Name *",
+      "lastNamePlaceholder": "Doe",
+      "email": "Email Address *",
+      "emailPlaceholder": "john.doe@example.com",
+      "password": "Password *",
+      "passwordPlaceholder": "Minimum 8 characters",
+      "phoneNumber": "Phone Number *",
+      "phonePlaceholder": "0771234567",
+      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
+      "dateOfBirth": "Date of Birth *",
+      "gender": "Gender *",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "genderOther": "Other",
+      "address": "Address *",
+      "addressPlaceholder": "123 Main Street, Colombo 07",
+      "emergencyContact": "Emergency Contact (Optional)",
+      "emergencyContactPlaceholder": "Name and phone number",
+      "registering": "Registering...",
+      "register": "Register",
+      "alreadyRegistered": "Already registered?",
+      "loginLink": "Log in"
+    },
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email format",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 8 characters",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "dateOfBirthRequired": "Date of birth is required",
+      "genderRequired": "Gender is required",
+      "phoneRequired": "Phone number is required",
+      "phoneDigits": "Phone number must be 10 digits",
+      "addressRequired": "Address is required",
+      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+    }
+  },
+  "doctorRegister": {
+    "brand": "Suwapatha",
+    "imageAlt": "Doctor in surgery",
+    "title": "Doctor Registration",
+    "subtitle": "Register as a healthcare professional",
+    "nav": {
+      "home": "මුල් පිටුව",
+      "about": "අප ගැන",
+      "contact": "සම්බන්ධ වන්න",
+      "getStarted": "ආරම්භ කරන්න"
+    },
+    "form": {
+      "firstName": "First Name *",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last Name *",
+      "lastNamePlaceholder": "Doe",
+      "email": "Email Address *",
+      "emailPlaceholder": "dr.john@hospital.com",
+      "password": "Password *",
+      "passwordPlaceholder": "Minimum 8 characters",
+      "doctorId": "Doctor ID Number *",
+      "doctorIdPlaceholder": "MD12345",
+      "doctorIdHint": "Enter your registered medical practitioner ID",
+      "nic": "NIC (National Identity Card) *",
+      "nicPlaceholder": "90123456V or 200012345678",
+      "nicHint": "Old format (9 digits + V/X) or new format (12 digits)",
+      "phone": "Phone Number *",
+      "phonePlaceholder": "0771234567",
+      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
+      "gender": "Gender *",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "genderOther": "Other",
+      "dateOfBirth": "Date of Birth *",
+      "hospital": "Affiliated Hospital *",
+      "hospitalPlaceholder": "Select a hospital",
+      "hospitalSearchPlaceholder": "Search hospitals...",
+      "hospitalNoResults": "No hospitals found matching \"{searchTerm}\"",
+      "registering": "Registering...",
+      "register": "Register as Doctor",
+      "alreadyRegistered": "Already registered?",
+      "loginLink": "Log in"
+    },
+    "errors": {
+      "hospitalsLoadFailed": "Failed to load hospitals. Please refresh the page.",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 8 characters",
+      "doctorIdRequired": "Doctor ID is required",
+      "nicRequired": "NIC is required",
+      "nicInvalid": "Invalid NIC format (e.g., 123456789V or 200012345678)",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "phoneRequired": "Phone number is required",
+      "phoneDigits": "Phone number must be 10 digits",
+      "genderRequired": "Gender is required",
+      "dateOfBirthRequired": "Date of birth is required",
+      "hospitalRequired": "Please select a hospital",
+      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+    }
+  },
+  "patientDashboard": {
+    "common": {
+      "patient": "Patient",
+      "notAvailable": "—",
+      "toBeAssigned": "To be assigned"
+    },
+    "alerts": {
+      "cancelFailed": "Failed to cancel."
+    },
+    "status": {
+      "booked": "Booked",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "newUser": {
+      "title": "Welcome to Suwapatha! 🎉",
+      "description": "Your account is ready. Book your first appointment from the <strong>Appointments</strong> page to get started."
+    },
+    "welcome": {
+      "greeting": "Hello, {name}",
+      "hasUpcoming": "You have {count} upcoming appointments.",
+      "noUpcoming": "No upcoming appointments. Book one from the Appointments page."
+    },
+    "upcoming": {
+      "title": "Upcoming Appointments",
+      "subtitle": "Your next visits and their details.",
+      "bookNew": "Book new ->",
+      "emptyTitle": "No upcoming appointments",
+      "bookNow": "Book one now"
+    },
+    "table": {
+      "date": "Date",
+      "hospital": "Hospital",
+      "doctor": "Doctor",
+      "queue": "Queue #",
+      "wait": "Wait",
+      "actions": "Actions",
+      "waitMinutes": "~{minutes} min",
+      "waitOnlyMinutes": "{minutes} min",
+      "youAreNext": "You're next!"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "cancelling": "Cancelling..."
+    },
+    "liveQueue": {
+      "title": "Live Queue Status",
+      "queue": "Queue #",
+      "hospital": "Hospital",
+      "doctor": "Doctor",
+      "estimatedWait": "Est. Wait",
+      "status": "Status"
+    },
+    "vitals": {
+      "title": "Vitals Trend",
+      "subtitle": "Blood pressure and heart rate over time.",
+      "emptyTitle": "No vitals recorded yet",
+      "emptySubtitle": "Your vitals history will appear here once recorded by your doctor."
+    },
+    "visitHistory": {
+      "title": "Visit History",
+      "subtitle": "Total appointments per month (last 6).",
+      "total": "Total: {count} appointments on record"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No notifications",
+      "upcomingTitle": "Upcoming Appointment",
+      "itemLine": "{hospital} — Queue #{queue}, {wait}",
+      "waitMinutes": "~{minutes} min wait",
+      "nextNow": "you're next!"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "subtitle": "Access common tasks instantly.",
+      "bookAppointment": "Book Appointment",
+      "viewRecords": "View Records",
+      "myProfile": "My Profile",
+      "contactSupport": "Contact Support"
+    }
+  },
+  "patientAppointments": {
+    "common": {
+      "toBeAssigned": "To be assigned"
+    },
+    "status": {
+      "booked": "Booked",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "alerts": {
+      "reminderTitle": "Appointment Reminder",
+      "reminderMessage": "Reminder: Your appointment at {hospital} starts in 10 minutes!",
+      "bookedSuccess": "Booked! Your queue number has been assigned.",
+      "bookingFailed": "Booking failed. Please try again.",
+      "cancelFailed": "Failed to cancel appointment."
+    },
+    "hospitalSearch": {
+      "title": "Hospital Search",
+      "placeholder": "Search hospitals by name...",
+      "noResults": "No hospitals found for \"{query}\"",
+      "startTyping": "Start typing to search Sri Lankan government hospitals..."
+    },
+    "sessions": {
+      "title": "OPD Sessions",
+      "clear": "Clear",
+      "emptyTitle": "No upcoming sessions available",
+      "emptySubtitle": "Sessions are added by the hospital admin",
+      "roomSuffix": " · Room {room}",
+      "slotsLeft": "{count} slots left",
+      "full": "Full",
+      "statusOpen": "Open",
+      "statusFull": "Full",
+      "booking": "Booking...",
+      "book": "Book"
+    },
+    "queue": {
+      "title": "My Queue Status",
+      "yourNumber": "Your Queue Number",
+      "youAreNext": "You're next!",
+      "estimatedAppointment": "Est. Appointment (UTC)",
+      "nextProceed": "You're next — please proceed!",
+      "minutesOnly": "{minutes} min",
+      "hospital": "Hospital",
+      "doctor": "Doctor",
+      "status": "Status",
+      "emptyTitle": "No active appointment",
+      "emptySubtitle": "Search a hospital and book an OPD session above."
+    },
+    "actions": {
+      "cancelling": "Cancelling...",
+      "cancel": "Cancel",
+      "cancelAppointment": "Cancel Appointment"
+    },
+    "history": {
+      "title": "Appointment History",
+      "empty": "No appointment history yet",
+      "itemMeta": "{date} · Queue #{queue}"
+    },
+    "tips": {
+      "title": "Tips",
+      "item1": "• Times shown in UTC — convert to your local time as needed",
+      "item2": "• You'll receive a browser alert 10 minutes before your session",
+      "item3": "• Bring your National ID card and any previous prescriptions",
+      "item4": "• Cancel at least 1 hour before if you cannot attend",
+      "item5": "• Sessions may have limited slots — book early"
+    }
+  },
+  "patientRecords": {
+    "common": {
+      "loading": "Loading..."
+    },
+    "loading": "Loading medical records...",
+    "patientId": "Patient ID: {id}",
+    "errors": {
+      "fetchFailed": "Failed to fetch medical records",
+      "loadFailed": "Failed to load medical records. Please try again.",
+      "filterFailed": "Failed to filter medical records",
+      "filterLoadFailed": "Failed to filter medical records. Please try again."
+    },
+    "alerts": {
+      "downloadVisit": "Downloading PDF for visit {visitId}",
+      "downloadAll": "Downloading all medical records as PDF",
+      "shareLink": "Share link functionality"
+    },
+    "filters": {
+      "dateRange": "Select a date range",
+      "selectHospital": "Select Hospital",
+      "hospital1": "Central Hospital",
+      "hospital2": "District Clinic",
+      "hospital3": "General Hospital",
+      "selectVisitType": "Select Visit Type",
+      "visitRoutine": "Routine Check-up",
+      "visitFollowup": "Follow-up",
+      "visitEmergency": "Emergency",
+      "clear": "Clear Filters"
+    },
+    "actions": {
+      "downloadAllPdf": "Download All PDF",
+      "shareLink": "Share link",
+      "downloadVisitPdf": "Download Visit PDF"
+    },
+    "empty": {
+      "title": "No Medical Records Found",
+      "subtitle": "You don't have any medical records yet."
+    },
+    "visit": {
+      "followUpRequired": "Follow-up Required",
+      "consultationNotes": "Consultation Notes",
+      "prescriptions": "Prescriptions",
+      "labReports": "Lab Reports & Images"
+    }
+  },
+  "doctorDashboard": {
+    "loading": "Loading dashboard...",
+    "errorTitle": "Error Loading Dashboard",
+    "tryAgain": "Try Again",
+    "welcome": "Welcome back, Dr. {name}!",
+    "doctorFallback": "Doctor",
+    "subtitle": "Here's what's happening with your patients today.",
+    "refresh": "Refresh",
+    "errors": {
+      "unauthorized": "Unauthorized: Access restricted to doctors.",
+      "loadFailed": "Failed to load dashboard data. Please try again later.",
+      "updateAvailabilityFailed": "Failed to update availability status."
+    },
+    "attendance": {
+      "title": "Today's Attendance",
+      "activeText": "You are marked as ACTIVE for today's OPD session.",
+      "inactiveText": "Mark yourself active to let the admin know you're here.",
+      "markOut": "Mark as Out (End Session)",
+      "markAvailable": "Mark as Available"
+    },
+    "stats": {
+      "totalPatientsToday": "Total Patients Today",
+      "consultationsThisWeek": "Consultations This Week",
+      "averageWaitTime": "Average Wait Time",
+      "sinceYesterday": "{value} since yesterday",
+      "fromLastWeek": "{value}% from last week",
+      "waitMins": "{value} min",
+      "fromLastMonth": "{value} min from last month"
+    },
+    "charts": {
+      "patientVisits": "Patient Visits Over Time",
+      "consultationsByDay": "Consultations by Day",
+      "consultationsTitle": "{count} consultations"
+    },
+    "appointments": {
+      "title": "Today's Appointments",
+      "emptyTitle": "No appointments for today",
+      "emptySubtitle": "Your schedule is clear",
+      "table": {
+        "patientName": "Patient Name",
+        "queueNo": "Queue No.",
+        "hospital": "Hospital",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "startConsultation": "Start Consultation",
+        "viewDetails": "View Details"
+      },
+      "status": {
+        "booked": "Booked",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "checkedIn": "Checked In"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emptyTitle": "No notifications",
+      "emptySubtitle": "You're all caught up!"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun"
+    },
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    }
+  },
+  "doctorMyPatients": {
+    "title": "My Patients",
+    "totalPatientsToday": "Total Patients Today:",
+    "searchPlaceholder": "Search by Name or Queue No.",
+    "loading": "Loading patients...",
+    "retry": "Retry",
+    "emptySearch": "No patients found matching your search.",
+    "errors": {
+      "loadFailed": "Failed to load patients. Please try again."
+    },
+    "table": {
+      "queueNo": "Queue No.",
+      "patientName": "Patient Name",
+      "gender": "Gender",
+      "time": "Time",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "medicalRecords": "Medical Records",
+      "markComplete": "Mark Complete"
+    },
+    "status": {
+      "waiting": "Waiting",
+      "consulting": "Consulting",
+      "missed": "Missed",
+      "completed": "Completed"
+    },
+    "alerts": {
+      "markComplete": "Marked patient {name} as complete"
+    },
+    "pagination": {
+      "showing": "Showing {start} to {end} of {total} patients",
+      "page": "Page {current} of {total}"
+    }
+  },
+  "doctorPatientDetails": {
+    "goBack": "Go Back",
+    "cancel": "Cancel",
+    "saveConsultation": "Save Consultation",
+    "startConsultation": "Start Consultation",
+    "currentConsultation": "Current Consultation",
+    "diagnosis": "Diagnosis",
+    "diagnosisPlaceholder": "Enter diagnosis...",
+    "consultationNotes": "Consultation Notes",
+    "consultationNotesPlaceholder": "Enter consultation notes, observations, recommendations...",
+    "addPrescription": "Add Prescription",
+    "addNew": "Add New",
+    "activePrescriptions": "Active Prescriptions",
+    "patientDetails": "Patient Details",
+    "allergies": "Allergies",
+    "chronicConditions": "Chronic Conditions",
+    "notes": "Notes",
+    "prescriptions": "Prescriptions",
+    "notAvailable": "N/A",
+    "status": {
+      "active": "Active"
+    },
+    "patientId": "Patient ID: {id}",
+    "queue": "Queue: {queue}",
+    "cards": {
+      "age": "Age",
+      "ageValue": "{age} years",
+      "gender": "Gender",
+      "bloodType": "Blood Type",
+      "phone": "Phone"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "medicalHistory": "Medical History",
+      "prescriptions": "Prescriptions"
+    },
+    "vitals": {
+      "temp": "Temp (°F)",
+      "weight": "Weight (kg)"
+    },
+    "fields": {
+      "email": "Email",
+      "address": "Address",
+      "emergencyContact": "Emergency Contact"
+    },
+    "errors": {
+      "loadFailed": "Failed to load patient details.",
+      "patientNotFound": "Patient not found"
+    },
+    "alerts": {
+      "enterDiagnosisAndNotes": "Please enter diagnosis and consultation notes",
+      "consultationSaved": "Consultation saved successfully!",
+      "saveFailed": "Failed to save consultation. Please try again."
+    },
+    "modal": {
+      "addPrescription": "Add Prescription",
+      "medicineName": "Medicine Name *",
+      "medicinePlaceholder": "e.g., Amlodipine",
+      "dosage": "Dosage *",
+      "dosagePlaceholder": "e.g., 5mg",
+      "frequency": "Frequency",
+      "frequencyPlaceholder": "e.g., Once daily",
+      "duration": "Duration",
+      "durationPlaceholder": "e.g., 30 days"
+    }
+  },
+  "doctorSettings": {
+    "loading": "Loading settings...",
+    "tryAgain": "Try Again",
+    "doctorRole": "Doctor",
+    "reset": "Reset",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "updating": "Updating...",
+    "updatePassword": "Update Password",
+    "logout": "Logout",
+    "doctorIdLabel": "Doctor ID",
+    "emailImmutable": "Email cannot be changed. Contact support if needed.",
+    "passwordChanged": "Password changed successfully!",
+    "profileStatus": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "sections": {
+      "profile": {"title": "Profile Information", "subtitle": "Update your basic information."},
+      "security": {"title": "Security", "subtitle": "Change your account password."},
+      "accountActions": {"title": "Account Actions", "subtitle": "Manage your account."}
+    },
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phoneNumber": "Phone Number",
+      "nicNumber": "NIC Number",
+      "emailAddress": "Email Address",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password"
+    },
+    "placeholders": {
+      "firstName": "Enter first name",
+      "lastName": "Enter last name"
+    },
+    "hints": {
+      "phoneDigits": "10 digits",
+      "nic": "9 digits + V/X or 12 digits"
+    },
+    "passwordRequirements": {
+      "title": "Password Requirements",
+      "item1": "At least 8 characters long",
+      "item2": "You'll be logged out after changing password"
+    },
+    "errors": {
+      "loadProfile": "Failed to load profile",
+      "loadSettingsTitle": "Failed to Load Settings",
+      "nameRequired": "Name fields are required.",
+      "phoneDigits": "Phone number must be 10 digits.",
+      "nicInvalid": "Invalid NIC format. Use 9 digits + V/X or 12 digits.",
+      "saveProfile": "Failed to save profile.",
+      "allPasswordFieldsRequired": "All fields are required.",
+      "passwordMismatch": "Passwords do not match.",
+      "passwordLength": "New password must be at least 8 characters.",
+      "changePassword": "Failed to change password."
+    }
+  },
+  "doctorPendingApproval": {
+    "title": "Registration Submitted",
+    "subtitle": "Thank you for joining Suwapatha Health. Your professional application has been received and is currently being verified by our clinical administration team.",
+    "pendingBadge": "PENDING ADMIN APPROVAL",
+    "timeline": {
+      "submission": {"title": "Submission", "subtitle": "Application form received successfully"},
+      "verification": {"title": "Verification", "subtitle": "Admin reviewing professional credentials"},
+      "activation": {"title": "Activation", "subtitle": "Full platform access granted via email"}
+    },
+    "summary": {
+      "title": "Submission Summary",
+      "subtitle": "Verify the information you provided below",
+      "fullName": "Full Name",
+      "userId": "User ID (Reference)",
+      "contactEmail": "Contact Email",
+      "accountType": "Account Type",
+      "professional": "Professional",
+      "dateSubmitted": "Date Submitted",
+      "notAvailable": "N/A",
+      "errorTitle": "Found an error?",
+      "errorText": "If any details are incorrect, please contact support immediately to update your application."
+    },
+    "nextSteps": {
+      "title": "What Happens Next?",
+      "subtitle": "Estimated timeline for your onboarding",
+      "step1": {
+        "title": "Credential Verification",
+        "time": "2-4 Hours",
+        "text": "Our team verifies your medical license and professional standing with national boards."
+      },
+      "step2": {
+        "title": "Email Confirmation",
+        "time": "Next 12 Hours",
+        "text": "You'll receive a \"Welcome\" email once your account has been whitelisted for login."
+      },
+      "step3": {
+        "title": "Profile Setup",
+        "text": "After approval, log in to complete your professional biography and consultation schedule."
+      },
+      "step4": {
+        "title": "Start Consultations",
+        "text": "Join our network and begin receiving patient appointments via your dashboard."
+      }
+    },
+    "actions": {
+      "returnHome": "Return to Home",
+      "contactSupport": "Contact Support"
+    }
+  }
+}
