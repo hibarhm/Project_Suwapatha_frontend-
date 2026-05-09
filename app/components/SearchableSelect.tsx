@@ -13,6 +13,8 @@ interface SearchableSelectProps {
     value: string;
     onChange: (value: string) => void;
     placeholder: string;
+    searchPlaceholder?: string;
+    noResultsText?: string;
     label?: string;
     error?: string;
     loading?: boolean;
@@ -23,6 +25,8 @@ export default function SearchableSelect({
     value,
     onChange,
     placeholder,
+    searchPlaceholder = 'Search...',
+    noResultsText = 'No results found',
     label,
     error,
     loading
@@ -92,7 +96,7 @@ export default function SearchableSelect({
                             <input
                                 type="text"
                                 autoFocus
-                                placeholder="Search hospitals..."
+                                placeholder={searchPlaceholder}
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#94B4C1]/20 focus:border-[#94B4C1] bg-white"
@@ -129,7 +133,7 @@ export default function SearchableSelect({
                                 <svg className="w-8 h-8 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span>No hospitals found matching "{searchTerm}"</span>
+                                <span>{noResultsText.replace('{searchTerm}', searchTerm)}</span>
                             </div>
                         )}
                     </div>

@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 import DoctorLayout from '@/app/components/doctorLayout';
 import API_BASE_URL from '@/app/api/api';
+import RequireRole from '@/app/components/RequireRole';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface DoctorProfile {
@@ -56,6 +58,7 @@ const inputCls = `w-full px-4 py-3 border border-gray-200 rounded-lg text-sm tex
   focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] transition-all`;
 
 export default function DoctorSettingsPage() {
+    const t = useTranslations('doctorSettings');
     const router = useRouter();
 
     const [profile, setProfile] = useState<DoctorProfile | null>(null);
@@ -121,7 +124,7 @@ export default function DoctorSettingsPage() {
         } catch (err) {
             console.error('Error fetching profile:', err);
             setError('Failed to load profile');
-            showToast('Failed to load profile', 'error');
+            showToast(t('errors.loadProfile'), 'error');
         } finally {
             setLoading(false);
         }
@@ -129,19 +132,19 @@ export default function DoctorSettingsPage() {
 
     const handleSaveProfile = async () => {
         if (!firstName.trim() || !lastName.trim()) {
-            showToast('Name fields are required.', 'error');
+            showToast(t('errors.nameRequired'), 'error');
             return;
         }
 
         // Validate phone number (Sri Lankan format: 10 digits)
         if (phone && !/^\d{10}$/.test(phone.trim())) {
-            showToast('Phone number must be 10 digits.', 'error');
+            showToast(t('errors.phoneDigits'), 'error');
             return;
         }
 
         // Validate NIC (Sri Lankan format: 9 digits + V/X or 12 digits)
         if (nic && !/^(\d{9}[VvXx]|\d{12})$/.test(nic.trim())) {
-            showToast('Invalid NIC format. Use 9 digits + V/X or 12 digits.', 'error');
+            showToast(t('errors.nicInvalid'), 'error');
             return;
         }
 
@@ -184,7 +187,7 @@ export default function DoctorSettingsPage() {
             showToast('Profile updated successfully!', 'success');
         } catch (e) {
             console.error('Error updating profile:', e);
-            showToast(e instanceof Error ? e.message : 'Failed to save profile.', 'error');
+            showToast(e instanceof Error ? e.message : t('errors.saveProfile'), 'error');
         } finally {
             setSavingProfile(false);
         }
@@ -192,15 +195,15 @@ export default function DoctorSettingsPage() {
 
     const handleChangePassword = async () => {
         if (!passwords.current || !passwords.next || !passwords.confirm) {
-            showToast('All fields are required.', 'error');
+            showToast(t('errors.allPasswordFieldsRequired'), 'error');
             return;
         }
         if (passwords.next !== passwords.confirm) {
-            showToast('Passwords do not match.', 'error');
+            showToast(t('errors.passwordMismatch'), 'error');
             return;
         }
         if (passwords.next.length < 8) {
-            showToast('New password must be at least 8 characters.', 'error');
+            showToast(t('errors.passwordLength'), 'error');
             return;
         }
 
@@ -226,10 +229,10 @@ export default function DoctorSettingsPage() {
             }
 
             setPasswords({ current: '', next: '', confirm: '' });
-            showToast('Password changed successfully!', 'success');
+            showToast(t('passwordChanged'), 'success');
         } catch (e) {
             console.error('Error changing password:', e);
-            showToast(e instanceof Error ? e.message : 'Failed to change password.', 'error');
+            showToast(e instanceof Error ? e.message : t('errors.changePassword'), 'error');
         } finally {
             setSavingPassword(false);
         }
@@ -240,47 +243,65 @@ export default function DoctorSettingsPage() {
         router.push('/');
     };
 
+    const getProfileStatusLabel = (status?: string) => {
+        switch (status) {
+            case 'APPROVED':
+                return t('profileStatus.approved');
+            case 'PENDING':
+                return t('profileStatus.pending');
+            case 'REJECTED':
+                return t('profileStatus.rejected');
+            default:
+                return status ?? '';
+        }
+    };
+
     if (loading) {
         return (
-            <DoctorLayout>
-                <div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-                        <p className="mt-4 text-gray-600">Loading settings...</p>
+            <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+                <DoctorLayout>
+                    <div className="flex items-center justify-center min-h-screen">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
+                            <p className="mt-4 text-gray-600">{t('loading')}</p>
+                        </div>
                     </div>
-                </div>
-            </DoctorLayout>
+                </DoctorLayout>
+            </RequireRole>
         );
     }
 
     if (error && !profile) {
         return (
-            <DoctorLayout>
-                <div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center">
-                        <svg className="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <h3 className="text-lg font-medium text-gray-900 mb-2">Failed to Load Settings</h3>
-                        <p className="text-gray-600 mb-4">{error}</p>
-                        <button
-                            onClick={fetchProfile}
-                            className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors"
-                        >
-                            Try Again
-                        </button>
+            <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+                <DoctorLayout>
+                    <div className="flex items-center justify-center min-h-screen">
+                        <div className="text-center">
+                            <svg className="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('errors.loadSettingsTitle')}</h3>
+                            <p className="text-gray-600 mb-4">{error}</p>
+                            <button
+                                onClick={fetchProfile}
+                                className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors"
+                            >
+                                {t('tryAgain')}
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </DoctorLayout>
+                </DoctorLayout>
+            </RequireRole>
         );
     }
 
     return (
-        <DoctorLayout>
-            {toast && <Toast msg={toast.msg} type={toast.type} />}
+        <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+            <DoctorLayout>
+                {toast && <Toast msg={toast.msg} type={toast.type} />}
 
             <div className="max-w-3xl mx-auto space-y-6 p-6">
-                <Section title="Profile Information" subtitle="Update your basic information.">
+                <Section title={t('sections.profile.title')} subtitle={t('sections.profile.subtitle')}>
                     <div className="flex items-center gap-5 mb-8">
                         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#94B4C1] to-[#7fa8b8]
               flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
@@ -291,7 +312,7 @@ export default function DoctorSettingsPage() {
                             <p className="text-sm text-gray-500 mt-0.5">{profile?.email}</p>
                             <div className="flex items-center gap-2 mt-2">
                                 <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#94B4C1]/10 text-[#94B4C1]">
-                                    Doctor
+                                    {t('doctorRole')}
                                 </span>
                                 <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium ${profile?.status === 'APPROVED'
                                         ? 'bg-green-100 text-green-800'
@@ -299,33 +320,33 @@ export default function DoctorSettingsPage() {
                                             ? 'bg-yellow-100 text-yellow-800'
                                             : 'bg-red-100 text-red-800'
                                     }`}>
-                                    {profile?.status}
+                                    {getProfileStatusLabel(profile?.status)}
                                 </span>
                             </div>
                         </div>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-5 mb-5">
-                        <Field label="First Name">
+                        <Field label={t('fields.firstName')}>
                             <input
                                 className={inputCls}
                                 value={firstName}
                                 onChange={e => setFirstName(e.target.value)}
-                                placeholder="Enter first name"
+                                placeholder={t('placeholders.firstName')}
                             />
                         </Field>
-                        <Field label="Last Name">
+                        <Field label={t('fields.lastName')}>
                             <input
                                 className={inputCls}
                                 value={lastName}
                                 onChange={e => setLastName(e.target.value)}
-                                placeholder="Enter last name"
+                                placeholder={t('placeholders.lastName')}
                             />
                         </Field>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-5 mb-6">
-                        <Field label="Phone Number">
+                        <Field label={t('fields.phoneNumber')}>
                             <input
                                 className={inputCls}
                                 value={phone}
@@ -333,9 +354,9 @@ export default function DoctorSettingsPage() {
                                 placeholder="0771234567"
                                 maxLength={10}
                             />
-                            <p className="text-xs text-gray-500 mt-1">10 digits</p>
+                            <p className="text-xs text-gray-500 mt-1">{t('hints.phoneDigits')}</p>
                         </Field>
-                        <Field label="NIC Number">
+                        <Field label={t('fields.nicNumber')}>
                             <input
                                 className={inputCls}
                                 value={nic}
@@ -343,7 +364,7 @@ export default function DoctorSettingsPage() {
                                 placeholder="123456789V or 200012345678"
                                 maxLength={12}
                             />
-                            <p className="text-xs text-gray-500 mt-1">9 digits + V/X or 12 digits</p>
+                            <p className="text-xs text-gray-500 mt-1">{t('hints.nic')}</p>
                         </Field>
                     </div>
 
@@ -353,9 +374,9 @@ export default function DoctorSettingsPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <div>
-                                <p className="text-sm font-medium text-blue-900">Email Address</p>
+                                <p className="text-sm font-medium text-blue-900">{t('fields.emailAddress')}</p>
                                 <p className="text-sm text-blue-700 mt-1">{profile?.email}</p>
-                                <p className="text-xs text-blue-600 mt-1">Email cannot be changed. Contact support if needed.</p>
+                                <p className="text-xs text-blue-600 mt-1">{t('emailImmutable')}</p>
                             </div>
                         </div>
                     </div>
@@ -363,7 +384,7 @@ export default function DoctorSettingsPage() {
                     {profile?.doctorId && (
                         <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 mb-6">
                             <p className="text-sm text-gray-600">
-                                Doctor ID: <span className="font-semibold text-gray-900">{profile.doctorId}</span>
+                                {t('doctorIdLabel')}: <span className="font-semibold text-gray-900">{profile.doctorId}</span>
                             </p>
                         </div>
                     )}
@@ -373,7 +394,7 @@ export default function DoctorSettingsPage() {
                             onClick={fetchProfile}
                             className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors"
                         >
-                            Reset
+                            {t('reset')}
                         </button>
                         <button
                             onClick={handleSaveProfile}
@@ -381,14 +402,14 @@ export default function DoctorSettingsPage() {
                             className="px-6 py-2.5 bg-[#94B4C1] text-white rounded-lg text-sm font-semibold hover:bg-[#7fa8b8] transition-colors disabled:opacity-50 flex items-center gap-2"
                         >
                             {savingProfile && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-                            {savingProfile ? 'Saving…' : 'Save Changes'}
+                            {savingProfile ? t('saving') : t('saveChanges')}
                         </button>
                     </div>
                 </Section>
 
-                <Section title="Security" subtitle="Change your account password.">
+                <Section title={t('sections.security.title')} subtitle={t('sections.security.subtitle')}>
                     <div className="space-y-4 mb-6">
-                        <Field label="Current Password">
+                        <Field label={t('fields.currentPassword')}>
                             <input
                                 type="password"
                                 className={inputCls}
@@ -397,7 +418,7 @@ export default function DoctorSettingsPage() {
                                 placeholder="••••••••"
                             />
                         </Field>
-                        <Field label="New Password">
+                        <Field label={t('fields.newPassword')}>
                             <input
                                 type="password"
                                 className={inputCls}
@@ -406,7 +427,7 @@ export default function DoctorSettingsPage() {
                                 placeholder="••••••••"
                             />
                         </Field>
-                        <Field label="Confirm New Password">
+                        <Field label={t('fields.confirmNewPassword')}>
                             <input
                                 type="password"
                                 className={inputCls}
@@ -423,10 +444,10 @@ export default function DoctorSettingsPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                             <div>
-                                <p className="text-sm font-medium text-amber-900">Password Requirements</p>
+                                <p className="text-sm font-medium text-amber-900">{t('passwordRequirements.title')}</p>
                                 <ul className="text-xs text-amber-700 mt-1 list-disc list-inside space-y-0.5">
-                                    <li>At least 8 characters long</li>
-                                    <li>You'll be logged out after changing password</li>
+                                    <li>{t('passwordRequirements.item1')}</li>
+                                    <li>{t('passwordRequirements.item2')}</li>
                                 </ul>
                             </div>
                         </div>
@@ -439,12 +460,12 @@ export default function DoctorSettingsPage() {
                             className="px-6 py-2.5 bg-[#94B4C1] text-white rounded-lg text-sm font-semibold hover:bg-[#7fa8b8] transition-colors disabled:opacity-50 flex items-center gap-2"
                         >
                             {savingPassword && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-                            {savingPassword ? 'Updating…' : 'Update Password'}
+                            {savingPassword ? t('updating') : t('updatePassword')}
                         </button>
                     </div>
                 </Section>
 
-                <Section title="Account Actions" subtitle="Manage your account.">
+                <Section title={t('sections.accountActions.title')} subtitle={t('sections.accountActions.subtitle')}>
                     <div className="space-y-3">
                         <button
                             onClick={handleLogout}
@@ -453,11 +474,12 @@ export default function DoctorSettingsPage() {
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            Logout
+                            {t('logout')}
                         </button>
                     </div>
                 </Section>
             </div>
-        </DoctorLayout>
+            </DoctorLayout>
+        </RequireRole>
     );
 }

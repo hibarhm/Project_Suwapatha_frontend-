@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import {useTranslations} from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import PatientLayout from '@/app/components/patientLayout';
 import { appointmentApi } from '@/app/api/appointment/appointmentApi';
 import {
@@ -12,6 +13,7 @@ import {
 /* ── helpers ──────────────────────────────────────────────────────────────── */
 
 function StatusBadge({ status }: { status: string }) {
+  const t = useTranslations('patientAppointments.status');
   const map: Record<string, string> = {
     BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
     CANCELLED: 'bg-red-100 text-red-700',
@@ -20,7 +22,7 @@ function StatusBadge({ status }: { status: string }) {
   return (
     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
       ${map[status] ?? 'bg-gray-100 text-gray-600'}`}>
-      {status.charAt(0) + status.slice(1).toLowerCase()}
+      {status === 'BOOKED' ? t('booked') : status === 'CANCELLED' ? t('cancelled') : status === 'COMPLETED' ? t('completed') : status}
     </span>
   );
 }
@@ -77,6 +79,7 @@ function getSessionStartUtc(sessionDate: string, sessionStartTime: string): Date
 
 /* ── main component ───────────────────────────────────────────────────────── */
 export default function AppointmentBookingPage() {
+  const t = useTranslations('patientAppointments');
   const router = useRouter();
 
   // ── state: hospital search ──────────────────────────────────────────────
@@ -181,15 +184,15 @@ export default function AppointmentBookingPage() {
     if (msUntilAlert <= 0) return; // already past
 
     alertTimerRef.current = setTimeout(async () => {
-      const msg = `⏰ Reminder: Your appointment at ${activeAppt.hospitalName} starts in 10 minutes!`;
+      const msg = t('alerts.reminderMessage', {hospital: activeAppt.hospitalName});
 
       if (typeof window !== 'undefined' && 'Notification' in window) {
         if (Notification.permission === 'granted') {
-          new Notification('Appointment Reminder', { body: msg, icon: '/favicon.ico' });
+          new Notification(t('alerts.reminderTitle'), { body: msg, icon: '/favicon.ico' });
         } else if (Notification.permission !== 'denied') {
           const permission = await Notification.requestPermission();
           if (permission === 'granted') {
-            new Notification('Appointment Reminder', { body: msg, icon: '/favicon.ico' });
+            new Notification(t('alerts.reminderTitle'), { body: msg, icon: '/favicon.ico' });
           } else {
             alert(msg);
           }
@@ -226,7 +229,7 @@ export default function AppointmentBookingPage() {
     setBookSuccess('');
     try {
       await appointmentApi.book({ sessionId });
-      setBookSuccess('Booked! Your queue number has been assigned.');
+      setBookSuccess(t('alerts.bookedSuccess'));
       await Promise.all([
         refreshAppointments(),
         selectedHospital
@@ -234,7 +237,7 @@ export default function AppointmentBookingPage() {
           : Promise.resolve(),
       ]);
     } catch (e) {
-      setBookError(e instanceof Error ? e.message : 'Booking failed. Please try again.');
+      setBookError(e instanceof Error ? e.message : t('alerts.bookingFailed'));
     } finally {
       setBooking(false);
     }
@@ -246,7 +249,7 @@ export default function AppointmentBookingPage() {
       await appointmentApi.cancel(id);
       await refreshAppointments();
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Failed to cancel appointment.');
+      alert(e instanceof Error ? e.message : t('alerts.cancelFailed'));
     } finally {
       setCancelling(null);
     }
@@ -260,6 +263,11 @@ export default function AppointmentBookingPage() {
   /* ── derived display values ───────────────────────────────────────────── */
 
   const isNextInQueue = activeAppt && activeAppt.estimatedWaitMinutes === 0;
+  const getSessionStatusLabel = (status: string) => {
+    if (status === 'OPEN') return t('sessions.statusOpen');
+    if (status === 'FULL') return t('sessions.statusFull');
+    return status;
+  };
 
   const utcAppointmentTime = activeAppt
     ? computeUtcAppointmentTime(
@@ -279,7 +287,7 @@ export default function AppointmentBookingPage() {
 
           {/* ── Hospital Search ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Hospital Search</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">{t('hospitalSearch.title')}</h2>
 
             <div className="relative mb-4">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -289,7 +297,7 @@ export default function AppointmentBookingPage() {
               </svg>
               <input
                 type="text"
-                placeholder="Search hospitals by name…"
+                placeholder={t('hospitalSearch.placeholder')}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg
@@ -334,12 +342,12 @@ export default function AppointmentBookingPage() {
             )}
 
             {!loadingHospitals && searchQuery && hospitals.length === 0 && (
-              <p className="text-sm text-gray-500 text-center py-6">No hospitals found for &quot;{searchQuery}&quot;</p>
+              <p className="text-sm text-gray-500 text-center py-6">{t('hospitalSearch.noResults', {query: searchQuery})}</p>
             )}
 
             {!loadingHospitals && !searchQuery && hospitals.length === 0 && (
               <p className="text-sm text-gray-400 text-center py-4">
-                Start typing to search Sri Lankan government hospitals…
+                {t('hospitalSearch.startTyping')}
               </p>
             )}
           </div>
@@ -349,14 +357,14 @@ export default function AppointmentBookingPage() {
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">OPD Sessions</h2>
+                  <h2 className="text-xl font-bold text-gray-900">{t('sessions.title')}</h2>
                   <p className="text-sm text-gray-500">{selectedHospital.name}</p>
                 </div>
                 <button
                   onClick={() => { setSelectedHospital(null); setSessions([]); }}
                   className="text-xs text-gray-400 hover:text-gray-600 mt-1"
                 >
-                  ✕ Clear
+                  {t('sessions.clear')}
                 </button>
               </div>
 
@@ -379,8 +387,8 @@ export default function AppointmentBookingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-gray-500 text-sm font-medium">No upcoming sessions available</p>
-                  <p className="text-xs text-gray-400 mt-1">Sessions are added by the hospital admin</p>
+                  <p className="text-gray-500 text-sm font-medium">{t('sessions.emptyTitle')}</p>
+                  <p className="text-xs text-gray-400 mt-1">{t('sessions.emptySubtitle')}</p>
                 </div>
               )}
 
@@ -397,13 +405,13 @@ export default function AppointmentBookingPage() {
                               ${session.status === 'OPEN' ? 'bg-green-100 text-green-700'
                                 : session.status === 'FULL' ? 'bg-orange-100 text-orange-700'
                                   : 'bg-gray-100 text-gray-500'}`}>
-                              {session.status}
+                              {getSessionStatusLabel(session.status)}
                             </span>
                           </div>
                           <p className="text-xs text-gray-500 mb-2">
                             {session.date} &nbsp;·&nbsp; {session.startTime}–{session.endTime}
                             {session.doctorName && ` · ${session.doctorName}`}
-                            {session.room && ` · Room ${session.room}`}
+                            {session.room && t('sessions.roomSuffix', {room: session.room})}
                           </p>
                           {/* Queue progress bar */}
                           <div className="flex items-center gap-3">
@@ -420,8 +428,8 @@ export default function AppointmentBookingPage() {
                               {session.currentQueueCount}/{session.maxQueueSize}
                               &nbsp;·&nbsp;
                               {session.availableSlots > 0
-                                ? `${session.availableSlots} slot${session.availableSlots !== 1 ? 's' : ''} left`
-                                : 'Full'}
+                                ? t('sessions.slotsLeft', {count: session.availableSlots})
+                                : t('sessions.full')}
                             </span>
                           </div>
                         </div>
@@ -437,9 +445,9 @@ export default function AppointmentBookingPage() {
                           {booking ? (
                             <span className="flex items-center gap-1.5">
                               <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                              Booking…
+                              {t('sessions.booking')}
                             </span>
-                          ) : session.status === 'OPEN' ? 'Book' : session.status}
+                          ) : session.status === 'OPEN' ? t('sessions.book') : getSessionStatusLabel(session.status)}
                         </button>
                       </div>
                     </div>
@@ -451,13 +459,13 @@ export default function AppointmentBookingPage() {
 
           {/* ── Queue Status Card ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">My Queue Status</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">{t('queue.title')}</h2>
 
             {loadingActive ? <Spinner /> : activeAppt ? (
               <>
                 <div className="bg-gradient-to-br from-gray-50 to-[#94B4C1]/5 rounded-xl p-8 mb-6">
                   <div className="text-center mb-6">
-                    <p className="text-sm text-gray-600 mb-2">Your Queue Number</p>
+                    <p className="text-sm text-gray-600 mb-2">{t('queue.yourNumber')}</p>
                     <p className="text-6xl font-bold text-[#94B4C1]">{activeAppt.queueNumber}</p>
 
                     {/* "You're next!" badge — only shown for the immediately next patient */}
@@ -465,7 +473,7 @@ export default function AppointmentBookingPage() {
                       <div className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5
                         bg-green-100 text-green-700 rounded-full text-sm font-semibold animate-pulse">
                         <span className="w-2 h-2 bg-green-500 rounded-full" />
-                        You&apos;re next!
+                        {t('queue.youAreNext')}
                       </div>
                     )}
                   </div>
@@ -474,24 +482,24 @@ export default function AppointmentBookingPage() {
                     {[
                       {
                         icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-                        label: 'Est. Appointment (UTC)',
+                        label: t('queue.estimatedAppointment'),
                         value: isNextInQueue
-                          ? "You're next — please proceed!"
-                          : (utcAppointmentTime ?? `${activeAppt.estimatedWaitMinutes} min`),
+                          ? t('queue.nextProceed')
+                          : (utcAppointmentTime ?? t('queue.minutesOnly', {minutes: activeAppt.estimatedWaitMinutes})),
                       },
                       {
                         icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
-                        label: 'Hospital',
+                        label: t('queue.hospital'),
                         value: activeAppt.hospitalName,
                       },
                       {
                         icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
-                        label: 'Doctor',
-                        value: activeAppt.doctorName || 'To be assigned',
+                        label: t('queue.doctor'),
+                        value: activeAppt.doctorName || t('common.toBeAssigned'),
                       },
                       {
                         icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-                        label: 'Status',
+                        label: t('queue.status'),
                         value: null,
                         badge: <StatusBadge status={activeAppt.status} />,
                       },
@@ -518,7 +526,7 @@ export default function AppointmentBookingPage() {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                  {cancelling ? 'Cancelling…' : 'Cancel Appointment'}
+                  {cancelling ? t('actions.cancelling') : t('actions.cancelAppointment')}
                 </button>
               </>
             ) : (
@@ -529,8 +537,8 @@ export default function AppointmentBookingPage() {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <p className="text-gray-900 font-medium mb-1">No active appointment</p>
-                <p className="text-sm text-gray-500">Search a hospital and book an OPD session above.</p>
+                <p className="text-gray-900 font-medium mb-1">{t('queue.emptyTitle')}</p>
+                <p className="text-sm text-gray-500">{t('queue.emptySubtitle')}</p>
               </div>
             )}
           </div>
@@ -541,7 +549,7 @@ export default function AppointmentBookingPage() {
 
           {/* ── Appointment History ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Appointment History</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">{t('history.title')}</h3>
 
             {loadingHistory ? <Spinner /> : history.length === 0 ? (
               <div className="flex flex-col items-center py-8 text-center">
@@ -549,7 +557,7 @@ export default function AppointmentBookingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                <p className="text-sm text-gray-500">No appointment history yet</p>
+                <p className="text-sm text-gray-500">{t('history.empty')}</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -561,7 +569,7 @@ export default function AppointmentBookingPage() {
                       <StatusBadge status={apt.status} />
                     </div>
                     <p className="text-xs text-gray-500 mb-2">
-                      {apt.appointmentDate} · Queue #{apt.queueNumber}
+                      {t('history.itemMeta', {date: apt.appointmentDate, queue: apt.queueNumber})}
                       {apt.doctorName ? ` · ${apt.doctorName}` : ''}
                     </p>
                     {apt.status === 'BOOKED' && (
@@ -570,7 +578,7 @@ export default function AppointmentBookingPage() {
                         disabled={cancelling === apt.id}
                         className="text-xs text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
                       >
-                        {cancelling === apt.id ? 'Cancelling…' : 'Cancel'}
+                        {cancelling === apt.id ? t('actions.cancelling') : t('actions.cancel')}
                       </button>
                     )}
                   </div>
@@ -581,13 +589,13 @@ export default function AppointmentBookingPage() {
 
           {/* ── Tips ── */}
           <div className="bg-[#94B4C1]/5 rounded-xl border border-[#94B4C1]/20 p-5">
-            <h3 className="text-sm font-bold text-[#94B4C1] mb-3">💡 Tips</h3>
+            <h3 className="text-sm font-bold text-[#94B4C1] mb-3">{t('tips.title')}</h3>
             <ul className="space-y-2 text-xs text-gray-600">
-              <li>• Times shown in UTC — convert to your local time as needed</li>
-              <li>• You&apos;ll receive a browser alert 10 minutes before your session</li>
-              <li>• Bring your National ID card and any previous prescriptions</li>
-              <li>• Cancel at least 1 hour before if you cannot attend</li>
-              <li>• Sessions may have limited slots — book early</li>
+              <li>{t('tips.item1')}</li>
+              <li>{t('tips.item2')}</li>
+              <li>{t('tips.item3')}</li>
+              <li>{t('tips.item4')}</li>
+              <li>{t('tips.item5')}</li>
             </ul>
           </div>
         </div>

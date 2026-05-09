@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 import DoctorLayout from '@/app/components/doctorLayout';
 import { doctorApi, DoctorPatient } from '@/app/api/doctor/doctorApi';
+import RequireRole from '@/app/components/RequireRole';
 
 export default function MyPatientsPage() {
+  const t = useTranslations('doctorMyPatients');
   const router = useRouter();
   const [patients, setPatients] = useState<DoctorPatient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +29,7 @@ export default function MyPatientsPage() {
       setError(null);
     } catch (err: any) {
       console.error('Error fetching patients:', err);
-      setError(err.message || 'Failed to load patients. Please try again.');
+      setError(err.message || t('errors.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -62,6 +65,25 @@ export default function MyPatientsPage() {
     }
   };
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'Waiting':
+      case 'BOOKED':
+        return t('status.waiting');
+      case 'Consulting':
+      case 'CHECKED_IN':
+        return t('status.consulting');
+      case 'Missed':
+      case 'CANCELLED':
+        return t('status.missed');
+      case 'Completed':
+      case 'COMPLETED':
+        return t('status.completed');
+      default:
+        return status;
+    }
+  };
+
   const getInitials = (name: string) => {
     if (!name) return '??';
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -73,12 +95,13 @@ export default function MyPatientsPage() {
   };
 
   return (
-    <DoctorLayout>
+    <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+      <DoctorLayout>
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">My Patients</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">Total Patients Today:</span>
+          <span className="text-sm text-gray-600">{t('totalPatientsToday')}</span>
           <span className="text-2xl font-bold text-[#94B4C1]">{patients.length}</span>
         </div>
       </div>
@@ -91,7 +114,7 @@ export default function MyPatientsPage() {
           </svg>
           <input
             type="text"
-            placeholder="Search by Name or Queue No."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-sm"
@@ -107,7 +130,7 @@ export default function MyPatientsPage() {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
-            Loading patients...
+            {t('loading')}
           </div>
         ) : error ? (
           <div className="p-12 text-center text-red-500">
@@ -116,24 +139,24 @@ export default function MyPatientsPage() {
               onClick={fetchPatients}
               className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7A9AA8] transition-colors"
             >
-              Retry
+              {t('retry')}
             </button>
           </div>
         ) : filteredPatients.length === 0 ? (
           <div className="p-12 text-center text-gray-500">
-            No patients found matching your search.
+            {t('emptySearch')}
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Queue No.</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Patient Name</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Gender</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Time</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Status</th>
-                  <th className="text-right py-4 px-6 text-sm font-semibold text-gray-700">Actions</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.queueNo')}</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.patientName')}</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.gender')}</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.time')}</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.status')}</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-gray-700">{t('table.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -156,7 +179,7 @@ export default function MyPatientsPage() {
                     <td className="py-4 px-6 text-sm text-gray-700">{patient.time}</td>
                     <td className="py-4 px-6">
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(patient.status)}`}>
-                        {patient.status}
+                        {getStatusLabel(patient.status)}
                       </span>
                     </td>
                     <td className="py-4 px-6" onClick={(e) => e.stopPropagation()}>
@@ -165,7 +188,7 @@ export default function MyPatientsPage() {
                         <button
                           onClick={() => handleViewPatient(patient.patientId || patient.id)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                          title="View Details"
+                          title={t('actions.viewDetails')}
                         >
                           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -177,7 +200,7 @@ export default function MyPatientsPage() {
                         <button
                           onClick={() => handleViewPatient(patient.patientId || patient.id)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                          title="Medical Records"
+                          title={t('actions.medicalRecords')}
                         >
                           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -188,10 +211,10 @@ export default function MyPatientsPage() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            alert(`Marked patient ${patient.name} as complete`);
+                            alert(t('alerts.markComplete', {name: patient.name}));
                           }}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                          title="Mark Complete"
+                          title={t('actions.markComplete')}
                         >
                           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -209,7 +232,11 @@ export default function MyPatientsPage() {
         {/* Pagination */}
         <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
           <div className="text-sm text-gray-600">
-            Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredPatients.length)} of {filteredPatients.length} patients
+            {t('pagination.showing', {
+              start: startIndex + 1,
+              end: Math.min(startIndex + itemsPerPage, filteredPatients.length),
+              total: filteredPatients.length
+            })}
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -222,7 +249,7 @@ export default function MyPatientsPage() {
               </svg>
             </button>
             <span className="text-sm font-medium text-gray-700">
-              Page {currentPage} of {totalPages}
+              {t('pagination.page', {current: currentPage, total: totalPages})}
             </span>
             <button
               onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
@@ -236,6 +263,7 @@ export default function MyPatientsPage() {
           </div>
         </div>
       </div>
-    </DoctorLayout>
+      </DoctorLayout>
+    </RequireRole>
   );
 }

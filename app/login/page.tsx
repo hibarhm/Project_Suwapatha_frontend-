@@ -1,18 +1,19 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '@/i18n/navigation';
 import { authApi, ApiError } from '../api/auth/authApi';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export default function LoginPage() {
+  const t = useTranslations('login');
   const router = useRouter();
   const [formData, setFormData] = useState({
     usernameOrEmail: '',
     password: '',
     rememberMe: false,
     role: 'Patient',
-    language: 'English',
     useLocation: '',
   });
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export default function LoginPage() {
       if (err instanceof ApiError) {
         setError(err.message);
       } else {
-        setError('An unexpected error occurred. Please try again.');
+        setError(t('errors.unexpected'));
       }
       console.error('Login error:', err);
     } finally {
@@ -97,21 +98,24 @@ export default function LoginPage() {
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Home
+              {t('nav.home')}
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              About
+              {t('nav.about')}
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
-          <Link
-            href="/"
-            className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
-          >
-            Get Started
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link
+              href="/"
+              className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
+            >
+              {t('nav.getStarted')}
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -146,8 +150,8 @@ export default function LoginPage() {
                 <h1 className="text-2xl font-bold text-[#94B4C1]">Suwapatha</h1>
               </div>
 
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
-              <p className="text-sm text-gray-600 mb-6">Login to access your Suwapatha account.</p>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{t('title')}</h2>
+              <p className="text-sm text-gray-600 mb-6">{t('subtitle')}</p>
 
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4">
@@ -159,7 +163,7 @@ export default function LoginPage() {
                 {/* Username/Email */}
                 <div>
                   <label htmlFor="usernameOrEmail" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Username / Email
+                    {t('form.usernameLabel')}
                   </label>
                   <input
                     type="text"
@@ -167,7 +171,7 @@ export default function LoginPage() {
                     name="usernameOrEmail"
                     value={formData.usernameOrEmail}
                     onChange={handleChange}
-                    placeholder="Enter your username or email"
+                    placeholder={t('form.usernamePlaceholder')}
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
                   />
@@ -176,7 +180,7 @@ export default function LoginPage() {
                 {/* Password */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Password
+                    {t('form.passwordLabel')}
                   </label>
                   <input
                     type="password"
@@ -184,7 +188,7 @@ export default function LoginPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Enter your password"
+                    placeholder={t('form.passwordPlaceholder')}
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
                   />
@@ -200,39 +204,20 @@ export default function LoginPage() {
                       onChange={handleChange}
                       className="w-4 h-4 text-[#94B4C1] border-gray-300 rounded focus:ring-[#94B4C1]"
                     />
-                    <span className="text-sm text-gray-700">Remember me</span>
+                    <span className="text-sm text-gray-700">{t('form.rememberMe')}</span>
                   </label>
                   <Link href="/forgot-password" className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium">
-                    Forgot Password?
+                    {t('form.forgotPassword')}
                   </Link>
-                </div>
-              
-
-                {/* Language */}
-                <div>
-                  <label htmlFor="language" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Language
-                  </label>
-                  <select
-                    id="language"
-                    name="language"
-                    value={formData.language}
-                    onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all appearance-none bg-white cursor-pointer"
-                  >
-                    <option value="English">English</option>
-                    <option value="Sinhala">Sinhala</option>
-                    <option value="Tamil">Tamil</option>
-                  </select>
                 </div>
 
                 {/* Use my location */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Use my location?
+                    {t('form.locationQuestion')}
                   </label>
                   <p className="text-xs text-gray-600 mb-2">
-                    Allowing location access helps find nearby hospitals.
+                    {t('form.locationHelp')}
                   </p>
                   <div className="flex gap-3">
                     <button
@@ -243,7 +228,7 @@ export default function LoginPage() {
                         : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
                         }`}
                     >
-                      Yes
+                      {t('form.yes')}
                     </button>
                     <button
                       type="button"
@@ -253,7 +238,7 @@ export default function LoginPage() {
                         : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#94B4C1]'
                         }`}
                     >
-                      No
+                      {t('form.no')}
                     </button>
                   </div>
                 </div>
@@ -264,7 +249,7 @@ export default function LoginPage() {
                   disabled={loading}
                   className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? t('form.loggingIn') : t('form.login')}
                 </button>
               </form>
             </div>

@@ -1,12 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '@/i18n/navigation';
 import { authApi, ApiError } from '@/app/api/auth/authApi';
+import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 
 export default function SuperAdminLoginPage() {
+  const t = useTranslations('superAdminLogin');
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -32,7 +34,7 @@ export default function SuperAdminLoginPage() {
     } catch (err: unknown) {
       if (err instanceof ApiError) setError(err.message);
       else if (err instanceof Error) setError(err.message);
-      else setError('An unexpected error occurred. Please try again.');
+      else setError(t('errors.unexpected'));
     } finally {
       setLoading(false);
     }
@@ -59,27 +61,30 @@ export default function SuperAdminLoginPage() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">Suwapatha</span>
+            <span className="text-xl font-bold text-gray-900">{t('brand')}</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Home
+              {t('nav.home')}
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              About
+              {t('nav.about')}
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
 
-          <Link
-            href="/"
-            className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
-          >
-            Get Started
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link
+              href="/"
+              className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
+            >
+              {t('nav.getStarted')}
+            </Link>
+          </div>
         </div>
       </nav>
       <br></br>
@@ -93,7 +98,7 @@ export default function SuperAdminLoginPage() {
             <div className="relative rounded-xl overflow-hidden border-4 border-[#94B4C1]/30 hidden lg:block min-h-[600px]">
               <Image
                 src="/doctor-patient.jpg"   
-                alt="Super Admin Dashboard"
+                alt={t('imageAlt')}
                 fill
                 className="object-cover"
                 priority
@@ -108,11 +113,11 @@ export default function SuperAdminLoginPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 01-5.356-1.857M17 20H7m5-2v-2a3 3 0 00-3-3H8a3 3 0 00-3 3v2M12 4a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h1 className="text-2xl font-bold text-[#94B4C1]">Suwapatha</h1>
+                <h1 className="text-2xl font-bold text-[#94B4C1]">{t('brand')}</h1>
               </div>
 <br></br>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Super Admin Login</h2>
-              <p className="text-sm text-gray-600 mb-6">Access the system administration panel</p>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{t('title')}</h2>
+              <p className="text-sm text-gray-600 mb-6">{t('subtitle')}</p>
 
               {error && (
                 <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-2">
@@ -126,7 +131,7 @@ export default function SuperAdminLoginPage() {
               <form onSubmit={handleSubmit} className="space-y-5 flex-1 flex flex-col">
                 <div>
                   <label htmlFor="usernameOrEmail" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Email Address
+                    {t('form.emailLabel')}
                   </label>
                   <input
                     type="email"
@@ -134,7 +139,7 @@ export default function SuperAdminLoginPage() {
                     name="usernameOrEmail"
                     value={formData.usernameOrEmail}
                     onChange={handleChange}
-                    placeholder="Enter your email"
+                    placeholder={t('form.emailPlaceholder')}
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
                     disabled={loading}
@@ -143,7 +148,7 @@ export default function SuperAdminLoginPage() {
 
                 <div>
                   <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Password
+                    {t('form.passwordLabel')}
                   </label>
                   <input
                     type="password"
@@ -151,7 +156,7 @@ export default function SuperAdminLoginPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Enter your password"
+                    placeholder={t('form.passwordPlaceholder')}
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                     required
                     disabled={loading}
@@ -168,11 +173,11 @@ export default function SuperAdminLoginPage() {
                       className="w-4 h-4 text-[#94B4C1] border-gray-300 rounded focus:ring-[#94B4C1]"
                       disabled={loading}
                     />
-                    <span className="text-sm text-gray-700">Remember me</span>
+                    <span className="text-sm text-gray-700">{t('form.rememberMe')}</span>
                   </label>
 
                   <Link href="/forgot-password" className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium">
-                    Forgot Password?
+                    {t('form.forgotPassword')}
                   </Link>
                 
                 </div>
@@ -182,7 +187,7 @@ export default function SuperAdminLoginPage() {
                   disabled={loading}
                   className={`w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg text-sm mt-auto ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#7fa8b8]'}`}
                 >
-                  {loading ? 'Signing in...' : 'Login as Super Admin'}
+                  {loading ? t('form.signingIn') : t('form.loginButton')}
                 </button>
 
               </form>

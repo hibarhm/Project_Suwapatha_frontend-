@@ -1,9 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 import DoctorLayout from '@/app/components/doctorLayout';
 import { doctorApi, DoctorAvailability } from '@/app/api/doctor/doctorApi';
 import API_BASE_URL from '@/app/api/api';
+import RequireRole from '@/app/components/RequireRole';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface DashboardStats {
@@ -48,6 +50,7 @@ interface Notification {
 }
 
 export default function DoctorDashboard() {
+  const t = useTranslations('doctorDashboard');
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -90,7 +93,7 @@ export default function DoctorDashboard() {
 
       const user = JSON.parse(storedUser);
       if (user.role !== 'DOCTOR') {
-        setError('Unauthorized: Access restricted to doctors.');
+        setError(t('errors.unauthorized'));
         setLoading(false);
         return;
       }
@@ -104,7 +107,7 @@ export default function DoctorDashboard() {
       ]);
     } catch (err: any) {
       console.error('Error fetching dashboard data:', err);
-      setError(err.message || 'Failed to load dashboard data. Please try again later.');
+      setError(err.message || t('errors.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -235,7 +238,7 @@ export default function DoctorDashboard() {
       setAvailability(data);
     } catch (err) {
       console.error('Error toggling availability:', err);
-      alert('Failed to update availability status.');
+      alert(t('errors.updateAvailabilityFailed'));
     } finally {
       setIsToggling(false);
     }
@@ -308,7 +311,7 @@ export default function DoctorDashboard() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading dashboard...</p>
+            <p className="mt-4 text-gray-600">{t('loading')}</p>
           </div>
         </div>
       </DoctorLayout>
@@ -323,13 +326,13 @@ export default function DoctorDashboard() {
             <svg className="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Error Loading Dashboard</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('errorTitle')}</h3>
             <p className="text-gray-600 mb-4">{error}</p>
             <button
               onClick={fetchAllData}
               className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors"
             >
-              Try Again
+              {t('tryAgain')}
             </button>
           </div>
         </div>
@@ -339,22 +342,22 @@ export default function DoctorDashboard() {
 
   // Sample data for charts (would come from backend in production)
   const patientVisitsData = [
-    { month: 'Jan', count: 245 },
-    { month: 'Feb', count: 280 },
-    { month: 'Mar', count: 265 },
-    { month: 'Apr', count: 310 },
-    { month: 'May', count: 290 },
-    { month: 'Jun', count: 330 }
+    { month: t('months.jan'), count: 245 },
+    { month: t('months.feb'), count: 280 },
+    { month: t('months.mar'), count: 265 },
+    { month: t('months.apr'), count: 310 },
+    { month: t('months.may'), count: 290 },
+    { month: t('months.jun'), count: 330 }
   ];
 
   const consultationsByDay = [
-    { day: 'Mon', count: 28 },
-    { day: 'Tue', count: 32 },
-    { day: 'Wed', count: 25 },
-    { day: 'Thu', count: 30 },
-    { day: 'Fri', count: 35 },
-    { day: 'Sat', count: 20 },
-    { day: 'Sun', count: 15 }
+    { day: t('days.mon'), count: 28 },
+    { day: t('days.tue'), count: 32 },
+    { day: t('days.wed'), count: 25 },
+    { day: t('days.thu'), count: 30 },
+    { day: t('days.fri'), count: 35 },
+    { day: t('days.sat'), count: 20 },
+    { day: t('days.sun'), count: 15 }
   ];
 
   const getNotificationIcon = (type: string) => {
@@ -386,15 +389,31 @@ export default function DoctorDashboard() {
     }
   };
 
+  const getAppointmentStatusLabel = (status: string) => {
+    switch (status) {
+      case 'BOOKED':
+        return t('appointments.status.booked');
+      case 'COMPLETED':
+        return t('appointments.status.completed');
+      case 'CANCELLED':
+        return t('appointments.status.cancelled');
+      case 'CHECKED_IN':
+        return t('appointments.status.checkedIn');
+      default:
+        return status;
+    }
+  };
+
   return (
-    <DoctorLayout>
-      <div className="p-6">
+    <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+      <DoctorLayout>
+        <div className="p-6">
         {/* Welcome Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, Dr. {profile?.lastName || 'Doctor'}!
+            {t('welcome', {name: profile?.lastName || t('doctorFallback')})}
           </h1>
-          <p className="text-gray-600 mt-1">Here's what's happening with your patients today.</p>
+          <p className="text-gray-600 mt-1">{t('subtitle')}</p>
         </div>
 
         {/* Availability Toggle */}
@@ -407,11 +426,11 @@ export default function DoctorDashboard() {
               </svg>
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Today's Attendance</h2>
+              <h2 className="text-lg font-bold text-gray-900">{t('attendance.title')}</h2>
               <p className="text-sm text-gray-600">
                 {availability?.available
-                  ? "You are marked as ACTIVE for today's OPD session."
-                  : "Mark yourself active to let the admin know you're here."}
+                  ? t('attendance.activeText')
+                  : t('attendance.inactiveText')}
               </p>
             </div>
           </div>
@@ -426,7 +445,7 @@ export default function DoctorDashboard() {
             {isToggling ? (
               <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
             ) : null}
-            {availability?.available ? 'Mark as Out (End Session)' : 'Mark as Available'}
+            {availability?.available ? t('attendance.markOut') : t('attendance.markAvailable')}
           </button>
         </div>
 
@@ -435,42 +454,42 @@ export default function DoctorDashboard() {
           {/* Total Patients Today */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Total Patients Today</p>
+              <p className="text-sm text-gray-600">{t('stats.totalPatientsToday')}</p>
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
             <p className="text-4xl font-bold text-[#94B4C1] mb-2">{stats.totalPatientsToday}</p>
             <p className={`text-sm ${stats.changeFromYesterday >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {stats.changeFromYesterday >= 0 ? '+' : ''}{stats.changeFromYesterday} since yesterday
+              {t('stats.sinceYesterday', {value: `${stats.changeFromYesterday >= 0 ? '+' : ''}${stats.changeFromYesterday}`})}
             </p>
           </div>
 
           {/* Consultations This Week */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Consultations This Week</p>
+              <p className="text-sm text-gray-600">{t('stats.consultationsThisWeek')}</p>
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <p className="text-4xl font-bold text-[#94B4C1] mb-2">{stats.consultationsThisWeek}</p>
             <p className={`text-sm ${stats.changeFromLastWeek >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {stats.changeFromLastWeek >= 0 ? '+' : ''}{stats.changeFromLastWeek}% from last week
+              {t('stats.fromLastWeek', {value: `${stats.changeFromLastWeek >= 0 ? '+' : ''}${stats.changeFromLastWeek}`})}
             </p>
           </div>
 
           {/* Average Wait Time */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Average Wait Time</p>
+              <p className="text-sm text-gray-600">{t('stats.averageWaitTime')}</p>
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-4xl font-bold text-[#94B4C1] mb-2">{stats.averageWaitTime} min</p>
+            <p className="text-4xl font-bold text-[#94B4C1] mb-2">{t('stats.waitMins', {value: stats.averageWaitTime})}</p>
             <p className={`text-sm ${stats.changeFromLastMonth <= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {stats.changeFromLastMonth >= 0 ? '+' : ''}{stats.changeFromLastMonth} min from last month
+              {t('stats.fromLastMonth', {value: `${stats.changeFromLastMonth >= 0 ? '+' : ''}${stats.changeFromLastMonth}`})}
             </p>
           </div>
         </div>
@@ -480,12 +499,12 @@ export default function DoctorDashboard() {
           {/* Patient Visits Over Time */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Patient Visits Over Time</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('charts.patientVisits')}</h3>
               <button
                 onClick={fetchAllData}
                 className="px-3 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors"
               >
-                Refresh
+                {t('refresh')}
               </button>
             </div>
 
@@ -520,12 +539,12 @@ export default function DoctorDashboard() {
           {/* Consultations by Day */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Consultations by Day</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('charts.consultationsByDay')}</h3>
               <button
                 onClick={fetchAllData}
                 className="px-3 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors"
               >
-                Refresh
+                {t('refresh')}
               </button>
             </div>
 
@@ -536,7 +555,7 @@ export default function DoctorDashboard() {
                   <div
                     className="w-full bg-[#94B4C1] rounded-t transition-all hover:bg-[#7fa8b8] cursor-pointer"
                     style={{ height: `${(day.count / 35) * 100}%` }}
-                    title={`${day.count} consultations`}
+                    title={t('charts.consultationsTitle', {count: day.count})}
                   ></div>
                   <span className="text-xs text-gray-600">{day.day}</span>
                 </div>
@@ -550,23 +569,23 @@ export default function DoctorDashboard() {
           {/* Today's Appointments */}
           <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Today's Appointments</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('appointments.title')}</h3>
               <button
                 onClick={fetchTodayAppointments}
                 className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
               >
-                Refresh
+                {t('refresh')}
               </button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Patient Name</th>
-                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Queue No.</th>
-                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Hospital</th>
-                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Status</th>
-                    <th className="text-right py-3 px-3 text-sm font-semibold text-gray-600">Actions</th>
+                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">{t('appointments.table.patientName')}</th>
+                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">{t('appointments.table.queueNo')}</th>
+                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">{t('appointments.table.hospital')}</th>
+                    <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">{t('appointments.table.status')}</th>
+                    <th className="text-right py-3 px-3 text-sm font-semibold text-gray-600">{t('appointments.table.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -590,7 +609,7 @@ export default function DoctorDashboard() {
                               ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-800'
                             }`}>
-                            {appointment.status}
+                            {getAppointmentStatusLabel(appointment.status)}
                           </span>
                         </td>
                         <td className="py-4 px-3">
@@ -598,7 +617,7 @@ export default function DoctorDashboard() {
                             <button
                               onClick={() => router.push(`/doctor/consultation/${appointment.id}`)}
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
-                              title="Start Consultation"
+                              title={t('appointments.actions.startConsultation')}
                             >
                               <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -607,7 +626,7 @@ export default function DoctorDashboard() {
                             </button>
                             <button
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
-                              title="View Details"
+                              title={t('appointments.actions.viewDetails')}
                             >
                               <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -624,8 +643,8 @@ export default function DoctorDashboard() {
                         <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <p className="text-gray-500 text-sm font-medium">No appointments for today</p>
-                        <p className="text-gray-400 text-xs mt-1">Your schedule is clear</p>
+                        <p className="text-gray-500 text-sm font-medium">{t('appointments.emptyTitle')}</p>
+                        <p className="text-gray-400 text-xs mt-1">{t('appointments.emptySubtitle')}</p>
                       </td>
                     </tr>
                   )}
@@ -637,13 +656,13 @@ export default function DoctorDashboard() {
           {/* Notifications & Alerts */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Notifications</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('notifications.title')}</h3>
               {notifications.length > 0 && (
                 <button
                   onClick={fetchNotifications}
                   className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                 >
-                  Refresh
+                  {t('refresh')}
                 </button>
               )}
             </div>
@@ -690,14 +709,15 @@ export default function DoctorDashboard() {
                   <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
-                  <p className="text-gray-500 text-sm font-medium">No notifications</p>
-                  <p className="text-gray-400 text-xs mt-1">You're all caught up!</p>
+                  <p className="text-gray-500 text-sm font-medium">{t('notifications.emptyTitle')}</p>
+                  <p className="text-gray-400 text-xs mt-1">{t('notifications.emptySubtitle')}</p>
                 </div>
               )}
             </div>
           </div>
         </div>
-      </div>
-    </DoctorLayout>
+        </div>
+      </DoctorLayout>
+    </RequireRole>
   );
 }

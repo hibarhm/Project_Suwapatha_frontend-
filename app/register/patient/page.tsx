@@ -1,12 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '@/i18n/navigation';
 import { authApi, ApiError } from '../../api/auth/authApi';
+import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 
 export default function PatientRegisterPage() {
+  const t = useTranslations('patientRegister');
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
@@ -29,48 +31,48 @@ export default function PatientRegisterPage() {
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('errors.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = t('errors.invalidEmail');
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('errors.passwordRequired');
     } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('errors.passwordLength');
     }
 
     // First name validation
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
+      newErrors.firstName = t('errors.firstNameRequired');
     }
 
     // Last name validation
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
+      newErrors.lastName = t('errors.lastNameRequired');
     }
 
     // Date of birth validation
     if (!formData.dateOfBirth) {
-      newErrors.dateOfBirth = 'Date of birth is required';
+      newErrors.dateOfBirth = t('errors.dateOfBirthRequired');
     }
 
     // Gender validation
     if (!formData.gender) {
-      newErrors.gender = 'Gender is required';
+      newErrors.gender = t('errors.genderRequired');
     }
 
     // Phone number validation
     if (!formData.phoneNumber) {
-      newErrors.phoneNumber = 'Phone number is required';
+      newErrors.phoneNumber = t('errors.phoneRequired');
     } else if (!/^[0-9]{10}$/.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = 'Phone number must be 10 digits';
+      newErrors.phoneNumber = t('errors.phoneDigits');
     }
 
     // Address validation
     if (!formData.address.trim()) {
-      newErrors.address = 'Address is required';
+      newErrors.address = t('errors.addressRequired');
     }
 
     setErrors(newErrors);
@@ -95,7 +97,7 @@ export default function PatientRegisterPage() {
       if (error instanceof ApiError) {
         setApiError(error.message);
       } else {
-        setApiError('An unexpected error occurred. Please try again.');
+        setApiError(t('errors.unexpected'));
       }
       console.error('Registration error:', error);
     } finally {
@@ -134,25 +136,28 @@ export default function PatientRegisterPage() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">Suwapatha</span>
+            <span className="text-xl font-bold text-gray-900">{t('brand')}</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Home
+              {t('nav.home')}
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              About
+              {t('nav.about')}
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
-          <Link
-            href="/"
-            className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
-          >
-            Get Started
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link
+              href="/"
+              className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
+            >
+              {t('nav.getStarted')}
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -164,7 +169,7 @@ export default function PatientRegisterPage() {
             <div className="relative h-[500px] lg:h-[780px] rounded-xl overflow-hidden">
               <Image
                 src="/surgery.jpg"
-                alt="Medical professionals in surgery"
+                alt={t('imageAlt')}
                 fill
                 className="object-cover"
                 priority
@@ -184,10 +189,10 @@ export default function PatientRegisterPage() {
                     />
                   </svg>
                 </div>
-                <h1 className="text-2xl font-bold text-[#94B4C1]">Suwapatha</h1>
+                <h1 className="text-2xl font-bold text-[#94B4C1]">{t('brand')}</h1>
               </div>
 
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Patient Registration</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-6">{t('title')}</h2>
 
               {apiError && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4">
@@ -200,7 +205,7 @@ export default function PatientRegisterPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      First Name *
+                      {t('form.firstName')}
                     </label>
                     <input
                       type="text"
@@ -208,7 +213,7 @@ export default function PatientRegisterPage() {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="John"
+                      placeholder={t('form.firstNamePlaceholder')}
                       className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.firstName ? 'border-red-500' : 'border-gray-300'
                         }`}
                     />
@@ -217,7 +222,7 @@ export default function PatientRegisterPage() {
 
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      Last Name *
+                      {t('form.lastName')}
                     </label>
                     <input
                       type="text"
@@ -225,7 +230,7 @@ export default function PatientRegisterPage() {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Doe"
+                      placeholder={t('form.lastNamePlaceholder')}
                       className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.lastName ? 'border-red-500' : 'border-gray-300'
                         }`}
                     />
@@ -236,7 +241,7 @@ export default function PatientRegisterPage() {
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Email Address *
+                    {t('form.email')}
                   </label>
                   <input
                     type="email"
@@ -244,7 +249,7 @@ export default function PatientRegisterPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john.doe@example.com"
+                    placeholder={t('form.emailPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
@@ -254,7 +259,7 @@ export default function PatientRegisterPage() {
                 {/* Password */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Password *
+                    {t('form.password')}
                   </label>
                   <input
                     type="password"
@@ -262,7 +267,7 @@ export default function PatientRegisterPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Minimum 8 characters"
+                    placeholder={t('form.passwordPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.password ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
@@ -272,7 +277,7 @@ export default function PatientRegisterPage() {
                 {/* Phone Number */}
                 <div>
                   <label htmlFor="phoneNumber" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Phone Number *
+                    {t('form.phoneNumber')}
                   </label>
                   <input
                     type="tel"
@@ -280,20 +285,20 @@ export default function PatientRegisterPage() {
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    placeholder="0771234567"
+                    placeholder={t('form.phonePlaceholder')}
                     maxLength={10}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
                   {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
-                  <p className="text-xs text-gray-500 mt-1">Enter 10 digits (e.g., 0771234567)</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('form.phoneHint')}</p>
                 </div>
 
                 {/* Date of Birth & Gender */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="dateOfBirth" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      Date of Birth *
+                      {t('form.dateOfBirth')}
                     </label>
                     <input
                       type="date"
@@ -309,7 +314,7 @@ export default function PatientRegisterPage() {
 
                   <div>
                     <label htmlFor="gender" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      Gender *
+                      {t('form.gender')}
                     </label>
                     <select
                       id="gender"
@@ -319,9 +324,9 @@ export default function PatientRegisterPage() {
                       className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all appearance-none bg-white cursor-pointer ${errors.gender ? 'border-red-500' : 'border-gray-300'
                         }`}
                     >
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
+                      <option value="Male">{t('form.genderMale')}</option>
+                      <option value="Female">{t('form.genderFemale')}</option>
+                      <option value="Other">{t('form.genderOther')}</option>
                     </select>
                     {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
                   </div>
@@ -330,14 +335,14 @@ export default function PatientRegisterPage() {
                 {/* Address */}
                 <div>
                   <label htmlFor="address" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Address *
+                    {t('form.address')}
                   </label>
                   <textarea
                     id="address"
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    placeholder="123 Main Street, Colombo 07"
+                    placeholder={t('form.addressPlaceholder')}
                     rows={2}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all resize-none ${errors.address ? 'border-red-500' : 'border-gray-300'
                       }`}
@@ -348,7 +353,7 @@ export default function PatientRegisterPage() {
                 {/* Emergency Contact */}
                 <div>
                   <label htmlFor="emergencyContact" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Emergency Contact (Optional)
+                    {t('form.emergencyContact')}
                   </label>
                   <input
                     type="text"
@@ -356,7 +361,7 @@ export default function PatientRegisterPage() {
                     name="emergencyContact"
                     value={formData.emergencyContact}
                     onChange={handleChange}
-                    placeholder="Name and phone number"
+                    placeholder={t('form.emergencyContactPlaceholder')}
                     className="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all"
                   />
                 </div>
@@ -367,14 +372,14 @@ export default function PatientRegisterPage() {
                   disabled={isSubmitting}
                   className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Registering...' : 'Register'}
+                  {isSubmitting ? t('form.registering') : t('form.register')}
                 </button>
 
                 {/* Login Link */}
                 <p className="text-center text-sm text-gray-600 pt-1">
-                  Already registered?{' '}
+                  {t('form.alreadyRegistered')}{' '}
                   <Link href="/login" className="text-[#94B4C1] hover:text-[#7fa8b8] font-medium">
-                    Log in
+                    {t('form.loginLink')}
                   </Link>
                 </p>
               </form>

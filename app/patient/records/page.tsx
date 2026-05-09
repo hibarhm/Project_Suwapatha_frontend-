@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import {useTranslations} from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import PatientLayout from '@/app/components/patientLayout';
 import API_BASE_URL from '@/app/api/api';
 
@@ -23,6 +24,7 @@ interface MedicalVisit {
 }
 
 export default function MedicalRecordsPage() {
+  const t = useTranslations('patientRecords');
   const router = useRouter();
   const [expandedVisit, setExpandedVisit] = useState<string | null>(null);
   const [dateRange, setDateRange] = useState('');
@@ -92,7 +94,7 @@ export default function MedicalRecordsPage() {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch medical records');
+        throw new Error(t('errors.fetchFailed'));
       }
 
       const data = await response.json();
@@ -100,7 +102,7 @@ export default function MedicalRecordsPage() {
       setError('');
     } catch (err) {
       console.error('Error fetching medical records:', err);
-      setError('Failed to load medical records. Please try again.');
+      setError(t('errors.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -132,7 +134,7 @@ export default function MedicalRecordsPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to filter medical records');
+        throw new Error(t('errors.filterFailed'));
       }
 
       const data = await response.json();
@@ -140,7 +142,7 @@ export default function MedicalRecordsPage() {
       setError('');
     } catch (err) {
       console.error('Error filtering medical records:', err);
-      setError('Failed to filter medical records. Please try again.');
+      setError(t('errors.filterLoadFailed'));
     } finally {
       setLoading(false);
     }
@@ -172,17 +174,17 @@ export default function MedicalRecordsPage() {
   // Download PDF handler
   const handleDownloadVisitPDF = async (visitId: string) => {
     // Implement PDF download logic
-    alert(`Downloading PDF for visit ${visitId}`);
+    alert(t('alerts.downloadVisit', {visitId}));
   };
 
   const handleDownloadAllPDF = async () => {
     // Implement download all logic
-    alert('Downloading all medical records as PDF');
+    alert(t('alerts.downloadAll'));
   };
 
   const handleShareLink = () => {
     // Implement share functionality
-    alert('Share link functionality');
+    alert(t('alerts.shareLink'));
   };
 
   if (loading) {
@@ -191,7 +193,7 @@ export default function MedicalRecordsPage() {
         <div className="p-8 flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading medical records...</p>
+            <p className="mt-4 text-gray-600">{t('loading')}</p>
           </div>
         </div>
       </PatientLayout>
@@ -216,7 +218,7 @@ export default function MedicalRecordsPage() {
             </svg>
             <input
               type="text"
-              placeholder="Select a date range"
+              placeholder={t('filters.dateRange')}
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
               className="outline-none bg-transparent text-gray-700 min-w-[160px]"
@@ -227,20 +229,20 @@ export default function MedicalRecordsPage() {
             onChange={(e) => setSelectedHospital(e.target.value)}
             className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
-            <option value="">Select Hospital</option>
-            <option value="Central Hospital">Central Hospital</option>
-            <option value="District Clinic">District Clinic</option>
-            <option value="General Hospital">General Hospital</option>
+            <option value="">{t('filters.selectHospital')}</option>
+            <option value="Central Hospital">{t('filters.hospital1')}</option>
+            <option value="District Clinic">{t('filters.hospital2')}</option>
+            <option value="General Hospital">{t('filters.hospital3')}</option>
           </select>
           <select
             value={selectedVisitType}
             onChange={(e) => setSelectedVisitType(e.target.value)}
             className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
-            <option value="">Select Visit Type</option>
-            <option value="routine">Routine Check-up</option>
-            <option value="followup">Follow-up</option>
-            <option value="emergency">Emergency</option>
+            <option value="">{t('filters.selectVisitType')}</option>
+            <option value="routine">{t('filters.visitRoutine')}</option>
+            <option value="followup">{t('filters.visitFollowup')}</option>
+            <option value="emergency">{t('filters.visitEmergency')}</option>
           </select>
           <button
             onClick={clearFilters}
@@ -249,15 +251,15 @@ export default function MedicalRecordsPage() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-            Clear Filters
+            {t('filters.clear')}
           </button>
         </div>
 
         {/* Patient Info & Actions */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{patientName || 'Loading...'}</h1>
-            <p className="text-sm text-gray-600">Patient ID: {patientId || 'Loading...'}</p>
+            <h1 className="text-2xl font-bold text-gray-900">{patientName || t('common.loading')}</h1>
+            <p className="text-sm text-gray-600">{t('patientId', {id: patientId || t('common.loading')})}</p>
           </div>
           <div className="flex items-center gap-3">
             <button
@@ -267,7 +269,7 @@ export default function MedicalRecordsPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Download All PDF
+              {t('actions.downloadAllPdf')}
             </button>
             <button
               onClick={handleShareLink}
@@ -276,7 +278,7 @@ export default function MedicalRecordsPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
               </svg>
-              Share link
+              {t('actions.shareLink')}
             </button>
           </div>
         </div>
@@ -287,8 +289,8 @@ export default function MedicalRecordsPage() {
             <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Medical Records Found</h3>
-            <p className="text-gray-600">You don't have any medical records yet.</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('empty.title')}</h3>
+            <p className="text-gray-600">{t('empty.subtitle')}</p>
           </div>
         )}
 
@@ -325,7 +327,7 @@ export default function MedicalRecordsPage() {
                   </div>
                   {visit.followUpRequired && (
                     <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
-                      Follow-up Required
+                      {t('visit.followUpRequired')}
                     </span>
                   )}
                 </div>
@@ -347,14 +349,14 @@ export default function MedicalRecordsPage() {
                 <div className="px-6 pb-6 space-y-6 border-t border-gray-200 pt-6">
                   {/* Consultation Notes */}
                   <div>
-                    <h4 className="text-base font-bold text-gray-900 mb-2">Consultation Notes</h4>
+                    <h4 className="text-base font-bold text-gray-900 mb-2">{t('visit.consultationNotes')}</h4>
                     <p className="text-sm text-gray-700 leading-relaxed">{visit.consultationNotes}</p>
                   </div>
 
                   {/* Prescriptions */}
                   {visit.prescriptions && visit.prescriptions.length > 0 && (
                     <div>
-                      <h4 className="text-base font-bold text-gray-900 mb-3">Prescriptions</h4>
+                      <h4 className="text-base font-bold text-gray-900 mb-3">{t('visit.prescriptions')}</h4>
                       <div className="space-y-2">
                         {visit.prescriptions.map((prescription, index) => (
                           <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
@@ -368,7 +370,7 @@ export default function MedicalRecordsPage() {
 
                   {/* Lab Reports & Images */}
                   <div>
-                    <h4 className="text-base font-bold text-gray-900 mb-3">Lab Reports & Images</h4>
+                    <h4 className="text-base font-bold text-gray-900 mb-3">{t('visit.labReports')}</h4>
                     <div className="flex gap-3 flex-wrap">
                       {Array.from({ length: visit.labReports }).map((_, index) => (
                         <div
@@ -388,7 +390,7 @@ export default function MedicalRecordsPage() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                      Download Visit PDF
+                      {t('actions.downloadVisitPdf')}
                     </button>
                   </div>
                 </div>

@@ -1,8 +1,11 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/navigation';
 import Navbar from './components/Navbar';
 
 export default function Home() {
+  const t = useTranslations('home');
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -13,16 +16,16 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-5">
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-[#19183B]">
-                Seamless Healthcare,{' '}
-                <span className="text-[#94B4C1]">Simplified for You</span>
+                {t('hero.title')}{' '}
+                <span className="text-[#94B4C1]">{t('hero.titleHighlight')}</span>
               </h1>
               <p className="text-base text-gray-600 leading-relaxed max-w-xl">
-                Connecting patients, doctors, and administrators through a unified, efficient, and compassionate digital health platform.
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-wrap gap-3 pt-3">
                 <Link href="/register/patient">
                   <button className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 px-5 py-2.5 rounded-lg font-medium text-gray-900 transition-colors border border-gray-200 text-sm">
-                    As Patient
+                    {t('hero.asPatient')}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -30,7 +33,7 @@ export default function Home() {
                 </Link>
                 <Link href="/register/doctor">
                   <button className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 px-5 py-2.5 rounded-lg font-medium text-gray-900 transition-colors border border-gray-200 text-sm">
-                    As Doctor
+                    {t('hero.asDoctor')}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -47,7 +50,7 @@ export default function Home() {
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="/doctors.png"
-                  alt="Doctors"
+                  alt={t('hero.doctorsImageAlt')}
                   width={800}
                   height={600}
                   className="w-full h-full object-cover"
@@ -68,7 +71,7 @@ export default function Home() {
         </div>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold text-white text-center mb-12">
-            Key Features Designed For You
+            {t('features.title')}
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Feature 1 */}
@@ -79,10 +82,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900">
-                Unified OPD Channeling
+                {t('features.unified.title')}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Access a seamless system for booking Outpatient Department appointments across various hospitals.
+                {t('features.unified.description')}
               </p>
             </div>
 
@@ -94,10 +97,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900">
-                Real-time Queue Status
+                {t('features.queue.title')}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Stay informed with live updates on queue times, reducing waiting periods and enhancing convenience.
+                {t('features.queue.description')}
               </p>
             </div>
 
@@ -109,10 +112,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900">
-                Continuity of Care
+                {t('features.care.title')}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Securely manage your health records and ensure consistent care across different medical practitioners.
+                {t('features.care.description')}
               </p>
             </div>
 
@@ -124,10 +127,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900">
-                Multilingual Support
+                {t('features.multilingual.title')}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Experience the platform in Sinhala, Tamil, and English for inclusive and accessible healthcare.
+                {t('features.multilingual.description')}
               </p>
             </div>
           </div>
@@ -138,7 +141,7 @@ export default function Home() {
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-16">
-            Your 3-Step Guide to Easy OPD Booking
+            {t('steps.title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
             {/* Step 1 */}
@@ -152,10 +155,10 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                  Step 1
+                  {t('steps.step1.label')}
                 </p>
                 <h3 className="text-2xl font-bold text-gray-900">
-                  Search Hospital
+                  {t('steps.step1.title')}
                 </h3>
               </div>
             </div>
@@ -171,10 +174,10 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                  Step 2
+                  {t('steps.step2.label')}
                 </p>
                 <h3 className="text-2xl font-bold text-gray-900">
-                  Select Date
+                  {t('steps.step2.title')}
                 </h3>
               </div>
             </div>
@@ -190,10 +193,10 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                  Step 3
+                  {t('steps.step3.label')}
                 </p>
                 <h3 className="text-2xl font-bold text-gray-900">
-                  Get Queue Number
+                  {t('steps.step3.title')}
                 </h3>
               </div>
             </div>
@@ -205,7 +208,7 @@ export default function Home() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-16">
-            Committed to Your Well-being
+            {t('commitment.title')}
           </h2>
           <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             {/* Left side - Trust badges */}
@@ -222,7 +225,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Government Endorsed</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{t('commitment.government')}</h3>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -232,7 +235,7 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Secure & Private</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{t('commitment.secure')}</h3>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -242,14 +245,14 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Accessible to All</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{t('commitment.accessible')}</h3>
                 </div>
               </div>
             </div>
 
             {/* Right side - Contact info */}
             <div className="bg-gray-50 rounded-2xl p-8 space-y-6">
-              <h3 className="text-2xl font-bold text-gray-900">Need Help? Contact Us</h3>
+              <h3 className="text-2xl font-bold text-gray-900">{t('contact.title')}</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -269,7 +272,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600 text-sm leading-relaxed pt-2">
-                Our support team is available 24/7 to assist you.
+                {t('contact.supportText')}
               </p>
             </div>
           </div>
@@ -291,30 +294,30 @@ export default function Home() {
             <div className="space-y-4">
               <nav className="flex flex-col space-y-3">
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Home
+                  {t('footer.home')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  About Us
+                  {t('footer.about')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Services
+                  {t('footer.services')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Contact Us
+                  {t('footer.contact')}
                 </Link>
               </nav>
             </div>
             {/* Right - Accessibility */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">Accessibility Statement</h3>
+              <h3 className="text-xl font-bold text-gray-900">{t('footer.accessibilityTitle')}</h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Committed to providing an accessible online experience.
+                {t('footer.accessibilityDescription')}
               </p>
               <Link href="#" className="inline-flex items-center gap-2 text-[#94B4C1] hover:text-[#7fa8b8] font-medium transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
-                Learn More
+                {t('footer.learnMore')}
               </Link>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { authApi } from '@/app/api/auth/authApi';
+import {stripLocalePrefix} from '@/lib/localePath';
 
 type Role = 'PATIENT' | 'DOCTOR' | 'ADMIN' | 'SUPER_ADMIN' | string;
 
@@ -17,6 +18,7 @@ export default function RequireRole({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const normalizedPathname = stripLocalePrefix(pathname ?? '/');
   const [ready, setReady] = useState(false);
 
   const allowed = useMemo(() => new Set(allowedRoles), [allowedRoles]);
@@ -33,14 +35,14 @@ export default function RequireRole({
 
     if (!allowed.has(role)) {
       // Prevent redirect loop if a user hits the login page already
-      if (!pathname?.startsWith('/login')) {
+      if (!normalizedPathname.startsWith('/login')) {
         router.replace(redirectTo);
       }
       return;
     }
 
     setReady(true);
-  }, [allowed, pathname, redirectTo, router]);
+  }, [allowed, normalizedPathname, redirectTo, router]);
 
   if (!ready) {
     return (

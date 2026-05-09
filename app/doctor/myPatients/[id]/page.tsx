@@ -1,11 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
+import { useParams } from 'next/navigation';
 import DoctorLayout from '@/app/components/doctorLayout';
 import { doctorApi, PatientDetails } from '@/app/api/doctor/doctorApi';
+import RequireRole from '@/app/components/RequireRole';
 
 export default function PatientDetailsPage() {
+  const t = useTranslations('doctorPatientDetails');
   const router = useRouter();
   const params = useParams();
   const patientRecordId = params.id as string;
@@ -54,7 +58,7 @@ export default function PatientDetailsPage() {
       setError(null);
     } catch (err: any) {
       console.error('Error fetching patient details:', err);
-      setError(err.message || 'Failed to load patient details.');
+      setError(err.message || t('errors.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -80,7 +84,7 @@ export default function PatientDetailsPage() {
 
   const handleSaveConsultation = async () => {
     if (!currentDiagnosis || !currentNotes) {
-      alert('Please enter diagnosis and consultation notes');
+      alert(t('alerts.enterDiagnosisAndNotes'));
       return;
     }
 
@@ -106,7 +110,7 @@ export default function PatientDetailsPage() {
         followUpRequired: false // Default
       });
 
-      alert('Consultation saved successfully!');
+      alert(t('alerts.consultationSaved'));
       setIsEditing(false);
       setCurrentDiagnosis('');
       setCurrentNotes('');
@@ -114,7 +118,7 @@ export default function PatientDetailsPage() {
       fetchPatientDetails(); // Refresh history
     } catch (err: any) {
       console.error('Error saving consultation:', err);
-      alert(err.message || 'Failed to save consultation. Please try again.');
+      alert(err.message || t('alerts.saveFailed'));
     } finally {
       setLoading(false);
     }
@@ -124,29 +128,41 @@ export default function PatientDetailsPage() {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
+  const getPrescriptionStatusLabel = (status: string) => {
+    if (status === 'Active' || status === 'ACTIVE') {
+      return t('status.active');
+    }
+    return status;
+  };
+
   if (loading && !patient) {
     return (
-      <DoctorLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-400"></div>
-        </div>
-      </DoctorLayout>
+      <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+        <DoctorLayout>
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-400"></div>
+          </div>
+        </DoctorLayout>
+      </RequireRole>
     );
   }
 
   if (error || !patient) {
     return (
-      <DoctorLayout>
-        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
-          {error || 'Patient not found'}
-          <button onClick={() => router.back()} className="ml-4 underline">Go Back</button>
-        </div>
-      </DoctorLayout>
+      <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+        <DoctorLayout>
+          <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
+            {error || t('errors.patientNotFound')}
+            <button onClick={() => router.back()} className="ml-4 underline">{t('goBack')}</button>
+          </div>
+        </DoctorLayout>
+      </RequireRole>
     );
   }
 
   return (
-    <DoctorLayout>
+    <RequireRole allowedRoles={['DOCTOR']} redirectTo="/login/doctor">
+      <DoctorLayout>
       {/* Header with Back Button */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
@@ -164,7 +180,10 @@ export default function PatientDetailsPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">{patient.name}</h1>
-              <p className="text-sm text-gray-600">Patient ID: {patient.id} {patient.queueNo ? `• Queue: ${patient.queueNo}` : ''}</p>
+              <p className="text-sm text-gray-600">
+                {t('patientId', {id: patient.id})}
+                {patient.queueNo ? ` • ${t('queue', {queue: patient.queueNo})}` : ''}
+              </p>
             </div>
           </div>
         </div>
@@ -176,13 +195,13 @@ export default function PatientDetailsPage() {
                 onClick={() => setIsEditing(false)}
                 className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 onClick={handleSaveConsultation}
                 className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
               >
-                Save Consultation
+                {t('saveConsultation')}
               </button>
             </>
           ) : (
@@ -190,7 +209,7 @@ export default function PatientDetailsPage() {
               onClick={() => setIsEditing(true)}
               className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
             >
-              Start Consultation
+              {t('startConsultation')}
             </button>
           )}
         </div>
@@ -199,19 +218,19 @@ export default function PatientDetailsPage() {
       {/* Patient Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs text-gray-600 mb-1">Age</p>
-          <p className="text-lg font-bold text-gray-900">{patient.age} years</p>
+          <p className="text-xs text-gray-600 mb-1">{t('cards.age')}</p>
+          <p className="text-lg font-bold text-gray-900">{t('cards.ageValue', {age: patient.age})}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs text-gray-600 mb-1">Gender</p>
+          <p className="text-xs text-gray-600 mb-1">{t('cards.gender')}</p>
           <p className="text-lg font-bold text-gray-900">{patient.gender}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs text-gray-600 mb-1">Blood Type</p>
+          <p className="text-xs text-gray-600 mb-1">{t('cards.bloodType')}</p>
           <p className="text-lg font-bold text-gray-900">{patient.bloodType}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs text-gray-600 mb-1">Phone</p>
+          <p className="text-xs text-gray-600 mb-1">{t('cards.phone')}</p>
           <p className="text-sm font-medium text-gray-900">{patient.phone}</p>
         </div>
       </div>
@@ -226,7 +245,7 @@ export default function PatientDetailsPage() {
               : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
-            Overview
+            {t('tabs.overview')}
           </button>
           <button
             onClick={() => setActiveTab('history')}
@@ -235,7 +254,7 @@ export default function PatientDetailsPage() {
               : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
-            Medical History
+            {t('tabs.medicalHistory')}
           </button>
           <button
             onClick={() => setActiveTab('prescriptions')}
@@ -244,7 +263,7 @@ export default function PatientDetailsPage() {
               : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
-            Prescriptions
+            {t('tabs.prescriptions')}
           </button>
         </nav>
       </div>
@@ -257,7 +276,7 @@ export default function PatientDetailsPage() {
             <>
               {/* Current Consultation */}
               <div className="bg-white rounded-xl border border-gray-200 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Current Consultation</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('currentConsultation')}</h2>
 
                 <div className="space-y-4">
                   {/* Vitals Input */}
@@ -274,7 +293,7 @@ export default function PatientDetailsPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Temp (°F)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t('vitals.temp')}</label>
                       <input
                         type="text"
                         value={vitals.temp}
@@ -296,7 +315,7 @@ export default function PatientDetailsPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t('vitals.weight')}</label>
                       <input
                         type="text"
                         value={vitals.weight}
@@ -309,26 +328,26 @@ export default function PatientDetailsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Diagnosis</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('diagnosis')}</label>
                     <textarea
                       value={currentDiagnosis}
                       onChange={(e) => setCurrentDiagnosis(e.target.value)}
                       disabled={!isEditing}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50 disabled:text-gray-600"
                       rows={3}
-                      placeholder="Enter diagnosis..."
+                      placeholder={t('diagnosisPlaceholder')}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Consultation Notes</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('consultationNotes')}</label>
                     <textarea
                       value={currentNotes}
                       onChange={(e) => setCurrentNotes(e.target.value)}
                       disabled={!isEditing}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm disabled:bg-gray-50 disabled:text-gray-600"
                       rows={6}
-                      placeholder="Enter consultation notes, observations, recommendations..."
+                      placeholder={t('consultationNotesPlaceholder')}
                     />
                   </div>
 
@@ -340,7 +359,7 @@ export default function PatientDetailsPage() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                       </svg>
-                      Add Prescription
+                      {t('addPrescription')}
                     </button>
                   )}
                 </div>
@@ -363,30 +382,30 @@ export default function PatientDetailsPage() {
                   <div className="grid grid-cols-4 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="text-xs text-gray-600">BP</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals?.bp || 'N/A'}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.bp || t('notAvailable')}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Temp</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals?.temp || 'N/A'}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.temp || t('notAvailable')}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Pulse</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals?.pulse || 'N/A'}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.pulse || t('notAvailable')}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600">Weight</p>
-                      <p className="text-sm font-medium text-gray-900">{record.vitals?.weight || 'N/A'}</p>
+                      <p className="text-sm font-medium text-gray-900">{record.vitals?.weight || t('notAvailable')}</p>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <p className="text-sm font-medium text-gray-700 mb-1">Notes:</p>
+                      <p className="text-sm font-medium text-gray-700 mb-1">{t('notes')}:</p>
                     <p className="text-sm text-gray-600">{record.consultationNotes}</p>
                   </div>
 
                   {record.prescriptions && record.prescriptions.length > 0 && (
                     <div>
-                      <p className="text-sm font-medium text-gray-700 mb-2">Prescriptions:</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">{t('prescriptions')}:</p>
                       <div className="space-y-2">
                         {record.prescriptions.map((rx: any, index: number) => (
                           <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
@@ -408,7 +427,7 @@ export default function PatientDetailsPage() {
           {activeTab === 'prescriptions' && (
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">Active Prescriptions</h2>
+                <h2 className="text-xl font-bold text-gray-900">{t('activePrescriptions')}</h2>
                 {isEditing && (
                   <button
                     onClick={() => setShowPrescriptionModal(true)}
@@ -417,7 +436,7 @@ export default function PatientDetailsPage() {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Add New
+                    {t('addNew')}
                   </button>
                 )}
               </div>
@@ -430,7 +449,7 @@ export default function PatientDetailsPage() {
                       <p className="text-sm text-gray-600">{rx.dosage} • {rx.frequency} • {rx.duration}</p>
                     </div>
                     <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
-                      {rx.status}
+                      {getPrescriptionStatusLabel(rx.status)}
                     </span>
                   </div>
                 ))}
@@ -443,19 +462,19 @@ export default function PatientDetailsPage() {
         <div className="space-y-6">
           {/* Patient Details */}
           <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Patient Details</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">{t('patientDetails')}</h3>
 
             <div className="space-y-3 text-sm">
               <div>
-                <p className="text-gray-600">Email</p>
+                <p className="text-gray-600">{t('fields.email')}</p>
                 <p className="font-medium text-gray-900">{patient.email}</p>
               </div>
               <div>
-                <p className="text-gray-600">Address</p>
+                <p className="text-gray-600">{t('fields.address')}</p>
                 <p className="font-medium text-gray-900">{patient.address}</p>
               </div>
               <div>
-                <p className="text-gray-600">Emergency Contact</p>
+                <p className="text-gray-600">{t('fields.emergencyContact')}</p>
                 <p className="font-medium text-gray-900">{patient.emergencyContact}</p>
               </div>
             </div>
@@ -464,7 +483,7 @@ export default function PatientDetailsPage() {
           {/* Allergies */}
           {patient.allergies.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Allergies</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{t('allergies')}</h3>
               <div className="space-y-2">
                 {patient.allergies.map((allergy, index) => (
                   <div key={index} className="flex items-center gap-2 p-2 bg-red-50 rounded-lg">
@@ -481,7 +500,7 @@ export default function PatientDetailsPage() {
           {/* Chronic Conditions */}
           {patient.chronicConditions.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Chronic Conditions</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{t('chronicConditions')}</h3>
               <div className="space-y-2">
                 {patient.chronicConditions.map((condition, index) => (
                   <div key={index} className="flex items-center gap-2 p-2 bg-orange-50 rounded-lg">
@@ -501,50 +520,50 @@ export default function PatientDetailsPage() {
       {showPrescriptionModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Add Prescription</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">{t('modal.addPrescription')}</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Medicine Name *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.medicineName')}</label>
                 <input
                   type="text"
                   value={newPrescription.medicine}
                   onChange={(e) => setNewPrescription({ ...newPrescription, medicine: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
-                  placeholder="e.g., Amlodipine"
+                  placeholder={t('modal.medicinePlaceholder')}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Dosage *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.dosage')}</label>
                 <input
                   type="text"
                   value={newPrescription.dosage}
                   onChange={(e) => setNewPrescription({ ...newPrescription, dosage: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
-                  placeholder="e.g., 5mg"
+                  placeholder={t('modal.dosagePlaceholder')}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Frequency</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.frequency')}</label>
                 <input
                   type="text"
                   value={newPrescription.frequency}
                   onChange={(e) => setNewPrescription({ ...newPrescription, frequency: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
-                  placeholder="e.g., Once daily"
+                  placeholder={t('modal.frequencyPlaceholder')}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.duration')}</label>
                 <input
                   type="text"
                   value={newPrescription.duration}
                   onChange={(e) => setNewPrescription({ ...newPrescription, duration: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
-                  placeholder="e.g., 30 days"
+                  placeholder={t('modal.durationPlaceholder')}
                 />
               </div>
             </div>
@@ -554,19 +573,20 @@ export default function PatientDetailsPage() {
                 onClick={() => setShowPrescriptionModal(false)}
                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 onClick={handleAddPrescription}
                 disabled={!newPrescription.medicine || !newPrescription.dosage}
                 className="flex-1 px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Add Prescription
+                {t('addPrescription')}
               </button>
             </div>
           </div>
         </div>
       )}
-    </DoctorLayout>
+      </DoctorLayout>
+    </RequireRole>
   );
 }

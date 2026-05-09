@@ -1,15 +1,17 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '@/i18n/navigation';
 import { authApi, ApiError } from '../../api/auth/authApi';
 import { appointmentApi } from '../../api/appointment/appointmentApi';
 import { HospitalResponse } from '../../api/appointment/appointmentTypes';
 import SearchableSelect from '../../components/SearchableSelect';
+import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 
 export default function DoctorRegisterPage() {
+  const t = useTranslations('doctorRegister');
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -38,7 +40,7 @@ export default function DoctorRegisterPage() {
         setHospitals(data);
       } catch (error) {
         console.error('Error fetching hospitals:', error);
-        setApiError('Failed to load hospitals. Please refresh the page.');
+        setApiError(t('errors.hospitalsLoadFailed'));
       } finally {
         setIsLoadingHospitals(false);
       }
@@ -51,60 +53,60 @@ export default function DoctorRegisterPage() {
 
     // First name validation
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
+      newErrors.firstName = t('errors.firstNameRequired');
     }
 
     // Last name validation
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
+      newErrors.lastName = t('errors.lastNameRequired');
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('errors.passwordRequired');
     } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('errors.passwordLength');
     }
 
     // Doctor ID validation
     if (!formData.doctorId.trim()) {
-      newErrors.doctorId = 'Doctor ID is required';
+      newErrors.doctorId = t('errors.doctorIdRequired');
     }
 
     // NIC validation
     if (!formData.nic.trim()) {
-      newErrors.nic = 'NIC is required';
+      newErrors.nic = t('errors.nicRequired');
     } else if (!/^([0-9]{9}[VvXx]|[0-9]{12})$/.test(formData.nic)) {
-      newErrors.nic = 'Invalid NIC format (e.g., 123456789V or 200012345678)';
+      newErrors.nic = t('errors.nicInvalid');
     }
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('errors.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = t('errors.emailInvalid');
     }
 
     // Phone validation
     if (!formData.phone) {
-      newErrors.phone = 'Phone number is required';
+      newErrors.phone = t('errors.phoneRequired');
     } else if (!/^[0-9]{10}$/.test(formData.phone)) {
-      newErrors.phone = 'Phone number must be 10 digits';
+      newErrors.phone = t('errors.phoneDigits');
     }
 
     // Gender validation
     if (!formData.gender) {
-      newErrors.gender = 'Gender is required';
+      newErrors.gender = t('errors.genderRequired');
     }
 
     // Date of birth validation
     if (!formData.dateOfBirth) {
-      newErrors.dateOfBirth = 'Date of birth is required';
+      newErrors.dateOfBirth = t('errors.dateOfBirthRequired');
     }
 
     // Hospital validation
     if (!formData.hospitalId) {
-      newErrors.hospitalId = 'Please select a hospital';
+      newErrors.hospitalId = t('errors.hospitalRequired');
     }
 
     setErrors(newErrors);
@@ -129,7 +131,7 @@ export default function DoctorRegisterPage() {
       if (error instanceof ApiError) {
         setApiError(error.message);
       } else {
-        setApiError('An unexpected error occurred. Please try again.');
+        setApiError(t('errors.unexpected'));
       }
       console.error('Registration error:', error);
     } finally {
@@ -168,25 +170,28 @@ export default function DoctorRegisterPage() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">Suwapatha</span>
+            <span className="text-xl font-bold text-gray-900">{t('brand')}</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Home
+              {t('nav.home')}
             </Link>
             <Link href="/about" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              About
+              {t('nav.about')}
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-[#94B4C1] transition-colors">
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
-          <Link
-            href="/"
-            className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
-          >
-            Get Started
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link
+              href="/"
+              className="bg-[#94B4C1] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#7fa8b8] transition-colors shadow-sm"
+            >
+              {t('nav.getStarted')}
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -198,7 +203,7 @@ export default function DoctorRegisterPage() {
             <div className="relative h-[500px] lg:h-[900px] rounded-xl overflow-hidden">
               <Image
                 src="/surgery.jpg"
-                alt="Doctor in surgery"
+                alt={t('imageAlt')}
                 fill
                 className="object-cover"
                 priority
@@ -218,11 +223,11 @@ export default function DoctorRegisterPage() {
                     />
                   </svg>
                 </div>
-                <h1 className="text-2xl font-bold text-[#94B4C1]">Suwapatha</h1>
+                <h1 className="text-2xl font-bold text-[#94B4C1]">{t('brand')}</h1>
               </div>
 
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Doctor Registration</h2>
-              <p className="text-sm text-gray-600 mb-5">Register as a healthcare professional</p>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{t('title')}</h2>
+              <p className="text-sm text-gray-600 mb-5">{t('subtitle')}</p>
 
               {apiError && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4">
@@ -235,7 +240,7 @@ export default function DoctorRegisterPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      First Name *
+                      {t('form.firstName')}
                     </label>
                     <input
                       type="text"
@@ -243,7 +248,7 @@ export default function DoctorRegisterPage() {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="John"
+                      placeholder={t('form.firstNamePlaceholder')}
                       className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.firstName ? 'border-red-500' : 'border-gray-300'
                         }`}
                     />
@@ -252,7 +257,7 @@ export default function DoctorRegisterPage() {
 
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                      Last Name *
+                      {t('form.lastName')}
                     </label>
                     <input
                       type="text"
@@ -260,7 +265,7 @@ export default function DoctorRegisterPage() {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Doe"
+                      placeholder={t('form.lastNamePlaceholder')}
                       className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.lastName ? 'border-red-500' : 'border-gray-300'
                         }`}
                     />
@@ -271,7 +276,7 @@ export default function DoctorRegisterPage() {
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Email Address *
+                    {t('form.email')}
                   </label>
                   <input
                     type="email"
@@ -279,7 +284,7 @@ export default function DoctorRegisterPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="dr.john@hospital.com"
+                    placeholder={t('form.emailPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
@@ -289,7 +294,7 @@ export default function DoctorRegisterPage() {
                 {/* Password */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Password *
+                    {t('form.password')}
                   </label>
                   <input
                     type="password"
@@ -297,7 +302,7 @@ export default function DoctorRegisterPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Minimum 8 characters"
+                    placeholder={t('form.passwordPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.password ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
@@ -307,7 +312,7 @@ export default function DoctorRegisterPage() {
                 {/* Doctor ID Number */}
                 <div>
                   <label htmlFor="doctorId" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Doctor ID Number *
+                    {t('form.doctorId')}
                   </label>
                   <input
                     type="text"
@@ -315,18 +320,18 @@ export default function DoctorRegisterPage() {
                     name="doctorId"
                     value={formData.doctorId}
                     onChange={handleChange}
-                    placeholder="MD12345"
+                    placeholder={t('form.doctorIdPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.doctorId ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
                   {errors.doctorId && <p className="text-red-500 text-xs mt-1">{errors.doctorId}</p>}
-                  <p className="text-xs text-gray-500 mt-1">Enter your registered medical practitioner ID</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('form.doctorIdHint')}</p>
                 </div>
 
                 {/* NIC */}
                 <div>
                   <label htmlFor="nic" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    NIC (National Identity Card) *
+                    {t('form.nic')}
                   </label>
                   <input
                     type="text"
@@ -334,18 +339,18 @@ export default function DoctorRegisterPage() {
                     name="nic"
                     value={formData.nic}
                     onChange={handleChange}
-                    placeholder="90123456V or 200012345678"
+                    placeholder={t('form.nicPlaceholder')}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.nic ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
                   {errors.nic && <p className="text-red-500 text-xs mt-1">{errors.nic}</p>}
-                  <p className="text-xs text-gray-500 mt-1">Old format (9 digits + V/X) or new format (12 digits)</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('form.nicHint')}</p>
                 </div>
 
                 {/* Phone */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Phone Number *
+                    {t('form.phone')}
                   </label>
                   <input
                     type="tel"
@@ -353,19 +358,19 @@ export default function DoctorRegisterPage() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="0771234567"
+                    placeholder={t('form.phonePlaceholder')}
                     maxLength={10}
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all ${errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
                   />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-                  <p className="text-xs text-gray-500 mt-1">Enter 10 digits (e.g., 0771234567)</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('form.phoneHint')}</p>
                 </div>
 
                 {/* Gender */}
                 <div>
                   <label htmlFor="gender" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Gender *
+                    {t('form.gender')}
                   </label>
                   <select
                     id="gender"
@@ -375,9 +380,9 @@ export default function DoctorRegisterPage() {
                     className={`w-full px-3.5 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-[#94B4C1] focus:border-[#94B4C1] outline-none transition-all appearance-none bg-white cursor-pointer ${errors.gender ? 'border-red-500' : 'border-gray-300'
                       }`}
                   >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    <option value="Male">{t('form.genderMale')}</option>
+                    <option value="Female">{t('form.genderFemale')}</option>
+                    <option value="Other">{t('form.genderOther')}</option>
                   </select>
                   {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
                 </div>
@@ -385,7 +390,7 @@ export default function DoctorRegisterPage() {
                 {/* Date of Birth */}
                 <div>
                   <label htmlFor="dateOfBirth" className="block text-sm font-semibold text-gray-900 mb-1.5">
-                    Date of Birth *
+                    {t('form.dateOfBirth')}
                   </label>
                   <input
                     type="date"
@@ -401,7 +406,7 @@ export default function DoctorRegisterPage() {
 
                 {/* Hospital Selection */}
                 <SearchableSelect
-                  label="Affiliated Hospital *"
+                  label={t('form.hospital')}
                   options={hospitals.map(h => ({
                     id: h.id,
                     name: h.name,
@@ -414,7 +419,9 @@ export default function DoctorRegisterPage() {
                       setErrors({ ...errors, hospitalId: '' });
                     }
                   }}
-                  placeholder="Select a hospital"
+                  placeholder={t('form.hospitalPlaceholder')}
+                  searchPlaceholder={t('form.hospitalSearchPlaceholder')}
+                  noResultsText={t('form.hospitalNoResults')}
                   loading={isLoadingHospitals}
                   error={errors.hospitalId}
                 />
@@ -425,14 +432,14 @@ export default function DoctorRegisterPage() {
                   disabled={isSubmitting}
                   className="w-full bg-[#94B4C1] text-white py-3 rounded-lg font-semibold hover:bg-[#7fa8b8] transition-colors shadow-md hover:shadow-lg text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Registering...' : 'Register as Doctor'}
+                  {isSubmitting ? t('form.registering') : t('form.register')}
                 </button>
 
                 {/* Login Link */}
                 <p className="text-center text-sm text-gray-600 pt-1">
-                  Already registered?{' '}
+                  {t('form.alreadyRegistered')}{' '}
                   <Link href="/login/doctor" className="text-[#94B4C1] hover:text-[#7fa8b8] font-medium">
-                    Log in
+                    {t('form.loginLink')}
                   </Link>
                 </p>
               </form>
