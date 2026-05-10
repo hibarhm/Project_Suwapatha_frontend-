@@ -1,9 +1,11 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
+import {useTranslations} from 'next-intl';
+import Navbar from '@/app/components/Navbar';
 
 export default function AboutPage() {
+  const t = useTranslations('about');
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -16,10 +18,10 @@ export default function AboutPage() {
               {/* Left side - Text */}
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold text-[#04090a] leading-tight">
-                  Suwapatha
+                  {t('title')}
                 </h1>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  Empowering citizens with seamless digital healthcare, connecting you to government health services efficiently and securely.
+                  {t('description')}
                 </p>
                 <div className="flex gap-2 pt-4">
                   <div className="w-2 h-2 rounded-full bg-gray-400"></div>
@@ -45,14 +47,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What is Suwapatha Section */}
+      {/* {t('whatIsTitle')}Suwapatha Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
-            What is <span className="text-[#94B4C1]">Suwapatha ? </span>
+            What is <span className="text-[#94B4C1]">{t('whatIsHighlight')} </span>
           </h2>
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-16">
-            Suwapatha is Sri Lanka's pioneering digital health platform, designed to revolutionize access to public healthcare services. We seamlessly connect citizens with government hospitals and health professionals, making healthcare more accessible, efficient, and patient-centric than ever before. Our platform simplifies everything from appointments to medical records, all while upholding the highest standards of data security and privacy.
+            {t('whatIsDescription')}
           </p>
 
           {/* Features Grid */}
@@ -68,7 +70,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Effortless Appointment Management
+                  {t('features.effortless')}
                 </h3>
               </div>
             </div>
@@ -84,7 +86,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Secure Digital Health Records
+                  {t('features.secure')}
                 </h3>
               </div>
             </div>
@@ -100,7 +102,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Reduced Waiting Times
+                  {t('features.reduced')}
                 </h3>
               </div>
             </div>
@@ -116,7 +118,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Enhanced Accessibility for All
+                  {t('features.enhanced')}
                 </h3>
               </div>
             </div>
@@ -124,7 +126,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Key Features Section */}
+      {/* {t('keyFeaturesTitle')} Section */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-16">
@@ -141,10 +143,10 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                Unified OPD Channeling
+                {t('keyFeatures.unified.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Book and manage outpatient department appointments across all government hospitals with ease.
+                {t('keyFeatures.unified.description')}
               </p>
             </div>
 
@@ -158,10 +160,10 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                Real-time Queue Status
+                {t('keyFeatures.realtime.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                View live waiting times at clinics and pharmacies, saving you valuable time and effort.
+                {t('keyFeatures.realtime.description')}
               </p>
             </div>
 
@@ -175,10 +177,10 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                e-Medical Book
+                {t('keyFeatures.eMedical.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Access your digital medical records securely, including prescriptions, reports, and health history.
+                {t('keyFeatures.eMedical.description')}
               </p>
             </div>
 
@@ -192,10 +194,10 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                Multilingual Support
+                {t('keyFeatures.multilingual.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Available in Sinhala, Tamil, and English to serve all communities across the island.
+                {t('keyFeatures.multilingual.description')}
               </p>
             </div>
 
@@ -209,10 +211,10 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                Accessibility Features
+                {t('keyFeatures.accessibility.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Designed for inclusivity with features catering to diverse needs and abilities.
+                {t('keyFeatures.accessibility.description')}
               </p>
             </div>
 
@@ -226,24 +228,24 @@ export default function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                Secure Patient Identity
+                {t('keyFeatures.secureIdentity.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Verify your identity and access services with a robust and secure digital patient ID system.
+                {t('keyFeatures.secureIdentity.description')}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Governance & Data Privacy Section */}
+      {/* {t('governanceTitle')} Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
             Governance & Data Privacy
           </h2>
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-12">
-            At Suwapatha, safeguarding your personal and health information is our utmost priority. We are committed to maintaining the highest standards of privacy and security, adhering strictly to all national regulations and international best practices for data protection. Your trust is paramount, and we employ robust measures to ensure your data remains confidential and secure.
+            {t('governanceDescription')}
           </p>
 
           {/* Privacy Points */}
@@ -257,7 +259,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Adherence to national data privacy laws and healthcare regulations.
+                {t('governancePoints.adherence')}
               </p>
             </div>
 
@@ -270,7 +272,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Secure encryption protocols for all patient data transmission and storage.
+                {t('governancePoints.encryption')}
               </p>
             </div>
 
@@ -283,7 +285,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Strict access controls ensuring only authorized personnel can view sensitive information.
+                {t('governancePoints.access')}
               </p>
             </div>
 
@@ -296,7 +298,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Transparent policies on data usage, with explicit patient consent for data sharing.
+                {t('governancePoints.policies')}
               </p>
             </div>
 
@@ -309,7 +311,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                Regular security audits and updates to protect against emerging threats.
+                {t('governancePoints.audits')}
               </p>
             </div>
           </div>
@@ -324,7 +326,7 @@ export default function AboutPage() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-[#94B4C1]">Suwapatha</h3>
               <p className="text-sm text-gray-600">
-                © 2026 Government of Sri Lanka. All rights reserved.
+                {t('footer.rights')}
               </p>
             </div>
 
@@ -351,9 +353,9 @@ export default function AboutPage() {
 
             {/* Right - Accessibility */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">Accessibility Statement</h3>
+              <h3 className="text-xl font-bold text-gray-900">{t('footer.accessibility')}</h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Committed to providing an accessible online experience.
+                {t('footer.accessibilityDesc')}
               </p>
               <Link
                 href="#"
@@ -367,7 +369,7 @@ export default function AboutPage() {
                     d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
                   />
                 </svg>
-                Learn More
+                {t('footer.learnMore')}
               </Link>
             </div>
           </div>

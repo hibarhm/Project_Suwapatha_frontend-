@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import AdminLayout from '@/app/components/adminLayout';
 import API_BASE_URL from '@/app/api/api';
 import { adminApi, DoctorAvailability } from '@/app/api/admin/adminApi';
@@ -48,6 +49,7 @@ interface Session {
 }
 
 export default function AdminDashboard() {
+  const t = useTranslations('adminDashboard');
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -96,7 +98,7 @@ export default function AdminDashboard() {
       ]);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
-      setError('Failed to load dashboard data');
+      setError('{t('errorTitle')}');
     } finally {
       setLoading(false);
     }
@@ -319,7 +321,7 @@ export default function AdminDashboard() {
         <div className="p-8 flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading dashboard...</p>
+            <p className="mt-4 text-gray-600">{t('loading')}</p>
           </div>
         </div>
       </AdminLayout>
@@ -328,7 +330,7 @@ export default function AdminDashboard() {
 
   const stats = [
     {
-      title: 'Total Patients Today',
+      title: t('stats.patientsToday'),
       value: todayStats.totalPatients.toString(),
       change: `${todayStats.allocatedPatients} allocated, ${todayStats.unallocatedPatients} waiting`,
       icon: (
@@ -337,7 +339,7 @@ export default function AdminDashboard() {
       color: '#94B4C1'
     },
     {
-      title: 'Active Queues',
+      title: t('stats.activeSessions'),
       value: todayStats.activeSessions.toString(),
       change: `${todayStats.totalDoctors} total sessions today`,
       icon: (
@@ -346,7 +348,7 @@ export default function AdminDashboard() {
       color: '#f97316'
     },
     {
-      title: 'Avg. Waiting Time',
+      title: 'Avg. Waiting Time', // TODO: translate
       value: calculateAvgWaitingTime(),
       change: 'Estimated per session',
       icon: (
@@ -355,7 +357,7 @@ export default function AdminDashboard() {
       color: '#6b7280'
     },
     {
-      title: 'Doctors Available',
+      title: t('stats.totalDoctors'),
       value: todayStats.activeDoctors.toString(),
       change: `${todayStats.totalDoctors} total doctors today`,
       icon: (
@@ -370,7 +372,7 @@ export default function AdminDashboard() {
       <div className="p-8">
         {/* Hospital Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
           {hospitalInfo && (
             <p className="text-gray-600 mt-1">
               {hospitalInfo.name} - {hospitalInfo.location}
@@ -405,7 +407,7 @@ export default function AdminDashboard() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left + Middle Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* OPD Session Management */}
+            {/* {t('todaysSessions.title')} */}
             <div className="bg-white rounded-xl border p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-900">OPD Session Management</h2>
               <button

@@ -4,10 +4,10 @@ import Image from 'next/image';
 import {useTranslations} from 'next-intl';
 import { useState, useEffect } from 'react';
 import {Link, useRouter} from '@/i18n/navigation';
-import { authApi, ApiError } from '../../api/auth/authApi';
-import { appointmentApi } from '../../api/appointment/appointmentApi';
-import { HospitalResponse } from '../../api/appointment/appointmentTypes';
-import SearchableSelect from '../../components/SearchableSelect';
+import { authApi, ApiError } from '@/app/api/auth/authApi';
+import { appointmentApi } from '@/app/api/appointment/appointmentApi';
+import { HospitalResponse } from '@/app/api/appointment/appointmentTypes';
+import SearchableSelect from '@/app/components/SearchableSelect';
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 
 export default function DoctorRegisterPage() {

@@ -2,9 +2,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '@/app/components/Navbar';
+import {useTranslations} from 'next-intl';
 
 export default function ContactPage() {
+  const t = useTranslations('contact');
+  const tFooter = useTranslations('about.footer');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,10 +39,10 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-              Send Us a Message
+              {t('title')}
             </h1>
             <p className="text-gray-600">
-              Have a question or need assistance? We're here to help.
+              {t('subtitle')}
             </p>
           </div>
 
@@ -57,7 +60,7 @@ export default function ContactPage() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Your full name"
+                  placeholder={t("form.namePlaceholder")}
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400 text-sm transition-colors"
                   required
                 />
@@ -74,7 +77,7 @@ export default function ContactPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="you@example.com"
+                  placeholder={t("form.emailPlaceholder")}
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400 text-sm transition-colors"
                   required
                 />
@@ -91,7 +94,7 @@ export default function ContactPage() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder="What is this about?"
+                  placeholder={t("form.subjectPlaceholder")}
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400 text-sm transition-colors"
                   required
                 />
@@ -107,7 +110,7 @@ export default function ContactPage() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Type your message here."
+                  placeholder={t("form.messagePlaceholder")}
                   rows="6"
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400 text-sm resize-none transition-colors"
                   required
@@ -126,7 +129,7 @@ export default function ContactPage() {
 
           {/* Additional Contact Info */}
           <div className="mt-12 text-center space-y-3">
-            <p className="text-sm text-gray-600">Or reach us directly:</p>
+            <p className="text-sm text-gray-600">{t('reachUs')}</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <a href="mailto:info@suwapatha.gov.lk" className="flex items-center gap-2 text-gray-700 hover:text-[#94B4C1] transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,7 +157,7 @@ export default function ContactPage() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-gray-900">Suwapatha</h3>
               <p className="text-sm text-gray-600">
-                © 2026 Government of Sri Lanka. All rights reserved.
+                {tFooter('rights')}
               </p>
             </div>
 
@@ -181,9 +184,9 @@ export default function ContactPage() {
 
             {/* Right - Accessibility */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">Accessibility Statement</h3>
+              <h3 className="text-xl font-bold text-gray-900">{tFooter('accessibility')}</h3>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Committed to providing an accessible online experience.
+                {tFooter('accessibilityDesc')}
               </p>
               <Link href="#" className="inline-flex items-center gap-2 text-[#94B4C1] hover:text-[#7fa8b8] font-medium transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

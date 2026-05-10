@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
-import Navbar from './components/Navbar';
+import Navbar from '@/app/components/Navbar';
 
 export default function Home() {
   const t = useTranslations('home');

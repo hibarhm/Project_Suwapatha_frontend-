@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import {NextIntlClientProvider} from 'next-intl'
 import {getLocale, getMessages} from 'next-intl/server'
 import {Noto_Sans_Sinhala, Noto_Sans_Tamil, Poppins} from 'next/font/google'
-import './globals.css'
+import '../globals.css'
 
 const poppins = Poppins({
   subsets: ['latin'],

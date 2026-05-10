@@ -3,8 +3,8 @@ import Image from 'next/image';
 import {useTranslations} from 'next-intl';
 import { useState } from 'react';
 import {Link, useRouter} from '@/i18n/navigation';
-import { authApi, ApiError } from '../api/auth/authApi';
-import LanguageSwitcher from '../components/LanguageSwitcher';
+import { authApi, ApiError } from '@/app/api/auth/authApi';
+import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 
 export default function LoginPage() {
   const t = useTranslations('login');

@@ -38,9 +38,18 @@
     },
     "steps": {
       "title": "පහසු OPD වෙන්කිරීම සඳහා පියවර 3",
-      "step1": {"label": "පියවර 1", "title": "රෝහල සොයන්න"},
-      "step2": {"label": "පියවර 2", "title": "දිනය තෝරන්න"},
-      "step3": {"label": "පියවර 3", "title": "පෝලිම් අංකය ලබාගන්න"}
+      "step1": {
+        "label": "පියවර 1",
+        "title": "රෝහල සොයන්න"
+      },
+      "step2": {
+        "label": "පියවර 2",
+        "title": "දිනය තෝරන්න"
+      },
+      "step3": {
+        "label": "පියවර 3",
+        "title": "පෝලිම් අංකය ලබාගන්න"
+      }
     },
     "commitment": {
       "title": "ඔබගේ සුවසනට අපගේ කැපවීම",
@@ -655,9 +664,18 @@
       "rejected": "Rejected"
     },
     "sections": {
-      "profile": {"title": "Profile Information", "subtitle": "Update your basic information."},
-      "security": {"title": "Security", "subtitle": "Change your account password."},
-      "accountActions": {"title": "Account Actions", "subtitle": "Manage your account."}
+      "profile": {
+        "title": "Profile Information",
+        "subtitle": "Update your basic information."
+      },
+      "security": {
+        "title": "Security",
+        "subtitle": "Change your account password."
+      },
+      "accountActions": {
+        "title": "Account Actions",
+        "subtitle": "Manage your account."
+      }
     },
     "fields": {
       "firstName": "First Name",
@@ -700,9 +718,18 @@
     "subtitle": "Thank you for joining Suwapatha Health. Your professional application has been received and is currently being verified by our clinical administration team.",
     "pendingBadge": "PENDING ADMIN APPROVAL",
     "timeline": {
-      "submission": {"title": "Submission", "subtitle": "Application form received successfully"},
-      "verification": {"title": "Verification", "subtitle": "Admin reviewing professional credentials"},
-      "activation": {"title": "Activation", "subtitle": "Full platform access granted via email"}
+      "submission": {
+        "title": "Submission",
+        "subtitle": "Application form received successfully"
+      },
+      "verification": {
+        "title": "Verification",
+        "subtitle": "Admin reviewing professional credentials"
+      },
+      "activation": {
+        "title": "Activation",
+        "subtitle": "Full platform access granted via email"
+      }
     },
     "summary": {
       "title": "Submission Summary",
@@ -742,6 +769,230 @@
     "actions": {
       "returnHome": "Return to Home",
       "contactSupport": "Contact Support"
+    }
+  },
+  "about": {
+    "title": "Suwapatha",
+    "description": "Empowering citizens with seamless digital healthcare, connecting you to government health services efficiently and securely.",
+    "whatIsTitle": "What is ",
+    "whatIsHighlight": "Suwapatha ?",
+    "whatIsDescription": "Suwapatha is Sri Lanka's pioneering digital health platform, designed to revolutionize access to public healthcare services. We seamlessly connect citizens with government hospitals and health professionals, making healthcare more accessible, efficient, and patient-centric than ever before. Our platform simplifies everything from appointments to medical records, all while upholding the highest standards of data security and privacy.",
+    "features": {
+      "effortless": "Effortless Appointment Management",
+      "secure": "Secure Digital Health Records",
+      "reduced": "Reduced Waiting Times",
+      "enhanced": "Enhanced Accessibility for All"
+    },
+    "keyFeaturesTitle": "Key Features",
+    "keyFeatures": {
+      "unified": {
+        "title": "Unified OPD Channeling",
+        "description": "Book and manage outpatient department appointments across all government hospitals with ease."
+      },
+      "realtime": {
+        "title": "Real-time Queue Status",
+        "description": "View live waiting times at clinics and pharmacies, saving you valuable time and effort."
+      },
+      "eMedical": {
+        "title": "e-Medical Book",
+        "description": "Access your digital medical records securely, including prescriptions, reports, and health history."
+      },
+      "multilingual": {
+        "title": "Multilingual Support",
+        "description": "Available in Sinhala, Tamil, and English to serve all communities across the island."
+      },
+      "accessibility": {
+        "title": "Accessibility Features",
+        "description": "Designed for inclusivity with features catering to diverse needs and abilities."
+      },
+      "secureIdentity": {
+        "title": "Secure Patient Identity",
+        "description": "Verify your identity and access services with a robust and secure digital patient ID system."
+      }
+    },
+    "governanceTitle": "Governance & Data Privacy",
+    "governanceDescription": "At Suwapatha, safeguarding your personal and health information is our utmost priority. We are committed to maintaining the highest standards of privacy and security, adhering strictly to all national regulations and international best practices for data protection. Your trust is paramount, and we employ robust measures to ensure your data remains confidential and secure.",
+    "governancePoints": {
+      "adherence": "Adherence to national data privacy laws and healthcare regulations.",
+      "encryption": "Secure encryption protocols for all patient data transmission and storage.",
+      "access": "Strict access controls ensuring only authorized personnel can view sensitive information.",
+      "policies": "Transparent policies on data usage, with explicit patient consent for data sharing.",
+      "audits": "Regular security audits and updates to protect against emerging threats."
+    },
+    "footer": {
+      "rights": "© 2026 Government of Sri Lanka. All rights reserved.",
+      "home": "Home",
+      "aboutUs": "About Us",
+      "services": "Services",
+      "faq": "FAQ",
+      "contactUs": "Contact Us",
+      "accessibility": "Accessibility Statement",
+      "accessibilityDesc": "Committed to providing an accessible online experience.",
+      "learnMore": "Learn More"
+    }
+  },
+  "contact": {
+    "title": "Send Us a Message",
+    "subtitle": "Have a question or need assistance? We're here to help.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "What is this about?",
+      "message": "Message",
+      "messagePlaceholder": "Type your message here.",
+      "submit": "Send Message"
+    },
+    "reachUs": "Or reach us directly:"
+  },
+  "adminLogin": {
+    "title": "Admin Portal Login",
+    "subtitle": "Suwapatha Healthcare Management",
+    "form": {
+      "emailLabel": "Email Address",
+      "passwordLabel": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot your password?",
+      "signingIn": "Signing in...",
+      "signIn": "Sign in"
+    },
+    "notAdmin": "Not an admin?",
+    "returnLogin": "Return to Main Login",
+    "errors": {
+      "unexpected": "An unexpected error occurred. Please try again."
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading Dashboard...",
+    "errorTitle": "Error Loading Dashboard",
+    "retry": "Retry",
+    "title": "Dashboard",
+    "stats": {
+      "totalDoctors": "Total Doctors",
+      "activeSessions": "Active Sessions",
+      "patientsToday": "Patients Today"
+    },
+    "recentDoctors": {
+      "title": "Recent Doctor Registrations",
+      "subtitle": "Pending verification",
+      "noDoctors": "No pending doctor registrations",
+      "viewAll": "View All ->"
+    },
+    "todaysSessions": {
+      "title": "Today's Sessions",
+      "noSessions": "No active sessions today",
+      "session": "Session {date}",
+      "patients": "{count} patients"
+    }
+  },
+  "adminSettings": {
+    "title": "Admin Settings",
+    "subtitle": "Manage your profile and security settings.",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "profile": {
+      "title": "Profile Settings",
+      "name": "Name",
+      "email": "Email"
+    },
+    "security": {
+      "title": "Security Settings",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password"
+    }
+  },
+  "adminOpdSession": {
+    "title": "OPD Session Management",
+    "subtitle": "Manage outpatient department sessions and doctor assignments.",
+    "addSession": "Add Session",
+    "table": {
+      "date": "Date",
+      "doctor": "Doctor",
+      "room": "Room",
+      "maxPatients": "Max Patients",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel"
+    }
+  },
+  "adminDoctorRegistration": {
+    "title": "Doctor Registrations",
+    "subtitle": "Review and approve new doctor registrations.",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "doctorId": "Doctor ID",
+      "specialty": "Specialty",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "actions": {
+      "view": "View",
+      "approve": "Approve",
+      "reject": "Reject"
+    }
+  },
+  "superAdminSettings": {
+    "title": "Super Admin Settings",
+    "subtitle": "Manage system-wide configuration.",
+    "save": "Save Settings",
+    "saving": "Saving..."
+  },
+  "superAdminAdmins": {
+    "title": "Hospital Admins",
+    "subtitle": "Manage hospital administrators.",
+    "addAdmin": "Add Admin",
+    "table": {
+      "name": "Name",
+      "hospital": "Hospital",
+      "email": "Email",
+      "status": "Status",
+      "actions": "Actions"
+    }
+  },
+  "superAdminHospitals": {
+    "title": "Hospitals",
+    "subtitle": "Manage registered hospitals.",
+    "addHospital": "Add Hospital",
+    "table": {
+      "name": "Name",
+      "district": "District",
+      "status": "Status",
+      "actions": "Actions"
+    }
+  },
+  "patientSettings": {
+    "title": "Patient Settings",
+    "subtitle": "Manage your profile and preferences.",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "profile": {
+      "title": "Personal Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phone": "Phone Number",
+      "dob": "Date of Birth",
+      "address": "Address"
+    },
+    "security": {
+      "title": "Security",
+      "changePassword": "Change Password"
     }
   }
 }
