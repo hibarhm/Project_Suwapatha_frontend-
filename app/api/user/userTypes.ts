@@ -13,6 +13,9 @@ export interface UserProfile {
     hospitalId?: string;
     hospitalName?: string;
     status?: string;
+    lateCancellationCount?: number;
+    hasRedMark?: boolean;
+    enabled?: boolean;
 }
 
 export interface UpdateProfileRequest {

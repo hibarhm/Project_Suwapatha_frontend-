@@ -6,6 +6,8 @@ import {Link} from '@/i18n/navigation';
 import PatientLayout from '@/app/components/patientLayout';
 import { appointmentApi } from '@/app/api/appointment/appointmentApi';
 import { AppointmentResponse } from '@/app/api/appointment/appointmentTypes';
+import { userApi } from '@/app/api/user/userApi';
+import { UserProfile } from '@/app/api/user/userTypes';
 
 function Spinner() {
   return (
@@ -67,18 +69,21 @@ export default function PatientDashboard() {
   // ── real appointments ─────────────────────────────────────────────────────
   const [appointments, setAppointments] = useState<AppointmentResponse[]>([]);
   const [activeAppt, setActiveAppt] = useState<AppointmentResponse | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loadingAppts, setLoadingAppts] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
-  const refreshAppointments = useCallback(async () => {
+  const refreshData = useCallback(async () => {
     setLoadingAppts(true);
     try {
-      const [all, active] = await Promise.all([
+      const [all, active, prof] = await Promise.all([
         appointmentApi.getAll(),
         appointmentApi.getActive(),
+        userApi.getProfile(),
       ]);
       setAppointments(all);
       setActiveAppt(active);
+      setProfile(prof);
     } catch {
       // not logged in or backend not running
     } finally {
@@ -86,13 +91,13 @@ export default function PatientDashboard() {
     }
   }, []);
 
-  useEffect(() => { refreshAppointments(); }, [refreshAppointments]);
+  useEffect(() => { refreshData(); }, [refreshData]);
 
   const handleCancel = async (id: string) => {
     setCancelling(id);
     try {
       await appointmentApi.cancel(id);
-      await refreshAppointments();
+      await refreshData();
     } catch (e) {
       alert(e instanceof Error ? e.message : t('alerts.cancelFailed'));
     } finally {
@@ -133,6 +138,32 @@ export default function PatientDashboard() {
 
         {/* ── Left Column ──────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-6">
+
+          {/* Penalty Warnings */}
+          {profile && profile.hasRedMark && (
+            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-5 flex items-start gap-4 shadow-sm animate-pulse">
+              <div className="w-10 h-10 bg-red-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-bold text-red-800 text-base">{t('penalty.redMarkTitle')}</p>
+                <p className="text-red-700 text-sm mt-0.5">{t('penalty.redMarkDescription')}</p>
+              </div>
+            </div>
+          )}
+
+          {profile && !profile.hasRedMark && (profile.lateCancellationCount ?? 0) > 0 && (
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center gap-3">
+              <div className="w-8 h-8 bg-orange-100 rounded-full flex-shrink-0 flex items-center justify-center">
+                <span className="text-orange-600 font-bold text-sm">!</span>
+              </div>
+              <p className="text-sm text-orange-800">
+                {t('penalty.countWarning', { count: profile.lateCancellationCount })}
+              </p>
+            </div>
+          )}
 
           {/* First-login welcome banner */}
           {isNewUser && (
@@ -179,6 +210,13 @@ export default function PatientDashboard() {
                 {t('upcoming.bookNew')}
               </Link>
             </div>
+
+            <p className="text-xs text-orange-600 font-medium mb-4 bg-orange-50 p-2 rounded-lg border border-orange-100 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {t('penalty.lastMinuteWarning')}
+            </p>
 
             {loadingAppts ? <Spinner /> : bookedAppointments.length === 0 ? (
               <div className="flex flex-col items-center py-10 text-center">

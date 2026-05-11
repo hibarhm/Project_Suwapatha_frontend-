@@ -289,6 +289,13 @@
       "notAvailable": "—",
       "toBeAssigned": "To be assigned"
     },
+    "penalty": {
+      "title": "Account Warning",
+      "redMarkTitle": "Account Disabled",
+      "redMarkDescription": "Your account has been disabled due to multiple last-minute cancellations. Please contact support.",
+      "countWarning": "You have {count} late cancellation(s). Maximum 3 are allowed before account suspension.",
+      "lastMinuteWarning": "Note: Cancellations within 12 hours of the session incur a penalty."
+    },
     "alerts": {
       "cancelFailed": "Failed to cancel."
     },
