@@ -470,10 +470,17 @@
       "subtitle": "ඔබට තවමත් වෛද්‍ය වාර්තා කිසිවක් නොමැත."
     },
     "visit": {
-      "followUpRequired": "පසු විපරම් කිරීම අවශ්ය වේ",
+      "followUpRequired": "අනුගමනය කිරීම අවශ්‍ය වේ",
+      "diagnosis": "රෝග විනිශ්චය",
       "consultationNotes": "උපදේශන සටහන්",
       "prescriptions": "බෙහෙත් වට්ටෝරු",
-      "labReports": "රසායනාගාර වාර්තා සහ පින්තූර"
+      "labReports": "රසායනාගාර වාර්තා සහ පින්තූර",
+      "vitals": {
+        "bp": "රුධිර පීඩනය",
+        "temp": "උෂ්ණත්වය",
+        "pulse": "නාඩි වේගය",
+        "weight": "බර"
+      }
     }
   },
   "doctorDashboard": {
@@ -597,6 +604,8 @@
     "cancel": "අවලංගු කරන්න",
     "saveConsultation": "උපදේශනය සුරකින්න",
     "startConsultation": "උපදේශනය ආරම්භ කරන්න",
+    "continueConsultation": "උපදේශනය දිගටම කරගෙන යන්න",
+    "markComplete": "සම්පූර්ණයි ලෙස ලකුණු කරන්න",
     "currentConsultation": "වත්මන් උපදේශනය",
     "diagnosis": "රෝග විනිශ්චය",
     "diagnosisPlaceholder": "රෝග විනිශ්චය ඇතුලත් කරන්න...",
@@ -648,6 +657,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "කරුණාකර රෝග විනිශ්චය සහ උපදේශන සටහන් ඇතුළත් කරන්න",
       "consultationSaved": "උපදේශනය සාර්ථකව සුරකින ලදී!",
+      "markedAsCompleted": "උපදේශනය සම්පූර්ණ කළා!",
+      "markComplete": "{name} සම්පූර්ණයි ලෙස සලකුණු කිරීමට ඔබට විශ්වාසද? මෙයින් මෙම සැසිය අවසන් වනු ඇත.",
       "saveFailed": "උපදේශනය සුරැකීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
     },
     "modal": {

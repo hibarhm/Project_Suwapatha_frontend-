@@ -262,7 +262,7 @@ export default function AppointmentBookingPage() {
 
   /* ── derived display values ───────────────────────────────────────────── */
 
-  const isNextInQueue = activeAppt && activeAppt.estimatedWaitMinutes === 0;
+  const isNextInQueue = activeAppt && (activeAppt.isNext || activeAppt.status === 'CONSULTING');
   const getSessionStatusLabel = (status: string) => {
     if (status === 'OPEN') return t('sessions.statusOpen');
     if (status === 'FULL') return t('sessions.statusFull');
@@ -483,7 +483,7 @@ export default function AppointmentBookingPage() {
                       {
                         icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
                         label: t('queue.estimatedAppointment'),
-                        value: isNextInQueue
+                        value: (activeAppt.status === 'CONSULTING' || activeAppt.isNext)
                           ? t('queue.nextProceed')
                           : (utcAppointmentTime ?? t('queue.minutesOnly', {minutes: activeAppt.estimatedWaitMinutes})),
                       },

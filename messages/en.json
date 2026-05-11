@@ -471,9 +471,16 @@
     },
     "visit": {
       "followUpRequired": "Follow-up Required",
+      "diagnosis": "Diagnosis",
       "consultationNotes": "Consultation Notes",
       "prescriptions": "Prescriptions",
-      "labReports": "Lab Reports & Images"
+      "labReports": "Lab Reports & Images",
+      "vitals": {
+        "bp": "Blood Pressure",
+        "temp": "Temperature",
+        "pulse": "Pulse",
+        "weight": "Weight"
+      }
     }
   },
   "doctorDashboard": {
@@ -597,6 +604,8 @@
     "cancel": "Cancel",
     "saveConsultation": "Save Consultation",
     "startConsultation": "Start Consultation",
+    "continueConsultation": "Continue Consultation",
+    "markComplete": "Mark as Complete",
     "currentConsultation": "Current Consultation",
     "diagnosis": "Diagnosis",
     "diagnosisPlaceholder": "Enter diagnosis...",
@@ -648,6 +657,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "Please enter diagnosis and consultation notes",
       "consultationSaved": "Consultation saved successfully!",
+      "markedAsCompleted": "Consultation marked as completed!",
+      "markComplete": "Are you sure you want to mark {name} as complete? This will end the active session.",
       "saveFailed": "Failed to save consultation. Please try again."
     },
     "modal": {

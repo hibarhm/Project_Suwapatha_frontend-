@@ -38,6 +38,7 @@ export interface AppointmentResponse {
     sessionStartTime: string; // HH:mm, session start time from OpdSession
     slotDuration: number;     // minutes per slot
     createdAt: string;
+    isNext: boolean;
 }
 
 export interface BookAppointmentRequest {

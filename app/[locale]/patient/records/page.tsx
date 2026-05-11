@@ -17,7 +17,12 @@ interface MedicalVisit {
   hospital: string;
   doctor: string;
   followUpRequired: boolean;
+  diagnosis: string;
   consultationNotes: string;
+  bp: string;
+  temp: string;
+  pulse: string;
+  weight: string;
   prescriptions: Prescription[];
   labReports: number;
   labReportUrls?: string[];
@@ -347,6 +352,32 @@ export default function MedicalRecordsPage() {
               {/* Expanded Content */}
               {expandedVisit === visit.id && (
                 <div className="px-6 pb-6 space-y-6 border-t border-gray-200 pt-6">
+                  {/* Diagnosis */}
+                  <div>
+                    <h4 className="text-base font-bold text-gray-900 mb-2">{t('visit.diagnosis')}</h4>
+                    <p className="text-sm font-medium text-[#94B4C1] leading-relaxed">{visit.diagnosis}</p>
+                  </div>
+
+                  {/* Vitals */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.bp')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.bp || '--'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.temp')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.temp || '--'} °F</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.pulse')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.pulse || '--'} bpm</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.weight')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.weight || '--'} kg</p>
+                    </div>
+                  </div>
+
                   {/* Consultation Notes */}
                   <div>
                     <h4 className="text-base font-bold text-gray-900 mb-2">{t('visit.consultationNotes')}</h4>

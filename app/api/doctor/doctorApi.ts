@@ -94,6 +94,9 @@ export interface PatientDetails {
         duration: string;
         status: string;
     }>;
+    currentAppointmentId?: string;
+    currentStatus?: string;
+    hospitalName?: string;
 }
 
 export interface ConsultationRequest {
@@ -112,6 +115,8 @@ export interface ConsultationRequest {
         status: string;
     }>;
     followUpRequired: boolean;
+    hospitalName?: string;
+    appointmentId?: string;
 }
 
 export const doctorApi = {
@@ -205,6 +210,25 @@ export const doctorApi = {
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.message || `Failed to save consultation (Status: ${response.status})`);
+        }
+    },
+
+    updateAppointmentStatus: async (id: string, status: string): Promise<void> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        if (!token) throw new Error('Authentication token not found.');
+
+        const response = await fetch(`${API_BASE_URL}/api/doctor/appointments/${id}/status`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `Failed to update status (Status: ${response.status})`);
         }
     },
 

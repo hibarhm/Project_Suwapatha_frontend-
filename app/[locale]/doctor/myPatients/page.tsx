@@ -209,11 +209,22 @@ export default function MyPatientsPage() {
 
                         {/* Complete/Check */}
                         <button
-                          onClick={(e) => {
+                          onClick={async (e) => {
                             e.stopPropagation();
-                            alert(t('alerts.markComplete', {name: patient.name}));
+                            if (confirm(t('alerts.markComplete', {name: patient.name}))) {
+                              try {
+                                setLoading(true);
+                                await doctorApi.updateAppointmentStatus(patient.id, 'COMPLETED');
+                                fetchPatients();
+                              } catch (err: any) {
+                                alert(err.message || 'Failed to complete consultation');
+                              } finally {
+                                setLoading(false);
+                              }
+                            }
                           }}
-                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          disabled={patient.status === 'COMPLETED'}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-30"
                           title={t('actions.markComplete')}
                         >
                           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

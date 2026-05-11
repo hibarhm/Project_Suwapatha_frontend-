@@ -470,10 +470,17 @@
       "subtitle": "உங்களிடம் இதுவரை மருத்துவப் பதிவுகள் எதுவும் இல்லை."
     },
     "visit": {
-      "followUpRequired": "பின்தொடர்தல் தேவை",
+      "followUpRequired": "தொடர் சிகிச்சை தேவை",
+      "diagnosis": "நோய் கண்டறிதல்",
       "consultationNotes": "ஆலோசனை குறிப்புகள்",
       "prescriptions": "மருந்துச்சீட்டுகள்",
-      "labReports": "ஆய்வக அறிக்கைகள் & படங்கள்"
+      "labReports": "ஆய்வக அறிக்கைகள் & படங்கள்",
+      "vitals": {
+        "bp": "இரத்த அழுத்தம்",
+        "temp": "உடல் வெப்பநிலை",
+        "pulse": "நாடித் துடிப்பு",
+        "weight": "எடை"
+      }
     }
   },
   "doctorDashboard": {
@@ -595,8 +602,10 @@
   "doctorPatientDetails": {
     "goBack": "திரும்பி செல்",
     "cancel": "ரத்து செய்",
-    "saveConsultation": "ஆலோசனையைச் சேமிக்கவும்",
-    "startConsultation": "ஆலோசனையைத் தொடங்குங்கள்",
+    "saveConsultation": "ஆலோசனையைச் சேமி",
+    "startConsultation": "ஆலோசனையைத் தொடங்கு",
+    "continueConsultation": "ஆலோசனையைத் தொடரவும்",
+    "markComplete": "முடிந்தது என குறிக்கவும்",
     "currentConsultation": "தற்போதைய ஆலோசனை",
     "diagnosis": "நோய் கண்டறிதல்",
     "diagnosisPlaceholder": "நோயறிதலை உள்ளிடவும்...",
@@ -648,6 +657,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "நோயறிதல் மற்றும் ஆலோசனை குறிப்புகளை உள்ளிடவும்",
       "consultationSaved": "ஆலோசனை வெற்றிகரமாக சேமிக்கப்பட்டது!",
+      "markedAsCompleted": "ஆலோசனை முடிந்தது என குறிக்கப்பட்டது!",
+      "markComplete": "{name} ஐ முடிந்தது எனக் குறிக்க விரும்புகிறீர்களா? இது செயலில் உள்ள அமர்வை முடிக்கும்.",
       "saveFailed": "ஆலோசனையைச் சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
     },
     "modal": {

@@ -107,7 +107,9 @@ export default function PatientDetailsPage() {
           duration: p.duration,
           status: 'Active'
         })),
-        followUpRequired: false // Default
+        followUpRequired: false, // Default
+        hospitalName: patient.hospitalName || 'Central Hospital', // Fallback or get from patient details if available
+        appointmentId: patient.currentAppointmentId
       });
 
       alert(t('alerts.consultationSaved'));
@@ -199,18 +201,56 @@ export default function PatientDetailsPage() {
               </button>
               <button
                 onClick={handleSaveConsultation}
-                className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
+                className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] text-sm font-medium"
               >
                 {t('saveConsultation')}
               </button>
             </>
           ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
-            >
-              {t('startConsultation')}
-            </button>
+            <div className="flex gap-2">
+              {patient.currentStatus !== 'COMPLETED' && (
+                <button
+                  onClick={async () => {
+                    if (patient.currentAppointmentId && (patient.currentStatus === 'BOOKED' || patient.currentStatus === 'CHECKED_IN')) {
+                      try {
+                        await doctorApi.updateAppointmentStatus(patient.currentAppointmentId, 'CONSULTING');
+                        setPatient({ ...patient, currentStatus: 'CONSULTING' });
+                      } catch (err) {
+                        console.error('Failed to update status:', err);
+                      }
+                    }
+                    setIsEditing(true);
+                  }}
+                  className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] text-sm font-medium"
+                >
+                  {patient.currentStatus === 'CONSULTING' ? t('continueConsultation') : t('startConsultation')}
+                </button>
+              )}
+              {patient.currentAppointmentId && (patient.currentStatus === 'CONSULTING' || patient.currentStatus === 'CHECKED_IN') && (
+                <button
+                  onClick={async () => {
+                    if (confirm(t('alerts.markComplete', { name: patient.name }))) {
+                      try {
+                        setLoading(true);
+                        await doctorApi.updateAppointmentStatus(patient.currentAppointmentId!, 'COMPLETED');
+                        alert(t('alerts.markedAsCompleted'));
+                        router.push('/doctor/myPatients');
+                      } catch (err: any) {
+                        alert(err.message || 'Failed to complete consultation');
+                      } finally {
+                        setLoading(false);
+                      }
+                    }
+                  }}
+                  className="px-4 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm font-medium flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  {t('markComplete')}
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>

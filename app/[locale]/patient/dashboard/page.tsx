@@ -210,7 +210,7 @@ export default function PatientDashboard() {
                         <td className="py-4 px-3 text-sm text-gray-600">{apt.doctorName || t('common.notAvailable')}</td>
                         <td className="py-4 px-3 text-sm font-bold text-[#94B4C1]">#{apt.queueNumber}</td>
                         <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap">
-                          {apt.estimatedWaitMinutes > 0 ? t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes}) : t('table.youAreNext')}
+                          {apt.status === 'CONSULTING' ? t('table.youAreNext') : apt.isNext ? t('table.youAreNext') : t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes})}
                         </td>
                         <td className="py-4 px-3">
                           <button
@@ -254,9 +254,9 @@ export default function PatientDashboard() {
                   <div>
                     <p className="text-xs text-gray-500">{t('liveQueue.estimatedWait')}</p>
                     <p className="text-sm font-semibold text-gray-900">
-                      {activeAppt.estimatedWaitMinutes > 0
-                        ? t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})
-                        : t('table.youAreNext')}
+                      {activeAppt.status === 'CONSULTING' ? t('table.youAreNext') : activeAppt.isNext
+                        ? t('table.youAreNext')
+                        : t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})}
                     </p>
                   </div>
                   <div>
@@ -335,9 +335,9 @@ export default function PatientDashboard() {
                         {t('notifications.itemLine', {
                           hospital: apt.hospitalName,
                           queue: apt.queueNumber,
-                          wait: apt.estimatedWaitMinutes > 0
-                            ? t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
-                            : t('notifications.nextNow')
+                          wait: apt.status === 'CONSULTING' ? t('notifications.nextNow') : apt.isNext
+                            ? t('notifications.nextNow')
+                            : t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
                         })}
                       </p>
                       <p className="text-xs text-gray-400">{apt.appointmentDate}</p>
