@@ -1,43 +1,56 @@
 {
   "common": {
-    "language": "භාෂාව"
+    "language": "භාෂාව",
+    "refresh": "නැවුම් කරන්න"
   },
   "navbar": {
-    "home": "මුල් පිටුව",
-    "about": "අප ගැන",
-    "contact": "සම්බන්ධ වන්න",
+    "home": "නිවස",
+    "about": "ගැන",
+    "contact": "අමතන්න",
     "getStarted": "ආරම්භ කරන්න"
+  },
+  "sidebar": {
+    "dashboard": "උපකරණ පුවරුව",
+    "opdSessions": "OPD සැසි",
+    "doctors": "වෛද්යවරු",
+    "appointments": "පත්වීම්",
+    "medicalRecords": "වෛද්ය වාර්තා",
+    "myPatients": "මගේ රෝගීන්",
+    "hospitals": "රෝහල්",
+    "settings": "සැකසීම්",
+    "logout": "ලොග් අවුට්",
+    "superAdmin": "සුපිරි ඇඩ්මින්"
   },
   "home": {
     "hero": {
-      "title": "නිරවද්‍ය සෞඛ්‍ය සේවාව,",
-      "titleHighlight": "ඔබ වෙනුවෙන් සරලව",
-      "subtitle": "රෝගීන්, වෛද්‍යවරුන් සහ පරිපාලකයින් එකමුතුවක්, කාර්යක්ෂම හා කරුණාවන්ත ඩිජිටල් සෞඛ්‍ය වේදිකාවකින් සම්බන්ධ කරයි.",
-      "asPatient": "රෝගියෙකු ලෙස",
-      "asDoctor": "වෛද්‍යවරයෙකු ලෙස",
-      "doctorsImageAlt": "වෛද්‍යවරු"
+      "title": "බාධාවකින් තොර සෞඛ්‍ය සේවා,",
+      "titleHighlight": "ඔබ වෙනුවෙන් සරල කර ඇත",
+      "subtitle": "ඒකාබද්ධ, කාර්යක්ෂම සහ දයානුකම්පිත ඩිජිටල් සෞඛ්‍ය වේදිකාවක් හරහා රෝගීන්, වෛද්‍යවරුන් සහ පරිපාලකයින් සම්බන්ධ කිරීම.",
+      "asPatient": "රෝගියා ලෙස",
+      "asDoctor": "වෛද්‍යවරයා ලෙස",
+      "doctorsImageAlt": "වෛද්යවරු"
     },
     "features": {
-      "title": "ඔබ වෙනුවෙන් සැලසුම් කළ ප්‍රධාන විශේෂාංග",
+      "title": "ඔබ සඳහා නිර්මාණය කර ඇති ප්රධාන විශේෂාංග",
       "unified": {
-        "title": "එකීය OPD චැනලින්",
-        "description": "විවිධ රෝහල් සඳහා බාහිර රෝගී පත්වීම් පහසුවෙන් වෙන්කර ගැනීමට පද්ධතියක් භාවිතා කරන්න."
+        "title": "ඒකාබද්ධ OPD නාලිකාකරණය",
+        "description": "විවිධ රෝහල් හරහා බාහිර රෝගී දෙපාර්තමේන්තු පත්වීම් වෙන්කරවා ගැනීම සඳහා බාධාවකින් තොර පද්ධතියකට ප්‍රවේශ වන්න."
       },
       "queue": {
-        "title": "සජීවී පෝලිම් තත්ත්වය",
-        "description": "පෝලිම් කාලය සජීවීව දැනගෙන, බලාසිටිම් කාලය අඩු කර පහසුව වැඩි කරන්න."
+        "title": "තත්‍ය කාලීන පෝලිම් තත්ත්වය",
+        "description": "පෝලිම් වේලාවන්, පොරොත්තු කාලය අඩු කිරීම සහ පහසුව වැඩි කිරීම පිළිබඳ සජීවී යාවත්කාලීන සමඟ දැනුවත්ව සිටින්න."
       },
       "care": {
-        "title": "අඛණ්ඩ ප්‍රතිකාර",
-        "description": "ඔබගේ සෞඛ්‍ය වාර්තා ආරක්ෂිතව කළමනාකරණය කර විවිධ වෛද්‍යවරුන් අතර අඛණ්ඩ ප්‍රතිකාරය තහවුරු කරන්න."
+        "title": "රැකවරණය අඛණ්ඩව",
+        "description": "ඔබේ සෞඛ්‍ය වාර්තා සුරක්ෂිතව කළමනාකරණය කර විවිධ වෛද්‍ය වෘත්තිකයන් හරහා ස්ථාවර රැකවරණයක් සහතික කරන්න."
       },
       "multilingual": {
-        "title": "බහුභාෂා සහය",
-        "description": "සියලු දෙනාටම ප්‍රවේශය ලබාදෙන සෞඛ්‍ය අත්දැකීමක් සඳහා සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවලින් වේදිකාව භාවිතා කරන්න."
+        "title": "බහුභාෂා සහාය",
+        "description": "ඇතුළත් සහ ප්‍රවේශ විය හැකි සෞඛ්‍ය සේවා සඳහා වේදිකාව සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවෙන් අත්විඳින්න."
       }
     },
     "steps": {
-      "title": "පහසු OPD වෙන්කිරීම සඳහා පියවර 3",
+      "title": "පහසු OPD වෙන්කරවා ගැනීම සඳහා ඔබේ 3-පියවර මාර්ගෝපදේශය",
       "step1": {
         "label": "පියවර 1",
         "title": "රෝහල සොයන්න"
@@ -48,951 +61,1323 @@
       },
       "step3": {
         "label": "පියවර 3",
-        "title": "පෝලිම් අංකය ලබාගන්න"
+        "title": "පෝලිම් අංකය ලබා ගන්න"
       }
     },
     "commitment": {
-      "title": "ඔබගේ සුවසනට අපගේ කැපවීම",
-      "government": "රජයේ අනුමැතිය ලැබූ",
+      "title": "ඔබගේ යහපැවැත්ම සඳහා කැපවී ඇත",
+      "government": "රජය අනුමත කර ඇත",
       "secure": "ආරක්ෂිත සහ පුද්ගලික",
-      "accessible": "සියලු දෙනාට ප්‍රවේශමය"
+      "accessible": "සැමට ප්‍රවේශ විය හැක"
     },
     "contact": {
-      "title": "උදව් අවශ්‍යද? අප අමතන්න",
-      "supportText": "අපගේ සහාය කණ්ඩායම 24/7 ඔබට උදව් කිරීමට සූදානම්."
+      "title": "උදව් අවශ්‍යද? අපව අමතන්න",
+      "supportText": "ඔබට සහාය වීමට අපගේ සහාය කණ්ඩායම 24/7 පවතී."
     },
     "footer": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
+      "home": "නිවස",
+      "about": "අපි ගැන",
       "services": "සේවා",
-      "contact": "සම්බන්ධ වන්න",
-      "accessibilityTitle": "ප්‍රවේශතා ප්‍රකාශය",
-      "accessibilityDescription": "සියලු දෙනාට ප්‍රවේශමය මාර්ගගත අත්දැකීමක් ලබාදීමට අප කැපවී සිටිමු.",
-      "learnMore": "තවත් දැනගන්න"
+      "contact": "අපව අමතන්න",
+      "accessibilityTitle": "ප්‍රවේශ්‍යතා ප්‍රකාශය",
+      "accessibilityDescription": "ප්‍රවේශ විය හැකි සබැඳි අත්දැකීමක් ලබා දීමට කැපවී සිටී.",
+      "learnMore": "තවත් හදාරන්න"
     }
   },
   "login": {
-    "title": "නැවත සාදරයෙන් පිළිගනිමු!",
-    "subtitle": "ඔබගේ Suwapatha ගිණුමට ප්‍රවේශ වීමට පිවිසෙන්න.",
+    "title": "ආපසු සාදරයෙන් පිළිගනිමු!",
+    "subtitle": "ඔබේ සුවපත ගිණුමට ප්‍රවේශ වීමට ලොග් වන්න.",
     "nav": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
-      "contact": "සම්බන්ධ වන්න",
+      "home": "නිවස",
+      "about": "ගැන",
+      "contact": "අමතන්න",
       "getStarted": "ආරම්භ කරන්න"
     },
     "form": {
-      "usernameLabel": "පරිශීලක නාමය / ඊමේල්",
-      "usernamePlaceholder": "ඔබගේ පරිශීලක නාමය හෝ ඊමේල් ඇතුළත් කරන්න",
+      "usernameLabel": "පරිශීලක නාමය / විද්‍යුත් තැපෑල",
+      "usernamePlaceholder": "ඔබගේ පරිශීලක නාමය හෝ විද්‍යුත් තැපෑල ඇතුලත් කරන්න",
       "passwordLabel": "මුරපදය",
-      "passwordPlaceholder": "ඔබගේ මුරපදය ඇතුළත් කරන්න",
-      "rememberMe": "මාව මතක තබා ගන්න",
-      "forgotPassword": "මුරපදය අමතකද?",
+      "passwordPlaceholder": "ඔබගේ මුරපදය ඇතුලත් කරන්න",
+      "rememberMe": "මාව මතක ද",
+      "forgotPassword": "මුරපදය අමතක වුණා ද?",
       "locationQuestion": "මගේ ස්ථානය භාවිතා කරන්නද?",
-      "locationHelp": "ස්ථාන අවසරය ආසන්න රෝහල් සොයා ගැනීමට උපකාරී වේ.",
+      "locationHelp": "ස්ථාන ප්‍රවේශයට ඉඩ දීම අවට රෝහල් සොයා ගැනීමට උපකාරී වේ.",
       "yes": "ඔව්",
-      "no": "නැහැ",
-      "loggingIn": "පිවිසෙමින්...",
-      "login": "පිවිසෙන්න"
+      "no": "නැත",
+      "loggingIn": "පුරනය වෙමින්...",
+      "login": "ඇතුල් වන්න"
     },
     "errors": {
-      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+      "unexpected": "අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "superAdminDashboard": {
-    "title": "සුපිරි පරිපාලක පුවරුව",
-    "subtitle": "තෝරාගත් රෝහලක් සඳහා රෝහල් පරිපාලක ගිණුම් තොරතුරු සෑදිය හැක්කේ සුපිරි පරිපාලකයාට පමණි.",
-    "createAdminTitle": "රෝහල් පරිපාලකයෙකු සාදන්න",
-    "createAdminDescription": "රෝහල් පිටුවට ගොස් රෝහලක් තෝරා, එහි පරිපාලකයා සඳහා පිවිසුම් තොරතුරු සාදන්න.",
+    "title": "සුපිරි පරිපාලක උපකරණ පුවරුව",
+    "subtitle": "Super Admin හට සෑදිය හැක්කේ තෝරාගත් රෝහලක් සඳහා රෝහල් පරිපාලක අක්තපත්‍ර පමණි.",
+    "createAdminTitle": "රෝහල් පරිපාලක සාදන්න",
+    "createAdminDescription": "රෝහල් වෙත ගොස්, රෝහලක් තෝරා, එහි පරිපාලක සඳහා අක්තපත්‍ර සාදන්න.",
     "goToHospitals": "රෝහල් වෙත යන්න"
   },
   "doctorLogin": {
-    "brand": "Suwapatha",
-    "imageAlt": "Professional doctor",
+    "brand": "සුවපත",
+    "imageAlt": "වෘත්තීය වෛද්‍යවරයෙක්",
     "title": "Doctor Login",
-    "subtitle": "Access your healthcare professional account",
+    "subtitle": "ඔබේ සෞඛ්‍ය සේවා වෘත්තීය ගිණුමට පිවිසෙන්න",
     "nav": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
-      "contact": "සම්බන්ධ වන්න",
+      "home": "නිවස",
+      "about": "ගැන",
+      "contact": "අමතන්න",
       "getStarted": "ආරම්භ කරන්න"
     },
     "form": {
-      "doctorIdOrEmailLabel": "Doctor ID / Email",
-      "doctorIdOrEmailPlaceholder": "Enter your Doctor ID or email",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot Password?",
-      "loggingIn": "Logging in...",
-      "loginButton": "Login as Doctor",
-      "notRegistered": "Not registered yet?",
-      "registerLink": "Register as Doctor"
+      "doctorIdOrEmailLabel": "වෛද්‍ය හැඳුනුම්පත / විද්‍යුත් තැපෑල",
+      "doctorIdOrEmailPlaceholder": "ඔබේ වෛද්‍ය හැඳුනුම්පත හෝ විද්‍යුත් තැපෑල ඇතුළත් කරන්න",
+      "passwordLabel": "මුරපදය",
+      "passwordPlaceholder": "ඔබගේ මුරපදය ඇතුලත් කරන්න",
+      "rememberMe": "මාව මතක ද",
+      "forgotPassword": "මුරපදය අමතක වුණා ද?",
+      "loggingIn": "පුරනය වෙමින්...",
+      "loginButton": "Doctor ලෙස ලොග් වන්න",
+      "notRegistered": "තවමත් ලියාපදිංචි වී නැද්ද?",
+      "registerLink": "වෛද්‍යවරයෙකු ලෙස ලියාපදිංචි වන්න"
     },
     "errors": {
-      "invalidCredentials": "Invalid credentials. Please try again."
+      "invalidCredentials": "වලංගු නොවන අක්තපත්‍ර. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "superAdminLogin": {
-    "brand": "Suwapatha",
-    "imageAlt": "Super Admin Dashboard",
-    "title": "Super Admin Login",
-    "subtitle": "Access the system administration panel",
+    "brand": "සුවපත",
+    "imageAlt": "සුපිරි පරිපාලක උපකරණ පුවරුව",
+    "title": "සුපිරි පරිපාලක පිවිසුම",
+    "subtitle": "පද්ධති පරිපාලන පැනලය වෙත පිවිසෙන්න",
     "nav": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
-      "contact": "සම්බන්ධ වන්න",
+      "home": "නිවස",
+      "about": "ගැන",
+      "contact": "අමතන්න",
       "getStarted": "ආරම්භ කරන්න"
     },
     "form": {
-      "emailLabel": "Email Address",
-      "emailPlaceholder": "Enter your email",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot Password?",
-      "signingIn": "Signing in...",
-      "loginButton": "Login as Super Admin"
+      "emailLabel": "ඊතැපැල් ලිපිනය",
+      "emailPlaceholder": "ඔබගේ විද්‍යුත් තැපෑල ඇතුලත් කරන්න",
+      "passwordLabel": "මුරපදය",
+      "passwordPlaceholder": "ඔබගේ මුරපදය ඇතුලත් කරන්න",
+      "rememberMe": "මාව මතක ද",
+      "forgotPassword": "මුරපදය අමතක වුණා ද?",
+      "signingIn": "පුරනය වෙමින්...",
+      "loginButton": "Super Admin ලෙස ලොග් වන්න"
     },
     "errors": {
-      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+      "unexpected": "අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "patientRegister": {
-    "brand": "Suwapatha",
-    "imageAlt": "Medical professionals in surgery",
-    "title": "Patient Registration",
+    "brand": "සුවපත",
+    "imageAlt": "ශල්යකර්මයේ වෛද්ය වෘත්තිකයන්",
+    "title": "රෝගීන් ලියාපදිංචි කිරීම",
     "nav": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
-      "contact": "සම්බන්ධ වන්න",
+      "home": "නිවස",
+      "about": "ගැන",
+      "contact": "අමතන්න",
       "getStarted": "ආරම්භ කරන්න"
     },
     "form": {
-      "firstName": "First Name *",
-      "firstNamePlaceholder": "John",
-      "lastName": "Last Name *",
-      "lastNamePlaceholder": "Doe",
-      "email": "Email Address *",
+      "firstName": "මුල් නම *",
+      "firstNamePlaceholder": "ජෝන්",
+      "lastName": "අවසන් නම *",
+      "lastNamePlaceholder": "ඩෝ",
+      "email": "ඊතැපැල් ලිපිනය *",
       "emailPlaceholder": "john.doe@example.com",
-      "password": "Password *",
-      "passwordPlaceholder": "Minimum 8 characters",
-      "phoneNumber": "Phone Number *",
+      "password": "මුරපදය *",
+      "passwordPlaceholder": "අවම වශයෙන් අක්ෂර 8 ක්",
+      "phoneNumber": "දුරකථන අංකය *",
       "phonePlaceholder": "0771234567",
-      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
-      "dateOfBirth": "Date of Birth *",
-      "gender": "Gender *",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "genderOther": "Other",
-      "address": "Address *",
-      "addressPlaceholder": "123 Main Street, Colombo 07",
-      "emergencyContact": "Emergency Contact (Optional)",
-      "emergencyContactPlaceholder": "Name and phone number",
-      "registering": "Registering...",
-      "register": "Register",
-      "alreadyRegistered": "Already registered?",
-      "loginLink": "Log in"
+      "phoneHint": "ඉලක්කම් 10ක් ඇතුළු කරන්න (උදා. 0771234567)",
+      "dateOfBirth": "උපන් දිනය *",
+      "gender": "ලිංගභේදය *",
+      "genderMale": "පිරිමි",
+      "genderFemale": "ගැහැණු",
+      "genderOther": "වෙනත්",
+      "address": "ලිපිනය *",
+      "addressPlaceholder": "123 ප්‍රධාන වීදිය, කොළඹ 07",
+      "emergencyContact": "හදිසි සම්බන්ධතා (විකල්ප)",
+      "emergencyContactPlaceholder": "නම සහ දුරකථන අංකය",
+      "registering": "ලියාපදිංචි වෙමින්...",
+      "register": "ලියාපදිංචි කරන්න",
+      "alreadyRegistered": "දැනටමත් ලියාපදිංචි වී තිබේද?",
+      "loginLink": "ඇතුල් වන්න"
     },
     "errors": {
-      "emailRequired": "Email is required",
-      "invalidEmail": "Invalid email format",
-      "passwordRequired": "Password is required",
-      "passwordLength": "Password must be at least 8 characters",
-      "firstNameRequired": "First name is required",
-      "lastNameRequired": "Last name is required",
-      "dateOfBirthRequired": "Date of birth is required",
-      "genderRequired": "Gender is required",
-      "phoneRequired": "Phone number is required",
-      "phoneDigits": "Phone number must be 10 digits",
-      "addressRequired": "Address is required",
-      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+      "emailRequired": "විද්‍යුත් තැපෑල අවශ්‍යයි",
+      "invalidEmail": "වලංගු නොවන ඊමේල් ආකෘතිය",
+      "passwordRequired": "මුරපදය අවශ්ය වේ",
+      "passwordLength": "මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය",
+      "firstNameRequired": "මුල් නම අවශ්ය වේ",
+      "lastNameRequired": "අවසාන නම අවශ්ය වේ",
+      "dateOfBirthRequired": "උපන් දිනය අවශ්ය වේ",
+      "genderRequired": "ස්ත්‍රී පුරුෂ භාවය අවශ්‍යයි",
+      "phoneRequired": "දුරකථන අංකය අවශ්‍යයි",
+      "phoneDigits": "දුරකථන අංකය ඉලක්කම් 10ක් විය යුතුය",
+      "addressRequired": "ලිපිනය අවශ්ය වේ",
+      "unexpected": "අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "doctorRegister": {
-    "brand": "Suwapatha",
-    "imageAlt": "Doctor in surgery",
-    "title": "Doctor Registration",
-    "subtitle": "Register as a healthcare professional",
+    "brand": "සුවපත",
+    "imageAlt": "ශල්යකර්මයේ වෛද්යවරයා",
+    "title": "වෛද්‍ය ලියාපදිංචිය",
+    "subtitle": "සෞඛ්‍ය සේවා වෘත්තිකයෙකු ලෙස ලියාපදිංචි වන්න",
     "nav": {
-      "home": "මුල් පිටුව",
-      "about": "අප ගැන",
-      "contact": "සම්බන්ධ වන්න",
+      "home": "නිවස",
+      "about": "ගැන",
+      "contact": "අමතන්න",
       "getStarted": "ආරම්භ කරන්න"
     },
     "form": {
-      "firstName": "First Name *",
-      "firstNamePlaceholder": "John",
-      "lastName": "Last Name *",
-      "lastNamePlaceholder": "Doe",
-      "email": "Email Address *",
+      "firstName": "මුල් නම *",
+      "firstNamePlaceholder": "ජෝන්",
+      "lastName": "අවසන් නම *",
+      "lastNamePlaceholder": "ඩෝ",
+      "email": "ඊතැපැල් ලිපිනය *",
       "emailPlaceholder": "dr.john@hospital.com",
-      "password": "Password *",
-      "passwordPlaceholder": "Minimum 8 characters",
-      "doctorId": "Doctor ID Number *",
+      "password": "මුරපදය *",
+      "passwordPlaceholder": "අවම වශයෙන් අක්ෂර 8 ක්",
+      "doctorId": "වෛද්‍ය ID අංකය *",
       "doctorIdPlaceholder": "MD12345",
-      "doctorIdHint": "Enter your registered medical practitioner ID",
-      "nic": "NIC (National Identity Card) *",
-      "nicPlaceholder": "90123456V or 200012345678",
-      "nicHint": "Old format (9 digits + V/X) or new format (12 digits)",
-      "phone": "Phone Number *",
+      "doctorIdHint": "ඔබේ ලියාපදිංචි වෛද්‍ය වෘත්තික හැඳුනුම්පත ඇතුළත් කරන්න",
+      "nic": "ජාතික හැඳුනුම්පත (ජාතික හැඳුනුම්පත) *",
+      "nicPlaceholder": "90123456V හෝ 200012345678",
+      "nicHint": "පැරණි ආකෘතිය (ඉලක්කම් 9 + V/X) හෝ නව ආකෘතිය (ඉලක්කම් 12)",
+      "phone": "දුරකථන අංකය *",
       "phonePlaceholder": "0771234567",
-      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
-      "gender": "Gender *",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "genderOther": "Other",
-      "dateOfBirth": "Date of Birth *",
-      "hospital": "Affiliated Hospital *",
-      "hospitalPlaceholder": "Select a hospital",
-      "hospitalSearchPlaceholder": "Search hospitals...",
-      "hospitalNoResults": "No hospitals found matching \"{searchTerm}\"",
-      "registering": "Registering...",
-      "register": "Register as Doctor",
-      "alreadyRegistered": "Already registered?",
-      "loginLink": "Log in"
+      "phoneHint": "ඉලක්කම් 10ක් ඇතුළු කරන්න (උදා. 0771234567)",
+      "gender": "ලිංගභේදය *",
+      "genderMale": "පිරිමි",
+      "genderFemale": "ගැහැණු",
+      "genderOther": "වෙනත්",
+      "dateOfBirth": "උපන් දිනය *",
+      "hospital": "අනුබද්ධ රෝහල *",
+      "hospitalPlaceholder": "රෝහලක් තෝරන්න",
+      "hospitalSearchPlaceholder": "රෝහල් සොයන්න...",
+      "hospitalNoResults": "\"{searchTerm}\" ට ගැළපෙන රෝහල් කිසිවක් හමු නොවීය",
+      "registering": "ලියාපදිංචි වෙමින්...",
+      "register": "වෛද්‍යවරයෙකු ලෙස ලියාපදිංචි වන්න",
+      "alreadyRegistered": "දැනටමත් ලියාපදිංචි වී තිබේද?",
+      "loginLink": "ඇතුල් වන්න"
     },
     "errors": {
-      "hospitalsLoadFailed": "Failed to load hospitals. Please refresh the page.",
-      "firstNameRequired": "First name is required",
-      "lastNameRequired": "Last name is required",
-      "passwordRequired": "Password is required",
-      "passwordLength": "Password must be at least 8 characters",
-      "doctorIdRequired": "Doctor ID is required",
-      "nicRequired": "NIC is required",
-      "nicInvalid": "Invalid NIC format (e.g., 123456789V or 200012345678)",
-      "emailRequired": "Email is required",
-      "emailInvalid": "Invalid email format",
-      "phoneRequired": "Phone number is required",
-      "phoneDigits": "Phone number must be 10 digits",
-      "genderRequired": "Gender is required",
-      "dateOfBirthRequired": "Date of birth is required",
-      "hospitalRequired": "Please select a hospital",
-      "unexpected": "අනපේක්ෂිත දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න."
+      "hospitalsLoadFailed": "රෝහල් පැටවීම අසාර්ථක විය. කරුණාකර පිටුව නැවුම් කරන්න.",
+      "firstNameRequired": "මුල් නම අවශ්ය වේ",
+      "lastNameRequired": "අවසාන නම අවශ්ය වේ",
+      "passwordRequired": "මුරපදය අවශ්ය වේ",
+      "passwordLength": "මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය",
+      "doctorIdRequired": "වෛද්‍ය හැඳුනුම්පත අවශ්‍යයි",
+      "nicRequired": "NIC අවශ්‍යයි",
+      "nicInvalid": "වලංගු නොවන NIC ආකෘතිය (උදා. 123456789V හෝ 200012345678)",
+      "emailRequired": "විද්‍යුත් තැපෑල අවශ්‍යයි",
+      "emailInvalid": "වලංගු නොවන ඊමේල් ආකෘතිය",
+      "phoneRequired": "දුරකථන අංකය අවශ්‍යයි",
+      "phoneDigits": "දුරකථන අංකය ඉලක්කම් 10ක් විය යුතුය",
+      "genderRequired": "ස්ත්‍රී පුරුෂ භාවය අවශ්‍යයි",
+      "dateOfBirthRequired": "උපන් දිනය අවශ්ය වේ",
+      "hospitalRequired": "කරුණාකර රෝහලක් තෝරන්න",
+      "unexpected": "අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "patientDashboard": {
     "common": {
-      "patient": "Patient",
-      "notAvailable": "—",
-      "toBeAssigned": "To be assigned"
+      "patient": "රෝගියා",
+      "notAvailable": "-",
+      "toBeAssigned": "පැවරීමට"
     },
     "alerts": {
-      "cancelFailed": "Failed to cancel."
+      "cancelFailed": "අවලංගු කිරීමට අසමත් විය."
     },
     "status": {
-      "booked": "Booked",
-      "cancelled": "Cancelled",
-      "completed": "Completed"
+      "booked": "වෙන්කර ඇත",
+      "cancelled": "අවලංගු කළා",
+      "completed": "සම්පූර්ණ කළා"
     },
     "newUser": {
-      "title": "Welcome to Suwapatha! 🎉",
-      "description": "Your account is ready. Book your first appointment from the <strong>Appointments</strong> page to get started."
+      "title": "සුවපත වෙත ඔබව සාදරයෙන් පිළිගනිමු! 🎉",
+      "description": "ඔබගේ ගිණුම සූදානම්. ආරම්භ කිරීමට <strong>පත්වීම්</strong> පිටුවෙන් ඔබේ පළමු හමුවීම වෙන්කරවා ගන්න."
     },
     "welcome": {
-      "greeting": "Hello, {name}",
-      "hasUpcoming": "You have {count} upcoming appointments.",
-      "noUpcoming": "No upcoming appointments. Book one from the Appointments page."
+      "greeting": "ආයුබෝවන්, {name}",
+      "hasUpcoming": "ඔබට ඉදිරි හමුවීම් {ගණන්} ඇත.",
+      "noUpcoming": "ඉදිරි පත්වීම් නැත. හමුවීම් පිටුවෙන් එකක් වෙන්කරවා ගන්න."
     },
     "upcoming": {
-      "title": "Upcoming Appointments",
-      "subtitle": "Your next visits and their details.",
-      "bookNew": "Book new ->",
-      "emptyTitle": "No upcoming appointments",
-      "bookNow": "Book one now"
+      "title": "ඉදිරි පත්වීම්",
+      "subtitle": "ඔබගේ මීළඟ පැමිණීම් සහ ඒවායේ විස්තර.",
+      "bookNew": "අලුතින් වෙන්කරවා ගන්න ->",
+      "emptyTitle": "ඉදිරි පත්වීම් නැත",
+      "bookNow": "දැන් එකක් වෙන්කරවා ගන්න"
     },
     "table": {
-      "date": "Date",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "queue": "Queue #",
-      "wait": "Wait",
-      "actions": "Actions",
-      "waitMinutes": "~{minutes} min",
-      "waitOnlyMinutes": "{minutes} min",
-      "youAreNext": "You're next!"
+      "date": "දිනය",
+      "hospital": "රෝහල",
+      "doctor": "ඩොක්ටර්",
+      "queue": "පෝලිම #",
+      "wait": "ඉන්න",
+      "actions": "ක්රියාවන්",
+      "waitMinutes": "~{මිනිත්තු} විනාඩි",
+      "waitOnlyMinutes": "මිනිත්තු {මිනිත්තු}",
+      "youAreNext": "ඔබ ඊළඟට!"
     },
     "actions": {
-      "cancel": "Cancel",
-      "cancelling": "Cancelling..."
+      "cancel": "අවලංගු කරන්න",
+      "cancelling": "අවලංගු කරමින්..."
     },
     "liveQueue": {
-      "title": "Live Queue Status",
-      "queue": "Queue #",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "estimatedWait": "Est. Wait",
-      "status": "Status"
+      "title": "සජීවී පෝලිම් තත්ත්වය",
+      "queue": "පෝලිම #",
+      "hospital": "රෝහල",
+      "doctor": "ඩොක්ටර්",
+      "estimatedWait": "EST. ඉන්න",
+      "status": "තත්ත්වය"
     },
     "vitals": {
       "title": "Vitals Trend",
-      "subtitle": "Blood pressure and heart rate over time.",
-      "emptyTitle": "No vitals recorded yet",
-      "emptySubtitle": "Your vitals history will appear here once recorded by your doctor."
+      "subtitle": "කාලයත් සමඟ රුධිර පීඩනය සහ හෘද ස්පන්දන වේගය.",
+      "emptyTitle": "තවමත් ජීව දත්ත වාර්තා කර නොමැත",
+      "emptySubtitle": "ඔබේ වෛද්‍යවරයා විසින් වාර්තා කළ පසු ඔබේ වැදගත් ඉතිහාසය මෙහි දිස්වනු ඇත."
     },
     "visitHistory": {
-      "title": "Visit History",
-      "subtitle": "Total appointments per month (last 6).",
-      "total": "Total: {count} appointments on record"
+      "title": "ඉතිහාසය බලන්න",
+      "subtitle": "මසකට මුළු පත්වීම් (පසුගිය 6).",
+      "total": "එකතුව: වාර්තාගත හමුවීම් {count}"
     },
     "notifications": {
-      "title": "Notifications",
-      "empty": "No notifications",
-      "upcomingTitle": "Upcoming Appointment",
-      "itemLine": "{hospital} — Queue #{queue}, {wait}",
-      "waitMinutes": "~{minutes} min wait",
-      "nextNow": "you're next!"
+      "title": "දැනුම්දීම්",
+      "empty": "දැනුම්දීම් නැත",
+      "upcomingTitle": "ඉදිරි පත්වීම",
+      "itemLine": "{hospital} — පෝලිම #{පෝලිම}, {ඉන්න}",
+      "waitMinutes": "~{මිනිත්තු} විනාඩි රැඳී සිටින්න",
+      "nextNow": "ඔබ ඊළඟට!"
     },
     "quickActions": {
-      "title": "Quick Actions",
-      "subtitle": "Access common tasks instantly.",
-      "bookAppointment": "Book Appointment",
-      "viewRecords": "View Records",
-      "myProfile": "My Profile",
-      "contactSupport": "Contact Support"
+      "title": "ඉක්මන් ක්‍රියා",
+      "subtitle": "පොදු කාර්යයන් ක්ෂණිකව ප්රවේශ කරන්න.",
+      "bookAppointment": "පොත් පත් කිරීම",
+      "viewRecords": "වාර්තා බලන්න",
+      "myProfile": "මගේ පැතිකඩ",
+      "contactSupport": "සහාය අමතන්න"
     }
   },
   "patientAppointments": {
     "common": {
-      "toBeAssigned": "To be assigned"
+      "toBeAssigned": "පැවරීමට"
     },
     "status": {
-      "booked": "Booked",
-      "cancelled": "Cancelled",
-      "completed": "Completed"
+      "booked": "වෙන්කර ඇත",
+      "cancelled": "අවලංගු කළා",
+      "completed": "සම්පූර්ණ කළා"
     },
     "alerts": {
-      "reminderTitle": "Appointment Reminder",
-      "reminderMessage": "Reminder: Your appointment at {hospital} starts in 10 minutes!",
-      "bookedSuccess": "Booked! Your queue number has been assigned.",
-      "bookingFailed": "Booking failed. Please try again.",
-      "cancelFailed": "Failed to cancel appointment."
+      "reminderTitle": "පත්වීම් මතක් කිරීම",
+      "reminderMessage": "සිහිකැඳවීම: {රෝහලේ} ඔබේ හමුවීම විනාඩි 10 කින් ආරම්භ වේ!",
+      "bookedSuccess": "වෙන්කර ඇත! ඔබගේ පෝලිම් අංකය පවරා ඇත.",
+      "bookingFailed": "වෙන්කරවා ගැනීම අසාර්ථක විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+      "cancelFailed": "හමුවීම අවලංගු කිරීමට අසමත් විය."
     },
     "hospitalSearch": {
-      "title": "Hospital Search",
-      "placeholder": "Search hospitals by name...",
-      "noResults": "No hospitals found for \"{query}\"",
-      "startTyping": "Start typing to search Sri Lankan government hospitals..."
+      "title": "රෝහල් සෙවීම",
+      "placeholder": "නමින් රෝහල් සොයන්න...",
+      "noResults": "\"{query}\" සඳහා රෝහල් කිසිවක් හමු නොවීය",
+      "startTyping": "ශ්‍රී ලංකාවේ රජයේ රෝහල් සෙවීමට ටයිප් කිරීම අරඹන්න..."
     },
     "sessions": {
-      "title": "OPD Sessions",
-      "clear": "Clear",
-      "emptyTitle": "No upcoming sessions available",
-      "emptySubtitle": "Sessions are added by the hospital admin",
-      "roomSuffix": " · Room {room}",
-      "slotsLeft": "{count} slots left",
-      "full": "Full",
-      "statusOpen": "Open",
-      "statusFull": "Full",
-      "booking": "Booking...",
-      "book": "Book"
+      "title": "OPD සැසි",
+      "clear": "පැහැදිලියි",
+      "emptyTitle": "ඉදිරි සැසි නොමැත",
+      "emptySubtitle": "සැසි එකතු කරනු ලබන්නේ රෝහල් පරිපාලක විසිනි",
+      "roomSuffix": "· කාමරය {කාමරය}",
+      "slotsLeft": "තව් {count}ක් ඉතිරියි",
+      "full": "සම්පූර්ණයි",
+      "statusOpen": "විවෘත කරන්න",
+      "statusFull": "සම්පූර්ණයි",
+      "booking": "වෙන්කරවා ගැනීම...",
+      "book": "පොත"
     },
     "queue": {
-      "title": "My Queue Status",
-      "yourNumber": "Your Queue Number",
-      "youAreNext": "You're next!",
-      "estimatedAppointment": "Est. Appointment (UTC)",
-      "nextProceed": "You're next — please proceed!",
-      "minutesOnly": "{minutes} min",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "status": "Status",
-      "emptyTitle": "No active appointment",
-      "emptySubtitle": "Search a hospital and book an OPD session above."
+      "title": "මගේ පෝලිම් තත්ත්වය",
+      "yourNumber": "ඔබේ පෝලිම් අංකය",
+      "youAreNext": "ඔබ ඊළඟට!",
+      "estimatedAppointment": "EST. පත්වීම (UTC)",
+      "nextProceed": "ඔබ ඊළඟට - කරුණාකර ඉදිරියට යන්න!",
+      "minutesOnly": "මිනිත්තු {මිනිත්තු}",
+      "hospital": "රෝහල",
+      "doctor": "ඩොක්ටර්",
+      "status": "තත්ත්වය",
+      "emptyTitle": "සක්‍රිය හමුවීමක් නැත",
+      "emptySubtitle": "රෝහලක් සොයන්න සහ ඉහත OPD සැසියක් වෙන්කරවා ගන්න."
     },
     "actions": {
-      "cancelling": "Cancelling...",
-      "cancel": "Cancel",
-      "cancelAppointment": "Cancel Appointment"
+      "cancelling": "අවලංගු කරමින්...",
+      "cancel": "අවලංගු කරන්න",
+      "cancelAppointment": "පත්වීම අවලංගු කරන්න"
     },
     "history": {
-      "title": "Appointment History",
-      "empty": "No appointment history yet",
-      "itemMeta": "{date} · Queue #{queue}"
+      "title": "පත්වීම් ඉතිහාසය",
+      "empty": "තවමත් පත්වීම් ඉතිහාසයක් නැත",
+      "itemMeta": "{date} · පෝලිම #{පෝලිම}"
     },
     "tips": {
-      "title": "Tips",
-      "item1": "• Times shown in UTC — convert to your local time as needed",
-      "item2": "• You'll receive a browser alert 10 minutes before your session",
-      "item3": "• Bring your National ID card and any previous prescriptions",
-      "item4": "• Cancel at least 1 hour before if you cannot attend",
-      "item5": "• Sessions may have limited slots — book early"
+      "title": "ඉඟි",
+      "item1": "• UTC හි පෙන්වන වේලාවන් — අවශ්‍ය පරිදි ඔබේ දේශීය වේලාවට පරිවර්තනය කරන්න",
+      "item2": "• ඔබේ සැසියට මිනිත්තු 10කට පෙර ඔබට බ්‍රවුසර ඇඟවීමක් ලැබෙනු ඇත",
+      "item3": "• ඔබගේ ජාතික හැඳුනුම්පත සහ පෙර බෙහෙත් වට්ටෝරු රැගෙන එන්න",
+      "item4": "• ඔබට සහභාගී විය නොහැකි නම් අවම වශයෙන් පැය 1කට පෙර අවලංගු කරන්න",
+      "item5": "• සැසිවල සීමිත කොටස් තිබිය හැක - කලින් වෙන්කරවා ගන්න"
     }
   },
   "patientRecords": {
     "common": {
-      "loading": "Loading..."
+      "loading": "පූරණය වෙමින්..."
     },
-    "loading": "Loading medical records...",
-    "patientId": "Patient ID: {id}",
+    "loading": "වෛද්‍ය වාර්තා පූරණය කරමින්...",
+    "patientId": "රෝගියාගේ ID: {id}",
     "errors": {
-      "fetchFailed": "Failed to fetch medical records",
-      "loadFailed": "Failed to load medical records. Please try again.",
-      "filterFailed": "Failed to filter medical records",
-      "filterLoadFailed": "Failed to filter medical records. Please try again."
+      "fetchFailed": "වෛද්‍ය වාර්තා ලබා ගැනීමට අපොහොසත් විය",
+      "loadFailed": "වෛද්‍ය වාර්තා පූරණය කිරීමට අපොහොසත් විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+      "filterFailed": "වෛද්‍ය වාර්තා පෙරීමට අපොහොසත් විය",
+      "filterLoadFailed": "වෛද්‍ය වාර්තා පෙරීමට අපොහොසත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
     },
     "alerts": {
-      "downloadVisit": "Downloading PDF for visit {visitId}",
-      "downloadAll": "Downloading all medical records as PDF",
-      "shareLink": "Share link functionality"
+      "downloadVisit": "{visitId} වෙත පිවිසීම සඳහා PDF බාගත කරමින්",
+      "downloadAll": "සියලුම වෛද්‍ය වාර්තා PDF ලෙස බාගත කිරීම",
+      "shareLink": "සබැඳි ක්‍රියාකාරීත්වය බෙදා ගන්න"
     },
     "filters": {
-      "dateRange": "Select a date range",
-      "selectHospital": "Select Hospital",
-      "hospital1": "Central Hospital",
-      "hospital2": "District Clinic",
-      "hospital3": "General Hospital",
-      "selectVisitType": "Select Visit Type",
-      "visitRoutine": "Routine Check-up",
-      "visitFollowup": "Follow-up",
-      "visitEmergency": "Emergency",
-      "clear": "Clear Filters"
+      "dateRange": "දින පරාසයක් තෝරන්න",
+      "selectHospital": "රෝහල තෝරන්න",
+      "hospital1": "මධ්යම රෝහල",
+      "hospital2": "දිස්ත්රික් සායනය",
+      "hospital3": "මහ රෝහල",
+      "selectVisitType": "පිවිසුම් වර්ගය තෝරන්න",
+      "visitRoutine": "සාමාන්‍ය පරීක්ෂාව",
+      "visitFollowup": "පසු විපරම",
+      "visitEmergency": "හදිසි",
+      "clear": "පෙරහන් හිස් කරන්න"
     },
     "actions": {
-      "downloadAllPdf": "Download All PDF",
-      "shareLink": "Share link",
-      "downloadVisitPdf": "Download Visit PDF"
+      "downloadAllPdf": "සියලුම PDF බාගන්න",
+      "shareLink": "සබැඳිය බෙදාගන්න",
+      "downloadVisitPdf": "බාගත කරන්න PDF වෙත පිවිසෙන්න"
     },
     "empty": {
-      "title": "No Medical Records Found",
-      "subtitle": "You don't have any medical records yet."
+      "title": "වෛද්‍ය වාර්තා හමු නොවීය",
+      "subtitle": "ඔබට තවමත් වෛද්‍ය වාර්තා කිසිවක් නොමැත."
     },
     "visit": {
-      "followUpRequired": "Follow-up Required",
-      "consultationNotes": "Consultation Notes",
-      "prescriptions": "Prescriptions",
-      "labReports": "Lab Reports & Images"
+      "followUpRequired": "පසු විපරම් කිරීම අවශ්ය වේ",
+      "consultationNotes": "උපදේශන සටහන්",
+      "prescriptions": "බෙහෙත් වට්ටෝරු",
+      "labReports": "රසායනාගාර වාර්තා සහ පින්තූර"
     }
   },
   "doctorDashboard": {
-    "loading": "Loading dashboard...",
-    "errorTitle": "Error Loading Dashboard",
-    "tryAgain": "Try Again",
-    "welcome": "Welcome back, Dr. {name}!",
-    "doctorFallback": "Doctor",
-    "subtitle": "Here's what's happening with your patients today.",
-    "refresh": "Refresh",
+    "loading": "උපකරණ පුවරුව පූරණය වෙමින්...",
+    "errorTitle": "උපකරණ පුවරුව පූරණය කිරීමේ දෝෂයකි",
+    "tryAgain": "නැවත උත්සාහ කරන්න",
+    "welcome": "නැවත සාදරයෙන් පිළිගනිමු, ආචාර්ය {name}!",
+    "doctorFallback": "ඩොක්ටර්",
+    "subtitle": "අද ඔබේ රෝගීන්ට සිදු වන දේ මෙන්න.",
+    "refresh": "නැවුම් කරන්න",
     "errors": {
-      "unauthorized": "Unauthorized: Access restricted to doctors.",
-      "loadFailed": "Failed to load dashboard data. Please try again later.",
-      "updateAvailabilityFailed": "Failed to update availability status."
+      "unauthorized": "අනවසර: වෛද්‍යවරුන්ට ප්‍රවේශය සීමා කර ඇත.",
+      "loadFailed": "උපකරණ පුවරු දත්ත පූරණය කිරීමට අසමත් විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.",
+      "updateAvailabilityFailed": "ලබා ගත හැකි තත්ත්වය යාවත්කාලීන කිරීමට අසමත් විය."
     },
     "attendance": {
-      "title": "Today's Attendance",
-      "activeText": "You are marked as ACTIVE for today's OPD session.",
-      "inactiveText": "Mark yourself active to let the admin know you're here.",
-      "markOut": "Mark as Out (End Session)",
-      "markAvailable": "Mark as Available"
+      "title": "අද පැමිණීම",
+      "activeText": "අද OPD සැසිය සඳහා ඔබ ක්‍රියාකාරී ලෙස ලකුණු කර ඇත.",
+      "inactiveText": "ඔබ මෙහි සිටින බව පරිපාලකයාට දැනුම් දීමට ඔබ ක්‍රියාකාරී ලෙස සලකුණු කරන්න.",
+      "markOut": "අවසන් ලෙස ලකුණු කරන්න (සැසිය අවසන්)",
+      "markAvailable": "පවතින ලෙස ලකුණු කරන්න"
     },
     "stats": {
-      "totalPatientsToday": "Total Patients Today",
-      "consultationsThisWeek": "Consultations This Week",
-      "averageWaitTime": "Average Wait Time",
-      "sinceYesterday": "{value} since yesterday",
-      "fromLastWeek": "{value}% from last week",
-      "waitMins": "{value} min",
-      "fromLastMonth": "{value} min from last month"
+      "totalPatientsToday": "අද මුළු රෝගීන්",
+      "consultationsThisWeek": "මෙම සතියේ උපදේශන",
+      "averageWaitTime": "සාමාන්‍ය පොරොත්තු කාලය",
+      "sinceYesterday": "ඊයේ සිට {value}",
+      "fromLastWeek": "පසුගිය සතියේ සිට {value}%",
+      "waitMins": "විනාඩි {value}",
+      "fromLastMonth": "පසුගිය මාසයේ සිට මිනිත්තු {value}"
     },
     "charts": {
-      "patientVisits": "Patient Visits Over Time",
-      "consultationsByDay": "Consultations by Day",
-      "consultationsTitle": "{count} consultations"
+      "patientVisits": "කාලයත් සමඟ රෝගියාගේ පැමිණීම",
+      "consultationsByDay": "දින අනුව උපදේශන",
+      "consultationsTitle": "උපදේශන {count}"
     },
     "appointments": {
-      "title": "Today's Appointments",
-      "emptyTitle": "No appointments for today",
-      "emptySubtitle": "Your schedule is clear",
+      "title": "අද පත්වීම්",
+      "emptyTitle": "අදට පත්වීම් නැත",
+      "emptySubtitle": "ඔබගේ කාලසටහන පැහැදිලිය",
       "table": {
-        "patientName": "Patient Name",
-        "queueNo": "Queue No.",
-        "hospital": "Hospital",
-        "status": "Status",
-        "actions": "Actions"
+        "patientName": "රෝගියාගේ නම",
+        "queueNo": "පෝලිම් අංකය",
+        "hospital": "රෝහල",
+        "status": "තත්ත්වය",
+        "actions": "ක්රියාවන්"
       },
       "actions": {
-        "startConsultation": "Start Consultation",
-        "viewDetails": "View Details"
+        "startConsultation": "උපදේශනය ආරම්භ කරන්න",
+        "viewDetails": "විස්තර බලන්න"
       },
       "status": {
-        "booked": "Booked",
-        "completed": "Completed",
-        "cancelled": "Cancelled",
-        "checkedIn": "Checked In"
+        "booked": "වෙන්කර ඇත",
+        "completed": "සම්පූර්ණ කළා",
+        "cancelled": "අවලංගු කළා",
+        "checkedIn": "ඇතුළු විය"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "emptyTitle": "No notifications",
-      "emptySubtitle": "You're all caught up!"
+      "title": "දැනුම්දීම්",
+      "emptyTitle": "දැනුම්දීම් නැත",
+      "emptySubtitle": "ඔබ සියල්ල අසු වී ඇත!"
     },
     "months": {
-      "jan": "Jan",
-      "feb": "Feb",
-      "mar": "Mar",
-      "apr": "Apr",
-      "may": "May",
-      "jun": "Jun"
+      "jan": "ජන",
+      "feb": "පෙබ",
+      "mar": "මාර්තු",
+      "apr": "අප්රේල්",
+      "may": "මැයි",
+      "jun": "ජූනි"
     },
     "days": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
+      "mon": "සඳු",
+      "tue": "අඟහරුවාදා",
+      "wed": "බදාදා",
+      "thu": "බ්රහස්පතින්දා",
+      "fri": "සිකු",
+      "sat": "සෙනසුරාදා",
+      "sun": "හිරු"
     }
   },
   "doctorMyPatients": {
-    "title": "My Patients",
-    "totalPatientsToday": "Total Patients Today:",
-    "searchPlaceholder": "Search by Name or Queue No.",
-    "loading": "Loading patients...",
-    "retry": "Retry",
-    "emptySearch": "No patients found matching your search.",
+    "title": "මගේ රෝගීන්",
+    "totalPatientsToday": "අද මුළු රෝගීන්:",
+    "searchPlaceholder": "නම හෝ පෝලිම් අංකය අනුව සොයන්න.",
+    "loading": "රෝගීන් පූරණය කරමින්...",
+    "retry": "නැවත උත්සාහ කරන්න",
+    "emptySearch": "ඔබගේ සෙවුමට ගැළපෙන රෝගියෙකු හමු නොවීය.",
     "errors": {
-      "loadFailed": "Failed to load patients. Please try again."
+      "loadFailed": "රෝගීන් පැටවීම අසාර්ථක විය. කරුණාකර නැවත උත්සාහ කරන්න."
     },
     "table": {
-      "queueNo": "Queue No.",
-      "patientName": "Patient Name",
-      "gender": "Gender",
-      "time": "Time",
-      "status": "Status",
-      "actions": "Actions"
+      "queueNo": "පෝලිම් අංකය",
+      "patientName": "රෝගියාගේ නම",
+      "gender": "ලිංගභේදය",
+      "time": "කාලය",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
     },
     "actions": {
-      "viewDetails": "View Details",
-      "medicalRecords": "Medical Records",
-      "markComplete": "Mark Complete"
+      "viewDetails": "විස්තර බලන්න",
+      "medicalRecords": "වෛද්ය වාර්තා",
+      "markComplete": "සම්පූර්ණ ලකුණු කරන්න"
     },
     "status": {
-      "waiting": "Waiting",
-      "consulting": "Consulting",
-      "missed": "Missed",
-      "completed": "Completed"
+      "waiting": "බලාගෙන ඉන්නවා",
+      "consulting": "උපදේශනය",
+      "missed": "මගහැරුණා",
+      "completed": "සම්පූර්ණ කළා"
     },
     "alerts": {
-      "markComplete": "Marked patient {name} as complete"
+      "markComplete": "රෝගියා {name} සම්පූර්ණ ලෙස සලකුණු කරන ලදී"
     },
     "pagination": {
-      "showing": "Showing {start} to {end} of {total} patients",
-      "page": "Page {current} of {total}"
+      "showing": "මුළු රෝගීන්ගෙන් {ආරම්භය} සිට {අවසානය} දක්වා පෙන්වමින්",
+      "page": "{total} හි {වර්තමාන} පිටුව"
     }
   },
   "doctorPatientDetails": {
-    "goBack": "Go Back",
-    "cancel": "Cancel",
-    "saveConsultation": "Save Consultation",
-    "startConsultation": "Start Consultation",
-    "currentConsultation": "Current Consultation",
-    "diagnosis": "Diagnosis",
-    "diagnosisPlaceholder": "Enter diagnosis...",
-    "consultationNotes": "Consultation Notes",
-    "consultationNotesPlaceholder": "Enter consultation notes, observations, recommendations...",
-    "addPrescription": "Add Prescription",
-    "addNew": "Add New",
-    "activePrescriptions": "Active Prescriptions",
-    "patientDetails": "Patient Details",
-    "allergies": "Allergies",
-    "chronicConditions": "Chronic Conditions",
-    "notes": "Notes",
-    "prescriptions": "Prescriptions",
+    "goBack": "ආපසු යන්න",
+    "cancel": "අවලංගු කරන්න",
+    "saveConsultation": "උපදේශනය සුරකින්න",
+    "startConsultation": "උපදේශනය ආරම්භ කරන්න",
+    "currentConsultation": "වත්මන් උපදේශනය",
+    "diagnosis": "රෝග විනිශ්චය",
+    "diagnosisPlaceholder": "රෝග විනිශ්චය ඇතුලත් කරන්න...",
+    "consultationNotes": "උපදේශන සටහන්",
+    "consultationNotesPlaceholder": "උපදේශන සටහන්, නිරීක්ෂණ, නිර්දේශ ඇතුළු කරන්න...",
+    "addPrescription": "බෙහෙත් වට්ටෝරුව එකතු කරන්න",
+    "addNew": "නව එකතු කරන්න",
+    "activePrescriptions": "ක්රියාකාරී වට්ටෝරු",
+    "patientDetails": "රෝගියාගේ විස්තර",
+    "allergies": "අසාත්මිකතා",
+    "chronicConditions": "නිදන්ගත කොන්දේසි",
+    "notes": "සටහන්",
+    "prescriptions": "බෙහෙත් වට්ටෝරු",
     "notAvailable": "N/A",
     "status": {
-      "active": "Active"
+      "active": "ක්රියාකාරී"
     },
-    "patientId": "Patient ID: {id}",
-    "queue": "Queue: {queue}",
+    "patientId": "රෝගියාගේ ID: {id}",
+    "queue": "පෝලිම: {queue}",
     "cards": {
-      "age": "Age",
-      "ageValue": "{age} years",
-      "gender": "Gender",
-      "bloodType": "Blood Type",
-      "phone": "Phone"
+      "age": "වයස",
+      "ageValue": "අවුරුදු {වයස}",
+      "gender": "ලිංගභේදය",
+      "bloodType": "රුධිර වර්ගය",
+      "phone": "දුරකථනය"
     },
     "tabs": {
-      "overview": "Overview",
-      "medicalHistory": "Medical History",
-      "prescriptions": "Prescriptions"
+      "overview": "දළ විශ්ලේෂණය",
+      "medicalHistory": "වෛද්ය ඉතිහාසය",
+      "prescriptions": "බෙහෙත් වට්ටෝරු"
     },
     "vitals": {
-      "temp": "Temp (°F)",
-      "weight": "Weight (kg)"
+      "temp": "උෂ්ණත්වය (°F)",
+      "weight": "බර (කිලෝ)",
+      "bp": "බීපී",
+      "pulse": "ස්පන්දනය",
+      "tempShort": "උෂ්ණත්වය",
+      "weightShort": "බර"
     },
     "fields": {
-      "email": "Email",
-      "address": "Address",
-      "emergencyContact": "Emergency Contact"
+      "email": "ඊමේල් කරන්න",
+      "address": "ලිපිනය",
+      "emergencyContact": "හදිසි සම්බන්ධතා"
     },
     "errors": {
-      "loadFailed": "Failed to load patient details.",
-      "patientNotFound": "Patient not found"
+      "loadFailed": "රෝගියාගේ විස්තර පූරණය කිරීමට අසමත් විය.",
+      "patientNotFound": "රෝගියා හමු නොවීය"
     },
     "alerts": {
-      "enterDiagnosisAndNotes": "Please enter diagnosis and consultation notes",
-      "consultationSaved": "Consultation saved successfully!",
-      "saveFailed": "Failed to save consultation. Please try again."
+      "enterDiagnosisAndNotes": "කරුණාකර රෝග විනිශ්චය සහ උපදේශන සටහන් ඇතුළත් කරන්න",
+      "consultationSaved": "උපදේශනය සාර්ථකව සුරකින ලදී!",
+      "saveFailed": "උපදේශනය සුරැකීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
     },
     "modal": {
-      "addPrescription": "Add Prescription",
-      "medicineName": "Medicine Name *",
-      "medicinePlaceholder": "e.g., Amlodipine",
-      "dosage": "Dosage *",
-      "dosagePlaceholder": "e.g., 5mg",
-      "frequency": "Frequency",
-      "frequencyPlaceholder": "e.g., Once daily",
-      "duration": "Duration",
-      "durationPlaceholder": "e.g., 30 days"
+      "addPrescription": "බෙහෙත් වට්ටෝරුව එකතු කරන්න",
+      "medicineName": "ඖෂධ නාමය *",
+      "medicinePlaceholder": "උදා: Amlodipine",
+      "dosage": "මාත්රාව *",
+      "dosagePlaceholder": "උදා: 5mg",
+      "frequency": "සංඛ්යාතය",
+      "frequencyPlaceholder": "උදා: දිනකට වරක්",
+      "duration": "කාලසීමාව",
+      "durationPlaceholder": "උදා: දින 30ක්"
     }
   },
   "doctorSettings": {
-    "loading": "Loading settings...",
-    "tryAgain": "Try Again",
-    "doctorRole": "Doctor",
-    "reset": "Reset",
-    "saving": "Saving...",
-    "saveChanges": "Save Changes",
-    "updating": "Updating...",
-    "updatePassword": "Update Password",
-    "logout": "Logout",
-    "doctorIdLabel": "Doctor ID",
-    "emailImmutable": "Email cannot be changed. Contact support if needed.",
-    "passwordChanged": "Password changed successfully!",
+    "loading": "සැකසුම් පූරණය වෙමින්...",
+    "tryAgain": "නැවත උත්සාහ කරන්න",
+    "doctorRole": "ඩොක්ටර්",
+    "reset": "යළි පිහිටුවන්න",
+    "saving": "සුරකිමින්...",
+    "saveChanges": "වෙනස්කම් සුරකින්න",
+    "updating": "යාවත්කාලීන කරමින්...",
+    "updatePassword": "මුරපදය යාවත්කාලීන කරන්න",
+    "logout": "පිටවීම",
+    "doctorIdLabel": "වෛද්‍ය හැඳුනුම්පත",
+    "emailImmutable": "ඊමේල් වෙනස් කළ නොහැක. අවශ්ය නම් සහය අමතන්න.",
+    "passwordChanged": "මුරපදය සාර්ථකව වෙනස් විය!",
     "profileStatus": {
-      "approved": "Approved",
-      "pending": "Pending",
-      "rejected": "Rejected"
+      "approved": "අනුමත කළා",
+      "pending": "පොරොත්තුවෙන්",
+      "rejected": "ප්‍රතික්ෂේප කළා"
     },
     "sections": {
       "profile": {
-        "title": "Profile Information",
-        "subtitle": "Update your basic information."
+        "title": "පැතිකඩ තොරතුරු",
+        "subtitle": "ඔබේ මූලික තොරතුරු යාවත්කාලීන කරන්න."
       },
       "security": {
-        "title": "Security",
-        "subtitle": "Change your account password."
+        "title": "ආරක්ෂාව",
+        "subtitle": "ඔබගේ ගිණුමේ මුරපදය වෙනස් කරන්න."
       },
       "accountActions": {
-        "title": "Account Actions",
-        "subtitle": "Manage your account."
+        "title": "ගිණුම් ක්‍රියා",
+        "subtitle": "ඔබගේ ගිණුම කළමනාකරණය කරන්න."
       }
     },
     "fields": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "phoneNumber": "Phone Number",
-      "nicNumber": "NIC Number",
-      "emailAddress": "Email Address",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmNewPassword": "Confirm New Password"
+      "firstName": "මුල් නම",
+      "lastName": "අවසන් නම",
+      "phoneNumber": "දුරකථන අංකය",
+      "nicNumber": "ජාතික හැඳුනුම්පත් අංකය",
+      "emailAddress": "ඊතැපැල් ලිපිනය",
+      "currentPassword": "වත්මන් මුර පදය",
+      "newPassword": "නව මුරපදය",
+      "confirmNewPassword": "නව මුරපදය තහවුරු කරන්න"
     },
     "placeholders": {
-      "firstName": "Enter first name",
-      "lastName": "Enter last name"
+      "firstName": "මුල් නම ඇතුලත් කරන්න",
+      "lastName": "අවසාන නම ඇතුලත් කරන්න"
     },
     "hints": {
-      "phoneDigits": "10 digits",
-      "nic": "9 digits + V/X or 12 digits"
+      "phoneDigits": "ඉලක්කම් 10 යි",
+      "nic": "ඉලක්කම් 9 + V/X හෝ ඉලක්කම් 12"
     },
     "passwordRequirements": {
-      "title": "Password Requirements",
-      "item1": "At least 8 characters long",
-      "item2": "You'll be logged out after changing password"
+      "title": "මුරපද අවශ්‍යතා",
+      "item1": "අවම වශයෙන් අක්ෂර 8 ක් දිග",
+      "item2": "මුරපදය වෙනස් කිරීමෙන් පසු ඔබ ඉවත් වනු ඇත"
     },
     "errors": {
-      "loadProfile": "Failed to load profile",
-      "loadSettingsTitle": "Failed to Load Settings",
-      "nameRequired": "Name fields are required.",
-      "phoneDigits": "Phone number must be 10 digits.",
-      "nicInvalid": "Invalid NIC format. Use 9 digits + V/X or 12 digits.",
-      "saveProfile": "Failed to save profile.",
-      "allPasswordFieldsRequired": "All fields are required.",
-      "passwordMismatch": "Passwords do not match.",
-      "passwordLength": "New password must be at least 8 characters.",
-      "changePassword": "Failed to change password."
+      "loadProfile": "පැතිකඩ පූරණය කිරීමට අසමත් විය",
+      "loadSettingsTitle": "සැකසීම් පූරණය කිරීමට අසමත් විය",
+      "nameRequired": "නම් ක්ෂේත්‍ර අවශ්‍යයි.",
+      "phoneDigits": "දුරකථන අංකය ඉලක්කම් 10ක් විය යුතුය.",
+      "nicInvalid": "වලංගු නොවන NIC ආකෘතිය. ඉලක්කම් 9 + V/X හෝ ඉලක්කම් 12 භාවිතා කරන්න.",
+      "saveProfile": "පැතිකඩ සුරැකීමට අසමත් විය.",
+      "allPasswordFieldsRequired": "සියලුම ක්ෂේත්ර අවශ්ය වේ.",
+      "passwordMismatch": "මුරපද නොගැලපේ.",
+      "passwordLength": "නව මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය.",
+      "changePassword": "මුරපදය වෙනස් කිරීමට අසමත් විය."
     }
   },
   "doctorPendingApproval": {
-    "title": "Registration Submitted",
-    "subtitle": "Thank you for joining Suwapatha Health. Your professional application has been received and is currently being verified by our clinical administration team.",
-    "pendingBadge": "PENDING ADMIN APPROVAL",
+    "title": "ලියාපදිංචිය ඉදිරිපත් කර ඇත",
+    "subtitle": "සුවපත සෞඛ්‍යය හා එක්වීම ගැන ඔබට ස්තුතියි. ඔබගේ වෘත්තීය අයදුම්පත ලැබී ඇති අතර දැනට අපගේ සායනික පරිපාලන කණ්ඩායම විසින් සත්‍යාපනය කරනු ලැබේ.",
+    "pendingBadge": "පරිපාලක අනුමැතිය පොරොත්තුවෙන්",
     "timeline": {
       "submission": {
-        "title": "Submission",
-        "subtitle": "Application form received successfully"
+        "title": "ඉදිරිපත් කිරීම",
+        "subtitle": "අයදුම් පත්‍රය සාර්ථකව ලැබී ඇත"
       },
       "verification": {
-        "title": "Verification",
-        "subtitle": "Admin reviewing professional credentials"
+        "title": "සත්යාපනය",
+        "subtitle": "පරිපාලක වෘත්තීය අක්තපත්‍ර සමාලෝචනය කරයි"
       },
       "activation": {
-        "title": "Activation",
-        "subtitle": "Full platform access granted via email"
+        "title": "සක්රිය කිරීම",
+        "subtitle": "සම්පූර්ණ වේදිකා ප්‍රවේශය විද්‍යුත් තැපෑලෙන් ලබා දී ඇත"
       }
     },
     "summary": {
-      "title": "Submission Summary",
-      "subtitle": "Verify the information you provided below",
-      "fullName": "Full Name",
-      "userId": "User ID (Reference)",
-      "contactEmail": "Contact Email",
-      "accountType": "Account Type",
-      "professional": "Professional",
-      "dateSubmitted": "Date Submitted",
+      "title": "ඉදිරිපත් කිරීමේ සාරාංශය",
+      "subtitle": "ඔබ පහත සපයා ඇති තොරතුරු තහවුරු කරන්න",
+      "fullName": "සම්පූර්ණ නම",
+      "userId": "පරිශීලක හැඳුනුම්පත (යොමු)",
+      "contactEmail": "ඊමේල් අමතන්න",
+      "accountType": "ගිණුම් වර්ගය",
+      "professional": "වෘත්තීය",
+      "dateSubmitted": "ඉදිරිපත් කළ දිනය",
       "notAvailable": "N/A",
-      "errorTitle": "Found an error?",
-      "errorText": "If any details are incorrect, please contact support immediately to update your application."
+      "errorTitle": "දෝෂයක් සොයා ගත්තාද?",
+      "errorText": "කිසියම් විස්තරයක් වැරදි නම්, කරුණාකර ඔබගේ අයදුම්පත යාවත්කාලීන කිරීමට වහාම සහාය අමතන්න."
     },
     "nextSteps": {
-      "title": "What Happens Next?",
-      "subtitle": "Estimated timeline for your onboarding",
+      "title": "ඊළඟට කුමක් සිදුවේද?",
+      "subtitle": "ඔබගේ ඇතුල්වීම සඳහා ඇස්තමේන්තුගත කාලරේඛාව",
       "step1": {
-        "title": "Credential Verification",
-        "time": "2-4 Hours",
-        "text": "Our team verifies your medical license and professional standing with national boards."
+        "title": "අක්තපත්‍ර සත්‍යාපනය",
+        "time": "2-4 පැය",
+        "text": "අපගේ කණ්ඩායම ජාතික මණ්ඩල සමඟ ඔබේ වෛද්‍ය බලපත්‍රය සහ වෘත්තීය තත්ත්වය තහවුරු කරයි."
       },
       "step2": {
-        "title": "Email Confirmation",
-        "time": "Next 12 Hours",
-        "text": "You'll receive a \"Welcome\" email once your account has been whitelisted for login."
+        "title": "විද්‍යුත් තැපෑල තහවුරු කිරීම",
+        "time": "ඊළඟ පැය 12",
+        "text": "පුරනය වීම සඳහා ඔබගේ ගිණුම සුදු ලැයිස්තුගත කළ පසු ඔබට \"සාදරයෙන් පිළිගනිමු\" විද්‍යුත් තැපෑලක් ලැබෙනු ඇත."
       },
       "step3": {
-        "title": "Profile Setup",
-        "text": "After approval, log in to complete your professional biography and consultation schedule."
+        "title": "පැතිකඩ සැකසුම",
+        "text": "අනුමැතියෙන් පසු, ඔබේ වෘත්තීය චරිතාපදානය සහ උපදේශන කාලසටහන සම්පූර්ණ කිරීමට ලොග් වන්න."
       },
       "step4": {
-        "title": "Start Consultations",
-        "text": "Join our network and begin receiving patient appointments via your dashboard."
+        "title": "උපදේශන ආරම්භ කරන්න",
+        "text": "අපගේ ජාලයට සම්බන්ධ වී ඔබේ උපකරණ පුවරුව හරහා රෝගීන් හමුවීම් ලබා ගැනීම ආරම්භ කරන්න."
       }
     },
     "actions": {
-      "returnHome": "Return to Home",
-      "contactSupport": "Contact Support"
+      "returnHome": "මුල් පිටුවට ආපසු යන්න",
+      "contactSupport": "සහාය අමතන්න"
     }
   },
   "about": {
-    "title": "Suwapatha",
-    "description": "Empowering citizens with seamless digital healthcare, connecting you to government health services efficiently and securely.",
-    "whatIsTitle": "What is ",
-    "whatIsHighlight": "Suwapatha ?",
-    "whatIsDescription": "Suwapatha is Sri Lanka's pioneering digital health platform, designed to revolutionize access to public healthcare services. We seamlessly connect citizens with government hospitals and health professionals, making healthcare more accessible, efficient, and patient-centric than ever before. Our platform simplifies everything from appointments to medical records, all while upholding the highest standards of data security and privacy.",
+    "title": "සුවපත",
+    "description": "බාධාවකින් තොර ඩිජිටල් සෞඛ්‍ය සේවාවකින් පුරවැසියන් සවිබල ගැන්වීම, රජයේ සෞඛ්‍ය සේවා වෙත ඔබව කාර්යක්ෂමව සහ ආරක්ෂිතව සම්බන්ධ කිරීම.",
+    "whatIsTitle": "කුමක්ද",
+    "whatIsHighlight": "සුවපත ?",
+    "whatIsDescription": "සුවපත යනු ශ්‍රී ලංකාවේ පුරෝගාමී ඩිජිටල් සෞඛ්‍ය වේදිකාව වන අතර එය මහජන සෞඛ්‍ය සේවා සඳහා ප්‍රවේශය විප්ලවීය වෙනසක් ඇති කිරීමට නිර්මාණය කර ඇත. සෞඛ්‍ය සේවාව වෙන කවරදාකටත් වඩා ප්‍රවේශ විය හැකි, කාර්යක්ෂම සහ රෝගීන් කේන්ද්‍ර කර ගනිමින් අපි පුරවැසියන් රජයේ රෝහල් සහ සෞඛ්‍ය වෘත්තිකයන් සමඟ බාධාවකින් තොරව සම්බන්ධ කරමු. අපගේ වේදිකාව හමුවීම් වල සිට වෛද්‍ය වාර්තා දක්වා සෑම දෙයක්ම සරල කරයි, ඒ සියල්ල දත්ත ආරක්ෂාව සහ පෞද්ගලිකත්වයේ ඉහළම ප්‍රමිතීන් රකිමින්.",
     "features": {
-      "effortless": "Effortless Appointment Management",
-      "secure": "Secure Digital Health Records",
-      "reduced": "Reduced Waiting Times",
-      "enhanced": "Enhanced Accessibility for All"
+      "effortless": "වෙහෙසකින් තොරව පත්වීම් කළමනාකරණය",
+      "secure": "ආරක්ෂිත ඩිජිටල් සෞඛ්‍ය වාර්තා",
+      "reduced": "පොරොත්තු කාලය අඩු කිරීම",
+      "enhanced": "සැමට වැඩි දියුණු කළ ප්‍රවේශ්‍යතාවය"
     },
-    "keyFeaturesTitle": "Key Features",
+    "keyFeaturesTitle": "ප්රධාන ලක්ෂණ",
     "keyFeatures": {
       "unified": {
-        "title": "Unified OPD Channeling",
-        "description": "Book and manage outpatient department appointments across all government hospitals with ease."
+        "title": "ඒකාබද්ධ OPD නාලිකාකරණය",
+        "description": "සියලුම රජයේ රෝහල් හරහා බාහිර රෝගී අංශයේ පත්වීම් පහසුවෙන් වෙන්කරවා ගැනීම සහ කළමනාකරණය කිරීම."
       },
       "realtime": {
-        "title": "Real-time Queue Status",
-        "description": "View live waiting times at clinics and pharmacies, saving you valuable time and effort."
+        "title": "තත්‍ය කාලීන පෝලිම් තත්ත්වය",
+        "description": "ඔබේ වටිනා කාලය හා ශ්‍රමය ඉතිරි කරමින් සායන සහ ඔසුසැල් වල සජීවීව බලා සිටින වේලාවන් බලන්න."
       },
       "eMedical": {
-        "title": "e-Medical Book",
-        "description": "Access your digital medical records securely, including prescriptions, reports, and health history."
+        "title": "විද්‍යුත් වෛද්‍ය පොත",
+        "description": "බෙහෙත් වට්ටෝරු, වාර්තා සහ සෞඛ්‍ය ඉතිහාසය ඇතුළුව ඔබේ ඩිජිටල් වෛද්‍ය වාර්තා සුරක්ෂිතව ප්‍රවේශ කරන්න."
       },
       "multilingual": {
-        "title": "Multilingual Support",
-        "description": "Available in Sinhala, Tamil, and English to serve all communities across the island."
+        "title": "බහුභාෂා සහාය",
+        "description": "දිවයින පුරා සිටින සියලුම ප්‍රජාවන්ට සේවය කිරීම සඳහා සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවලින් ලබාගත හැකිය."
       },
       "accessibility": {
-        "title": "Accessibility Features",
-        "description": "Designed for inclusivity with features catering to diverse needs and abilities."
+        "title": "ප්රවේශ්යතා විශේෂාංග",
+        "description": "විවිධ අවශ්‍යතා සහ හැකියාවන් සපුරාලන විශේෂාංග සමඟ ඇතුළත් කිරීම සඳහා නිර්මාණය කර ඇත."
       },
       "secureIdentity": {
-        "title": "Secure Patient Identity",
-        "description": "Verify your identity and access services with a robust and secure digital patient ID system."
+        "title": "ආරක්ෂිත රෝගියාගේ අනන්‍යතාවය",
+        "description": "ඔබේ අනන්‍යතාවය තහවුරු කර ශක්තිමත් සහ ආරක්ෂිත ඩිජිටල් රෝගීන් හැඳුනුම්පත් පද්ධතියක් සමඟින් සේවාවන් වෙත ප්‍රවේශ වන්න."
       }
     },
-    "governanceTitle": "Governance & Data Privacy",
-    "governanceDescription": "At Suwapatha, safeguarding your personal and health information is our utmost priority. We are committed to maintaining the highest standards of privacy and security, adhering strictly to all national regulations and international best practices for data protection. Your trust is paramount, and we employ robust measures to ensure your data remains confidential and secure.",
+    "governanceTitle": "පාලනය සහ දත්ත පෞද්ගලිකත්වය",
+    "governanceDescription": "සුවපත හිදී ඔබගේ පුද්ගලික සහ සෞඛ්‍ය තොරතුරු සුරක්ෂිත කිරීම අපගේ ප්‍රමුඛතාවයයි. දත්ත ආරක්ෂණය සඳහා සියලුම ජාතික රෙගුලාසි සහ ජාත්‍යන්තර හොඳම භාවිතයන් දැඩි ලෙස පිළිපදින, පුද්ගලිකත්වය සහ ආරක්ෂාව පිළිබඳ ඉහළම ප්‍රමිතීන් පවත්වා ගැනීමට අපි කැපවී සිටිමු. ඔබගේ විශ්වාසය ඉතා වැදගත් වන අතර, ඔබගේ දත්ත රහසිගතව සහ සුරක්ෂිතව පවතින බව සහතික කිරීමට අපි ශක්තිමත් පියවරයන් භාවිතා කරමු.",
     "governancePoints": {
-      "adherence": "Adherence to national data privacy laws and healthcare regulations.",
-      "encryption": "Secure encryption protocols for all patient data transmission and storage.",
-      "access": "Strict access controls ensuring only authorized personnel can view sensitive information.",
-      "policies": "Transparent policies on data usage, with explicit patient consent for data sharing.",
-      "audits": "Regular security audits and updates to protect against emerging threats."
+      "adherence": "ජාතික දත්ත රහස්‍යතා නීති සහ සෞඛ්‍ය ආරක්ෂණ රෙගුලාසි පිළිපැදීම.",
+      "encryption": "සියලුම රෝගීන්ගේ දත්ත සම්ප්‍රේෂණය සහ ගබඩා කිරීම සඳහා ආරක්ෂිත සංකේතාංකන ප්‍රොටෝකෝල.",
+      "access": "බලයලත් පුද්ගලයන්ට පමණක් සංවේදී තොරතුරු බැලිය හැකි බව සහතික කෙරෙන දැඩි ප්‍රවේශ පාලනයන්.",
+      "policies": "දත්ත හුවමාරුව සඳහා පැහැදිලි රෝගියාගේ කැමැත්ත ඇතිව දත්ත භාවිතය පිළිබඳ විනිවිද පෙනෙන ප්‍රතිපත්ති.",
+      "audits": "නැගී එන තර්ජන වලින් ආරක්ෂා වීමට නිතිපතා ආරක්ෂක විගණන සහ යාවත්කාලීන."
     },
     "footer": {
-      "rights": "© 2026 Government of Sri Lanka. All rights reserved.",
-      "home": "Home",
-      "aboutUs": "About Us",
-      "services": "Services",
-      "faq": "FAQ",
-      "contactUs": "Contact Us",
-      "accessibility": "Accessibility Statement",
-      "accessibilityDesc": "Committed to providing an accessible online experience.",
-      "learnMore": "Learn More"
+      "rights": "© 2026 ශ්‍රී ලංකා රජය. සියලු හිමිකම් ඇවිරිණි.",
+      "home": "නිවස",
+      "aboutUs": "අපි ගැන",
+      "services": "සේවා",
+      "faq": "නිති අසන පැණ",
+      "contactUs": "අපව අමතන්න",
+      "accessibility": "ප්‍රවේශ්‍යතා ප්‍රකාශය",
+      "accessibilityDesc": "ප්‍රවේශ විය හැකි සබැඳි අත්දැකීමක් ලබා දීමට කැපවී සිටී.",
+      "learnMore": "තවත් හදාරන්න"
     }
   },
   "contact": {
-    "title": "Send Us a Message",
-    "subtitle": "Have a question or need assistance? We're here to help.",
+    "title": "අපට පණිවිඩයක් එවන්න",
+    "subtitle": "ප්‍රශ්නයක් තිබේද නැතහොත් සහාය අවශ්‍යද? අපි ඉන්නේ උදව් කරන්න.",
     "form": {
-      "name": "Name",
-      "namePlaceholder": "Your full name",
-      "email": "Email",
+      "name": "නම",
+      "namePlaceholder": "ඔබේ සම්පූර්ණ නම",
+      "email": "ඊමේල් කරන්න",
       "emailPlaceholder": "you@example.com",
-      "subject": "Subject",
-      "subjectPlaceholder": "What is this about?",
-      "message": "Message",
-      "messagePlaceholder": "Type your message here.",
-      "submit": "Send Message"
+      "subject": "විෂය",
+      "subjectPlaceholder": "මේ කුමක් ගැනද?",
+      "message": "පණිවිඩය",
+      "messagePlaceholder": "ඔබේ පණිවිඩය මෙහි ටයිප් කරන්න.",
+      "submit": "පණිවිඩයක් යවන්න"
     },
-    "reachUs": "Or reach us directly:"
+    "reachUs": "නැතහොත් අප වෙත කෙලින්ම සම්බන්ධ වන්න:"
   },
   "adminLogin": {
-    "title": "Admin Portal Login",
-    "subtitle": "Suwapatha Healthcare Management",
+    "title": "පරිපාලක ද්වාර පිවිසුම",
+    "subtitle": "සුවපත සෞඛ්‍ය කළමනාකරණය",
     "form": {
-      "emailLabel": "Email Address",
-      "passwordLabel": "Password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot your password?",
-      "signingIn": "Signing in...",
-      "signIn": "Sign in"
+      "emailLabel": "ඊතැපැල් ලිපිනය",
+      "passwordLabel": "මුරපදය",
+      "rememberMe": "මාව මතක ද",
+      "forgotPassword": "මුරපදය අමතක වුනාද?",
+      "signingIn": "පුරනය වෙමින්...",
+      "signIn": "පුරන්න"
     },
-    "notAdmin": "Not an admin?",
-    "returnLogin": "Return to Main Login",
+    "notAdmin": "පරිපාලකයෙක් නොවේද?",
+    "returnLogin": "ප්‍රධාන පිවිසුම වෙත ආපසු යන්න",
     "errors": {
-      "unexpected": "An unexpected error occurred. Please try again."
+      "unexpected": "අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න."
     }
   },
   "adminDashboard": {
-    "loading": "Loading Dashboard...",
-    "errorTitle": "Error Loading Dashboard",
-    "retry": "Retry",
-    "title": "Dashboard",
+    "loading": "උපකරණ පුවරුව පූරණය වෙමින්...",
+    "errorTitle": "උපකරණ පුවරුව පූරණය කිරීමේ දෝෂයකි",
+    "retry": "නැවත උත්සාහ කරන්න",
+    "title": "උපකරණ පුවරුව",
     "stats": {
-      "totalDoctors": "Total Doctors",
-      "activeSessions": "Active Sessions",
-      "patientsToday": "Patients Today"
+      "totalDoctors": "සම්පූර්ණ වෛද්‍යවරු",
+      "activeSessions": "ක්රියාකාරී සැසි",
+      "patientsToday": "අද රෝගීන්",
+      "avgWaitingTime": "සාමාන්‍ය පොරොත්තු කාලය",
+      "estimatedPerSession": "එක් සැසියකට ඇස්තමේන්තු කර ඇත",
+      "allocatedWaiting": "{allocated} වෙන් කර ඇත, {waiting} රැඳී සිටී",
+      "totalSessionsToday": "අද මුළු සැසි {count}",
+      "totalDoctorsToday": "අද මුළු වෛද්යවරු {count}"
     },
     "recentDoctors": {
-      "title": "Recent Doctor Registrations",
-      "subtitle": "Pending verification",
-      "noDoctors": "No pending doctor registrations",
-      "viewAll": "View All ->"
+      "title": "මෑත වෛද්ය ලියාපදිංචි කිරීම්",
+      "subtitle": "පොරොත්තු සත්‍යාපනය",
+      "noDoctors": "වෛද්‍ය ලියාපදිංචිය පොරොත්තු නැත",
+      "viewAll": "සියල්ල බලන්න ->"
     },
     "todaysSessions": {
-      "title": "Today's Sessions",
-      "noSessions": "No active sessions today",
-      "session": "Session {date}",
-      "patients": "{count} patients"
+      "title": "අද සැසි",
+      "noSessions": "අද ක්‍රියාකාරී සැසි නැත",
+      "empty": "අද දින OPD සැසි සැලසුම් කර නොමැත",
+      "createFirst": "පළමු සැසිය සාදන්න",
+      "patients": "රෝගීන්",
+      "viewAll": "සියලුම {count} සැසි බලන්න",
+      "session": "සැසිය {date}",
+      "patientsCount": "රෝගීන් {ගණන්}"
+    },
+    "sessionManagement": {
+      "title": "OPD සැසි කළමනාකරණය",
+      "createNew": "නව සැසියක් සාදන්න",
+      "viewAll": "සියලුම සැසි බලන්න"
+    },
+    "attendance": {
+      "title": "වෛද්‍යවරයාගේ පැමිණීම",
+      "present": "{count} PRESENT",
+      "availableToday": "අද ලබා ගත හැක",
+      "allocate": "වෙන් කරන්න",
+      "allDoctors": "සියලුම වෛද්යවරුන්",
+      "noDoctors": "තවමත් වෛද්‍යවරු ලියාපදිංචි වී නොමැත",
+      "viewAllDoctors": "සියලුම වෛද්‍යවරුන් {ගණන්} බලන්න",
+      "table": {
+        "name": "නම",
+        "email": "ඊමේල් කරන්න",
+        "status": "තත්ත්වය"
+      }
+    },
+    "alerts": {
+      "title": "ඇඟවීම් සහ දැනුම්දීම්",
+      "sessionWithoutDoctorTitle": "වෛද්‍යවරයෙකු නොමැති සැසි {count}",
+      "sessionWithoutDoctorDescription": "සමහර OPD සැසි සඳහා වෛද්‍යවරුන් පවරා නැත. කරුණාකර එම සැසිවලට වෛද්‍යවරුන් පවරන්න.",
+      "sessionWithoutRoomTitle": "කාමර නොමැති සැසි {count}",
+      "sessionWithoutRoomDescription": "සමහර OPD සැසි සඳහා කාමර පවරා නැත. කරුණාකර එම සැසිවලට කාමර පවරන්න.",
+      "highPatientLoadTitle": "සැසි {count} තුළ ඉහළ රෝගී බර",
+      "highPatientLoadDescription": "සමහර සැසි උපරිම ධාරිතාවයට ළඟා වේ. අමතර සැසි සෑදීමට සලකා බලන්න.",
+      "unallocatedPatientsTitle": "නොපවරන ලද රෝගීන් {count}",
+      "unallocatedPatientsDescription": "OPD සැසිවලට පැවරීමට රැඳී සිටින රෝගීන් ඇත.",
+      "allSystemsNormalTitle": "සියලු පද්ධති සාමාන්‍යයි",
+      "allSystemsNormalDescription": "දැන් හදිසි අනතුරු ඇඟවීම් නොමැත. සියලු OPD සැසි සුමටව ක්‍රියාත්මක වේ."
+    },
+    "quickActions": {
+      "title": "ඉක්මන් ක්‍රියා",
+      "subtitle": "ඔබේ රෝහල් මෙහෙයුම් කළමනාකරණය කරන්න",
+      "manageSessions": "OPD සැසි කළමනාකරණය කරන්න",
+      "manageDoctors": "වෛද්යවරුන් කළමනාකරණය කරන්න",
+      "refreshDashboard": "උපකරණ පුවරුව නැවුම් කරන්න"
+    },
+    "hospitalInfo": {
+      "title": "රෝහල් තොරතුරු",
+      "name": "නම",
+      "type": "ටයිප් කරන්න",
+      "location": "ස්ථානය",
+      "phone": "දුරකථනය"
+    },
+    "footer": {
+      "rights": "© 2026 සුවපත. සියලු හිමිකම් ඇවිරිණි."
+    },
+    "errors": {
+      "fetchHospitalInfo": "රෝහලේ තොරතුරු ලබා ගැනීමට අසමත් විය",
+      "fetchTodayStats": "අද සංඛ්‍යාලේඛන ලබා ගැනීමට අසමත් විය",
+      "fetchDoctors": "වෛද්‍යවරු ලබා ගැනීමට අසමත් විය",
+      "fetchTodaySessions": "අද සැසි ලබා ගැනීමට අසමත් විය",
+      "createSession": "සැසිය සෑදීමට අසමත් විය"
+    },
+    "common": {
+      "notAssigned": "පවරා නැත",
+      "zeroMinutes": "මිනිත්තු 0",
+      "minutes": "{value} මිනි",
+      "generalDepartment": "සාමාන්‍ය"
     }
   },
   "adminSettings": {
-    "title": "Admin Settings",
-    "subtitle": "Manage your profile and security settings.",
-    "save": "Save Changes",
-    "saving": "Saving...",
+    "title": "පරිපාලක සැකසුම්",
+    "subtitle": "ඔබගේ පැතිකඩ සහ ආරක්ෂක සැකසුම් කළමනාකරණය කරන්න.",
+    "save": "වෙනස්කම් සුරකින්න",
+    "saving": "සුරකිමින්...",
     "profile": {
-      "title": "Profile Settings",
-      "name": "Name",
-      "email": "Email"
+      "title": "පැතිකඩ සැකසුම්",
+      "name": "නම",
+      "email": "ඊමේල් කරන්න"
     },
     "security": {
-      "title": "Security Settings",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password"
+      "title": "ආරක්ෂක සැකසුම්",
+      "currentPassword": "වත්මන් මුර පදය",
+      "newPassword": "නව මුරපදය",
+      "confirmPassword": "නව මුරපදය තහවුරු කරන්න"
     }
   },
   "adminOpdSession": {
-    "title": "OPD Session Management",
-    "subtitle": "Manage outpatient department sessions and doctor assignments.",
-    "addSession": "Add Session",
+    "title": "OPD සැසි කළමනාකරණය",
+    "subtitle": "බාහිර රෝගී අංශයේ සැසි සහ වෛද්‍ය පැවරුම් කළමනාකරණය කරන්න.",
+    "addSession": "සැසිය එකතු කරන්න",
     "table": {
-      "date": "Date",
-      "doctor": "Doctor",
-      "room": "Room",
-      "maxPatients": "Max Patients",
-      "status": "Status",
-      "actions": "Actions"
+      "date": "දිනය",
+      "doctor": "ඩොක්ටර්",
+      "room": "කාමරය",
+      "maxPatients": "උපරිම රෝගීන්",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
     },
     "status": {
-      "active": "Active",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
+      "active": "ක්රියාකාරී",
+      "completed": "සම්පූර්ණ කළා",
+      "cancelled": "අවලංගු කළා"
     },
     "actions": {
-      "edit": "Edit",
-      "cancel": "Cancel"
+      "edit": "සංස්කරණය කරන්න",
+      "cancel": "අවලංගු කරන්න"
     }
   },
   "adminDoctorRegistration": {
-    "title": "Doctor Registrations",
-    "subtitle": "Review and approve new doctor registrations.",
+    "title": "වෛද්‍යවරුන්ගේ ලියාපදිංචි කිරීම්",
+    "subtitle": "නව වෛද්‍ය ලියාපදිංචි කිරීම් සමාලෝචනය කර අනුමත කරන්න.",
     "table": {
-      "name": "Name",
-      "email": "Email",
-      "doctorId": "Doctor ID",
-      "specialty": "Specialty",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "නම",
+      "email": "ඊමේල් කරන්න",
+      "doctorId": "වෛද්‍ය හැඳුනුම්පත",
+      "specialty": "විශේෂත්වය",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
     },
     "status": {
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected"
+      "pending": "පොරොත්තුවෙන්",
+      "approved": "අනුමත කළා",
+      "rejected": "ප්‍රතික්ෂේප කළා"
     },
     "actions": {
-      "view": "View",
-      "approve": "Approve",
-      "reject": "Reject"
+      "view": "බලන්න",
+      "approve": "අනුමත කරන්න",
+      "reject": "ප්රතික්ෂේප කරන්න"
     }
   },
   "superAdminSettings": {
-    "title": "Super Admin Settings",
-    "subtitle": "Manage system-wide configuration.",
-    "save": "Save Settings",
-    "saving": "Saving..."
+    "title": "සුපිරි පරිපාලක සැකසුම්",
+    "subtitle": "පද්ධතිය පුරා වින්‍යාසය කළමනාකරණය කරන්න.",
+    "save": "සැකසුම් සුරකින්න",
+    "saving": "සුරකිමින්..."
   },
   "superAdminAdmins": {
-    "title": "Hospital Admins",
-    "subtitle": "Manage hospital administrators.",
-    "addAdmin": "Add Admin",
+    "title": "රෝහල් පරිපාලකයින්",
+    "subtitle": "රෝහල් පරිපාලකයින් කළමනාකරණය කරන්න.",
+    "addAdmin": "Admin එකතු කරන්න",
     "table": {
-      "name": "Name",
-      "hospital": "Hospital",
-      "email": "Email",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "නම",
+      "hospital": "රෝහල",
+      "email": "ඊමේල් කරන්න",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
     }
   },
   "superAdminHospitals": {
-    "title": "Hospitals",
-    "subtitle": "Manage registered hospitals.",
-    "addHospital": "Add Hospital",
+    "title": "රෝහල්",
+    "subtitle": "ලියාපදිංචි රෝහල් කළමනාකරණය කරන්න.",
+    "addHospital": "රෝහල එකතු කරන්න",
     "table": {
-      "name": "Name",
-      "district": "District",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "නම",
+      "district": "දිස්ත්රික්කය",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
+    }
+  },
+  "superAdminSettingsPage": {
+    "title": "සැකසීම්",
+    "subtitle": "සුපිරි පරිපාලක අවසාන ලක්ෂ්‍ය වින්‍යාසය",
+    "endpointsTitle": "පසුපස අන්ත ලක්ෂ්‍ය",
+    "description": "සුපිරි පරිපාලක රෝහල් පරිපාලක අක්තපත්‍ර සෑදීමට පමණක් සීමා වේ.",
+    "hospitals": "රෝහල්",
+    "createHospitalAdmin": "රෝහල් පරිපාලක සාදන්න"
+  },
+  "superAdminAdminsPage": {
+    "title": "පරිපාලකවරු",
+    "descriptionStart": "සුපිරි පරිපාලක පරිපාලක විශේෂාංග කළමනාකරණය නොකරයි. භාවිතා කරන්න",
+    "hospitals": "රෝහල්",
+    "descriptionEnd": "නිශ්චිත රෝහලක් සඳහා අක්තපත්ර නිර්මාණය කිරීමට."
+  },
+  "superAdminHospitalsPage": {
+    "title": "රෝහල්",
+    "subtitle": "රෝහලක් තෝරා පරිපාලක අක්තපත්‍ර සාදන්න",
+    "searchPlaceholder": "නම / දිස්ත්‍රික්කය / පළාත අනුව රෝහල් සොයන්න",
+    "refresh": "නැවුම් කරන්න",
+    "loadingHospitals": "රෝහල් පූරණය වෙමින්...",
+    "emptyTitle": "රෝහල් කිසිවක් හමු නොවීය",
+    "emptySubtitle": "වෙනත් සෙවීමක් උත්සාහ කරන්න හෝ නව රෝහලක් එක් කරන්න.",
+    "notAvailable": "-",
+    "createAdmin": "පරිපාලක සාදන්න",
+    "editAdmin": "පරිපාලක සංස්කරණය කරන්න",
+    "table": {
+      "name": "නම",
+      "district": "දිස්ත්රික්කය",
+      "province": "පළාත",
+      "phone": "දුරකථනය",
+      "action": "ක්‍රියාව"
+    },
+    "modal": {
+      "createTitle": "රෝහල් පරිපාලක අක්තපත්‍ර සාදන්න",
+      "editTitle": "රෝහල් පරිපාලක සංස්කරණය කරන්න",
+      "hospitalLabel": "රෝහල",
+      "firstName": "මුල් නම *",
+      "lastName": "අවසන් නම *",
+      "email": "විද්‍යුත් තැපෑල *",
+      "passwordCreate": "මුරපදය *",
+      "passwordEdit": "නව මුරපදය (විකල්ප)",
+      "cancel": "අවලංගු කරන්න",
+      "creating": "නිර්මාණය කරමින්...",
+      "saving": "සුරකිමින්...",
+      "saveChanges": "වෙනස්කම් සුරකින්න"
+    },
+    "errors": {
+      "loadHospitals": "රෝහල් පැටවීම අසාර්ථක විය",
+      "hospitalRequired": "රෝහල අවශ්ය වේ",
+      "firstNameRequired": "මුල් නම අවශ්ය වේ",
+      "lastNameRequired": "අවසාන නම අවශ්ය වේ",
+      "emailRequired": "විද්‍යුත් තැපෑල අවශ්‍යයි",
+      "passwordRequired": "මුරපදය අවශ්ය වේ",
+      "createAdmin": "පරිපාලක සෑදීමට අසමත් විය",
+      "updateAdmin": "පරිපාලක යාවත්කාලීන කිරීමට අසමත් විය"
+    }
+  },
+  "requireRole": {
+    "checkingPermissions": "අවසර පරීක්ෂා කරමින්..."
+  },
+  "doctorReviewModal": {
+    "confirmReject": "ඔබට මෙම වෛද්‍ය ලියාපදිංචිය ප්‍රතික්ෂේප කිරීමට අවශ්‍ය බව විශ්වාසද?",
+    "pendingReview": "පොරොත්තු සමාලෝචනය",
+    "registrationDetails": "ලියාපදිංචි විස්තර",
+    "submittedOn": "මත ඉදිරිපත් කරන ලදී",
+    "rejecting": "ප්‍රතික්ෂේප කරමින්...",
+    "reject": "ප්රතික්ෂේප කරන්න",
+    "approving": "අනුමත කරමින්...",
+    "approveRegistration": "ලියාපදිංචිය අනුමත කරන්න",
+    "fields": {
+      "firstName": "මුල් නම",
+      "lastName": "අවසන් නම",
+      "email": "ඊතැපැල් ලිපිනය",
+      "doctorId": "වෛද්‍ය හැඳුනුම්පත අංකය",
+      "nic": "ජාතික හැඳුනුම්පත් අංකය",
+      "phone": "දුරකථන අංකය",
+      "gender": "ලිංගභේදය",
+      "dob": "උපන් දිනය"
+    }
+  },
+  "adminDoctorRegistrationPage": {
+    "title": "වෛද්‍ය ලියාපදිංචි සමාලෝචනය",
+    "searchPlaceholder": "නම හෝ හැඳුනුම්පත අනුව සොයන්න...",
+    "loading": "වෛද්‍යවරුන් පූරණය කරමින්...",
+    "doctorPrefix": "ආචාර්ය",
+    "viewDetails": "විස්තර බලන්න →",
+    "emptyTitle": "වෛද්‍යවරුන් හමු නොවීය",
+    "emptySubtitle": "ඔබේ සෙවුම් නිර්ණායකයට ගැලපෙන වෛද්‍යවරු නැත.",
+    "stats": {
+      "totalRegistered": "මුළු ලියාපදිංචිය",
+      "pendingReview": "පොරොත්තු සමාලෝචනය",
+      "approved": "අනුමත කළා",
+      "rejected": "ප්‍රතික්ෂේප කළා"
+    },
+    "filters": {
+      "allStatuses": "සියලුම තත්ව",
+      "pendingReview": "පොරොත්තු සමාලෝචනය",
+      "approved": "අනුමත කළා",
+      "rejected": "ප්‍රතික්ෂේප කළා"
+    },
+    "table": {
+      "doctorName": "වෛද්‍යවරයාගේ නම",
+      "doctorId": "වෛද්‍ය හැඳුනුම්පත",
+      "phone": "දුරකථනය",
+      "status": "තත්ත්වය",
+      "actions": "ක්රියාවන්"
+    },
+    "status": {
+      "pending": "පොරොත්තුවෙන්"
+    },
+    "alerts": {
+      "approved": "වෛද්‍යවරයා සාර්ථකව අනුමත කළා! දැනුම්දීම් ඊමේල් යවා ඇත.",
+      "approveFailed": "වෛද්යවරයා අනුමත කිරීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+      "rejected": "වෛද්‍ය ලියාපදිංචිය ප්‍රතික්ෂේප විය. දැනුම්දීම් ඊමේල් යවා ඇත.",
+      "rejectFailed": "වෛද්යවරයා ප්රතික්ෂේප කිරීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
+    },
+    "errors": {
+      "loadFailed": "වෛද්‍යවරුන් පැටවීම අසාර්ථක විය. කරුණාකර නැවත උත්සාහ කරන්න."
+    }
+  },
+  "adminSettingsPage": {
+    "loading": "සැකසුම් පූරණය වෙමින්...",
+    "toasts": {
+      "nameEmpty": "නම් ක්ෂේත්‍ර හිස් විය නොහැක",
+      "profileUpdated": "පැතිකඩ සාර්ථකව යාවත්කාලීන කරන ලදී",
+      "updateFailed": "යාවත්කාලීන කිරීම අසාර්ථක විය",
+      "passwordFieldsRequired": "සියලුම මුරපද ක්ෂේත්‍ර අවශ්‍ය වේ",
+      "passwordMismatch": "මුරපද නොගැලපේ",
+      "passwordUpdated": "මුරපදය සාර්ථකව යාවත්කාලීන කරන ලදී",
+      "passwordChangeFailed": "මුරපදය වෙනස් කිරීම අසාර්ථක විය"
+    },
+    "actions": {
+      "saving": "සුරකිමින්...",
+      "saveChanges": "වෙනස්කම් සුරකින්න",
+      "updating": "යාවත්කාලීන කරමින්...",
+      "updatePassword": "මුරපදය යාවත්කාලීන කරන්න"
+    },
+    "fields": {
+      "firstName": "මුල් නම",
+      "lastName": "අවසන් නම"
+    },
+    "profile": {
+      "title": "පැතිකඩ තොරතුරු",
+      "subtitle": "ඔබගේ ඡායාරූපය, සම්පූර්ණ නම සහ පරිශීලක නාමය යාවත්කාලීන කරන්න.",
+      "photoTitle": "පැතිකඩ ඡායාරූපය",
+      "photoHint": "JPG, GIF හෝ PNG. උපරිම ප්‍රමාණය 800K",
+      "changePhoto": "ඡායාරූපය වෙනස් කරන්න"
+    },
+    "email": {
+      "title": "ඊතැපැල් ලිපිනය",
+      "subtitle": "ඔබගේ මූලික ඊමේල් ලිපිනය සහ සත්‍යාපන තත්ත්වය කළමනාකරණය කරන්න.",
+      "label": "ඊතැපැල් ලිපිනය",
+      "statusLabel": "තත්ත්වය:",
+      "verified": "තහවුරු කර ඇත"
+    },
+    "password": {
+      "title": "මුරපදය",
+      "subtitle": "ඔබගේ ගිණුමේ මුරපදය වෙනස් කරන්න.",
+      "current": "වත්මන් මුර පදය",
+      "new": "නව මුරපදය",
+      "confirm": "නව මුරපදය තහවුරු කරන්න"
+    },
+    "notifications": {
+      "title": "දැනුම්දීම් මනාප",
+      "subtitle": "ඔබට යාවත්කාලීන සහ ඇඟවීම් ලැබෙන ආකාරය තෝරන්න.",
+      "emailTitle": "ඊමේල් දැනුම්දීම්",
+      "emailDesc": "ඊමේල් හරහා වැදගත් යාවත්කාලීන සහ නිවේදන ලබා ගන්න.",
+      "smsTitle": "SMS දැනුම්දීම්",
+      "smsDesc": "ඔබගේ දුරකථනයේ තත්‍ය කාලීන ඇඟවීම් සහ සිහිකැඳවීම් ලබා ගන්න.",
+      "pushTitle": "තල්ලු දැනුම්දීම්",
+      "pushDesc": "ඔබගේ උපාංගයට හෝ බ්‍රවුසරයට ක්ෂණික දැනුම්දීම්."
+    },
+    "account": {
+      "title": "ගිණුම් කළමනාකරණය",
+      "subtitle": "ඔබගේ ගිණුම කළමනාකරණය කිරීමට හෝ මකා දැමීමට විකල්ප.",
+      "warning": "ඔබගේ ගිණුම සහ සියලු ආශ්‍රිත දත්ත ස්ථිරවම මකන්න. මෙම ක්‍රියාව පසුගමනය කළ නොහැක.",
+      "delete": "ගිණුම මකන්න"
+    }
+  },
+  "createSessionModal": {
+    "title": "නව OPD සැසියක් සාදන්න",
+    "headerSubtitle": "සියලුම සැසි 08:00 සිට 12:00 දක්වා පැවැත්වේ",
+    "date": "දිනය",
+    "selectDate": "දිනය තෝරන්න",
+    "advanceHint": "දින 7කට පෙර",
+    "totalSlots": "මුළු තව්",
+    "sessionTime": "සැසි කාලය",
+    "sessionTimeValue": "08:00 - 12:00 (ස්ථාවර උදෑසන සැසිය)",
+    "slotDuration": "තව් කාලය (මිනිත්තු)",
+    "noteLabel": "සටහන:",
+    "note": "සාමාන්‍ය උපදේශනය පමණි (08:00-12:00). වෛද්‍යවරුන් සහ කාමර එදිනට පවරනු ලැබේ. රෝගීන්ට නිශ්චිත වෛද්යවරයෙකු තෝරා ගත නොහැක.",
+    "cancel": "අවලංගු කරන්න",
+    "createSession": "සැසිය සාදන්න"
+  },
+  "adminOpdSessionPage": {
+    "loadingShort": "පූරණය වෙමින්...",
+    "loading": "OPD සැසි පූරණය වෙමින්...",
+    "title": "OPD සැසි කළමනාකරණය",
+    "actions": {
+      "createNewSession": "නව සැසියක් සාදන්න",
+      "refreshDoctors": "වෛද්‍යවරු ප්‍රබෝධමත් කරන්න",
+      "viewPatients": "රෝගීන් බලන්න",
+      "allocating": "පවරමින්...",
+      "allocatePatients": "රෝගීන් පවරන්න",
+      "cancelSession": "සැසිය අවලංගු කරන්න",
+      "edit": "සංස්කරණය",
+      "cancel": "අවලංගු කරන්න"
+    },
+    "tabs": {
+      "todaySessions": "අද සැසි",
+      "upcomingSessions": "ඉදිරි සැසි (ඉදිරි දින 7)"
+    },
+    "stats": {
+      "totalPatientsToday": "අද මුළු රෝගීන්",
+      "allocated": "වෙන් කර ඇත",
+      "unallocated": "වෙන් නොකළ",
+      "activeDoctors": "ක්රියාකාරී වෛද්යවරුන්"
+    },
+    "availableDoctors": {
+      "title": "අද පවතින වෛද්‍යවරු",
+      "subtitle": "අද ක්‍රියාකාරී වෛද්‍යවරුන්ට කාමර පවරන්න. පවරා ඇති කාමර සහිත වෛද්‍යවරුන් අතර රෝගීන් බෙදා හරිනු ලැබේ.",
+      "empty": "අද දින සඳහා තවමත් කිසිදු වෛද්‍යවරයකු තමන් සිටින බවට සලකුණු කර නැත."
+    },
+    "todaySessions": {
+      "title": "අද OPD සැසි",
+      "emptyTitle": "අද සැසි නැත",
+      "emptySubtitle": "අද දිනට නියමිත OPD සැසි නොමැත.",
+      "createFirst": "පළමු සැසිය සාදන්න"
+    },
+    "upcoming": {
+      "bookableTitle": "ඉදිරි සැසි (වෙන් කළ හැකි)",
+      "bookableSubtitle": "ඉදිරි දින 7 සඳහා සැසි සැලසුම් කර ඇත. වෛද්‍යවරුන් සහ කාමර දැන් පවරන්න පුළුවන්.",
+      "emptyTitle": "ඉදිරි සැසි නැත",
+      "emptySubtitle": "ඉදිරි දින 7 සඳහා කිසිදු සැසියක් සැලසුම් කර නොමැත."
+    },
+    "labels": {
+      "assignedRoom": "පවරා ඇති කාමරය",
+      "notAssigned": "පවරා නැත",
+      "pendingAssignment": "පවරා ගැනීම බලාපොරොත්තු වේ",
+      "time": "කාලය",
+      "room": "කාමරය",
+      "assign": "පවරන්න",
+      "patients": "රෝගීන්",
+      "date": "දිනය",
+      "bookingStatus": "වෙන්කරවා ගැනීමේ තත්ත්වය",
+      "doctor": "ඩොක්ටර්",
+      "slotsCount": "{current}/{max} තව්"
+    },
+    "patientList": {
+      "title": "රෝගීන් ලැයිස්තුව",
+      "loading": "රෝගීන් පූරණය කරමින්...",
+      "empty": "තවමත් කිසිදු රෝගියෙකු වෙන් කර නොමැත."
+    },
+    "summary": {
+      "title": "සැසියේ සාරාංශය",
+      "capacityUsage": "ධාරිතාව භාවිතය",
+      "patientsPerDoctor": "එක් වෛද්‍යවරයෙකුට රෝගීන් (සාමාන්‍ය)",
+      "activeSessions": "ක්රියාකාරී සැසි"
+    },
+    "quickActions": {
+      "title": "ඉක්මන් ක්‍රියා",
+      "subtitle": "අද මෙහෙයුම් කළමනාකරණය කරන්න",
+      "refreshData": "දත්ත නැවුම් කරන්න",
+      "viewDashboard": "උපකරණ පුවරුව බලන්න"
+    },
+    "alerts": {
+      "roomAssigned": "කාමරය සාර්ථකව පවරා ඇත!",
+      "patientsAllocated": "රෝගීන් සාර්ථකව වෙන් කර ඇත!",
+      "sessionCreated": "සැසිය සාර්ථකව සාදන ලදී!",
+      "sessionUpdated": "සැසිය සාර්ථකව යාවත්කාලීන කරන ලදී!",
+      "sessionCancelled": "සැසිය සාර්ථකව අවලංගු කරන ලදී!",
+      "editComingSoon": "සංස්කරණය කිරීමේ ක්‍රියාකාරිත්වය ඉක්මනින් පැමිණේ"
+    },
+    "confirm": {
+      "cancelSession": "ඔබට මෙම සැසිය අවලංගු කිරීමට අවශ්‍ය බව විශ්වාසද?"
+    },
+    "errors": {
+      "loadData": "දත්ත පූරණය කිරීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+      "fetchHospitalInfo": "රෝහලේ තොරතුරු ලබා ගැනීමට අසමත් විය",
+      "fetchTodayStats": "අද සංඛ්‍යාලේඛන ලබා ගැනීමට අසමත් විය",
+      "fetchTodaySessions": "අද සැසි ලබා ගැනීමට අසමත් විය",
+      "fetchUpcomingSessions": "ඉදිරියට එන සැසි ලබා ගැනීමට අසමත් විය",
+      "fetchRooms": "කාමර ලබා ගැනීමට අසමත් විය",
+      "assignRoom": "කාමරය පැවරීම අසාර්ථක විය",
+      "allocatePatients": "රෝගීන් වෙන් කිරීමට අසමත් විය",
+      "createSession": "සැසිය සෑදීමට අසමත් විය",
+      "updateSession": "සැසිය යාවත්කාලීන කිරීමට අසමත් විය",
+      "cancelSession": "සැසිය අවලංගු කිරීමට අසමත් විය",
+      "fetchPatients": "රෝගීන් ගෙන්වා ගැනීමට අපොහොසත් විය",
+      "loadPatientList": "රෝගීන් ලැයිස්තුව පූරණය කිරීමට අසමත් විය"
+    },
+    "common": {
+      "refresh": "නැවුම් කරන්න",
+      "active": "සක්‍රීය",
+      "patient": "රෝගියා"
     }
   },
   "patientSettings": {
-    "title": "Patient Settings",
-    "subtitle": "Manage your profile and preferences.",
-    "save": "Save Changes",
-    "saving": "Saving...",
+    "title": "රෝගියාගේ සැකසුම්",
+    "subtitle": "ඔබගේ පැතිකඩ සහ මනාප කළමනාකරණය කරන්න.",
+    "save": "වෙනස්කම් සුරකින්න",
+    "saving": "සුරකිමින්...",
     "profile": {
-      "title": "Personal Information",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "phone": "Phone Number",
-      "dob": "Date of Birth",
-      "address": "Address"
+      "title": "පුද්ගලික තොරතුරු",
+      "firstName": "මුල් නම",
+      "lastName": "අවසන් නම",
+      "phone": "දුරකථන අංකය",
+      "dob": "උපන් දිනය",
+      "address": "ලිපිනය"
     },
     "security": {
-      "title": "Security",
-      "changePassword": "Change Password"
+      "title": "ආරක්ෂාව",
+      "changePassword": "මුරපදය වෙනස් කරන්න"
     }
   }
 }

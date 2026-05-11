@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {useTranslations} from 'next-intl';
+import {Link, usePathname} from '@/i18n/navigation';
 
 export default function SuperAdminSidebar({
   sidebarOpen,
@@ -11,11 +11,12 @@ export default function SuperAdminSidebar({
   onLogout: () => void;
 }) {
   const pathname = usePathname();
+  const t = useTranslations('sidebar');
   const isActive = (path: string) => pathname === path;
 
   const menuItems = [
     {
-      name: 'Dashboard',
+      name: t('dashboard'),
       path: '/super-admin/dashboard',
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,7 +25,7 @@ export default function SuperAdminSidebar({
       ),
     },
     {
-      name: 'Hospitals',
+      name: t('hospitals'),
       path: '/super-admin/hospitals',
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +34,7 @@ export default function SuperAdminSidebar({
       ),
     },
     {
-      name: 'Settings',
+      name: t('settings'),
       path: '/super-admin/settings',
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +58,7 @@ export default function SuperAdminSidebar({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21v-1a7 7 0 00-14 0v1" />
               </svg>
             </div>
-            <span className="text-lg font-bold text-[#94B4C1] whitespace-nowrap">Super Admin</span>
+            <span className="text-lg font-bold text-[#94B4C1] whitespace-nowrap">{t('superAdmin')}</span>
           </div>
         </Link>
       </div>
@@ -87,7 +88,7 @@ export default function SuperAdminSidebar({
           <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          <span className="whitespace-nowrap">Log Out</span>
+          <span className="whitespace-nowrap">{t('logout')}</span>
         </button>
       </div>
     </aside>

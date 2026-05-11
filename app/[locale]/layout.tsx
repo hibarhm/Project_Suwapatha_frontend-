@@ -47,7 +47,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={`${poppins.variable} ${sinhala.variable} ${tamil.variable}`}>
-      <body className={poppins.className}>
+      {/* 
+        Font selection is locale-aware so Tamil/Sinhala scripts render correctly.
+        We still register all font variables at <html> for consistent fallback behavior.
+      */}
+      <body className={locale === 'si' ? sinhala.className : locale === 'ta' ? tamil.className : poppins.className}>
         {/* Translation provider is mounted at the root so existing route groups continue to work. */}
         <NextIntlClientProvider messages={messages}>
           {children}

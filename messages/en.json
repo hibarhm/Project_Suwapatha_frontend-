@@ -1,12 +1,25 @@
 {
   "common": {
-    "language": "Language"
+    "language": "Language",
+    "refresh": "Refresh"
   },
   "navbar": {
     "home": "Home",
     "about": "About",
     "contact": "Contact",
     "getStarted": "Get Started"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "opdSessions": "OPD Sessions",
+    "doctors": "Doctors",
+    "appointments": "Appointments",
+    "medicalRecords": "Medical Records",
+    "myPatients": "My Patients",
+    "hospitals": "Hospitals",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "superAdmin": "Super Admin"
   },
   "home": {
     "hero": {
@@ -617,7 +630,11 @@
     },
     "vitals": {
       "temp": "Temp (°F)",
-      "weight": "Weight (kg)"
+      "weight": "Weight (kg)",
+      "bp": "BP",
+      "pulse": "Pulse",
+      "tempShort": "Temp",
+      "weightShort": "Weight"
     },
     "fields": {
       "email": "Email",
@@ -872,7 +889,12 @@
     "stats": {
       "totalDoctors": "Total Doctors",
       "activeSessions": "Active Sessions",
-      "patientsToday": "Patients Today"
+      "patientsToday": "Patients Today",
+      "avgWaitingTime": "Avg. Waiting Time",
+      "estimatedPerSession": "Estimated per session",
+      "allocatedWaiting": "{allocated} allocated, {waiting} waiting",
+      "totalSessionsToday": "{count} total sessions today",
+      "totalDoctorsToday": "{count} total doctors today"
     },
     "recentDoctors": {
       "title": "Recent Doctor Registrations",
@@ -883,8 +905,74 @@
     "todaysSessions": {
       "title": "Today's Sessions",
       "noSessions": "No active sessions today",
+      "empty": "No OPD sessions scheduled for today",
+      "createFirst": "Create First Session",
+      "patients": "patients",
+      "viewAll": "View all {count} sessions",
       "session": "Session {date}",
-      "patients": "{count} patients"
+      "patientsCount": "{count} patients"
+    },
+    "sessionManagement": {
+      "title": "OPD Session Management",
+      "createNew": "Create New Session",
+      "viewAll": "View All Sessions"
+    },
+    "attendance": {
+      "title": "Doctor Attendance",
+      "present": "{count} PRESENT",
+      "availableToday": "Available Today",
+      "allocate": "Allocate",
+      "allDoctors": "All Doctors",
+      "noDoctors": "No doctors registered yet",
+      "viewAllDoctors": "View all {count} doctors",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "status": "Status"
+      }
+    },
+    "alerts": {
+      "title": "Alerts & Notifications",
+      "sessionWithoutDoctorTitle": "{count} Session(s) Without Doctor",
+      "sessionWithoutDoctorDescription": "Some OPD sessions do not have assigned doctors. Please assign doctors to these sessions.",
+      "sessionWithoutRoomTitle": "{count} Session(s) Without Room",
+      "sessionWithoutRoomDescription": "Some OPD sessions do not have assigned rooms. Please assign rooms to these sessions.",
+      "highPatientLoadTitle": "High Patient Load in {count} Session(s)",
+      "highPatientLoadDescription": "Some sessions are approaching maximum capacity. Consider creating additional sessions.",
+      "unallocatedPatientsTitle": "{count} Unallocated Patients",
+      "unallocatedPatientsDescription": "There are patients waiting to be assigned to OPD sessions.",
+      "allSystemsNormalTitle": "All Systems Normal",
+      "allSystemsNormalDescription": "No urgent alerts at this time. All OPD sessions are running smoothly."
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "subtitle": "Manage your hospital operations",
+      "manageSessions": "Manage OPD Sessions",
+      "manageDoctors": "Manage Doctors",
+      "refreshDashboard": "Refresh Dashboard"
+    },
+    "hospitalInfo": {
+      "title": "Hospital Information",
+      "name": "Name",
+      "type": "Type",
+      "location": "Location",
+      "phone": "Phone"
+    },
+    "footer": {
+      "rights": "© 2026 Suwapatha. All rights reserved."
+    },
+    "errors": {
+      "fetchHospitalInfo": "Failed to fetch hospital info",
+      "fetchTodayStats": "Failed to fetch today stats",
+      "fetchDoctors": "Failed to fetch doctors",
+      "fetchTodaySessions": "Failed to fetch today sessions",
+      "createSession": "Failed to create session"
+    },
+    "common": {
+      "notAssigned": "Not Assigned",
+      "zeroMinutes": "0 min",
+      "minutes": "{value} min",
+      "generalDepartment": "General"
     }
   },
   "adminSettings": {
@@ -975,6 +1063,303 @@
       "district": "District",
       "status": "Status",
       "actions": "Actions"
+    }
+  },
+  "superAdminSettingsPage": {
+    "title": "Settings",
+    "subtitle": "Super Admin endpoint configuration",
+    "endpointsTitle": "Backend endpoints",
+    "description": "Super Admin is restricted to creating hospital admin credentials only.",
+    "hospitals": "Hospitals",
+    "createHospitalAdmin": "Create hospital admin"
+  },
+  "superAdminAdminsPage": {
+    "title": "Admins",
+    "descriptionStart": "Super Admin does not manage admin features. Use",
+    "hospitals": "Hospitals",
+    "descriptionEnd": "to create credentials for a specific hospital."
+  },
+  "superAdminHospitalsPage": {
+    "title": "Hospitals",
+    "subtitle": "Select a hospital and create admin credentials",
+    "searchPlaceholder": "Search hospitals by name / district / province",
+    "refresh": "Refresh",
+    "loadingHospitals": "Loading hospitals...",
+    "emptyTitle": "No hospitals found",
+    "emptySubtitle": "Try a different search or add a new hospital.",
+    "notAvailable": "—",
+    "createAdmin": "Create Admin",
+    "editAdmin": "Edit Admin",
+    "table": {
+      "name": "Name",
+      "district": "District",
+      "province": "Province",
+      "phone": "Phone",
+      "action": "Action"
+    },
+    "modal": {
+      "createTitle": "Create Hospital Admin Credentials",
+      "editTitle": "Edit Hospital Admin",
+      "hospitalLabel": "Hospital",
+      "firstName": "First name *",
+      "lastName": "Last name *",
+      "email": "Email *",
+      "passwordCreate": "Password *",
+      "passwordEdit": "New password (optional)",
+      "cancel": "Cancel",
+      "creating": "Creating...",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes"
+    },
+    "errors": {
+      "loadHospitals": "Failed to load hospitals",
+      "hospitalRequired": "Hospital is required",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "createAdmin": "Failed to create admin",
+      "updateAdmin": "Failed to update admin"
+    }
+  },
+  "requireRole": {
+    "checkingPermissions": "Checking permissions..."
+  },
+  "doctorReviewModal": {
+    "confirmReject": "Are you sure you want to reject this doctor registration?",
+    "pendingReview": "Pending Review",
+    "registrationDetails": "Registration Details",
+    "submittedOn": "Submitted on",
+    "rejecting": "Rejecting...",
+    "reject": "Reject",
+    "approving": "Approving...",
+    "approveRegistration": "Approve Registration",
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "doctorId": "Doctor ID Number",
+      "nic": "NIC Number",
+      "phone": "Phone Number",
+      "gender": "Gender",
+      "dob": "Date of Birth"
+    }
+  },
+  "adminDoctorRegistrationPage": {
+    "title": "Doctor Registration Review",
+    "searchPlaceholder": "Search by name or ID...",
+    "loading": "Loading doctors...",
+    "doctorPrefix": "Dr.",
+    "viewDetails": "View Details →",
+    "emptyTitle": "No doctors found",
+    "emptySubtitle": "No doctors matching your search criteria.",
+    "stats": {
+      "totalRegistered": "Total Registered",
+      "pendingReview": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "filters": {
+      "allStatuses": "All Statuses",
+      "pendingReview": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "doctorName": "Doctor Name",
+      "doctorId": "Doctor ID",
+      "phone": "Phone",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "PENDING"
+    },
+    "alerts": {
+      "approved": "Doctor approved successfully! Notification email has been sent.",
+      "approveFailed": "Failed to approve doctor. Please try again.",
+      "rejected": "Doctor registration rejected. Notification email has been sent.",
+      "rejectFailed": "Failed to reject doctor. Please try again."
+    },
+    "errors": {
+      "loadFailed": "Failed to load doctors. Please try again."
+    }
+  },
+  "adminSettingsPage": {
+    "loading": "Loading settings...",
+    "toasts": {
+      "nameEmpty": "Name fields cannot be empty",
+      "profileUpdated": "Profile updated successfully",
+      "updateFailed": "Update failed",
+      "passwordFieldsRequired": "All password fields are required",
+      "passwordMismatch": "Passwords do not match",
+      "passwordUpdated": "Password updated successfully",
+      "passwordChangeFailed": "Password change failed"
+    },
+    "actions": {
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "updating": "Updating...",
+      "updatePassword": "Update Password"
+    },
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "subtitle": "Update your photo, full name, and username.",
+      "photoTitle": "Profile Photo",
+      "photoHint": "JPG, GIF or PNG. Max size of 800K",
+      "changePhoto": "Change Photo"
+    },
+    "email": {
+      "title": "Email Address",
+      "subtitle": "Manage your primary email address and verification status.",
+      "label": "Email Address",
+      "statusLabel": "Status:",
+      "verified": "Verified"
+    },
+    "password": {
+      "title": "Password",
+      "subtitle": "Change your account password.",
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm New Password"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "subtitle": "Choose how you receive updates and alerts.",
+      "emailTitle": "Email Notifications",
+      "emailDesc": "Receive important updates and announcements via email.",
+      "smsTitle": "SMS Notifications",
+      "smsDesc": "Get real-time alerts and reminders on your phone.",
+      "pushTitle": "Push Notifications",
+      "pushDesc": "Instant notifications directly to your device or browser."
+    },
+    "account": {
+      "title": "Account Management",
+      "subtitle": "Options to manage or delete your account.",
+      "warning": "Permanently delete your account and all associated data. This action cannot be undone.",
+      "delete": "Delete Account"
+    }
+  },
+  "createSessionModal": {
+    "title": "Create New OPD Session",
+    "headerSubtitle": "All sessions run from 08:00 to 12:00",
+    "date": "Date",
+    "selectDate": "Select date",
+    "advanceHint": "Up to 7 days in advance",
+    "totalSlots": "Total Slots",
+    "sessionTime": "Session Time",
+    "sessionTimeValue": "08:00 - 12:00 (fixed morning session)",
+    "slotDuration": "Slot Duration (minutes)",
+    "noteLabel": "Note:",
+    "note": "General consultation only (08:00-12:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
+    "cancel": "Cancel",
+    "createSession": "Create Session"
+  },
+  "adminOpdSessionPage": {
+    "loadingShort": "Loading...",
+    "loading": "Loading OPD sessions...",
+    "title": "OPD Session Management",
+    "actions": {
+      "createNewSession": "Create New Session",
+      "refreshDoctors": "Refresh Doctors",
+      "viewPatients": "View Patients",
+      "allocating": "Allocating...",
+      "allocatePatients": "Allocate Patients",
+      "cancelSession": "Cancel Session",
+      "edit": "Edit",
+      "cancel": "Cancel"
+    },
+    "tabs": {
+      "todaySessions": "Today's Sessions",
+      "upcomingSessions": "Upcoming Sessions (Next 7 Days)"
+    },
+    "stats": {
+      "totalPatientsToday": "Total Patients Today",
+      "allocated": "Allocated",
+      "unallocated": "Unallocated",
+      "activeDoctors": "Active Doctors"
+    },
+    "availableDoctors": {
+      "title": "Today's Available Doctors",
+      "subtitle": "Assign rooms to doctors who are active today. Patients will be distributed among doctors with assigned rooms.",
+      "empty": "No doctors have marked themselves as available for today yet."
+    },
+    "todaySessions": {
+      "title": "Today's OPD Sessions",
+      "emptyTitle": "No Sessions Today",
+      "emptySubtitle": "There are no OPD sessions scheduled for today.",
+      "createFirst": "Create First Session"
+    },
+    "upcoming": {
+      "bookableTitle": "Upcoming Sessions (Bookable)",
+      "bookableSubtitle": "Sessions scheduled for the next 7 days. Doctors and rooms can be assigned now.",
+      "emptyTitle": "No Upcoming Sessions",
+      "emptySubtitle": "There are no sessions scheduled for the next 7 days."
+    },
+    "labels": {
+      "assignedRoom": "Assigned Room",
+      "notAssigned": "Not Assigned",
+      "pendingAssignment": "Pending Assignment",
+      "time": "Time",
+      "room": "Room",
+      "assign": "Assign",
+      "patients": "Patients",
+      "date": "Date",
+      "bookingStatus": "Booking Status",
+      "doctor": "Doctor",
+      "slotsCount": "{current}/{max} slots"
+    },
+    "patientList": {
+      "title": "Patient List",
+      "loading": "Loading patients...",
+      "empty": "No patients booked yet."
+    },
+    "summary": {
+      "title": "Session Summary",
+      "capacityUsage": "Capacity Usage",
+      "patientsPerDoctor": "Patients per Doctor (Avg)",
+      "activeSessions": "Active Sessions"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "subtitle": "Manage today's operations",
+      "refreshData": "Refresh Data",
+      "viewDashboard": "View Dashboard"
+    },
+    "alerts": {
+      "roomAssigned": "Room assigned successfully!",
+      "patientsAllocated": "Patients allocated successfully!",
+      "sessionCreated": "Session created successfully!",
+      "sessionUpdated": "Session updated successfully!",
+      "sessionCancelled": "Session cancelled successfully!",
+      "editComingSoon": "Edit functionality coming soon"
+    },
+    "confirm": {
+      "cancelSession": "Are you sure you want to cancel this session?"
+    },
+    "errors": {
+      "loadData": "Failed to load data. Please try again.",
+      "fetchHospitalInfo": "Failed to fetch hospital info",
+      "fetchTodayStats": "Failed to fetch today stats",
+      "fetchTodaySessions": "Failed to fetch today sessions",
+      "fetchUpcomingSessions": "Failed to fetch upcoming sessions",
+      "fetchRooms": "Failed to fetch rooms",
+      "assignRoom": "Failed to assign room",
+      "allocatePatients": "Failed to allocate patients",
+      "createSession": "Failed to create session",
+      "updateSession": "Failed to update session",
+      "cancelSession": "Failed to cancel session",
+      "fetchPatients": "Failed to fetch patients",
+      "loadPatientList": "Failed to load patient list"
+    },
+    "common": {
+      "refresh": "Refresh",
+      "active": "Active",
+      "patient": "Patient"
     }
   },
   "patientSettings": {

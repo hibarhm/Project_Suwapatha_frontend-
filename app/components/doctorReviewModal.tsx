@@ -1,8 +1,7 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import {useTranslations} from 'next-intl';
 
 import { Doctor } from '@/app/api/admin/adminApi';
 
@@ -21,6 +20,7 @@ export default function DoctorReviewModal({
   onApprove,
   onReject,
 }: DoctorReviewModalProps) {
+  const t = useTranslations('doctorReviewModal');
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
 
@@ -39,7 +39,7 @@ export default function DoctorReviewModal({
   };
 
   const handleReject = async () => {
-    if (!confirm('Are you sure you want to reject this doctor registration?')) {
+    if (!confirm(t('confirmReject'))) {
       return;
     }
     setIsRejecting(true);
@@ -72,7 +72,7 @@ export default function DoctorReviewModal({
             <div className="flex items-center gap-2 mt-1">
               <span className="text-sm text-gray-600">{doctor.doctorId}</span>
               <span className="px-2 py-0.5 bg-[#94B4C1]/10 text-[#94B4C1] text-xs font-semibold rounded">
-                Pending Review
+                {t('pendingReview')}
               </span>
             </div>
           </div>
@@ -89,47 +89,47 @@ export default function DoctorReviewModal({
           {/* Registration Details */}
           <div>
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">
-              Registration Details
+              {t('registrationDetails')}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               {/* First Name */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">First Name</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.firstName')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.firstName}</p>
               </div>
               {/* Last Name */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Last Name</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.lastName')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.lastName}</p>
               </div>
               {/* Email */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Email Address</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.email')}</p>
                 <p className="text-sm font-semibold text-gray-900 break-all">{doctor.email}</p>
               </div>
               {/* Doctor ID */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Doctor ID Number</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.doctorId')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.doctorId}</p>
               </div>
               {/* NIC */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">NIC Number</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.nic')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.nic}</p>
               </div>
               {/* Phone */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Phone Number</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.phone')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.phone}</p>
               </div>
               {/* Gender */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Gender</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.gender')}</p>
                 <p className="text-sm font-semibold text-gray-900">{doctor.gender}</p>
               </div>
               {/* Date of Birth */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-xs text-gray-500 mb-1">Date of Birth</p>
+                <p className="text-xs text-gray-500 mb-1">{t('fields.dob')}</p>
                 <p className="text-sm font-semibold text-gray-900">
                   {new Date(doctor.dateOfBirth).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -148,7 +148,7 @@ export default function DoctorReviewModal({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className="text-sm font-semibold text-[#94B4C1] mb-1">Submitted on</p>
+                <p className="text-sm font-semibold text-[#94B4C1] mb-1">{t('submittedOn')}</p>
                 <p className="text-sm text-gray-700">
                   {new Date(doctor.createdAt).toLocaleDateString('en-US', {
                     weekday: 'long',
@@ -177,14 +177,14 @@ export default function DoctorReviewModal({
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Rejecting...</span>
+                <span>{t('rejecting')}</span>
               </>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <span>Reject</span>
+                <span>{t('reject')}</span>
               </>
             )}
           </button>
@@ -200,14 +200,14 @@ export default function DoctorReviewModal({
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Approving...</span>
+                <span>{t('approving')}</span>
               </>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span>Approve Registration</span>
+                <span>{t('approveRegistration')}</span>
               </>
             )}
           </button>

@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import AdminLayout from '@/app/components/adminLayout';
 import API_BASE_URL from '@/app/api/api';
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
       ]);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
-      setError('{t('errorTitle')}');
+      setError(t('errorTitle'));
     } finally {
       setLoading(false);
     }
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch hospital info');
+        throw new Error(t('errors.fetchHospitalInfo'));
       }
 
       const data = await response.json();
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch today stats');
+        throw new Error(t('errors.fetchTodayStats'));
       }
 
       const data = await response.json();
@@ -171,7 +171,7 @@ export default function AdminDashboard() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch doctors');
+        throw new Error(t('errors.fetchDoctors'));
       }
 
       const data = await response.json();
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch today sessions');
+        throw new Error(t('errors.fetchTodaySessions'));
       }
 
       const data = await response.json();
@@ -220,27 +220,27 @@ export default function AdminDashboard() {
 
     // Check for sessions without doctors
     const sessionsWithoutDoctors = sessions.filter(
-      s => !s.doctorName || s.doctorName === 'Not Assigned'
+      s => !s.doctorName || s.doctorName === t('common.notAssigned')
     );
 
     if (sessionsWithoutDoctors.length > 0) {
       newAlerts.push({
         type: 'warning',
-        title: `${sessionsWithoutDoctors.length} Session(s) Without Doctor`,
-        description: 'Some OPD sessions do not have assigned doctors. Please assign doctors to these sessions.'
+        title: t('alerts.sessionWithoutDoctorTitle', {count: sessionsWithoutDoctors.length}),
+        description: t('alerts.sessionWithoutDoctorDescription')
       });
     }
 
     // Check for sessions without rooms
     const sessionsWithoutRooms = sessions.filter(
-      s => !s.room || s.room === 'Not Assigned'
+      s => !s.room || s.room === t('common.notAssigned')
     );
 
     if (sessionsWithoutRooms.length > 0) {
       newAlerts.push({
         type: 'warning',
-        title: `${sessionsWithoutRooms.length} Session(s) Without Room`,
-        description: 'Some OPD sessions do not have assigned rooms. Please assign rooms to these sessions.'
+        title: t('alerts.sessionWithoutRoomTitle', {count: sessionsWithoutRooms.length}),
+        description: t('alerts.sessionWithoutRoomDescription')
       });
     }
 
@@ -252,8 +252,8 @@ export default function AdminDashboard() {
     if (highLoadSessions.length > 0) {
       newAlerts.push({
         type: 'warning',
-        title: `High Patient Load in ${highLoadSessions.length} Session(s)`,
-        description: 'Some sessions are approaching maximum capacity. Consider creating additional sessions.'
+        title: t('alerts.highPatientLoadTitle', {count: highLoadSessions.length}),
+        description: t('alerts.highPatientLoadDescription')
       });
     }
 
@@ -261,23 +261,23 @@ export default function AdminDashboard() {
     if (todayStats.unallocatedPatients > 0) {
       newAlerts.push({
         type: 'info',
-        title: `${todayStats.unallocatedPatients} Unallocated Patients`,
-        description: 'There are patients waiting to be assigned to OPD sessions.'
+        title: t('alerts.unallocatedPatientsTitle', {count: todayStats.unallocatedPatients}),
+        description: t('alerts.unallocatedPatientsDescription')
       });
     }
 
     setAlerts(newAlerts.length > 0 ? newAlerts : [
       {
         type: 'info',
-        title: 'All Systems Normal',
-        description: 'No urgent alerts at this time. All OPD sessions are running smoothly.'
+        title: t('alerts.allSystemsNormalTitle'),
+        description: t('alerts.allSystemsNormalDescription')
       }
     ]);
   };
 
   // Calculate average waiting time based on queue counts
   const calculateAvgWaitingTime = () => {
-    if (todaySessions.length === 0) return '0 min';
+    if (todaySessions.length === 0) return t('common.zeroMinutes');
 
     const totalWaitTime = todaySessions.reduce((sum, session) => {
       // Assuming 15 minutes per patient
@@ -285,7 +285,7 @@ export default function AdminDashboard() {
     }, 0);
 
     const avgTime = Math.round(totalWaitTime / todaySessions.length);
-    return `${avgTime} min`;
+    return t('common.minutes', {value: avgTime});
   };
 
   const handleCreateSession = () => {
@@ -298,7 +298,7 @@ export default function AdminDashboard() {
         date: sessionFormData.date,
         startTime: '08:00',
         endTime: '12:00',
-        department: 'General',
+        department: t('common.generalDepartment'),
         maxQueueSize: sessionFormData.totalSlots,
         slotDuration: sessionFormData.slotDuration,
       });
@@ -307,7 +307,7 @@ export default function AdminDashboard() {
       // Refresh dashboard data to show the new session
       await fetchAllData();
     } catch (err: any) {
-      alert(err.message || 'Failed to create session');
+      alert(err.message || t('errors.createSession'));
     }
   };
 
@@ -332,7 +332,10 @@ export default function AdminDashboard() {
     {
       title: t('stats.patientsToday'),
       value: todayStats.totalPatients.toString(),
-      change: `${todayStats.allocatedPatients} allocated, ${todayStats.unallocatedPatients} waiting`,
+      change: t('stats.allocatedWaiting', {
+        allocated: todayStats.allocatedPatients,
+        waiting: todayStats.unallocatedPatients
+      }),
       icon: (
         <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/crowd.png" alt="crowd" />
       ),
@@ -341,16 +344,16 @@ export default function AdminDashboard() {
     {
       title: t('stats.activeSessions'),
       value: todayStats.activeSessions.toString(),
-      change: `${todayStats.totalDoctors} total sessions today`,
+      change: t('stats.totalSessionsToday', {count: todayStats.totalDoctors}),
       icon: (
         <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/queue.png" alt="queue" />
       ),
       color: '#f97316'
     },
     {
-      title: 'Avg. Waiting Time', // TODO: translate
+      title: t('stats.avgWaitingTime'),
       value: calculateAvgWaitingTime(),
-      change: 'Estimated per session',
+      change: t('stats.estimatedPerSession'),
       icon: (
         <img width="20" height="20" src="https://img.icons8.com/ios/50/time_2.png" alt="time" />
       ),
@@ -359,7 +362,7 @@ export default function AdminDashboard() {
     {
       title: t('stats.totalDoctors'),
       value: todayStats.activeDoctors.toString(),
-      change: `${todayStats.totalDoctors} total doctors today`,
+      change: t('stats.totalDoctorsToday', {count: todayStats.totalDoctors}),
       icon: (
         <img width="23" height="23" src="https://img.icons8.com/ios-glyphs/30/stethoscope.png" alt="stethoscope" />
       ),
@@ -409,41 +412,41 @@ export default function AdminDashboard() {
           <div className="lg:col-span-2 space-y-6">
             {/* {t('todaysSessions.title')} */}
             <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">OPD Session Management</h2>
+              <h2 className="text-xl font-bold mb-4 text-gray-900">{t('sessionManagement.title')}</h2>
               <button
                 onClick={handleCreateSession}
                 className="w-full bg-[#94B4C1] text-white py-3 rounded-lg mb-3 hover:bg-[#7fa8b8] transition-colors font-medium"
               >
-                Create New Session
+                {t('sessionManagement.createNew')}
               </button>
               <button
                 onClick={handleViewAllSessions}
                 className="w-full bg-[#94B4C1]/10 text-[#94B4C1] py-3 rounded-lg hover:bg-[#94B4C1]/20 transition-colors font-medium"
               >
-                View All Sessions
+                {t('sessionManagement.viewAll')}
               </button>
             </div>
 
             {/* Doctor Availability */}
             <div className="bg-white rounded-xl border p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Doctor Attendance</h2>
+                <h2 className="text-xl font-bold text-gray-900">{t('attendance.title')}</h2>
                 <div className="flex gap-2">
                   <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">
-                    {availableDoctors.length} PRESENT
+                    {t('attendance.present', {count: availableDoctors.length})}
                   </span>
                   <button
                     onClick={async () => { await fetchDoctors(); await fetchAvailableDoctors(); }}
                     className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                   >
-                    Refresh
+                    {t('common.refresh')}
                   </button>
                 </div>
               </div>
 
               {availableDoctors.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">Available Today</h3>
+                  <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">{t('attendance.availableToday')}</h3>
                   <div className="space-y-3">
                     {availableDoctors.map((doc) => (
                       <div key={doc.id} className="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-lg">
@@ -460,7 +463,7 @@ export default function AdminDashboard() {
                           onClick={() => router.push('/admin/opd-management')}
                           className="text-xs bg-white px-2 py-1 rounded border border-green-200 text-green-700 hover:bg-green-100 font-medium"
                         >
-                          Allocate
+                          {t('attendance.allocate')}
                         </button>
                       </div>
                     ))}
@@ -468,22 +471,22 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">All Doctors</h3>
+              <h3 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">{t('attendance.allDoctors')}</h3>
               {doctors.length === 0 ? (
                 <div className="text-center py-8">
                   <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
-                  <p className="text-gray-600 text-sm">No doctors registered yet</p>
+                  <p className="text-gray-600 text-sm">{t('attendance.noDoctors')}</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Name</th>
-                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Email</th>
-                        <th className="text-left py-3 text-xs font-semibold text-gray-900">Status</th>
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">{t('attendance.table.name')}</th>
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">{t('attendance.table.email')}</th>
+                        <th className="text-left py-3 text-xs font-semibold text-gray-900">{t('attendance.table.status')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -515,7 +518,7 @@ export default function AdminDashboard() {
                         onClick={() => router.push('/admin/doctors')}
                         className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                       >
-                        View all {doctors.length} doctors →
+                        {t('attendance.viewAllDoctors', {count: doctors.length})} →
                       </button>
                     </div>
                   )}
@@ -525,18 +528,18 @@ export default function AdminDashboard() {
 
             {/* Today's Sessions Overview */}
             <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">Today's Sessions</h2>
+              <h2 className="text-xl font-bold mb-4 text-gray-900">{t('todaysSessions.title')}</h2>
               {todaySessions.length === 0 ? (
                 <div className="text-center py-8">
                   <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="text-gray-600 text-sm mb-4">No OPD sessions scheduled for today</p>
+                  <p className="text-gray-600 text-sm mb-4">{t('todaysSessions.empty')}</p>
                   <button
                     onClick={handleCreateSession}
                     className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium"
                   >
-                    Create First Session
+                    {t('todaysSessions.createFirst')}
                   </button>
                 </div>
               ) : (
@@ -555,7 +558,7 @@ export default function AdminDashboard() {
                         <p className="text-sm font-medium text-gray-900">
                           {session.currentQueueCount}/{session.maxQueueSize}
                         </p>
-                        <p className="text-xs text-gray-600">patients</p>
+                        <p className="text-xs text-gray-600">{t('todaysSessions.patients')}</p>
                       </div>
                     </div>
                   ))}
@@ -564,7 +567,7 @@ export default function AdminDashboard() {
                       onClick={handleViewAllSessions}
                       className="w-full text-center text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium py-2"
                     >
-                      View all {todaySessions.length} sessions →
+                      {t('todaysSessions.viewAll', {count: todaySessions.length})} →
                     </button>
                   )}
                 </div>
@@ -576,7 +579,7 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             {/* Alerts & Notifications */}
             <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">Alerts & Notifications</h2>
+              <h2 className="text-xl font-bold mb-4 text-gray-900">{t('alerts.title')}</h2>
               {alerts.map((alert, i) => (
                 <div key={i} className="border rounded-lg mb-3 last:mb-0">
                   <button
@@ -602,26 +605,26 @@ export default function AdminDashboard() {
 
             {/* Quick Actions */}
             <div className="bg-gradient-to-br from-[#94B4C1]/10 to-[#A1C2BD]/10 rounded-xl p-6">
-              <h3 className="text-lg font-bold mb-2 text-gray-900">Quick Actions</h3>
-              <p className="text-sm text-gray-700 mb-4">Manage your hospital operations</p>
+              <h3 className="text-lg font-bold mb-2 text-gray-900">{t('quickActions.title')}</h3>
+              <p className="text-sm text-gray-700 mb-4">{t('quickActions.subtitle')}</p>
               <div className="space-y-2">
                 <button
                   onClick={() => router.push('/admin/opd-management')}
                   className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
                 >
-                  Manage OPD Sessions
+                  {t('quickActions.manageSessions')}
                 </button>
                 <button
                   onClick={() => router.push('/admin/doctors')}
                   className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
                 >
-                  Manage Doctors
+                  {t('quickActions.manageDoctors')}
                 </button>
                 <button
                   onClick={fetchAllData}
                   className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
                 >
-                  Refresh Dashboard
+                  {t('quickActions.refreshDashboard')}
                 </button>
               </div>
             </div>
@@ -629,22 +632,22 @@ export default function AdminDashboard() {
             {/* Hospital Info Card */}
             {hospitalInfo && (
               <div className="bg-white rounded-xl border p-6">
-                <h3 className="text-lg font-bold mb-3 text-gray-900">Hospital Information</h3>
+                <h3 className="text-lg font-bold mb-3 text-gray-900">{t('hospitalInfo.title')}</h3>
                 <div className="space-y-2 text-sm">
                   <div>
-                    <p className="text-gray-600">Name</p>
+                    <p className="text-gray-600">{t('hospitalInfo.name')}</p>
                     <p className="font-medium text-gray-900">{hospitalInfo.name}</p>
                   </div>
                   <div>
-                    <p className="text-gray-600">Type</p>
+                    <p className="text-gray-600">{t('hospitalInfo.type')}</p>
                     <p className="font-medium text-gray-900">{hospitalInfo.type}</p>
                   </div>
                   <div>
-                    <p className="text-gray-600">Location</p>
+                    <p className="text-gray-600">{t('hospitalInfo.location')}</p>
                     <p className="font-medium text-gray-900">{hospitalInfo.district}, {hospitalInfo.province}</p>
                   </div>
                   <div>
-                    <p className="text-gray-600">Phone</p>
+                    <p className="text-gray-600">{t('hospitalInfo.phone')}</p>
                     <p className="font-medium text-gray-900">{hospitalInfo.phone}</p>
                   </div>
                 </div>
@@ -655,7 +658,7 @@ export default function AdminDashboard() {
 
         {/* Footer */}
         <footer className="mt-8 py-6 text-center border-t">
-          <p className="text-sm text-gray-800">© 2026 Suwapatha. All rights reserved.</p>
+          <p className="text-sm text-gray-800">{t('footer.rights')}</p>
         </footer>
       </div>
 

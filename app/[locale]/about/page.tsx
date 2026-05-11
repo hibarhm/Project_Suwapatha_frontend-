@@ -35,7 +35,7 @@ export default function AboutPage() {
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200">
                   <Image
                     src="/Healthcare.jpg"
-                    alt="Healthcare professional"
+                    alt={t('title')}
                     width={800}
                     height={600}
                     className="w-full h-full object-cover"
@@ -51,7 +51,7 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
-            What is <span className="text-[#94B4C1]">{t('whatIsHighlight')} </span>
+            {t('whatIsTitle')}<span className="text-[#94B4C1]">{t('whatIsHighlight')} </span>
           </h2>
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-16">
             {t('whatIsDescription')}
@@ -130,7 +130,7 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-16">
-            Key Features
+            {t('keyFeaturesTitle')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Feature 1 */}
@@ -242,7 +242,7 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-12">
-            Governance & Data Privacy
+            {t('governanceTitle')}
           </h2>
           <p className="text-lg text-gray-600 text-center leading-relaxed mb-12">
             {t('governanceDescription')}
@@ -334,19 +334,19 @@ export default function AboutPage() {
             <div className="space-y-4">
               <nav className="flex flex-col space-y-3">
                 <Link href="/" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Home
+                  {t('footer.home')}
                 </Link>
                 <Link href="/about" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  About Us
+                  {t('footer.aboutUs')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Services
+                  {t('footer.services')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  FAQ
+                  {t('footer.faq')}
                 </Link>
                 <Link href="/contact" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Contact Us
+                  {t('footer.contactUs')}
                 </Link>
               </nav>
             </div>

@@ -1,6 +1,6 @@
 'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {useTranslations} from 'next-intl';
+import {Link, usePathname} from '@/i18n/navigation';
 
 interface PatientSidebarProps {
   sidebarOpen: boolean;
@@ -9,11 +9,12 @@ interface PatientSidebarProps {
 
 export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebarProps) {
   const pathname = usePathname();
+  const t = useTranslations('sidebar');
   const isActive = (path: string) => pathname === path;
 
   const menuItems = [
     {
-      name: 'Dashboard',
+      name: t('dashboard'),
       path: '/patient/dashboard',
       icon: (
         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,7 +23,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
       )
     },
     {
-      name: 'Appointments',
+      name: t('appointments'),
       path: '/patient/appointments',
       icon: (
         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +32,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
       )
     },
     {
-      name: 'Medical Records',
+      name: t('medicalRecords'),
       path: '/patient/records',
       icon: (
         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,7 +41,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
       )
     },
     {
-      name: 'Settings',
+      name: t('settings'),
       path: '/patient/settings',
       icon: (
         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +104,7 @@ export default function PatientSidebar({ sidebarOpen, onLogout }: PatientSidebar
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <span className="whitespace-nowrap">Log Out</span>
+          <span className="whitespace-nowrap">{t('logout')}</span>
         </button>
       </div>
 

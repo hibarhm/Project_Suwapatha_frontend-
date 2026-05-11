@@ -6,6 +6,7 @@ import AdminLayout from '@/app/components/adminLayout';
 import CreateSessionModal from '@/app/components/CreateSessionModal';
 import { adminApi, DoctorAvailability } from '@/app/api/admin/adminApi';
 import API_BASE_URL from '@/app/api/api';
+import {useTranslations} from 'next-intl';
 
 interface HospitalInfo {
   id: string;
@@ -39,6 +40,7 @@ interface Session {
 }
 
 export default function OPDSessionManagement() {
+  const t = useTranslations('adminOpdSessionPage');
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('today');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -47,8 +49,8 @@ export default function OPDSessionManagement() {
 
   // State for real data
   const [hospitalInfo, setHospitalInfo] = useState<HospitalInfo>({
-    name: 'Loading...',
-    location: 'Loading...',
+    name: t('loadingShort'),
+    location: t('loadingShort'),
     id: ''
   });
   const [todayStats, setTodayStats] = useState<TodayStats>({
@@ -102,7 +104,7 @@ export default function OPDSessionManagement() {
       ]);
     } catch (err) {
       console.error('Error fetching data:', err);
-      setError('Failed to load data. Please try again.');
+      setError(t('errors.loadData'));
     } finally {
       setLoading(false);
     }
@@ -131,7 +133,7 @@ export default function OPDSessionManagement() {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch hospital info');
+        throw new Error(t('errors.fetchHospitalInfo'));
       }
 
       const data = await response.json();
@@ -153,7 +155,7 @@ export default function OPDSessionManagement() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch today stats');
+        throw new Error(t('errors.fetchTodayStats'));
       }
 
       const data = await response.json();
@@ -175,7 +177,7 @@ export default function OPDSessionManagement() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch today sessions');
+        throw new Error(t('errors.fetchTodaySessions'));
       }
 
       const data = await response.json();
@@ -197,7 +199,7 @@ export default function OPDSessionManagement() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch upcoming sessions');
+        throw new Error(t('errors.fetchUpcomingSessions'));
       }
 
       const data = await response.json();
@@ -219,7 +221,7 @@ export default function OPDSessionManagement() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch rooms');
+        throw new Error(t('errors.fetchRooms'));
       }
 
       const data = await response.json();
@@ -242,9 +244,9 @@ export default function OPDSessionManagement() {
     try {
       await adminApi.assignDoctorRoom(availabilityId, room);
       await fetchAvailableDoctors();
-      alert('Room assigned to doctor successfully!');
+      alert(t('alerts.roomAssigned'));
     } catch (err: any) {
-      alert(err.message || 'Failed to assign room');
+      alert(err.message || t('errors.assignRoom'));
     }
   };
 
@@ -253,9 +255,9 @@ export default function OPDSessionManagement() {
     try {
       await adminApi.allocatePatients(sessionId);
       await fetchTodaySessions();
-      alert('Patients allocated successfully!');
+      alert(t('alerts.patientsAllocated'));
     } catch (err: any) {
-      alert(err.message || 'Failed to allocate patients');
+      alert(err.message || t('errors.allocatePatients'));
     } finally {
       setAllocatingSessionId(null);
     }
@@ -287,8 +289,8 @@ export default function OPDSessionManagement() {
           startTime: '08:00',
           endTime: '12:00',
           department: 'General Consultation',
-          doctorName: 'Pending Assignment',
-          room: 'Not Assigned',
+          doctorName: t('labels.pendingAssignment'),
+          room: t('labels.notAssigned'),
           maxQueueSize: formData.totalSlots,
           slotDuration: formData.slotDuration
         }),
@@ -296,7 +298,7 @@ export default function OPDSessionManagement() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create session');
+        throw new Error(errorData.message || t('errors.createSession'));
       }
 
       // Refresh data
@@ -309,10 +311,10 @@ export default function OPDSessionManagement() {
         slotDuration: 15
       });
 
-      alert('Session created successfully!');
+      alert(t('alerts.sessionCreated'));
     } catch (err: any) {
       console.error('Error creating session:', err);
-      alert(err.message || 'Failed to create session');
+      alert(err.message || t('errors.createSession'));
     }
   };
 
@@ -333,16 +335,16 @@ export default function OPDSessionManagement() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to assign room');
+        throw new Error(errorData.message || t('errors.assignRoom'));
       }
 
       // Refresh data
       await fetchTodaySessions();
 
-      alert('Room assigned successfully!');
+      alert(t('alerts.roomAssigned'));
     } catch (err: any) {
       console.error('Error assigning room:', err);
-      alert(err.message || 'Failed to assign room');
+      alert(err.message || t('errors.assignRoom'));
     }
   };
 
@@ -361,21 +363,21 @@ export default function OPDSessionManagement() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update session');
+        throw new Error(errorData.message || t('errors.updateSession'));
       }
 
       // Refresh data
       await fetchTodaySessions();
 
-      alert('Session updated successfully!');
+      alert(t('alerts.sessionUpdated'));
     } catch (err: any) {
       console.error('Error updating session:', err);
-      alert(err.message || 'Failed to update session');
+      alert(err.message || t('errors.updateSession'));
     }
   };
 
   const handleCancelSession = async (sessionId: string) => {
-    if (!confirm('Are you sure you want to cancel this session?')) {
+    if (!confirm(t('confirm.cancelSession'))) {
       return;
     }
 
@@ -392,7 +394,7 @@ export default function OPDSessionManagement() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to cancel session');
+        throw new Error(errorData.message || t('errors.cancelSession'));
       }
 
       // Refresh data
@@ -402,10 +404,10 @@ export default function OPDSessionManagement() {
         await fetchUpcomingData();
       }
 
-      alert('Session cancelled successfully!');
+      alert(t('alerts.sessionCancelled'));
     } catch (err: any) {
       console.error('Error cancelling session:', err);
-      alert(err.message || 'Failed to cancel session');
+      alert(err.message || t('errors.cancelSession'));
     }
   };
 
@@ -422,14 +424,14 @@ export default function OPDSessionManagement() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch patients');
+        throw new Error(t('errors.fetchPatients'));
       }
 
       const data = await response.json();
       setSelectedSessionPatients(data);
     } catch (err) {
       console.error('Error fetching patients:', err);
-      setError('Failed to load patient list');
+      setError(t('errors.loadPatientList'));
     } finally {
       setLoadingPatients(false);
     }
@@ -441,7 +443,7 @@ export default function OPDSessionManagement() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading OPD sessions...</p>
+            <p className="mt-4 text-gray-600">{t('loading')}</p>
           </div>
         </div>
       </AdminLayout>
@@ -454,7 +456,7 @@ export default function OPDSessionManagement() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">OPD Session Management</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
             <p className="text-sm text-gray-600 mt-1">{hospitalInfo.name}, {hospitalInfo.location}</p>
           </div>
           <button
@@ -464,7 +466,7 @@ export default function OPDSessionManagement() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Create New Session
+            {t('actions.createNewSession')}
           </button>
         </div>
 
@@ -478,19 +480,19 @@ export default function OPDSessionManagement() {
         {/* Today's Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-sm text-gray-600 mb-1">Total Patients Today</p>
+            <p className="text-sm text-gray-600 mb-1">{t('stats.totalPatientsToday')}</p>
             <p className="text-3xl font-bold text-[#94B4C1]">{todayStats.totalPatients}</p>
           </div>
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-sm text-gray-600 mb-1">Allocated</p>
+            <p className="text-sm text-gray-600 mb-1">{t('stats.allocated')}</p>
             <p className="text-3xl font-bold text-green-600">{todayStats.allocatedPatients}</p>
           </div>
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-sm text-gray-600 mb-1">Unallocated</p>
+            <p className="text-sm text-gray-600 mb-1">{t('stats.unallocated')}</p>
             <p className="text-3xl font-bold text-orange-600">{todayStats.unallocatedPatients}</p>
           </div>
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-sm text-gray-600 mb-1">Active Doctors</p>
+            <p className="text-sm text-gray-600 mb-1">{t('stats.activeDoctors')}</p>
             <p className="text-3xl font-bold text-blue-600">{todayStats.activeDoctors}/{todayStats.totalDoctors}</p>
           </div>
         </div>
@@ -506,7 +508,7 @@ export default function OPDSessionManagement() {
               : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
-            Today's Sessions
+            {t('tabs.todaySessions')}
             <span className="ml-2 px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
               {todayStats.activeSessions}
             </span>
@@ -518,7 +520,7 @@ export default function OPDSessionManagement() {
               : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
-            Upcoming Sessions (Next 7 Days)
+            {t('tabs.upcomingSessions')}
             <span className="ml-2 px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
               {scheduledSessions.length}
             </span>
@@ -530,19 +532,19 @@ export default function OPDSessionManagement() {
       {activeTab === 'today' && (
         <div className="mb-8 bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900">Today's Available Doctors</h2>
+            <h2 className="text-xl font-bold text-gray-900">{t('availableDoctors.title')}</h2>
             <button
               onClick={fetchAvailableDoctors}
               className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
             >
-              Refresh Doctors
+              {t('actions.refreshDoctors')}
             </button>
           </div>
-          <p className="text-sm text-gray-600 mb-6">Assign rooms to doctors who are active today. Patients will be distributed among doctors with assigned rooms.</p>
+          <p className="text-sm text-gray-600 mb-6">{t('availableDoctors.subtitle')}</p>
 
           {availableDoctors.length === 0 ? (
             <div className="text-center py-6 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 italic">No doctors have marked themselves as available for today yet.</p>
+              <p className="text-gray-500 italic">{t('availableDoctors.empty')}</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -559,14 +561,14 @@ export default function OPDSessionManagement() {
                   </div>
 
                   <div className="mt-2">
-                    <label className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">Assigned Room</label>
+                    <label className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">{t('labels.assignedRoom')}</label>
                     <div className="flex gap-2">
                       <select
                         value={doc.room || ''}
                         onChange={(e) => handleUpdateDoctorRoom(doc.id, e.target.value)}
                         className="flex-1 text-sm border border-gray-200 rounded px-2 py-1.5 focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
                       >
-                        <option value="">Not Assigned</option>
+                        <option value="">{t('labels.notAssigned')}</option>
                         {rooms.map(room => (
                           <option key={room} value={room}>{room}</option>
                         ))}
@@ -592,12 +594,12 @@ export default function OPDSessionManagement() {
             {/* Today's Active Sessions */}
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">Today's OPD Sessions</h2>
+                <h2 className="text-xl font-bold text-gray-900">{t('todaySessions.title')}</h2>
                 <button
                   onClick={fetchTodaySessions}
                   className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                 >
-                  Refresh
+                  {t('common.refresh')}
                 </button>
               </div>
 
@@ -606,13 +608,13 @@ export default function OPDSessionManagement() {
                   <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Sessions Today</h3>
-                  <p className="text-gray-600 mb-4">There are no OPD sessions scheduled for today.</p>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">{t('todaySessions.emptyTitle')}</h3>
+                  <p className="text-gray-600 mb-4">{t('todaySessions.emptySubtitle')}</p>
                   <button
                     onClick={() => setShowCreateModal(true)}
                     className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors font-medium"
                   >
-                    Create First Session
+                    {t('todaySessions.createFirst')}
                   </button>
                 </div>
               ) : (
@@ -627,27 +629,27 @@ export default function OPDSessionManagement() {
                             {session.status === 'OPEN' && (
                               <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full flex items-center gap-1">
                                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                                Active
+                                {t('common.active')}
                               </span>
                             )}
                           </div>
                           <div className="grid grid-cols-3 gap-4 text-sm">
                             <div>
-                              <p className="text-gray-600">Time</p>
+                              <p className="text-gray-600">{t('labels.time')}</p>
                               <p className="font-medium text-gray-900">{session.startTime} - {session.endTime}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Room</p>
+                              <p className="text-gray-600">{t('labels.room')}</p>
                               <div className="flex items-center gap-2">
-                                <p className={`font-medium ${session.room === 'Not Assigned' ? 'text-red-600' : 'text-gray-900'}`}>
+                                <p className={`font-medium ${session.room === t('labels.notAssigned') ? 'text-red-600' : 'text-gray-900'}`}>
                                   {session.room}
                                 </p>
-                                {session.room === 'Not Assigned' && (
+                                {session.room === t('labels.notAssigned') && (
                                   <select
                                     onChange={(e) => handleAssignRoom(session.id, e.target.value)}
                                     className="text-xs border border-gray-300 rounded px-2 py-1 focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
                                   >
-                                    <option value="">Assign</option>
+                                    <option value="">{t('labels.assign')}</option>
                                     {rooms.map(room => (
                                       <option key={room} value={room}>{room}</option>
                                     ))}
@@ -656,7 +658,7 @@ export default function OPDSessionManagement() {
                               </div>
                             </div>
                             <div>
-                              <p className="text-gray-600">Patients</p>
+                              <p className="text-gray-600">{t('labels.patients')}</p>
                               <p className="font-medium text-gray-900">
                                 {session.currentQueueCount}/{session.maxQueueSize}
                               </p>
@@ -667,7 +669,7 @@ export default function OPDSessionManagement() {
                               onClick={() => fetchSessionPatients(session.id)}
                               className="px-4 py-1.5 text-sm font-medium text-[#94B4C1] border border-[#94B4C1] rounded-lg hover:bg-[#94B4C1] hover:text-white transition-colors"
                             >
-                              View Patients
+                              {t('actions.viewPatients')}
                             </button>
 
                             {session.status === 'OPEN' && session.currentQueueCount > 0 && (
@@ -680,10 +682,10 @@ export default function OPDSessionManagement() {
                                 {allocatingSessionId === session.id ? (
                                   <>
                                     <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                    Allocating...
+                                    {t('actions.allocating')}
                                   </>
                                 ) : (
-                                  'Allocate Patients'
+                                  t('actions.allocatePatients')
                                 )}
                               </button>
                             )}
@@ -693,7 +695,7 @@ export default function OPDSessionManagement() {
                                 onClick={() => handleCancelSession(session.id)}
                                 className="px-4 py-1.5 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
                               >
-                                Cancel Session
+                                {t('actions.cancelSession')}
                               </button>
                             )}
                           </div>
@@ -701,11 +703,11 @@ export default function OPDSessionManagement() {
                           {/* Patient List Section */}
                           {viewingPatientsFor === session.id && (
                             <div className="mt-4 pt-4 border-t border-gray-100">
-                              <h4 className="text-sm font-bold text-gray-900 mb-3">Patient List</h4>
+                              <h4 className="text-sm font-bold text-gray-900 mb-3">{t('patientList.title')}</h4>
                               {loadingPatients ? (
-                                <p className="text-sm text-gray-600">Loading patients...</p>
+                                <p className="text-sm text-gray-600">{t('patientList.loading')}</p>
                               ) : selectedSessionPatients.length === 0 ? (
-                                <p className="text-sm text-gray-500 italic">No patients booked yet.</p>
+                                <p className="text-sm text-gray-500 italic">{t('patientList.empty')}</p>
                               ) : (
                                 <div className="space-y-2">
                                   {selectedSessionPatients.map((apt) => (
@@ -714,7 +716,7 @@ export default function OPDSessionManagement() {
                                         <span className="w-6 h-6 flex items-center justify-center bg-[#94B4C1]/20 text-[#94B4C1] rounded-full text-xs font-bold">
                                           {apt.queueNumber}
                                         </span>
-                                        <span className="font-medium text-gray-900">{apt.patientName || 'Patient'}</span>
+                                        <span className="font-medium text-gray-900">{apt.patientName || t('common.patient')}</span>
                                         <span className="text-gray-500 text-xs">{apt.patientEmail}</span>
                                       </div>
                                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${apt.status === 'BOOKED' ? 'bg-blue-100 text-blue-700' :
@@ -741,11 +743,11 @@ export default function OPDSessionManagement() {
           {/* Right Column - Quick Stats */}
           <div className="space-y-6">
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Session Summary</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{t('summary.title')}</h3>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-600">Capacity Usage</span>
+                    <span className="text-gray-600">{t('summary.capacityUsage')}</span>
                     <span className="font-semibold text-gray-900">
                       {todayStats.totalPatients > 0
                         ? Math.round((todayStats.allocatedPatients / todayStats.totalPatients) * 100)
@@ -764,7 +766,7 @@ export default function OPDSessionManagement() {
                   </div>
                 </div>
                 <div className="pt-4 border-t border-gray-200">
-                  <p className="text-xs text-gray-600 mb-3">Patients per Doctor (Avg)</p>
+                  <p className="text-xs text-gray-600 mb-3">{t('summary.patientsPerDoctor')}</p>
                   <p className="text-2xl font-bold text-gray-900">
                     {todayStats.activeDoctors > 0
                       ? Math.round(todayStats.allocatedPatients / todayStats.activeDoctors)
@@ -772,27 +774,27 @@ export default function OPDSessionManagement() {
                   </p>
                 </div>
                 <div className="pt-4 border-t border-gray-200">
-                  <p className="text-xs text-gray-600 mb-3">Active Sessions</p>
+                  <p className="text-xs text-gray-600 mb-3">{t('summary.activeSessions')}</p>
                   <p className="text-2xl font-bold text-green-600">{todayStats.activeSessions}</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-[#94B4C1]/10 to-[#A1C2BD]/10 rounded-xl p-6">
-              <h3 className="text-lg font-bold mb-2 text-gray-900">Quick Actions</h3>
-              <p className="text-sm text-gray-700 mb-4">Manage today's operations</p>
+              <h3 className="text-lg font-bold mb-2 text-gray-900">{t('quickActions.title')}</h3>
+              <p className="text-sm text-gray-700 mb-4">{t('quickActions.subtitle')}</p>
               <div className="space-y-2">
                 <button
                   onClick={fetchTodayData}
                   className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
                 >
-                  Refresh Data
+                  {t('quickActions.refreshData')}
                 </button>
                 <button
                   onClick={() => router.push('/admin/dashboard')}
                   className="w-full bg-white bg-opacity-60 hover:bg-opacity-80 text-gray-900 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-300"
                 >
-                  View Dashboard
+                  {t('quickActions.viewDashboard')}
                 </button>
               </div>
             </div>
@@ -809,9 +811,9 @@ export default function OPDSessionManagement() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className="text-sm font-semibold text-[#94B4C1]">Upcoming Sessions (Bookable)</p>
+                <p className="text-sm font-semibold text-[#94B4C1]">{t('upcoming.bookableTitle')}</p>
                 <p className="text-xs text-gray-700 mt-1">
-                  Sessions scheduled for the next 7 days. Doctors and rooms can be assigned now.
+                  {t('upcoming.bookableSubtitle')}
                 </p>
               </div>
             </div>
@@ -822,13 +824,13 @@ export default function OPDSessionManagement() {
               <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Upcoming Sessions</h3>
-              <p className="text-gray-600 mb-4">There are no sessions scheduled for the next 7 days.</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('upcoming.emptyTitle')}</h3>
+              <p className="text-gray-600 mb-4">{t('upcoming.emptySubtitle')}</p>
               <button
                 onClick={() => setShowCreateModal(true)}
                 className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors font-medium"
               >
-                Create New Session
+                {t('actions.createNewSession')}
               </button>
             </div>
           ) : (
@@ -843,17 +845,17 @@ export default function OPDSessionManagement() {
                     </div>
                     <div className="grid grid-cols-3 gap-6">
                       <div>
-                        <p className="text-sm text-gray-600">Date</p>
+                        <p className="text-sm text-gray-600">{t('labels.date')}</p>
                         <p className="font-semibold text-gray-900">{session.date}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Time</p>
+                        <p className="text-sm text-gray-600">{t('labels.time')}</p>
                         <p className="font-semibold text-gray-900">{session.startTime} - {session.endTime}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Booking Status</p>
+                        <p className="text-sm text-gray-600">{t('labels.bookingStatus')}</p>
                         <p className="font-semibold text-gray-900">
-                          {session.currentQueueCount}/{session.maxQueueSize} slots
+                          {t('labels.slotsCount', {current: session.currentQueueCount, max: session.maxQueueSize})}
                         </p>
                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                           <div
@@ -869,11 +871,11 @@ export default function OPDSessionManagement() {
                     </div>
                     <div className="grid grid-cols-2 gap-6 mt-4">
                       <div>
-                        <p className="text-sm text-gray-600">Doctor</p>
+                        <p className="text-sm text-gray-600">{t('labels.doctor')}</p>
                         <p className="font-medium text-gray-900">{session.doctorName}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Room</p>
+                        <p className="text-sm text-gray-600">{t('labels.room')}</p>
                         <p className="font-medium text-gray-900">{session.room}</p>
                       </div>
                     </div>
@@ -884,33 +886,33 @@ export default function OPDSessionManagement() {
                         onClick={() => fetchSessionPatients(session.id)}
                         className="px-4 py-2 border border-[#94B4C1] text-[#94B4C1] rounded-lg hover:bg-[#94B4C1] hover:text-white text-sm font-medium transition-colors"
                       >
-                        View Patients
+                        {t('actions.viewPatients')}
                       </button>
                       <button
                         onClick={() => {
                           // You can implement edit functionality here
-                          alert('Edit functionality coming soon');
+                          alert(t('alerts.editComingSoon'));
                         }}
                         className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] text-sm font-medium transition-colors"
                       >
-                        Edit
+                        {t('actions.edit')}
                       </button>
                       <button
                         onClick={() => handleCancelSession(session.id)}
                         className="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 text-sm font-medium"
                       >
-                        Cancel
+                        {t('actions.cancel')}
                       </button>
                     </div>
 
                     {/* Patient List Section */}
                     {viewingPatientsFor === session.id && (
                       <div className="mt-4 pt-4 border-t border-gray-100">
-                        <h4 className="text-sm font-bold text-gray-900 mb-3">Patient List</h4>
+                        <h4 className="text-sm font-bold text-gray-900 mb-3">{t('patientList.title')}</h4>
                         {loadingPatients ? (
-                          <p className="text-sm text-gray-600">Loading patients...</p>
+                          <p className="text-sm text-gray-600">{t('patientList.loading')}</p>
                         ) : selectedSessionPatients.length === 0 ? (
-                          <p className="text-sm text-gray-500 italic">No patients booked yet.</p>
+                          <p className="text-sm text-gray-500 italic">{t('patientList.empty')}</p>
                         ) : (
                           <div className="space-y-2">
                             {selectedSessionPatients.map((apt) => (
@@ -919,7 +921,7 @@ export default function OPDSessionManagement() {
                                   <span className="w-6 h-6 flex items-center justify-center bg-[#94B4C1]/20 text-[#94B4C1] rounded-full text-xs font-bold">
                                     {apt.queueNumber}
                                   </span>
-                                  <span className="font-medium text-gray-900">{apt.patientName || 'Patient'}</span>
+                                  <span className="font-medium text-gray-900">{apt.patientName || t('common.patient')}</span>
                                   <span className="text-gray-500 text-xs">{apt.patientEmail}</span>
                                 </div>
                                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${apt.status === 'BOOKED' ? 'bg-blue-100 text-blue-700' :

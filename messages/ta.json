@@ -1,997 +1,1339 @@
 {
   "common": {
-    "language": "மொழி"
+    "language": "மொழி",
+    "refresh": "புதுப்பிக்கவும்"
   },
   "navbar": {
-    "home": "முகப்பு",
-    "about": "எங்களை பற்றி",
-    "contact": "தொடர்பு",
+    "home": "வீடு",
+    "about": "பற்றி",
+    "contact": "தொடர்பு கொள்ளவும்",
     "getStarted": "தொடங்குங்கள்"
+  },
+  "sidebar": {
+    "dashboard": "டாஷ்போர்டு",
+    "opdSessions": "OPD அமர்வுகள்",
+    "doctors": "மருத்துவர்கள்",
+    "appointments": "நியமனங்கள்",
+    "medicalRecords": "மருத்துவ பதிவுகள்",
+    "myPatients": "என் நோயாளிகள்",
+    "hospitals": "மருத்துவமனைகள்",
+    "settings": "அமைப்புகள்",
+    "logout": "வெளியேறு",
+    "superAdmin": "சூப்பர் அட்மின்"
   },
   "home": {
     "hero": {
-      "title": "இடையறாத சுகாதாரம்,",
+      "title": "தடையற்ற சுகாதாரம்,",
       "titleHighlight": "உங்களுக்காக எளிமைப்படுத்தப்பட்டது",
-      "subtitle": "நோயாளிகள், மருத்துவர்கள் மற்றும் நிர்வாகிகளை ஒருங்கிணைந்த, திறமையான மற்றும் கருணையுள்ள டிஜிட்டல் சுகாதார தளத்தில் இணைக்கிறது.",
+      "subtitle": "ஒருங்கிணைந்த, திறமையான மற்றும் இரக்கமுள்ள டிஜிட்டல் சுகாதார தளத்தின் மூலம் நோயாளிகள், மருத்துவர்கள் மற்றும் நிர்வாகிகளை இணைக்கிறது.",
       "asPatient": "நோயாளியாக",
-      "asDoctor": "மருத்துவராக",
+      "asDoctor": "டாக்டராக",
       "doctorsImageAlt": "மருத்துவர்கள்"
     },
     "features": {
       "title": "உங்களுக்காக வடிவமைக்கப்பட்ட முக்கிய அம்சங்கள்",
       "unified": {
         "title": "ஒருங்கிணைந்த OPD சேனலிங்",
-        "description": "பல்வேறு மருத்துவமனைகளில் வெளிநோயாளர் நேரங்களை எளிதாக முன்பதிவு செய்யும் அமைப்பை அணுகவும்."
+        "description": "பல்வேறு மருத்துவமனைகளில் வெளிநோயாளர் பிரிவு சந்திப்புகளை முன்பதிவு செய்வதற்கான தடையற்ற அமைப்பை அணுகவும்."
       },
       "queue": {
-        "title": "நேரடி வரிசை நிலை",
-        "description": "காத்திருப்பு நேரங்களை நேரடியாக அறிந்து, காத்திருப்பை குறைத்து வசதியை மேம்படுத்துங்கள்."
+        "title": "நிகழ் நேர வரிசை நிலை",
+        "description": "வரிசை நேரங்கள், காத்திருப்பு காலங்களைக் குறைத்தல் மற்றும் வசதியை மேம்படுத்துதல் போன்றவற்றைப் பற்றிய நேரடி அறிவிப்புகளுடன் தொடர்ந்து தெரிந்துகொள்ளுங்கள்."
       },
       "care": {
-        "title": "தொடர்ச்சியான சிகிச்சை",
-        "description": "உங்கள் சுகாதார பதிவுகளை பாதுகாப்பாக நிர்வகித்து, பல்வேறு மருத்துவர்களிடையே தொடர்ச்சியான பராமரிப்பைப் பெறுங்கள்."
+        "title": "கவனிப்பின் தொடர்ச்சி",
+        "description": "உங்கள் உடல்நலப் பதிவுகளை பாதுகாப்பாக நிர்வகிக்கவும், பல்வேறு மருத்துவப் பயிற்சியாளர்களிடையே நிலையான கவனிப்பை உறுதி செய்யவும்."
       },
       "multilingual": {
         "title": "பன்மொழி ஆதரவு",
-        "description": "ஒப்புரவான சுகாதார அனுபவத்திற்காக இந்த தளத்தை சிங்களம், தமிழ், ஆங்கிலத்தில் பயன்படுத்துங்கள்."
+        "description": "உள்ளடக்கிய மற்றும் அணுகக்கூடிய சுகாதார சேவைக்காக சிங்களம், தமிழ் மற்றும் ஆங்கிலத்தில் தளத்தை அனுபவிக்கவும்."
       }
     },
     "steps": {
-      "title": "எளிய OPD முன்பதிவுக்கான 3 படிகள்",
+      "title": "எளிதான OPD முன்பதிவுக்கான உங்கள் 3-படி வழிகாட்டி",
       "step1": {
         "label": "படி 1",
-        "title": "மருத்துவமனை தேடல்"
+        "title": "மருத்துவமனையைத் தேடுங்கள்"
       },
       "step2": {
         "label": "படி 2",
-        "title": "தேதி தேர்வு"
+        "title": "தேதியைத் தேர்ந்தெடுக்கவும்"
       },
       "step3": {
         "label": "படி 3",
-        "title": "வரிசை எண் பெறுதல்"
+        "title": "வரிசை எண்ணைப் பெறுங்கள்"
       }
     },
     "commitment": {
-      "title": "உங்கள் நலனுக்கு எங்கள் அர்ப்பணிப்பு",
-      "government": "அரசு அங்கீகாரம்",
-      "secure": "பாதுகாப்பானது மற்றும் தனியுரிமை",
+      "title": "உங்கள் நலனுக்காக அர்ப்பணிக்கப்பட்டுள்ளது",
+      "government": "அரசு ஒப்புதல்",
+      "secure": "பாதுகாப்பான & தனியார்",
       "accessible": "அனைவருக்கும் அணுகக்கூடியது"
     },
     "contact": {
-      "title": "உதவி வேண்டுமா? எங்களை தொடர்புகொள்ளுங்கள்",
-      "supportText": "எங்கள் ஆதரவு குழு 24/7 உங்களுக்கு உதவ தயாராக உள்ளது."
+      "title": "உதவி தேவையா? எங்களை தொடர்பு கொள்ளவும்",
+      "supportText": "உங்களுக்கு உதவ எங்கள் ஆதரவுக் குழு 24/7 உள்ளது."
     },
     "footer": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
+      "home": "வீடு",
+      "about": "எங்களைப் பற்றி",
       "services": "சேவைகள்",
-      "contact": "தொடர்பு",
-      "accessibilityTitle": "அணுகல் அறிக்கை",
-      "accessibilityDescription": "அனைவரும் அணுகக்கூடிய ஆன்லைன் அனுபவத்தை வழங்க உறுதிபூண்டுள்ளோம்.",
+      "contact": "எங்களை தொடர்பு கொள்ளவும்",
+      "accessibilityTitle": "அணுகல்தன்மை அறிக்கை",
+      "accessibilityDescription": "அணுகக்கூடிய ஆன்லைன் அனுபவத்தை வழங்க உறுதிபூண்டுள்ளது.",
       "learnMore": "மேலும் அறிக"
     }
   },
   "login": {
     "title": "மீண்டும் வரவேற்கிறோம்!",
-    "subtitle": "உங்கள் Suwapatha கணக்கை அணுக உள்நுழையவும்.",
+    "subtitle": "உங்கள் சுவபாதா கணக்கை அணுக உள்நுழைக.",
     "nav": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
-      "contact": "தொடர்பு",
+      "home": "வீடு",
+      "about": "பற்றி",
+      "contact": "தொடர்பு கொள்ளவும்",
       "getStarted": "தொடங்குங்கள்"
     },
     "form": {
-      "usernameLabel": "பயனர்பெயர் / மின்னஞ்சல்",
+      "usernameLabel": "பயனர் பெயர் / மின்னஞ்சல்",
       "usernamePlaceholder": "உங்கள் பயனர்பெயர் அல்லது மின்னஞ்சலை உள்ளிடவும்",
       "passwordLabel": "கடவுச்சொல்",
       "passwordPlaceholder": "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
-      "rememberMe": "என்னை நினைவில் கொள்ளவும்",
-      "forgotPassword": "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
-      "locationQuestion": "என் இருப்பிடத்தை பயன்படுத்தவா?",
-      "locationHelp": "இருப்பிட அனுமதி அருகிலுள்ள மருத்துவமனைகளை கண்டறிய உதவும்.",
+      "rememberMe": "என்னை நினைவில் வையுங்கள்",
+      "forgotPassword": "கடவுச்சொல் மறந்துவிட்டதா?",
+      "locationQuestion": "எனது இருப்பிடத்தைப் பயன்படுத்தவா?",
+      "locationHelp": "இருப்பிட அணுகலை அனுமதிப்பது அருகிலுள்ள மருத்துவமனைகளைக் கண்டறிய உதவுகிறது.",
       "yes": "ஆம்",
       "no": "இல்லை",
       "loggingIn": "உள்நுழைகிறது...",
-      "login": "உள்நுழை"
+      "login": "உள்நுழைக"
     },
     "errors": {
-      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
     }
   },
   "superAdminDashboard": {
-    "title": "சூப்பர் நிர்வாகி டாஷ்போர்டு",
-    "subtitle": "தேர்ந்தெடுக்கப்பட்ட மருத்துவமனைக்கு மருத்துவமனை நிர்வாகி கணக்குகளை உருவாக்குவது சூப்பர் நிர்வாகிக்கு மட்டுமே அனுமதி.",
-    "createAdminTitle": "மருத்துவமனை நிர்வாகியை உருவாக்கு",
-    "createAdminDescription": "மருத்துவமனைகள் பகுதிக்கு சென்று ஒரு மருத்துவமனையை தேர்வு செய்து அதன் நிர்வாகிக்கு சான்றுகளை உருவாக்கவும்.",
-    "goToHospitals": "மருத்துவமனைகளுக்கு செல்லவும்"
+    "title": "சூப்பர் அட்மின் டாஷ்போர்டு",
+    "subtitle": "தேர்ந்தெடுக்கப்பட்ட மருத்துவமனைக்கான மருத்துவமனை நிர்வாகச் சான்றுகளை மட்டுமே Super Admin உருவாக்க முடியும்.",
+    "createAdminTitle": "மருத்துவமனை நிர்வாகத்தை உருவாக்கவும்",
+    "createAdminDescription": "மருத்துவமனைகளுக்குச் சென்று, மருத்துவமனையைத் தேர்ந்தெடுத்து, அதன் நிர்வாகிக்கான நற்சான்றிதழ்களை உருவாக்கவும்.",
+    "goToHospitals": "மருத்துவமனைகளுக்குச் செல்லுங்கள்"
   },
   "doctorLogin": {
-    "brand": "Suwapatha",
-    "imageAlt": "Professional doctor",
-    "title": "Doctor Login",
-    "subtitle": "Access your healthcare professional account",
+    "brand": "சுவபாதா",
+    "imageAlt": "தொழில்முறை மருத்துவர்",
+    "title": "டாக்டர் உள்நுழைவு",
+    "subtitle": "உங்கள் சுகாதார தொழில்முறை கணக்கை அணுகவும்",
     "nav": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
-      "contact": "தொடர்பு",
+      "home": "வீடு",
+      "about": "பற்றி",
+      "contact": "தொடர்பு கொள்ளவும்",
       "getStarted": "தொடங்குங்கள்"
     },
     "form": {
-      "doctorIdOrEmailLabel": "Doctor ID / Email",
-      "doctorIdOrEmailPlaceholder": "Enter your Doctor ID or email",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot Password?",
-      "loggingIn": "Logging in...",
-      "loginButton": "Login as Doctor",
-      "notRegistered": "Not registered yet?",
-      "registerLink": "Register as Doctor"
+      "doctorIdOrEmailLabel": "மருத்துவர் ஐடி / மின்னஞ்சல்",
+      "doctorIdOrEmailPlaceholder": "உங்கள் மருத்துவர் ஐடி அல்லது மின்னஞ்சலை உள்ளிடவும்",
+      "passwordLabel": "கடவுச்சொல்",
+      "passwordPlaceholder": "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
+      "rememberMe": "என்னை நினைவில் வையுங்கள்",
+      "forgotPassword": "கடவுச்சொல் மறந்துவிட்டதா?",
+      "loggingIn": "உள்நுழைகிறது...",
+      "loginButton": "டாக்டராக உள்நுழைக",
+      "notRegistered": "இன்னும் பதிவு செய்யவில்லையா?",
+      "registerLink": "டாக்டராக பதிவு செய்யுங்கள்"
     },
     "errors": {
-      "invalidCredentials": "Invalid credentials. Please try again."
+      "invalidCredentials": "தவறான சான்றுகள். மீண்டும் முயற்சிக்கவும்."
     }
   },
   "superAdminLogin": {
-    "brand": "Suwapatha",
-    "imageAlt": "Super Admin Dashboard",
-    "title": "Super Admin Login",
-    "subtitle": "Access the system administration panel",
+    "brand": "சுவபாதா",
+    "imageAlt": "சூப்பர் அட்மின் டாஷ்போர்டு",
+    "title": "சூப்பர் அட்மின் உள்நுழைவு",
+    "subtitle": "கணினி நிர்வாக குழுவை அணுகவும்",
     "nav": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
-      "contact": "தொடர்பு",
+      "home": "வீடு",
+      "about": "பற்றி",
+      "contact": "தொடர்பு கொள்ளவும்",
       "getStarted": "தொடங்குங்கள்"
     },
     "form": {
-      "emailLabel": "Email Address",
-      "emailPlaceholder": "Enter your email",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot Password?",
-      "signingIn": "Signing in...",
-      "loginButton": "Login as Super Admin"
+      "emailLabel": "மின்னஞ்சல் முகவரி",
+      "emailPlaceholder": "உங்கள் மின்னஞ்சலை உள்ளிடவும்",
+      "passwordLabel": "கடவுச்சொல்",
+      "passwordPlaceholder": "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
+      "rememberMe": "என்னை நினைவில் வையுங்கள்",
+      "forgotPassword": "கடவுச்சொல் மறந்துவிட்டதா?",
+      "signingIn": "உள்நுழைகிறது...",
+      "loginButton": "சூப்பர் நிர்வாகியாக உள்நுழைக"
     },
     "errors": {
-      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
     }
   },
   "patientRegister": {
-    "brand": "Suwapatha",
-    "imageAlt": "Medical professionals in surgery",
-    "title": "Patient Registration",
+    "brand": "சுவபாதா",
+    "imageAlt": "அறுவை சிகிச்சையில் மருத்துவ வல்லுநர்கள்",
+    "title": "நோயாளி பதிவு",
     "nav": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
-      "contact": "தொடர்பு",
+      "home": "வீடு",
+      "about": "பற்றி",
+      "contact": "தொடர்பு கொள்ளவும்",
       "getStarted": "தொடங்குங்கள்"
     },
     "form": {
-      "firstName": "First Name *",
-      "firstNamePlaceholder": "John",
-      "lastName": "Last Name *",
-      "lastNamePlaceholder": "Doe",
-      "email": "Email Address *",
+      "firstName": "முதல் பெயர் *",
+      "firstNamePlaceholder": "ஜான்",
+      "lastName": "கடைசி பெயர் *",
+      "lastNamePlaceholder": "டோ",
+      "email": "மின்னஞ்சல் முகவரி *",
       "emailPlaceholder": "john.doe@example.com",
-      "password": "Password *",
-      "passwordPlaceholder": "Minimum 8 characters",
-      "phoneNumber": "Phone Number *",
+      "password": "கடவுச்சொல்*",
+      "passwordPlaceholder": "குறைந்தபட்சம் 8 எழுத்துகள்",
+      "phoneNumber": "தொலைபேசி எண் *",
       "phonePlaceholder": "0771234567",
-      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
-      "dateOfBirth": "Date of Birth *",
-      "gender": "Gender *",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "genderOther": "Other",
-      "address": "Address *",
-      "addressPlaceholder": "123 Main Street, Colombo 07",
-      "emergencyContact": "Emergency Contact (Optional)",
-      "emergencyContactPlaceholder": "Name and phone number",
-      "registering": "Registering...",
-      "register": "Register",
-      "alreadyRegistered": "Already registered?",
-      "loginLink": "Log in"
+      "phoneHint": "10 இலக்கங்களை உள்ளிடவும் (எ.கா., 0771234567)",
+      "dateOfBirth": "பிறந்த தேதி *",
+      "gender": "பாலினம் *",
+      "genderMale": "ஆண்",
+      "genderFemale": "பெண்",
+      "genderOther": "மற்றவை",
+      "address": "முகவரி *",
+      "addressPlaceholder": "123 பிரதான வீதி, கொழும்பு 07",
+      "emergencyContact": "அவசரத் தொடர்பு (விரும்பினால்)",
+      "emergencyContactPlaceholder": "பெயர் மற்றும் தொலைபேசி எண்",
+      "registering": "பதிவு செய்கிறது...",
+      "register": "பதிவு செய்யுங்கள்",
+      "alreadyRegistered": "ஏற்கனவே பதிவு செய்யப்பட்டுள்ளதா?",
+      "loginLink": "உள்நுழையவும்"
     },
     "errors": {
-      "emailRequired": "Email is required",
-      "invalidEmail": "Invalid email format",
-      "passwordRequired": "Password is required",
-      "passwordLength": "Password must be at least 8 characters",
-      "firstNameRequired": "First name is required",
-      "lastNameRequired": "Last name is required",
-      "dateOfBirthRequired": "Date of birth is required",
-      "genderRequired": "Gender is required",
-      "phoneRequired": "Phone number is required",
-      "phoneDigits": "Phone number must be 10 digits",
-      "addressRequired": "Address is required",
-      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+      "emailRequired": "மின்னஞ்சல் தேவை",
+      "invalidEmail": "தவறான மின்னஞ்சல் வடிவம்",
+      "passwordRequired": "கடவுச்சொல் தேவை",
+      "passwordLength": "கடவுச்சொல் குறைந்தது 8 எழுத்துகளாக இருக்க வேண்டும்",
+      "firstNameRequired": "முதல் பெயர் தேவை",
+      "lastNameRequired": "கடைசி பெயர் தேவை",
+      "dateOfBirthRequired": "பிறந்த தேதி தேவை",
+      "genderRequired": "பாலினம் தேவை",
+      "phoneRequired": "தொலைபேசி எண் தேவை",
+      "phoneDigits": "தொலைபேசி எண் 10 இலக்கங்களாக இருக்க வேண்டும்",
+      "addressRequired": "முகவரி தேவை",
+      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
     }
   },
   "doctorRegister": {
-    "brand": "Suwapatha",
-    "imageAlt": "Doctor in surgery",
-    "title": "Doctor Registration",
-    "subtitle": "Register as a healthcare professional",
+    "brand": "சுவபாதா",
+    "imageAlt": "அறுவை சிகிச்சையில் மருத்துவர்",
+    "title": "மருத்துவர் பதிவு",
+    "subtitle": "சுகாதார நிபுணராக பதிவு செய்யவும்",
     "nav": {
-      "home": "முகப்பு",
-      "about": "எங்களை பற்றி",
-      "contact": "தொடர்பு",
+      "home": "வீடு",
+      "about": "பற்றி",
+      "contact": "தொடர்பு கொள்ளவும்",
       "getStarted": "தொடங்குங்கள்"
     },
     "form": {
-      "firstName": "First Name *",
-      "firstNamePlaceholder": "John",
-      "lastName": "Last Name *",
-      "lastNamePlaceholder": "Doe",
-      "email": "Email Address *",
+      "firstName": "முதல் பெயர் *",
+      "firstNamePlaceholder": "ஜான்",
+      "lastName": "கடைசி பெயர் *",
+      "lastNamePlaceholder": "டோ",
+      "email": "மின்னஞ்சல் முகவரி *",
       "emailPlaceholder": "dr.john@hospital.com",
-      "password": "Password *",
-      "passwordPlaceholder": "Minimum 8 characters",
-      "doctorId": "Doctor ID Number *",
+      "password": "கடவுச்சொல்*",
+      "passwordPlaceholder": "குறைந்தபட்சம் 8 எழுத்துகள்",
+      "doctorId": "மருத்துவர் அடையாள எண் *",
       "doctorIdPlaceholder": "MD12345",
-      "doctorIdHint": "Enter your registered medical practitioner ID",
-      "nic": "NIC (National Identity Card) *",
-      "nicPlaceholder": "90123456V or 200012345678",
-      "nicHint": "Old format (9 digits + V/X) or new format (12 digits)",
-      "phone": "Phone Number *",
+      "doctorIdHint": "உங்கள் பதிவு செய்யப்பட்ட மருத்துவ பயிற்சியாளர் ஐடியை உள்ளிடவும்",
+      "nic": "NIC (தேசிய அடையாள அட்டை)*",
+      "nicPlaceholder": "90123456V அல்லது 200012345678",
+      "nicHint": "பழைய வடிவம் (9 இலக்கங்கள் + V/X) அல்லது புதிய வடிவம் (12 இலக்கங்கள்)",
+      "phone": "தொலைபேசி எண் *",
       "phonePlaceholder": "0771234567",
-      "phoneHint": "Enter 10 digits (e.g., 0771234567)",
-      "gender": "Gender *",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "genderOther": "Other",
-      "dateOfBirth": "Date of Birth *",
-      "hospital": "Affiliated Hospital *",
-      "hospitalPlaceholder": "Select a hospital",
-      "hospitalSearchPlaceholder": "Search hospitals...",
-      "hospitalNoResults": "No hospitals found matching \"{searchTerm}\"",
-      "registering": "Registering...",
-      "register": "Register as Doctor",
-      "alreadyRegistered": "Already registered?",
-      "loginLink": "Log in"
+      "phoneHint": "10 இலக்கங்களை உள்ளிடவும் (எ.கா., 0771234567)",
+      "gender": "பாலினம் *",
+      "genderMale": "ஆண்",
+      "genderFemale": "பெண்",
+      "genderOther": "மற்றவை",
+      "dateOfBirth": "பிறந்த தேதி *",
+      "hospital": "இணைந்த மருத்துவமனை *",
+      "hospitalPlaceholder": "ஒரு மருத்துவமனையைத் தேர்ந்தெடுக்கவும்",
+      "hospitalSearchPlaceholder": "மருத்துவமனைகளைத் தேடு...",
+      "hospitalNoResults": "\"{searchTerm}\" உடன் எந்த மருத்துவமனையும் இல்லை",
+      "registering": "பதிவு செய்கிறது...",
+      "register": "டாக்டராக பதிவு செய்யுங்கள்",
+      "alreadyRegistered": "ஏற்கனவே பதிவு செய்யப்பட்டுள்ளதா?",
+      "loginLink": "உள்நுழையவும்"
     },
     "errors": {
-      "hospitalsLoadFailed": "Failed to load hospitals. Please refresh the page.",
-      "firstNameRequired": "First name is required",
-      "lastNameRequired": "Last name is required",
-      "passwordRequired": "Password is required",
-      "passwordLength": "Password must be at least 8 characters",
-      "doctorIdRequired": "Doctor ID is required",
-      "nicRequired": "NIC is required",
-      "nicInvalid": "Invalid NIC format (e.g., 123456789V or 200012345678)",
-      "emailRequired": "Email is required",
-      "emailInvalid": "Invalid email format",
-      "phoneRequired": "Phone number is required",
-      "phoneDigits": "Phone number must be 10 digits",
-      "genderRequired": "Gender is required",
-      "dateOfBirthRequired": "Date of birth is required",
-      "hospitalRequired": "Please select a hospital",
-      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்."
+      "hospitalsLoadFailed": "மருத்துவமனைகளை ஏற்ற முடியவில்லை. பக்கத்தைப் புதுப்பிக்கவும்.",
+      "firstNameRequired": "முதல் பெயர் தேவை",
+      "lastNameRequired": "கடைசி பெயர் தேவை",
+      "passwordRequired": "கடவுச்சொல் தேவை",
+      "passwordLength": "கடவுச்சொல் குறைந்தது 8 எழுத்துகளாக இருக்க வேண்டும்",
+      "doctorIdRequired": "மருத்துவர் ஐடி தேவை",
+      "nicRequired": "NIC தேவை",
+      "nicInvalid": "தவறான NIC வடிவம் (எ.கா., 123456789V அல்லது 200012345678)",
+      "emailRequired": "மின்னஞ்சல் தேவை",
+      "emailInvalid": "தவறான மின்னஞ்சல் வடிவம்",
+      "phoneRequired": "தொலைபேசி எண் தேவை",
+      "phoneDigits": "தொலைபேசி எண் 10 இலக்கங்களாக இருக்க வேண்டும்",
+      "genderRequired": "பாலினம் தேவை",
+      "dateOfBirthRequired": "பிறந்த தேதி தேவை",
+      "hospitalRequired": "மருத்துவமனையைத் தேர்ந்தெடுக்கவும்",
+      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
     }
   },
   "patientDashboard": {
     "common": {
-      "patient": "Patient",
-      "notAvailable": "—",
-      "toBeAssigned": "To be assigned"
+      "patient": "நோயாளி",
+      "notAvailable": null,
+      "toBeAssigned": "ஒதுக்க வேண்டும்"
     },
     "alerts": {
-      "cancelFailed": "Failed to cancel."
+      "cancelFailed": "ரத்துசெய்ய முடியவில்லை."
     },
     "status": {
-      "booked": "Booked",
-      "cancelled": "Cancelled",
-      "completed": "Completed"
+      "booked": "முன்பதிவு செய்யப்பட்டது",
+      "cancelled": "ரத்து செய்யப்பட்டது",
+      "completed": "முடிக்கப்பட்டது"
     },
     "newUser": {
-      "title": "Welcome to Suwapatha! 🎉",
-      "description": "Your account is ready. Book your first appointment from the <strong>Appointments</strong> page to get started."
+      "title": "சுவபாதாவிற்கு வருக! 🎉",
+      "description": "உங்கள் கணக்கு தயாராக உள்ளது. தொடங்குவதற்கு <strong>Appointments</strong> பக்கத்திலிருந்து உங்கள் முதல் சந்திப்பை பதிவு செய்யவும்."
     },
     "welcome": {
-      "greeting": "Hello, {name}",
-      "hasUpcoming": "You have {count} upcoming appointments.",
-      "noUpcoming": "No upcoming appointments. Book one from the Appointments page."
+      "greeting": "வணக்கம், {name}",
+      "hasUpcoming": "உங்களிடம் {count} வரவிருக்கும் சந்திப்புகள் உள்ளன.",
+      "noUpcoming": "வரவிருக்கும் சந்திப்புகள் இல்லை. சந்திப்புகள் பக்கத்திலிருந்து ஒன்றை முன்பதிவு செய்யவும்."
     },
     "upcoming": {
-      "title": "Upcoming Appointments",
-      "subtitle": "Your next visits and their details.",
-      "bookNew": "Book new ->",
-      "emptyTitle": "No upcoming appointments",
-      "bookNow": "Book one now"
+      "title": "வரவிருக்கும் நியமனங்கள்",
+      "subtitle": "உங்கள் அடுத்த வருகைகள் மற்றும் அவற்றின் விவரங்கள்.",
+      "bookNew": "புதிய பதிவு ->",
+      "emptyTitle": "வரவிருக்கும் சந்திப்புகள் இல்லை",
+      "bookNow": "இப்போதே ஒன்றை முன்பதிவு செய்யுங்கள்"
     },
     "table": {
-      "date": "Date",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "queue": "Queue #",
-      "wait": "Wait",
-      "actions": "Actions",
-      "waitMinutes": "~{minutes} min",
-      "waitOnlyMinutes": "{minutes} min",
-      "youAreNext": "You're next!"
+      "date": "தேதி",
+      "hospital": "மருத்துவமனை",
+      "doctor": "டாக்டர்",
+      "queue": "வரிசை #",
+      "wait": "காத்திருங்கள்",
+      "actions": "செயல்கள்",
+      "waitMinutes": "~{minutes} நிமிடம்",
+      "waitOnlyMinutes": "{minutes} நிமிடம்",
+      "youAreNext": "நீங்கள் அடுத்தவர்!"
     },
     "actions": {
-      "cancel": "Cancel",
-      "cancelling": "Cancelling..."
+      "cancel": "ரத்து செய்",
+      "cancelling": "ரத்துசெய்கிறது..."
     },
     "liveQueue": {
-      "title": "Live Queue Status",
-      "queue": "Queue #",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "estimatedWait": "Est. Wait",
-      "status": "Status"
+      "title": "நேரலை வரிசை நிலை",
+      "queue": "வரிசை #",
+      "hospital": "மருத்துவமனை",
+      "doctor": "டாக்டர்",
+      "estimatedWait": "Est. காத்திருங்கள்",
+      "status": "நிலை"
     },
     "vitals": {
-      "title": "Vitals Trend",
-      "subtitle": "Blood pressure and heart rate over time.",
-      "emptyTitle": "No vitals recorded yet",
-      "emptySubtitle": "Your vitals history will appear here once recorded by your doctor."
+      "title": "உயிர் போக்கு",
+      "subtitle": "காலப்போக்கில் இரத்த அழுத்தம் மற்றும் இதய துடிப்பு.",
+      "emptyTitle": "உயிர்ச்சக்திகள் எதுவும் இன்னும் பதிவு செய்யப்படவில்லை",
+      "emptySubtitle": "உங்கள் மருத்துவரால் பதிவுசெய்யப்பட்டவுடன் உங்கள் உயிர்வாழ்க்கை வரலாறு இங்கே தோன்றும்."
     },
     "visitHistory": {
-      "title": "Visit History",
-      "subtitle": "Total appointments per month (last 6).",
-      "total": "Total: {count} appointments on record"
+      "title": "வரலாற்றைப் பார்வையிடவும்",
+      "subtitle": "ஒரு மாதத்திற்கான மொத்த சந்திப்புகள் (கடந்த 6).",
+      "total": "மொத்தம்: {count} சந்திப்புகள் பதிவு செய்யப்பட்டுள்ளன"
     },
     "notifications": {
-      "title": "Notifications",
-      "empty": "No notifications",
-      "upcomingTitle": "Upcoming Appointment",
-      "itemLine": "{hospital} — Queue #{queue}, {wait}",
-      "waitMinutes": "~{minutes} min wait",
-      "nextNow": "you're next!"
+      "title": "அறிவிப்புகள்",
+      "empty": "அறிவிப்புகள் இல்லை",
+      "upcomingTitle": "வரவிருக்கும் நியமனம்",
+      "itemLine": "{மருத்துவமனை} — வரிசை #{வரிசை}, {காத்திருங்கள்}",
+      "waitMinutes": "~{minutes} நிமிடம் காத்திருக்கவும்",
+      "nextNow": "நீ அடுத்தவன்!"
     },
     "quickActions": {
-      "title": "Quick Actions",
-      "subtitle": "Access common tasks instantly.",
-      "bookAppointment": "Book Appointment",
-      "viewRecords": "View Records",
-      "myProfile": "My Profile",
-      "contactSupport": "Contact Support"
+      "title": "விரைவான செயல்கள்",
+      "subtitle": "பொதுவான பணிகளை உடனடியாக அணுகவும்.",
+      "bookAppointment": "புத்தக நியமனம்",
+      "viewRecords": "பதிவுகளைப் பார்க்கவும்",
+      "myProfile": "எனது சுயவிவரம்",
+      "contactSupport": "ஆதரவைத் தொடர்பு கொள்ளவும்"
     }
   },
   "patientAppointments": {
     "common": {
-      "toBeAssigned": "To be assigned"
+      "toBeAssigned": "ஒதுக்க வேண்டும்"
     },
     "status": {
-      "booked": "Booked",
-      "cancelled": "Cancelled",
-      "completed": "Completed"
+      "booked": "முன்பதிவு செய்யப்பட்டது",
+      "cancelled": "ரத்து செய்யப்பட்டது",
+      "completed": "முடிக்கப்பட்டது"
     },
     "alerts": {
-      "reminderTitle": "Appointment Reminder",
-      "reminderMessage": "Reminder: Your appointment at {hospital} starts in 10 minutes!",
-      "bookedSuccess": "Booked! Your queue number has been assigned.",
-      "bookingFailed": "Booking failed. Please try again.",
-      "cancelFailed": "Failed to cancel appointment."
+      "reminderTitle": "சந்திப்பு நினைவூட்டல்",
+      "reminderMessage": "நினைவூட்டல்: {மருத்துவமனையில்} உங்கள் சந்திப்பு இன்னும் 10 நிமிடங்களில் தொடங்கும்!",
+      "bookedSuccess": "முன்பதிவு செய்யப்பட்டது! உங்கள் வரிசை எண் ஒதுக்கப்பட்டுள்ளது.",
+      "bookingFailed": "முன்பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.",
+      "cancelFailed": "சந்திப்பை ரத்து செய்ய முடியவில்லை."
     },
     "hospitalSearch": {
-      "title": "Hospital Search",
-      "placeholder": "Search hospitals by name...",
-      "noResults": "No hospitals found for \"{query}\"",
-      "startTyping": "Start typing to search Sri Lankan government hospitals..."
+      "title": "மருத்துவமனை தேடல்",
+      "placeholder": "மருத்துவமனைகளை பெயரால் தேடுங்கள்...",
+      "noResults": "\"{query}\"க்கான மருத்துவமனைகள் எதுவும் இல்லை",
+      "startTyping": "இலங்கை அரசாங்க மருத்துவமனைகளைத் தேட தட்டச்சு செய்யத் தொடங்குங்கள்..."
     },
     "sessions": {
-      "title": "OPD Sessions",
-      "clear": "Clear",
-      "emptyTitle": "No upcoming sessions available",
-      "emptySubtitle": "Sessions are added by the hospital admin",
-      "roomSuffix": " · Room {room}",
-      "slotsLeft": "{count} slots left",
-      "full": "Full",
-      "statusOpen": "Open",
-      "statusFull": "Full",
-      "booking": "Booking...",
-      "book": "Book"
+      "title": "OPD அமர்வுகள்",
+      "clear": "தெளிவு",
+      "emptyTitle": "வரவிருக்கும் அமர்வுகள் இல்லை",
+      "emptySubtitle": "அமர்வுகள் மருத்துவமனை நிர்வாகியால் சேர்க்கப்படுகின்றன",
+      "roomSuffix": "· அறை {அறை}",
+      "slotsLeft": "{count} இடங்கள் மீதமுள்ளன",
+      "full": "முழு",
+      "statusOpen": "திற",
+      "statusFull": "முழு",
+      "booking": "முன்பதிவு...",
+      "book": "புத்தகம்"
     },
     "queue": {
-      "title": "My Queue Status",
-      "yourNumber": "Your Queue Number",
-      "youAreNext": "You're next!",
-      "estimatedAppointment": "Est. Appointment (UTC)",
-      "nextProceed": "You're next — please proceed!",
-      "minutesOnly": "{minutes} min",
-      "hospital": "Hospital",
-      "doctor": "Doctor",
-      "status": "Status",
-      "emptyTitle": "No active appointment",
-      "emptySubtitle": "Search a hospital and book an OPD session above."
+      "title": "எனது வரிசை நிலை",
+      "yourNumber": "உங்கள் வரிசை எண்",
+      "youAreNext": "நீங்கள் அடுத்தவர்!",
+      "estimatedAppointment": "Est. நியமனம் (UTC)",
+      "nextProceed": "நீங்கள் அடுத்தவர் — தயவுசெய்து தொடரவும்!",
+      "minutesOnly": "{minutes} நிமிடம்",
+      "hospital": "மருத்துவமனை",
+      "doctor": "டாக்டர்",
+      "status": "நிலை",
+      "emptyTitle": "செயலில் உள்ள சந்திப்பு இல்லை",
+      "emptySubtitle": "ஒரு மருத்துவமனையைத் தேடி மேலே OPD அமர்வை முன்பதிவு செய்யவும்."
     },
     "actions": {
-      "cancelling": "Cancelling...",
-      "cancel": "Cancel",
-      "cancelAppointment": "Cancel Appointment"
+      "cancelling": "ரத்துசெய்கிறது...",
+      "cancel": "ரத்து செய்",
+      "cancelAppointment": "அப்பாயிண்ட்மெண்ட்டை ரத்து செய்"
     },
     "history": {
-      "title": "Appointment History",
-      "empty": "No appointment history yet",
-      "itemMeta": "{date} · Queue #{queue}"
+      "title": "நியமன வரலாறு",
+      "empty": "இதுவரை நியமன வரலாறு இல்லை",
+      "itemMeta": "{date} · வரிசை #{வரிசை}"
     },
     "tips": {
-      "title": "Tips",
-      "item1": "• Times shown in UTC — convert to your local time as needed",
-      "item2": "• You'll receive a browser alert 10 minutes before your session",
-      "item3": "• Bring your National ID card and any previous prescriptions",
-      "item4": "• Cancel at least 1 hour before if you cannot attend",
-      "item5": "• Sessions may have limited slots — book early"
+      "title": "குறிப்புகள்",
+      "item1": "• UTC இல் காட்டப்படும் நேரங்கள் — தேவைக்கேற்ப உங்கள் உள்ளூர் நேரத்திற்கு மாற்றவும்",
+      "item2": "• உங்கள் அமர்வுக்கு 10 நிமிடங்களுக்கு முன்பு உலாவி எச்சரிக்கையைப் பெறுவீர்கள்",
+      "item3": "• உங்களின் தேசிய அடையாள அட்டை மற்றும் முந்தைய மருந்துச்சீட்டுகளை கொண்டு வாருங்கள்",
+      "item4": "• உங்களால் கலந்து கொள்ள முடியாவிட்டால், குறைந்தது 1 மணிநேரத்திற்கு முன்னதாக ரத்து செய்யவும்",
+      "item5": "• அமர்வுகள் வரையறுக்கப்பட்ட இடங்களைக் கொண்டிருக்கலாம் - முன்கூட்டியே முன்பதிவு செய்யவும்"
     }
   },
   "patientRecords": {
     "common": {
-      "loading": "Loading..."
+      "loading": "ஏற்றுகிறது..."
     },
-    "loading": "Loading medical records...",
-    "patientId": "Patient ID: {id}",
+    "loading": "மருத்துவ பதிவுகளை ஏற்றுகிறது...",
+    "patientId": "நோயாளி ஐடி: {id}",
     "errors": {
-      "fetchFailed": "Failed to fetch medical records",
-      "loadFailed": "Failed to load medical records. Please try again.",
-      "filterFailed": "Failed to filter medical records",
-      "filterLoadFailed": "Failed to filter medical records. Please try again."
+      "fetchFailed": "மருத்துவப் பதிவுகளைப் பெற முடியவில்லை",
+      "loadFailed": "மருத்துவப் பதிவுகளை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+      "filterFailed": "மருத்துவ பதிவுகளை வடிகட்ட முடியவில்லை",
+      "filterLoadFailed": "மருத்துவ பதிவுகளை வடிகட்ட முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
     },
     "alerts": {
-      "downloadVisit": "Downloading PDF for visit {visitId}",
-      "downloadAll": "Downloading all medical records as PDF",
-      "shareLink": "Share link functionality"
+      "downloadVisit": "வருகைக்கான PDF ஐப் பதிவிறக்குகிறது {visitId}",
+      "downloadAll": "அனைத்து மருத்துவ பதிவுகளையும் PDF ஆக பதிவிறக்குகிறது",
+      "shareLink": "பகிர்வு இணைப்பு செயல்பாடு"
     },
     "filters": {
-      "dateRange": "Select a date range",
-      "selectHospital": "Select Hospital",
-      "hospital1": "Central Hospital",
-      "hospital2": "District Clinic",
-      "hospital3": "General Hospital",
-      "selectVisitType": "Select Visit Type",
-      "visitRoutine": "Routine Check-up",
-      "visitFollowup": "Follow-up",
-      "visitEmergency": "Emergency",
-      "clear": "Clear Filters"
+      "dateRange": "தேதி வரம்பைத் தேர்ந்தெடுக்கவும்",
+      "selectHospital": "மருத்துவமனையைத் தேர்ந்தெடுக்கவும்",
+      "hospital1": "மத்திய மருத்துவமனை",
+      "hospital2": "மாவட்ட மருத்துவ மனை",
+      "hospital3": "பொது மருத்துவமனை",
+      "selectVisitType": "வருகை வகையைத் தேர்ந்தெடுக்கவும்",
+      "visitRoutine": "வழக்கமான சோதனை",
+      "visitFollowup": "பின்தொடர்தல்",
+      "visitEmergency": "அவசரநிலை",
+      "clear": "வடிகட்டிகளை அழி"
     },
     "actions": {
-      "downloadAllPdf": "Download All PDF",
-      "shareLink": "Share link",
-      "downloadVisitPdf": "Download Visit PDF"
+      "downloadAllPdf": "அனைத்து PDFகளையும் பதிவிறக்கவும்",
+      "shareLink": "இணைப்பைப் பகிரவும்",
+      "downloadVisitPdf": "பதிவிறக்கம் PDF ஐப் பார்வையிடவும்"
     },
     "empty": {
-      "title": "No Medical Records Found",
-      "subtitle": "You don't have any medical records yet."
+      "title": "மருத்துவப் பதிவுகள் எதுவும் கிடைக்கவில்லை",
+      "subtitle": "உங்களிடம் இதுவரை மருத்துவப் பதிவுகள் எதுவும் இல்லை."
     },
     "visit": {
-      "followUpRequired": "Follow-up Required",
-      "consultationNotes": "Consultation Notes",
-      "prescriptions": "Prescriptions",
-      "labReports": "Lab Reports & Images"
+      "followUpRequired": "பின்தொடர்தல் தேவை",
+      "consultationNotes": "ஆலோசனை குறிப்புகள்",
+      "prescriptions": "மருந்துச்சீட்டுகள்",
+      "labReports": "ஆய்வக அறிக்கைகள் & படங்கள்"
     }
   },
   "doctorDashboard": {
-    "loading": "Loading dashboard...",
-    "errorTitle": "Error Loading Dashboard",
-    "tryAgain": "Try Again",
-    "welcome": "Welcome back, Dr. {name}!",
-    "doctorFallback": "Doctor",
-    "subtitle": "Here's what's happening with your patients today.",
-    "refresh": "Refresh",
+    "loading": "டாஷ்போர்டை ஏற்றுகிறது...",
+    "errorTitle": "டாஷ்போர்டை ஏற்றுவதில் பிழை",
+    "tryAgain": "மீண்டும் முயற்சிக்கவும்",
+    "welcome": "மீண்டும் வரவேற்கிறோம், டாக்டர் {name}!",
+    "doctorFallback": "டாக்டர்",
+    "subtitle": "இன்று உங்கள் நோயாளிகளுக்கு என்ன நடக்கிறது என்பது இங்கே.",
+    "refresh": "புதுப்பிக்கவும்",
     "errors": {
-      "unauthorized": "Unauthorized: Access restricted to doctors.",
-      "loadFailed": "Failed to load dashboard data. Please try again later.",
-      "updateAvailabilityFailed": "Failed to update availability status."
+      "unauthorized": "அங்கீகரிக்கப்படாதது: மருத்துவர்களுக்கான அணுகல் தடைசெய்யப்பட்டுள்ளது.",
+      "loadFailed": "டாஷ்போர்டு தரவை ஏற்றுவதில் தோல்வி. பிறகு முயற்சிக்கவும்.",
+      "updateAvailabilityFailed": "கிடைக்கும் நிலையைப் புதுப்பிக்க முடியவில்லை."
     },
     "attendance": {
-      "title": "Today's Attendance",
-      "activeText": "You are marked as ACTIVE for today's OPD session.",
-      "inactiveText": "Mark yourself active to let the admin know you're here.",
-      "markOut": "Mark as Out (End Session)",
-      "markAvailable": "Mark as Available"
+      "title": "இன்றைய வருகை",
+      "activeText": "இன்றைய OPD அமர்வுக்கு நீங்கள் செயலில் உள்ளதாகக் குறிக்கப்பட்டுள்ளீர்கள்.",
+      "inactiveText": "நீங்கள் இங்கே இருக்கிறீர்கள் என்பதை நிர்வாகிக்கு தெரியப்படுத்த உங்களை செயலில் உள்ளதாகக் குறிக்கவும்.",
+      "markOut": "வெளியேறியதாகக் குறி (அமர்வு முடிவு)",
+      "markAvailable": "உள்ளது எனக் குறிக்கவும்"
     },
     "stats": {
-      "totalPatientsToday": "Total Patients Today",
-      "consultationsThisWeek": "Consultations This Week",
-      "averageWaitTime": "Average Wait Time",
-      "sinceYesterday": "{value} since yesterday",
-      "fromLastWeek": "{value}% from last week",
-      "waitMins": "{value} min",
-      "fromLastMonth": "{value} min from last month"
+      "totalPatientsToday": "இன்று மொத்த நோயாளிகள்",
+      "consultationsThisWeek": "இந்த வாரம் ஆலோசனைகள்",
+      "averageWaitTime": "சராசரி காத்திருப்பு நேரம்",
+      "sinceYesterday": "நேற்றிலிருந்து {value}",
+      "fromLastWeek": "கடந்த வாரத்திலிருந்து {value}%",
+      "waitMins": "{value} நிமிடம்",
+      "fromLastMonth": "கடந்த மாதத்திலிருந்து {value} நிமிடம்"
     },
     "charts": {
-      "patientVisits": "Patient Visits Over Time",
-      "consultationsByDay": "Consultations by Day",
-      "consultationsTitle": "{count} consultations"
+      "patientVisits": "காலப்போக்கில் நோயாளி வருகை",
+      "consultationsByDay": "நாள் வாரியாக ஆலோசனைகள்",
+      "consultationsTitle": "{count} ஆலோசனைகள்"
     },
     "appointments": {
-      "title": "Today's Appointments",
-      "emptyTitle": "No appointments for today",
-      "emptySubtitle": "Your schedule is clear",
+      "title": "இன்றைய நியமனங்கள்",
+      "emptyTitle": "இன்றைக்கு சந்திப்புகள் இல்லை",
+      "emptySubtitle": "உங்கள் அட்டவணை தெளிவாக உள்ளது",
       "table": {
-        "patientName": "Patient Name",
-        "queueNo": "Queue No.",
-        "hospital": "Hospital",
-        "status": "Status",
-        "actions": "Actions"
+        "patientName": "நோயாளி பெயர்",
+        "queueNo": "வரிசை எண்.",
+        "hospital": "மருத்துவமனை",
+        "status": "நிலை",
+        "actions": "செயல்கள்"
       },
       "actions": {
-        "startConsultation": "Start Consultation",
-        "viewDetails": "View Details"
+        "startConsultation": "ஆலோசனையைத் தொடங்குங்கள்",
+        "viewDetails": "விவரங்களைக் காண்க"
       },
       "status": {
-        "booked": "Booked",
-        "completed": "Completed",
-        "cancelled": "Cancelled",
-        "checkedIn": "Checked In"
+        "booked": "முன்பதிவு செய்யப்பட்டது",
+        "completed": "முடிக்கப்பட்டது",
+        "cancelled": "ரத்து செய்யப்பட்டது",
+        "checkedIn": "செக் இன் செய்தேன்"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "emptyTitle": "No notifications",
-      "emptySubtitle": "You're all caught up!"
+      "title": "அறிவிப்புகள்",
+      "emptyTitle": "அறிவிப்புகள் இல்லை",
+      "emptySubtitle": "நீங்கள் அனைவரும் பிடித்துவிட்டீர்கள்!"
     },
     "months": {
-      "jan": "Jan",
-      "feb": "Feb",
-      "mar": "Mar",
-      "apr": "Apr",
-      "may": "May",
-      "jun": "Jun"
+      "jan": "ஜன",
+      "feb": "பிப்",
+      "mar": "மார்",
+      "apr": "ஏப்",
+      "may": "மே",
+      "jun": "ஜூன்"
     },
     "days": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
+      "mon": "திங்கள்",
+      "tue": "செவ்வாய்",
+      "wed": "புதன்",
+      "thu": "வியாழன்",
+      "fri": "வெள்ளி",
+      "sat": "சனி",
+      "sun": "சூரியன்"
     }
   },
   "doctorMyPatients": {
-    "title": "My Patients",
-    "totalPatientsToday": "Total Patients Today:",
-    "searchPlaceholder": "Search by Name or Queue No.",
-    "loading": "Loading patients...",
-    "retry": "Retry",
-    "emptySearch": "No patients found matching your search.",
+    "title": "என் நோயாளிகள்",
+    "totalPatientsToday": "இன்று மொத்த நோயாளிகள்:",
+    "searchPlaceholder": "பெயர் அல்லது வரிசை எண் மூலம் தேடவும்.",
+    "loading": "நோயாளிகளை ஏற்றுகிறது...",
+    "retry": "மீண்டும் முயற்சிக்கவும்",
+    "emptySearch": "உங்கள் தேடலுக்குப் பொருத்தமான நோயாளிகள் எவரும் இல்லை.",
     "errors": {
-      "loadFailed": "Failed to load patients. Please try again."
+      "loadFailed": "நோயாளிகளை ஏற்றுவதில் தோல்வி. மீண்டும் முயற்சிக்கவும்."
     },
     "table": {
-      "queueNo": "Queue No.",
-      "patientName": "Patient Name",
-      "gender": "Gender",
-      "time": "Time",
-      "status": "Status",
-      "actions": "Actions"
+      "queueNo": "வரிசை எண்.",
+      "patientName": "நோயாளி பெயர்",
+      "gender": "பாலினம்",
+      "time": "நேரம்",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
     },
     "actions": {
-      "viewDetails": "View Details",
-      "medicalRecords": "Medical Records",
-      "markComplete": "Mark Complete"
+      "viewDetails": "விவரங்களைக் காண்க",
+      "medicalRecords": "மருத்துவ பதிவுகள்",
+      "markComplete": "முடிந்ததாகக் குறிக்கவும்"
     },
     "status": {
-      "waiting": "Waiting",
-      "consulting": "Consulting",
-      "missed": "Missed",
-      "completed": "Completed"
+      "waiting": "காத்திருக்கிறது",
+      "consulting": "ஆலோசனை",
+      "missed": "தவறவிட்டது",
+      "completed": "முடிக்கப்பட்டது"
     },
     "alerts": {
-      "markComplete": "Marked patient {name} as complete"
+      "markComplete": "நோயாளி {name} முடிந்ததாகக் குறிக்கப்பட்டது"
     },
     "pagination": {
-      "showing": "Showing {start} to {end} of {total} patients",
-      "page": "Page {current} of {total}"
+      "showing": "{total} நோயாளிகளில் {start} to {end} ஐக் காட்டுகிறது",
+      "page": "{total} இல் {தற்போதைய} பக்கம்"
     }
   },
   "doctorPatientDetails": {
-    "goBack": "Go Back",
-    "cancel": "Cancel",
-    "saveConsultation": "Save Consultation",
-    "startConsultation": "Start Consultation",
-    "currentConsultation": "Current Consultation",
-    "diagnosis": "Diagnosis",
-    "diagnosisPlaceholder": "Enter diagnosis...",
-    "consultationNotes": "Consultation Notes",
-    "consultationNotesPlaceholder": "Enter consultation notes, observations, recommendations...",
-    "addPrescription": "Add Prescription",
-    "addNew": "Add New",
-    "activePrescriptions": "Active Prescriptions",
-    "patientDetails": "Patient Details",
-    "allergies": "Allergies",
-    "chronicConditions": "Chronic Conditions",
-    "notes": "Notes",
-    "prescriptions": "Prescriptions",
+    "goBack": "திரும்பி செல்",
+    "cancel": "ரத்து செய்",
+    "saveConsultation": "ஆலோசனையைச் சேமிக்கவும்",
+    "startConsultation": "ஆலோசனையைத் தொடங்குங்கள்",
+    "currentConsultation": "தற்போதைய ஆலோசனை",
+    "diagnosis": "நோய் கண்டறிதல்",
+    "diagnosisPlaceholder": "நோயறிதலை உள்ளிடவும்...",
+    "consultationNotes": "ஆலோசனை குறிப்புகள்",
+    "consultationNotesPlaceholder": "ஆலோசனைக் குறிப்புகள், அவதானிப்புகள், பரிந்துரைகளை உள்ளிடவும்...",
+    "addPrescription": "மருந்துச் சீட்டைச் சேர்க்கவும்",
+    "addNew": "புதியதைச் சேர்க்கவும்",
+    "activePrescriptions": "செயலில் உள்ள மருந்துகள்",
+    "patientDetails": "நோயாளி விவரங்கள்",
+    "allergies": "ஒவ்வாமை",
+    "chronicConditions": "நாள்பட்ட நிலைமைகள்",
+    "notes": "குறிப்புகள்",
+    "prescriptions": "மருந்துச்சீட்டுகள்",
     "notAvailable": "N/A",
     "status": {
-      "active": "Active"
+      "active": "செயலில்"
     },
-    "patientId": "Patient ID: {id}",
-    "queue": "Queue: {queue}",
+    "patientId": "நோயாளி ஐடி: {id}",
+    "queue": "வரிசை: {வரிசை}",
     "cards": {
-      "age": "Age",
-      "ageValue": "{age} years",
-      "gender": "Gender",
-      "bloodType": "Blood Type",
-      "phone": "Phone"
+      "age": "வயது",
+      "ageValue": "{வயது} ஆண்டுகள்",
+      "gender": "பாலினம்",
+      "bloodType": "இரத்த வகை",
+      "phone": "தொலைபேசி"
     },
     "tabs": {
-      "overview": "Overview",
-      "medicalHistory": "Medical History",
-      "prescriptions": "Prescriptions"
+      "overview": "கண்ணோட்டம்",
+      "medicalHistory": "மருத்துவ வரலாறு",
+      "prescriptions": "மருந்துச்சீட்டுகள்"
     },
     "vitals": {
-      "temp": "Temp (°F)",
-      "weight": "Weight (kg)"
+      "temp": "வெப்பநிலை (°F)",
+      "weight": "எடை (கிலோ)",
+      "bp": "பிபி",
+      "pulse": "துடிப்பு",
+      "tempShort": "வெப்பநிலை",
+      "weightShort": "எடை"
     },
     "fields": {
-      "email": "Email",
-      "address": "Address",
-      "emergencyContact": "Emergency Contact"
+      "email": "மின்னஞ்சல்",
+      "address": "முகவரி",
+      "emergencyContact": "அவசரத் தொடர்பு"
     },
     "errors": {
-      "loadFailed": "Failed to load patient details.",
-      "patientNotFound": "Patient not found"
+      "loadFailed": "நோயாளி விவரங்களை ஏற்றுவதில் தோல்வி.",
+      "patientNotFound": "நோயாளியைக் காணவில்லை"
     },
     "alerts": {
-      "enterDiagnosisAndNotes": "Please enter diagnosis and consultation notes",
-      "consultationSaved": "Consultation saved successfully!",
-      "saveFailed": "Failed to save consultation. Please try again."
+      "enterDiagnosisAndNotes": "நோயறிதல் மற்றும் ஆலோசனை குறிப்புகளை உள்ளிடவும்",
+      "consultationSaved": "ஆலோசனை வெற்றிகரமாக சேமிக்கப்பட்டது!",
+      "saveFailed": "ஆலோசனையைச் சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
     },
     "modal": {
-      "addPrescription": "Add Prescription",
-      "medicineName": "Medicine Name *",
-      "medicinePlaceholder": "e.g., Amlodipine",
-      "dosage": "Dosage *",
-      "dosagePlaceholder": "e.g., 5mg",
-      "frequency": "Frequency",
-      "frequencyPlaceholder": "e.g., Once daily",
-      "duration": "Duration",
-      "durationPlaceholder": "e.g., 30 days"
+      "addPrescription": "மருந்துச் சீட்டைச் சேர்க்கவும்",
+      "medicineName": "மருந்தின் பெயர் *",
+      "medicinePlaceholder": "எ.கா., அம்லோடிபைன்",
+      "dosage": "மருந்தளவு *",
+      "dosagePlaceholder": "எ.கா., 5மி.கி",
+      "frequency": "அதிர்வெண்",
+      "frequencyPlaceholder": "எ.கா., தினமும் ஒருமுறை",
+      "duration": "கால அளவு",
+      "durationPlaceholder": "எ.கா., 30 நாட்கள்"
     }
   },
   "doctorSettings": {
-    "loading": "Loading settings...",
-    "tryAgain": "Try Again",
-    "doctorRole": "Doctor",
-    "reset": "Reset",
-    "saving": "Saving...",
-    "saveChanges": "Save Changes",
-    "updating": "Updating...",
-    "updatePassword": "Update Password",
-    "logout": "Logout",
-    "doctorIdLabel": "Doctor ID",
-    "emailImmutable": "Email cannot be changed. Contact support if needed.",
-    "passwordChanged": "Password changed successfully!",
+    "loading": "அமைப்புகளை ஏற்றுகிறது...",
+    "tryAgain": "மீண்டும் முயற்சிக்கவும்",
+    "doctorRole": "டாக்டர்",
+    "reset": "மீட்டமை",
+    "saving": "சேமிக்கிறது...",
+    "saveChanges": "மாற்றங்களைச் சேமிக்கவும்",
+    "updating": "புதுப்பிக்கிறது...",
+    "updatePassword": "கடவுச்சொல்லை புதுப்பிக்கவும்",
+    "logout": "வெளியேறு",
+    "doctorIdLabel": "மருத்துவர் ஐடி",
+    "emailImmutable": "மின்னஞ்சலை மாற்ற முடியாது. தேவைப்பட்டால் ஆதரவைத் தொடர்பு கொள்ளவும்.",
+    "passwordChanged": "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது!",
     "profileStatus": {
-      "approved": "Approved",
-      "pending": "Pending",
-      "rejected": "Rejected"
+      "approved": "அங்கீகரிக்கப்பட்டது",
+      "pending": "நிலுவையில் உள்ளது",
+      "rejected": "நிராகரிக்கப்பட்டது"
     },
     "sections": {
       "profile": {
-        "title": "Profile Information",
-        "subtitle": "Update your basic information."
+        "title": "சுயவிவரத் தகவல்",
+        "subtitle": "உங்கள் அடிப்படைத் தகவலைப் புதுப்பிக்கவும்."
       },
       "security": {
-        "title": "Security",
-        "subtitle": "Change your account password."
+        "title": "பாதுகாப்பு",
+        "subtitle": "உங்கள் கணக்கின் கடவுச்சொல்லை மாற்றவும்."
       },
       "accountActions": {
-        "title": "Account Actions",
-        "subtitle": "Manage your account."
+        "title": "கணக்கு நடவடிக்கைகள்",
+        "subtitle": "உங்கள் கணக்கை நிர்வகிக்கவும்."
       }
     },
     "fields": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "phoneNumber": "Phone Number",
-      "nicNumber": "NIC Number",
-      "emailAddress": "Email Address",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmNewPassword": "Confirm New Password"
+      "firstName": "முதல் பெயர்",
+      "lastName": "கடைசி பெயர்",
+      "phoneNumber": "தொலைபேசி எண்",
+      "nicNumber": "NIC எண்",
+      "emailAddress": "மின்னஞ்சல் முகவரி",
+      "currentPassword": "தற்போதைய கடவுச்சொல்",
+      "newPassword": "புதிய கடவுச்சொல்",
+      "confirmNewPassword": "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்"
     },
     "placeholders": {
-      "firstName": "Enter first name",
-      "lastName": "Enter last name"
+      "firstName": "முதல் பெயரை உள்ளிடவும்",
+      "lastName": "கடைசி பெயரை உள்ளிடவும்"
     },
     "hints": {
-      "phoneDigits": "10 digits",
-      "nic": "9 digits + V/X or 12 digits"
+      "phoneDigits": "10 இலக்கங்கள்",
+      "nic": "9 இலக்கங்கள் + V/X அல்லது 12 இலக்கங்கள்"
     },
     "passwordRequirements": {
-      "title": "Password Requirements",
-      "item1": "At least 8 characters long",
-      "item2": "You'll be logged out after changing password"
+      "title": "கடவுச்சொல் தேவைகள்",
+      "item1": "குறைந்தது 8 எழுத்துகள் நீளம்",
+      "item2": "கடவுச்சொல்லை மாற்றிய பிறகு நீங்கள் வெளியேற்றப்படுவீர்கள்"
     },
     "errors": {
-      "loadProfile": "Failed to load profile",
-      "loadSettingsTitle": "Failed to Load Settings",
-      "nameRequired": "Name fields are required.",
-      "phoneDigits": "Phone number must be 10 digits.",
-      "nicInvalid": "Invalid NIC format. Use 9 digits + V/X or 12 digits.",
-      "saveProfile": "Failed to save profile.",
-      "allPasswordFieldsRequired": "All fields are required.",
-      "passwordMismatch": "Passwords do not match.",
-      "passwordLength": "New password must be at least 8 characters.",
-      "changePassword": "Failed to change password."
+      "loadProfile": "சுயவிவரத்தை ஏற்ற முடியவில்லை",
+      "loadSettingsTitle": "அமைப்புகளை ஏற்றுவதில் தோல்வி",
+      "nameRequired": "பெயர் புலங்கள் தேவை.",
+      "phoneDigits": "தொலைபேசி எண் 10 இலக்கங்களாக இருக்க வேண்டும்.",
+      "nicInvalid": "தவறான NIC வடிவம். 9 இலக்கங்கள் + V/X அல்லது 12 இலக்கங்களைப் பயன்படுத்தவும்.",
+      "saveProfile": "சுயவிவரத்தைச் சேமிப்பதில் தோல்வி.",
+      "allPasswordFieldsRequired": "அனைத்து புலங்களும் தேவை.",
+      "passwordMismatch": "கடவுச்சொற்கள் பொருந்தவில்லை.",
+      "passwordLength": "புதிய கடவுச்சொல் குறைந்தது 8 எழுத்துகளாக இருக்க வேண்டும்.",
+      "changePassword": "கடவுச்சொல்லை மாற்ற முடியவில்லை."
     }
   },
   "doctorPendingApproval": {
-    "title": "Registration Submitted",
-    "subtitle": "Thank you for joining Suwapatha Health. Your professional application has been received and is currently being verified by our clinical administration team.",
-    "pendingBadge": "PENDING ADMIN APPROVAL",
+    "title": "பதிவு சமர்ப்பிக்கப்பட்டது",
+    "subtitle": "சுவபாத ஆரோக்கியத்தில் இணைந்ததற்கு நன்றி. உங்கள் தொழில்முறை விண்ணப்பம் பெறப்பட்டு, தற்போது எங்கள் மருத்துவ நிர்வாகக் குழுவால் சரிபார்க்கப்படுகிறது.",
+    "pendingBadge": "நிர்வாகி அனுமதி நிலுவையில் உள்ளது",
     "timeline": {
       "submission": {
-        "title": "Submission",
-        "subtitle": "Application form received successfully"
+        "title": "சமர்ப்பணம்",
+        "subtitle": "விண்ணப்பப் படிவம் வெற்றிகரமாகப் பெறப்பட்டது"
       },
       "verification": {
-        "title": "Verification",
-        "subtitle": "Admin reviewing professional credentials"
+        "title": "சரிபார்ப்பு",
+        "subtitle": "நிர்வாகம் தொழில்முறை சான்றுகளை மதிப்பாய்வு செய்கிறது"
       },
       "activation": {
-        "title": "Activation",
-        "subtitle": "Full platform access granted via email"
+        "title": "செயல்படுத்துதல்",
+        "subtitle": "முழு தள அணுகல் மின்னஞ்சல் வழியாக வழங்கப்பட்டது"
       }
     },
     "summary": {
-      "title": "Submission Summary",
-      "subtitle": "Verify the information you provided below",
-      "fullName": "Full Name",
-      "userId": "User ID (Reference)",
-      "contactEmail": "Contact Email",
-      "accountType": "Account Type",
-      "professional": "Professional",
-      "dateSubmitted": "Date Submitted",
+      "title": "சமர்ப்பிப்பு சுருக்கம்",
+      "subtitle": "நீங்கள் கீழே வழங்கிய தகவலைச் சரிபார்க்கவும்",
+      "fullName": "முழுப் பெயர்",
+      "userId": "பயனர் ஐடி (குறிப்பு)",
+      "contactEmail": "தொடர்பு மின்னஞ்சல்",
+      "accountType": "கணக்கு வகை",
+      "professional": "தொழில்முறை",
+      "dateSubmitted": "சமர்ப்பிக்கப்பட்ட தேதி",
       "notAvailable": "N/A",
-      "errorTitle": "Found an error?",
-      "errorText": "If any details are incorrect, please contact support immediately to update your application."
+      "errorTitle": "பிழை கண்டுபிடிக்கப்பட்டதா?",
+      "errorText": "ஏதேனும் விவரங்கள் தவறாக இருந்தால், உங்கள் விண்ணப்பத்தைப் புதுப்பிக்க உடனடியாக ஆதரவைத் தொடர்பு கொள்ளவும்."
     },
     "nextSteps": {
-      "title": "What Happens Next?",
-      "subtitle": "Estimated timeline for your onboarding",
+      "title": "அடுத்து என்ன நடக்கும்?",
+      "subtitle": "உங்கள் ஆன்போர்டிங்கிற்கான மதிப்பிடப்பட்ட காலவரிசை",
       "step1": {
-        "title": "Credential Verification",
-        "time": "2-4 Hours",
-        "text": "Our team verifies your medical license and professional standing with national boards."
+        "title": "நற்சான்றிதழ் சரிபார்ப்பு",
+        "time": "2-4 மணி நேரம்",
+        "text": "எங்கள் குழு உங்கள் மருத்துவ உரிமம் மற்றும் தேசிய வாரியங்களுடன் தொழில்முறை நிலையை சரிபார்க்கிறது."
       },
       "step2": {
-        "title": "Email Confirmation",
-        "time": "Next 12 Hours",
-        "text": "You'll receive a \"Welcome\" email once your account has been whitelisted for login."
+        "title": "மின்னஞ்சல் உறுதிப்படுத்தல்",
+        "time": "அடுத்த 12 மணி நேரம்",
+        "text": "உள்நுழைவதற்காக உங்கள் கணக்கு அனுமதிப்பட்டியலுக்கு வந்ததும், \"வரவேற்பு\" மின்னஞ்சலைப் பெறுவீர்கள்."
       },
       "step3": {
-        "title": "Profile Setup",
-        "text": "After approval, log in to complete your professional biography and consultation schedule."
+        "title": "சுயவிவர அமைப்பு",
+        "text": "ஒப்புதலுக்குப் பிறகு, உங்கள் தொழில்முறை வாழ்க்கை வரலாறு மற்றும் ஆலோசனை அட்டவணையை முடிக்க உள்நுழையவும்."
       },
       "step4": {
-        "title": "Start Consultations",
-        "text": "Join our network and begin receiving patient appointments via your dashboard."
+        "title": "ஆலோசனைகளைத் தொடங்குங்கள்",
+        "text": "எங்கள் நெட்வொர்க்கில் சேர்ந்து, உங்கள் டாஷ்போர்டு வழியாக நோயாளி சந்திப்புகளைப் பெறத் தொடங்குங்கள்."
       }
     },
     "actions": {
-      "returnHome": "Return to Home",
-      "contactSupport": "Contact Support"
+      "returnHome": "வீட்டிற்குத் திரும்பு",
+      "contactSupport": "ஆதரவைத் தொடர்பு கொள்ளவும்"
     }
   },
   "about": {
-    "title": "Suwapatha",
-    "description": "Empowering citizens with seamless digital healthcare, connecting you to government health services efficiently and securely.",
-    "whatIsTitle": "What is ",
-    "whatIsHighlight": "Suwapatha ?",
-    "whatIsDescription": "Suwapatha is Sri Lanka's pioneering digital health platform, designed to revolutionize access to public healthcare services. We seamlessly connect citizens with government hospitals and health professionals, making healthcare more accessible, efficient, and patient-centric than ever before. Our platform simplifies everything from appointments to medical records, all while upholding the highest standards of data security and privacy.",
+    "title": "சுவபாதா",
+    "description": "தடையற்ற டிஜிட்டல் ஹெல்த்கேர் மூலம் குடிமக்களுக்கு அதிகாரமளித்தல், திறமையாகவும் பாதுகாப்பாகவும் அரசாங்க சுகாதார சேவைகளுடன் உங்களை இணைக்கிறது.",
+    "whatIsTitle": "என்ன",
+    "whatIsHighlight": "சுவபாதா ?",
+    "whatIsDescription": "சுவபாதா என்பது இலங்கையின் முன்னோடி டிஜிட்டல் சுகாதார தளமாகும், இது பொது சுகாதார சேவைகளுக்கான அணுகலை புரட்சிகரமாக்க வடிவமைக்கப்பட்டுள்ளது. அரசு மருத்துவமனைகள் மற்றும் சுகாதார நிபுணர்களுடன் குடிமக்களை நாங்கள் தடையின்றி இணைக்கிறோம், சுகாதார சேவையை முன்பை விட அணுகக்கூடியதாகவும், திறமையாகவும், நோயாளிகளை மையப்படுத்தவும் செய்கிறோம். எங்கள் தளமானது சந்திப்புகள் முதல் மருத்துவப் பதிவுகள் வரை அனைத்தையும் எளிதாக்குகிறது, அதே நேரத்தில் தரவு பாதுகாப்பு மற்றும் தனியுரிமையின் மிக உயர்ந்த தரத்தை நிலைநிறுத்துகிறது.",
     "features": {
-      "effortless": "Effortless Appointment Management",
-      "secure": "Secure Digital Health Records",
-      "reduced": "Reduced Waiting Times",
-      "enhanced": "Enhanced Accessibility for All"
+      "effortless": "சிரமமற்ற நியமன மேலாண்மை",
+      "secure": "பாதுகாப்பான டிஜிட்டல் சுகாதார பதிவுகள்",
+      "reduced": "காத்திருப்பு நேரம் குறைக்கப்பட்டது",
+      "enhanced": "அனைவருக்கும் மேம்படுத்தப்பட்ட அணுகல்தன்மை"
     },
-    "keyFeaturesTitle": "Key Features",
+    "keyFeaturesTitle": "முக்கிய அம்சங்கள்",
     "keyFeatures": {
       "unified": {
-        "title": "Unified OPD Channeling",
-        "description": "Book and manage outpatient department appointments across all government hospitals with ease."
+        "title": "ஒருங்கிணைந்த OPD சேனலிங்",
+        "description": "அனைத்து அரசு மருத்துவமனைகளிலும் வெளிநோயாளர் பிரிவு நியமனங்களை எளிதாக பதிவு செய்து நிர்வகிக்கவும்."
       },
       "realtime": {
-        "title": "Real-time Queue Status",
-        "description": "View live waiting times at clinics and pharmacies, saving you valuable time and effort."
+        "title": "நிகழ் நேர வரிசை நிலை",
+        "description": "கிளினிக்குகள் மற்றும் மருந்தகங்களில் நேரடி காத்திருப்பு நேரங்களைப் பார்க்கவும், உங்கள் மதிப்புமிக்க நேரத்தையும் முயற்சியையும் மிச்சப்படுத்துகிறது."
       },
       "eMedical": {
-        "title": "e-Medical Book",
-        "description": "Access your digital medical records securely, including prescriptions, reports, and health history."
+        "title": "மின் மருத்துவ புத்தகம்",
+        "description": "மருந்துச்சீட்டுகள், அறிக்கைகள் மற்றும் சுகாதார வரலாறு உட்பட உங்கள் டிஜிட்டல் மருத்துவப் பதிவுகளை பாதுகாப்பாக அணுகவும்."
       },
       "multilingual": {
-        "title": "Multilingual Support",
-        "description": "Available in Sinhala, Tamil, and English to serve all communities across the island."
+        "title": "பன்மொழி ஆதரவு",
+        "description": "தீவு முழுவதும் உள்ள அனைத்து சமூகங்களுக்கும் சேவை செய்ய சிங்களம், தமிழ் மற்றும் ஆங்கிலத்தில் கிடைக்கிறது."
       },
       "accessibility": {
-        "title": "Accessibility Features",
-        "description": "Designed for inclusivity with features catering to diverse needs and abilities."
+        "title": "அணுகல் அம்சங்கள்",
+        "description": "பல்வேறு தேவைகள் மற்றும் திறன்களைப் பூர்த்தி செய்யும் அம்சங்களுடன் உள்ளடக்கியதாக வடிவமைக்கப்பட்டுள்ளது."
       },
       "secureIdentity": {
-        "title": "Secure Patient Identity",
-        "description": "Verify your identity and access services with a robust and secure digital patient ID system."
+        "title": "பாதுகாப்பான நோயாளி அடையாளம்",
+        "description": "உங்கள் அடையாளத்தைச் சரிபார்த்து, வலுவான மற்றும் பாதுகாப்பான டிஜிட்டல் நோயாளி அடையாள அமைப்புடன் சேவைகளை அணுகவும்."
       }
     },
-    "governanceTitle": "Governance & Data Privacy",
-    "governanceDescription": "At Suwapatha, safeguarding your personal and health information is our utmost priority. We are committed to maintaining the highest standards of privacy and security, adhering strictly to all national regulations and international best practices for data protection. Your trust is paramount, and we employ robust measures to ensure your data remains confidential and secure.",
+    "governanceTitle": "ஆளுமை & தரவு தனியுரிமை",
+    "governanceDescription": "சுவபாதாவில், உங்கள் தனிப்பட்ட மற்றும் சுகாதாரத் தகவல்களைப் பாதுகாப்பதே எங்களின் முதன்மையான முன்னுரிமையாகும். தனியுரிமை மற்றும் பாதுகாப்பின் மிக உயர்ந்த தரங்களைப் பேணுவதற்கு நாங்கள் உறுதிபூண்டுள்ளோம், தரவுப் பாதுகாப்பிற்கான அனைத்து தேசிய விதிமுறைகள் மற்றும் சர்வதேச சிறந்த நடைமுறைகளை கண்டிப்பாக கடைபிடிக்கிறோம். உங்கள் நம்பிக்கை மிகவும் முக்கியமானது, மேலும் உங்கள் தரவு ரகசியமாகவும் பாதுகாப்பாகவும் இருப்பதை உறுதிசெய்ய நாங்கள் வலுவான நடவடிக்கைகளைப் பயன்படுத்துகிறோம்.",
     "governancePoints": {
-      "adherence": "Adherence to national data privacy laws and healthcare regulations.",
-      "encryption": "Secure encryption protocols for all patient data transmission and storage.",
-      "access": "Strict access controls ensuring only authorized personnel can view sensitive information.",
-      "policies": "Transparent policies on data usage, with explicit patient consent for data sharing.",
-      "audits": "Regular security audits and updates to protect against emerging threats."
+      "adherence": "தேசிய தரவு தனியுரிமை சட்டங்கள் மற்றும் சுகாதார விதிமுறைகளை பின்பற்றுதல்.",
+      "encryption": "அனைத்து நோயாளிகளின் தரவு பரிமாற்றம் மற்றும் சேமிப்பிற்கான பாதுகாப்பான குறியாக்க நெறிமுறைகள்.",
+      "access": "அங்கீகரிக்கப்பட்ட பணியாளர்கள் மட்டுமே முக்கியமான தகவல்களைப் பார்க்க முடியும் என்பதை உறுதி செய்யும் கடுமையான அணுகல் கட்டுப்பாடுகள்.",
+      "policies": "தரவுப் பகிர்வுக்கான வெளிப்படையான நோயாளியின் ஒப்புதலுடன் தரவுப் பயன்பாடு குறித்த வெளிப்படையான கொள்கைகள்.",
+      "audits": "வளர்ந்து வரும் அச்சுறுத்தல்களிலிருந்து பாதுகாக்க வழக்கமான பாதுகாப்பு தணிக்கைகள் மற்றும் புதுப்பிப்புகள்."
     },
     "footer": {
-      "rights": "© 2026 Government of Sri Lanka. All rights reserved.",
-      "home": "Home",
-      "aboutUs": "About Us",
-      "services": "Services",
-      "faq": "FAQ",
-      "contactUs": "Contact Us",
-      "accessibility": "Accessibility Statement",
-      "accessibilityDesc": "Committed to providing an accessible online experience.",
-      "learnMore": "Learn More"
+      "rights": "© 2026 இலங்கை அரசாங்கம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+      "home": "வீடு",
+      "aboutUs": "எங்களைப் பற்றி",
+      "services": "சேவைகள்",
+      "faq": "அடிக்கடி கேட்கப்படும் கேள்விகள்",
+      "contactUs": "எங்களை தொடர்பு கொள்ளவும்",
+      "accessibility": "அணுகல்தன்மை அறிக்கை",
+      "accessibilityDesc": "அணுகக்கூடிய ஆன்லைன் அனுபவத்தை வழங்க உறுதிபூண்டுள்ளது.",
+      "learnMore": "மேலும் அறிக"
     }
   },
   "contact": {
-    "title": "Send Us a Message",
-    "subtitle": "Have a question or need assistance? We're here to help.",
+    "title": "எங்களுக்கு ஒரு செய்தி அனுப்பவும்",
+    "subtitle": "ஏதேனும் கேள்வி உள்ளதா அல்லது உதவி தேவையா? நாங்கள் உதவ இங்கே இருக்கிறோம்.",
     "form": {
-      "name": "Name",
-      "namePlaceholder": "Your full name",
-      "email": "Email",
+      "name": "பெயர்",
+      "namePlaceholder": "உங்கள் முழு பெயர்",
+      "email": "மின்னஞ்சல்",
       "emailPlaceholder": "you@example.com",
-      "subject": "Subject",
-      "subjectPlaceholder": "What is this about?",
-      "message": "Message",
-      "messagePlaceholder": "Type your message here.",
-      "submit": "Send Message"
+      "subject": "பொருள்",
+      "subjectPlaceholder": "இது எதைப் பற்றியது?",
+      "message": "செய்தி",
+      "messagePlaceholder": "உங்கள் செய்தியை இங்கே தட்டச்சு செய்யவும்.",
+      "submit": "செய்தி அனுப்பு"
     },
-    "reachUs": "Or reach us directly:"
+    "reachUs": "அல்லது எங்களை நேரடியாக அணுகவும்:"
   },
   "adminLogin": {
-    "title": "Admin Portal Login",
-    "subtitle": "Suwapatha Healthcare Management",
+    "title": "நிர்வாக போர்டல் உள்நுழைவு",
+    "subtitle": "சுவபாத ஹெல்த்கேர் மேனேஜ்மென்ட்",
     "form": {
-      "emailLabel": "Email Address",
-      "passwordLabel": "Password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot your password?",
-      "signingIn": "Signing in...",
-      "signIn": "Sign in"
+      "emailLabel": "மின்னஞ்சல் முகவரி",
+      "passwordLabel": "கடவுச்சொல்",
+      "rememberMe": "என்னை நினைவில் வையுங்கள்",
+      "forgotPassword": "உங்கள் கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
+      "signingIn": "உள்நுழைகிறது...",
+      "signIn": "உள்நுழைக"
     },
-    "notAdmin": "Not an admin?",
-    "returnLogin": "Return to Main Login",
+    "notAdmin": "நிர்வாகி இல்லையா?",
+    "returnLogin": "முதன்மை உள்நுழைவுக்குத் திரும்பு",
     "errors": {
-      "unexpected": "An unexpected error occurred. Please try again."
+      "unexpected": "எதிர்பாராத பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்."
     }
   },
   "adminDashboard": {
-    "loading": "Loading Dashboard...",
-    "errorTitle": "Error Loading Dashboard",
-    "retry": "Retry",
-    "title": "Dashboard",
+    "loading": "டாஷ்போர்டை ஏற்றுகிறது...",
+    "errorTitle": "டாஷ்போர்டை ஏற்றுவதில் பிழை",
+    "retry": "மீண்டும் முயற்சிக்கவும்",
+    "title": "டாஷ்போர்டு",
     "stats": {
-      "totalDoctors": "Total Doctors",
-      "activeSessions": "Active Sessions",
-      "patientsToday": "Patients Today"
+      "totalDoctors": "மொத்த மருத்துவர்கள்",
+      "activeSessions": "செயலில் உள்ள அமர்வுகள்",
+      "patientsToday": "இன்று நோயாளிகள்",
+      "avgWaitingTime": "சராசரி காத்திருக்கும் நேரம்",
+      "estimatedPerSession": "ஒரு அமர்வுக்கு மதிப்பிடப்பட்டுள்ளது"
     },
     "recentDoctors": {
-      "title": "Recent Doctor Registrations",
-      "subtitle": "Pending verification",
-      "noDoctors": "No pending doctor registrations",
-      "viewAll": "View All ->"
+      "title": "சமீபத்திய மருத்துவர் பதிவுகள்",
+      "subtitle": "சரிபார்ப்பு நிலுவையில் உள்ளது",
+      "noDoctors": "மருத்துவர் பதிவுகள் நிலுவையில் இல்லை",
+      "viewAll": "அனைத்தையும் காண்க ->"
     },
     "todaysSessions": {
-      "title": "Today's Sessions",
-      "noSessions": "No active sessions today",
-      "session": "Session {date}",
-      "patients": "{count} patients"
+      "title": "இன்றைய அமர்வுகள்",
+      "noSessions": "இன்று செயலில் அமர்வுகள் இல்லை",
+      "empty": "இன்று OPD அமர்வுகள் எதுவும் திட்டமிடப்படவில்லை",
+      "createFirst": "முதல் அமர்வை உருவாக்கவும்",
+      "patients": "நோயாளிகள்",
+      "viewAll": "அனைத்து {count} அமர்வுகளையும் காண்க",
+      "session": "அமர்வு {date}",
+      "patientsCount": "{count} நோயாளிகள்"
+    },
+    "sessionManagement": {
+      "title": "OPD அமர்வு மேலாண்மை",
+      "createNew": "புதிய அமர்வை உருவாக்கவும்",
+      "viewAll": "அனைத்து அமர்வுகளையும் காண்க"
+    },
+    "attendance": {
+      "title": "டாக்டர் வருகை",
+      "present": "{count} தற்போது",
+      "availableToday": "இன்று கிடைக்கும்",
+      "allocate": "ஒதுக்குங்கள்",
+      "allDoctors": "அனைத்து மருத்துவர்கள்",
+      "noDoctors": "இதுவரை மருத்துவர்கள் யாரும் பதிவு செய்யவில்லை",
+      "viewAllDoctors": "அனைத்து {count} மருத்துவர்களையும் பார்க்கவும்",
+      "table": {
+        "name": "பெயர்",
+        "email": "மின்னஞ்சல்",
+        "status": "நிலை"
+      }
+    },
+    "alerts": {
+      "title": "விழிப்பூட்டல்கள் & அறிவிப்புகள்"
+    },
+    "quickActions": {
+      "title": "விரைவான செயல்கள்",
+      "subtitle": "உங்கள் மருத்துவமனை செயல்பாடுகளை நிர்வகிக்கவும்",
+      "manageSessions": "OPD அமர்வுகளை நிர்வகிக்கவும்",
+      "manageDoctors": "மருத்துவர்களை நிர்வகிக்கவும்",
+      "refreshDashboard": "டாஷ்போர்டைப் புதுப்பிக்கவும்"
+    },
+    "hospitalInfo": {
+      "title": "மருத்துவமனை தகவல்",
+      "name": "பெயர்",
+      "type": "வகை",
+      "location": "இடம்",
+      "phone": "தொலைபேசி"
+    },
+    "footer": {
+      "rights": "© 2026 சுவபாதா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
     }
   },
   "adminSettings": {
-    "title": "Admin Settings",
-    "subtitle": "Manage your profile and security settings.",
-    "save": "Save Changes",
-    "saving": "Saving...",
+    "title": "நிர்வாக அமைப்புகள்",
+    "subtitle": "உங்கள் சுயவிவரம் மற்றும் பாதுகாப்பு அமைப்புகளை நிர்வகிக்கவும்.",
+    "save": "மாற்றங்களைச் சேமிக்கவும்",
+    "saving": "சேமிக்கிறது...",
     "profile": {
-      "title": "Profile Settings",
-      "name": "Name",
-      "email": "Email"
+      "title": "சுயவிவர அமைப்புகள்",
+      "name": "பெயர்",
+      "email": "மின்னஞ்சல்"
     },
     "security": {
-      "title": "Security Settings",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password"
+      "title": "பாதுகாப்பு அமைப்புகள்",
+      "currentPassword": "தற்போதைய கடவுச்சொல்",
+      "newPassword": "புதிய கடவுச்சொல்",
+      "confirmPassword": "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்"
     }
   },
   "adminOpdSession": {
-    "title": "OPD Session Management",
-    "subtitle": "Manage outpatient department sessions and doctor assignments.",
-    "addSession": "Add Session",
+    "title": "OPD அமர்வு மேலாண்மை",
+    "subtitle": "வெளிநோயாளர் பிரிவு அமர்வுகள் மற்றும் மருத்துவர் பணிகளை நிர்வகிக்கவும்.",
+    "addSession": "அமர்வைச் சேர்க்கவும்",
     "table": {
-      "date": "Date",
-      "doctor": "Doctor",
-      "room": "Room",
-      "maxPatients": "Max Patients",
-      "status": "Status",
-      "actions": "Actions"
+      "date": "தேதி",
+      "doctor": "டாக்டர்",
+      "room": "அறை",
+      "maxPatients": "அதிகபட்ச நோயாளிகள்",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
     },
     "status": {
-      "active": "Active",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
+      "active": "செயலில்",
+      "completed": "முடிக்கப்பட்டது",
+      "cancelled": "ரத்து செய்யப்பட்டது"
     },
     "actions": {
-      "edit": "Edit",
-      "cancel": "Cancel"
+      "edit": "திருத்தவும்",
+      "cancel": "ரத்து செய்"
     }
   },
   "adminDoctorRegistration": {
-    "title": "Doctor Registrations",
-    "subtitle": "Review and approve new doctor registrations.",
+    "title": "மருத்துவர் பதிவுகள்",
+    "subtitle": "புதிய மருத்துவர் பதிவுகளை மதிப்பாய்வு செய்து அங்கீகரிக்கவும்.",
     "table": {
-      "name": "Name",
-      "email": "Email",
-      "doctorId": "Doctor ID",
-      "specialty": "Specialty",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "பெயர்",
+      "email": "மின்னஞ்சல்",
+      "doctorId": "மருத்துவர் ஐடி",
+      "specialty": "சிறப்பு",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
     },
     "status": {
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected"
+      "pending": "நிலுவையில் உள்ளது",
+      "approved": "அங்கீகரிக்கப்பட்டது",
+      "rejected": "நிராகரிக்கப்பட்டது"
     },
     "actions": {
-      "view": "View",
-      "approve": "Approve",
-      "reject": "Reject"
+      "view": "காண்க",
+      "approve": "ஒப்புதல்",
+      "reject": "நிராகரிக்கவும்"
     }
   },
   "superAdminSettings": {
-    "title": "Super Admin Settings",
-    "subtitle": "Manage system-wide configuration.",
-    "save": "Save Settings",
-    "saving": "Saving..."
+    "title": "சூப்பர் அட்மின் அமைப்புகள்",
+    "subtitle": "கணினி முழுவதும் உள்ளமைவை நிர்வகிக்கவும்.",
+    "save": "அமைப்புகளைச் சேமிக்கவும்",
+    "saving": "சேமிக்கிறது..."
   },
   "superAdminAdmins": {
-    "title": "Hospital Admins",
-    "subtitle": "Manage hospital administrators.",
-    "addAdmin": "Add Admin",
+    "title": "மருத்துவமனை நிர்வாகிகள்",
+    "subtitle": "மருத்துவமனை நிர்வாகிகளை நிர்வகிக்கவும்.",
+    "addAdmin": "நிர்வாகியைச் சேர்க்கவும்",
     "table": {
-      "name": "Name",
-      "hospital": "Hospital",
-      "email": "Email",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "பெயர்",
+      "hospital": "மருத்துவமனை",
+      "email": "மின்னஞ்சல்",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
     }
   },
   "superAdminHospitals": {
-    "title": "Hospitals",
-    "subtitle": "Manage registered hospitals.",
-    "addHospital": "Add Hospital",
+    "title": "மருத்துவமனைகள்",
+    "subtitle": "பதிவு செய்யப்பட்ட மருத்துவமனைகளை நிர்வகிக்கவும்.",
+    "addHospital": "மருத்துவமனையைச் சேர்க்கவும்",
     "table": {
-      "name": "Name",
-      "district": "District",
-      "status": "Status",
-      "actions": "Actions"
+      "name": "பெயர்",
+      "district": "மாவட்டம்",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
+    }
+  },
+  "superAdminSettingsPage": {
+    "title": "அமைப்புகள்",
+    "subtitle": "சூப்பர் அட்மின் எண்ட்பாயிண்ட் உள்ளமைவு",
+    "endpointsTitle": "பின்தள இறுதிப்புள்ளிகள்",
+    "description": "சூப்பர் அட்மின், மருத்துவமனை நிர்வாகச் சான்றுகளை உருவாக்குவதற்கு மட்டுமே கட்டுப்படுத்தப்பட்டுள்ளது.",
+    "hospitals": "மருத்துவமனைகள்",
+    "createHospitalAdmin": "மருத்துவமனை நிர்வாகத்தை உருவாக்கவும்"
+  },
+  "superAdminAdminsPage": {
+    "title": "நிர்வாகிகள்",
+    "descriptionStart": "சூப்பர் நிர்வாகம் நிர்வாக அம்சங்களை நிர்வகிக்கவில்லை. பயன்படுத்தவும்",
+    "hospitals": "மருத்துவமனைகள்",
+    "descriptionEnd": "ஒரு குறிப்பிட்ட மருத்துவமனைக்கான சான்றுகளை உருவாக்க."
+  },
+  "superAdminHospitalsPage": {
+    "title": "மருத்துவமனைகள்",
+    "subtitle": "மருத்துவமனையைத் தேர்ந்தெடுத்து நிர்வாகச் சான்றுகளை உருவாக்கவும்",
+    "searchPlaceholder": "பெயர் / மாவட்டம் / மாகாணம் மூலம் மருத்துவமனைகளைத் தேடுங்கள்",
+    "refresh": "புதுப்பிக்கவும்",
+    "loadingHospitals": "மருத்துவமனைகளை ஏற்றுகிறது...",
+    "emptyTitle": "மருத்துவமனைகள் எதுவும் இல்லை",
+    "emptySubtitle": "வேறு தேடலை முயற்சிக்கவும் அல்லது புதிய மருத்துவமனையைச் சேர்க்கவும்.",
+    "notAvailable": null,
+    "createAdmin": "நிர்வாகியை உருவாக்கவும்",
+    "editAdmin": "நிர்வாகியைத் திருத்து",
+    "table": {
+      "name": "பெயர்",
+      "district": "மாவட்டம்",
+      "province": "மாகாணம்",
+      "phone": "தொலைபேசி",
+      "action": "செயல்"
+    },
+    "modal": {
+      "createTitle": "மருத்துவமனை நிர்வாக சான்றுகளை உருவாக்கவும்",
+      "editTitle": "மருத்துவமனை நிர்வாகத்தைத் திருத்தவும்",
+      "hospitalLabel": "மருத்துவமனை",
+      "firstName": "முதல் பெயர் *",
+      "lastName": "கடைசி பெயர் *",
+      "email": "மின்னஞ்சல் *",
+      "passwordCreate": "கடவுச்சொல்*",
+      "passwordEdit": "புதிய கடவுச்சொல் (விரும்பினால்)",
+      "cancel": "ரத்து செய்",
+      "creating": "உருவாக்குகிறது...",
+      "saving": "சேமிக்கிறது...",
+      "saveChanges": "மாற்றங்களைச் சேமிக்கவும்"
+    },
+    "errors": {
+      "loadHospitals": "Failed to load hospitals",
+      "hospitalRequired": "Hospital is required",
+      "firstNameRequired": "முதல் பெயர் தேவை",
+      "lastNameRequired": "கடைசி பெயர் தேவை",
+      "emailRequired": "மின்னஞ்சல் தேவை",
+      "passwordRequired": "கடவுச்சொல் தேவை",
+      "createAdmin": "Failed to create admin",
+      "updateAdmin": "Failed to update admin"
+    }
+  },
+  "requireRole": {
+    "checkingPermissions": "Checking permissions..."
+  },
+  "doctorReviewModal": {
+    "confirmReject": "Are you sure you want to reject this doctor registration?",
+    "pendingReview": "Pending Review",
+    "registrationDetails": "Registration Details",
+    "submittedOn": "Submitted on",
+    "rejecting": "Rejecting...",
+    "reject": "நிராகரிக்கவும்",
+    "approving": "Approving...",
+    "approveRegistration": "Approve Registration",
+    "fields": {
+      "firstName": "முதல் பெயர்",
+      "lastName": "கடைசி பெயர்",
+      "email": "மின்னஞ்சல் முகவரி",
+      "doctorId": "Doctor ID Number",
+      "nic": "NIC எண்",
+      "phone": "தொலைபேசி எண்",
+      "gender": "பாலினம்",
+      "dob": "Date of Birth"
+    }
+  },
+  "adminDoctorRegistrationPage": {
+    "title": "Doctor Registration Review",
+    "searchPlaceholder": "Search by name or ID...",
+    "loading": "Loading doctors...",
+    "doctorPrefix": "Dr.",
+    "viewDetails": "View Details →",
+    "emptyTitle": "No doctors found",
+    "emptySubtitle": "No doctors matching your search criteria.",
+    "stats": {
+      "totalRegistered": "Total Registered",
+      "pendingReview": "Pending Review",
+      "approved": "அங்கீகரிக்கப்பட்டது",
+      "rejected": "நிராகரிக்கப்பட்டது"
+    },
+    "filters": {
+      "allStatuses": "All Statuses",
+      "pendingReview": "Pending Review",
+      "approved": "அங்கீகரிக்கப்பட்டது",
+      "rejected": "நிராகரிக்கப்பட்டது"
+    },
+    "table": {
+      "doctorName": "Doctor Name",
+      "doctorId": "மருத்துவர் ஐடி",
+      "phone": "தொலைபேசி",
+      "status": "நிலை",
+      "actions": "செயல்கள்"
+    },
+    "status": {
+      "pending": "PENDING"
+    },
+    "alerts": {
+      "approved": "Doctor approved successfully! Notification email has been sent.",
+      "approveFailed": "Failed to approve doctor. Please try again.",
+      "rejected": "Doctor registration rejected. Notification email has been sent.",
+      "rejectFailed": "Failed to reject doctor. Please try again."
+    },
+    "errors": {
+      "loadFailed": "Failed to load doctors. Please try again."
+    }
+  },
+  "adminSettingsPage": {
+    "loading": "அமைப்புகளை ஏற்றுகிறது...",
+    "toasts": {
+      "nameEmpty": "Name fields cannot be empty",
+      "profileUpdated": "Profile updated successfully",
+      "updateFailed": "Update failed",
+      "passwordFieldsRequired": "All password fields are required",
+      "passwordMismatch": "Passwords do not match",
+      "passwordUpdated": "Password updated successfully",
+      "passwordChangeFailed": "Password change failed"
+    },
+    "actions": {
+      "saving": "சேமிக்கிறது...",
+      "saveChanges": "மாற்றங்களைச் சேமிக்கவும்",
+      "updating": "புதுப்பிக்கிறது...",
+      "updatePassword": "கடவுச்சொல்லை புதுப்பிக்கவும்"
+    },
+    "fields": {
+      "firstName": "முதல் பெயர்",
+      "lastName": "கடைசி பெயர்"
+    },
+    "profile": {
+      "title": "சுயவிவரத் தகவல்",
+      "subtitle": "Update your photo, full name, and username.",
+      "photoTitle": "Profile Photo",
+      "photoHint": "JPG, GIF or PNG. Max size of 800K",
+      "changePhoto": "Change Photo"
+    },
+    "email": {
+      "title": "மின்னஞ்சல் முகவரி",
+      "subtitle": "Manage your primary email address and verification status.",
+      "label": "மின்னஞ்சல் முகவரி",
+      "statusLabel": "Status:",
+      "verified": "Verified"
+    },
+    "password": {
+      "title": "கடவுச்சொல்",
+      "subtitle": "உங்கள் கணக்கின் கடவுச்சொல்லை மாற்றவும்.",
+      "current": "தற்போதைய கடவுச்சொல்",
+      "new": "புதிய கடவுச்சொல்",
+      "confirm": "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "subtitle": "Choose how you receive updates and alerts.",
+      "emailTitle": "Email Notifications",
+      "emailDesc": "Receive important updates and announcements via email.",
+      "smsTitle": "SMS Notifications",
+      "smsDesc": "Get real-time alerts and reminders on your phone.",
+      "pushTitle": "Push Notifications",
+      "pushDesc": "Instant notifications directly to your device or browser."
+    },
+    "account": {
+      "title": "Account Management",
+      "subtitle": "Options to manage or delete your account.",
+      "warning": "Permanently delete your account and all associated data. This action cannot be undone.",
+      "delete": "Delete Account"
+    }
+  },
+  "createSessionModal": {
+    "title": "Create New OPD Session",
+    "headerSubtitle": "All sessions run from 08:00 to 12:00",
+    "date": "தேதி",
+    "selectDate": "Select date",
+    "advanceHint": "Up to 7 days in advance",
+    "totalSlots": "Total Slots",
+    "sessionTime": "Session Time",
+    "sessionTimeValue": "08:00 - 12:00 (fixed morning session)",
+    "slotDuration": "Slot Duration (minutes)",
+    "noteLabel": "Note:",
+    "note": "General consultation only (08:00-12:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
+    "cancel": "ரத்து செய்",
+    "createSession": "Create Session"
+  },
+  "adminOpdSessionPage": {
+    "loadingShort": "ஏற்றுகிறது...",
+    "loading": "Loading OPD sessions...",
+    "title": "OPD அமர்வு மேலாண்மை",
+    "actions": {
+      "createNewSession": "புதிய அமர்வை உருவாக்கவும்",
+      "refreshDoctors": "Refresh Doctors"
+    },
+    "tabs": {
+      "todaySessions": "இன்றைய அமர்வுகள்",
+      "upcomingSessions": "Upcoming Sessions (Next 7 Days)"
+    },
+    "stats": {
+      "totalPatientsToday": "இன்று மொத்த நோயாளிகள்",
+      "allocated": "Allocated",
+      "unallocated": "Unallocated",
+      "activeDoctors": "Active Doctors"
+    },
+    "availableDoctors": {
+      "title": "Today's Available Doctors",
+      "subtitle": "Assign rooms to doctors who are active today. Patients will be distributed among doctors with assigned rooms.",
+      "empty": "No doctors have marked themselves as available for today yet."
+    },
+    "todaySessions": {
+      "title": "Today's OPD Sessions",
+      "emptyTitle": "No Sessions Today",
+      "emptySubtitle": "There are no OPD sessions scheduled for today.",
+      "createFirst": "முதல் அமர்வை உருவாக்கவும்"
+    },
+    "upcoming": {
+      "bookableTitle": "Upcoming Sessions (Bookable)",
+      "bookableSubtitle": "Sessions scheduled for the next 7 days. Doctors and rooms can be assigned now.",
+      "emptyTitle": "No Upcoming Sessions",
+      "emptySubtitle": "There are no sessions scheduled for the next 7 days."
+    },
+    "labels": {
+      "assignedRoom": "Assigned Room",
+      "notAssigned": "Not Assigned",
+      "time": "நேரம்",
+      "room": "அறை",
+      "assign": "Assign",
+      "patients": "Patients",
+      "date": "தேதி",
+      "bookingStatus": "Booking Status",
+      "doctor": "டாக்டர்",
+      "slotsCount": "{current}/{max} slots"
+    },
+    "patientList": {
+      "title": "Patient List",
+      "loading": "நோயாளிகளை ஏற்றுகிறது...",
+      "empty": "No patients booked yet."
+    },
+    "summary": {
+      "title": "Session Summary",
+      "capacityUsage": "Capacity Usage",
+      "patientsPerDoctor": "Patients per Doctor (Avg)",
+      "activeSessions": "செயலில் உள்ள அமர்வுகள்"
+    },
+    "quickActions": {
+      "title": "விரைவான செயல்கள்",
+      "subtitle": "Manage today's operations",
+      "refreshData": "Refresh Data",
+      "viewDashboard": "View Dashboard"
+    },
+    "alerts": {
+      "roomAssigned": "Room assigned successfully!",
+      "patientsAllocated": "Patients allocated successfully!",
+      "sessionCreated": "Session created successfully!",
+      "sessionUpdated": "Session updated successfully!",
+      "sessionCancelled": "Session cancelled successfully!",
+      "editComingSoon": "Edit functionality coming soon"
+    },
+    "confirm": {
+      "cancelSession": "Are you sure you want to cancel this session?"
+    },
+    "errors": {
+      "loadData": "Failed to load data. Please try again.",
+      "assignRoom": "Failed to assign room",
+      "allocatePatients": "Failed to allocate patients",
+      "createSession": "Failed to create session",
+      "updateSession": "Failed to update session",
+      "cancelSession": "Failed to cancel session",
+      "fetchPatients": "Failed to fetch patients",
+      "loadPatientList": "Failed to load patient list"
     }
   },
   "patientSettings": {
     "title": "Patient Settings",
     "subtitle": "Manage your profile and preferences.",
-    "save": "Save Changes",
-    "saving": "Saving...",
+    "save": "மாற்றங்களைச் சேமிக்கவும்",
+    "saving": "சேமிக்கிறது...",
     "profile": {
       "title": "Personal Information",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "phone": "Phone Number",
+      "firstName": "முதல் பெயர்",
+      "lastName": "கடைசி பெயர்",
+      "phone": "தொலைபேசி எண்",
       "dob": "Date of Birth",
-      "address": "Address"
+      "address": "முகவரி"
     },
     "security": {
-      "title": "Security",
+      "title": "பாதுகாப்பு",
       "changePassword": "Change Password"
     }
   }

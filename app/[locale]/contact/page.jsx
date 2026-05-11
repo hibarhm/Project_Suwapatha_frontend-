@@ -52,7 +52,7 @@ export default function ContactPage() {
               {/* Name Field */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
-                  Name
+                  {t('form.name')}
                 </label>
                 <input
                   type="text"
@@ -69,7 +69,7 @@ export default function ContactPage() {
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
-                  Email
+                  {t('form.email')}
                 </label>
                 <input
                   type="email"
@@ -86,7 +86,7 @@ export default function ContactPage() {
               {/* Subject Field */}
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-900 mb-2">
-                  Subject
+                  {t('form.subject')}
                 </label>
                 <input
                   type="text"
@@ -103,7 +103,7 @@ export default function ContactPage() {
               {/* Message Field */}
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
-                  Message
+                  {t('form.message')}
                 </label>
                 <textarea
                   id="message"
@@ -122,7 +122,7 @@ export default function ContactPage() {
                 type="submit"
                 className="w-full bg-[#94B4C1] hover:bg-[#7fa8b8] text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-sm"
               >
-                Send Message
+                {t('form.submit')}
               </button>
             </form>
           </div>
@@ -165,19 +165,19 @@ export default function ContactPage() {
             <div className="space-y-4">
               <nav className="flex flex-col space-y-3">
                 <Link href="/" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Home
+                  {tFooter('home')}
                 </Link>
                 <Link href="/about" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  About Us
+                  {tFooter('aboutUs')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Services
+                  {tFooter('services')}
                 </Link>
                 <Link href="#" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  FAQ
+                  {tFooter('faq')}
                 </Link>
                 <Link href="/contact" className="text-gray-900 font-medium hover:text-[#94B4C1] transition-colors">
-                  Contact Us
+                  {tFooter('contactUs')}
                 </Link>
               </nav>
             </div>
@@ -192,7 +192,7 @@ export default function ContactPage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
-                Learn More
+                {tFooter('learnMore')}
               </Link>
             </div>
           </div>

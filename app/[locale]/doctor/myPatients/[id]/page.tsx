@@ -282,7 +282,7 @@ export default function PatientDetailsPage() {
                   {/* Vitals Input */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">BP</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t('vitals.bp')}</label>
                       <input
                         type="text"
                         value={vitals.bp}
@@ -304,7 +304,7 @@ export default function PatientDetailsPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Pulse</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t('vitals.pulse')}</label>
                       <input
                         type="text"
                         value={vitals.pulse}
@@ -381,19 +381,19 @@ export default function PatientDetailsPage() {
                   {/* Vitals */}
                   <div className="grid grid-cols-4 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
                     <div>
-                      <p className="text-xs text-gray-600">BP</p>
+                      <p className="text-xs text-gray-600">{t('vitals.bp')}</p>
                       <p className="text-sm font-medium text-gray-900">{record.vitals?.bp || t('notAvailable')}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-600">Temp</p>
+                      <p className="text-xs text-gray-600">{t('vitals.tempShort')}</p>
                       <p className="text-sm font-medium text-gray-900">{record.vitals?.temp || t('notAvailable')}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-600">Pulse</p>
+                      <p className="text-xs text-gray-600">{t('vitals.pulse')}</p>
                       <p className="text-sm font-medium text-gray-900">{record.vitals?.pulse || t('notAvailable')}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-600">Weight</p>
+                      <p className="text-xs text-gray-600">{t('vitals.weightShort')}</p>
                       <p className="text-sm font-medium text-gray-900">{record.vitals?.weight || t('notAvailable')}</p>
                     </div>
                   </div>

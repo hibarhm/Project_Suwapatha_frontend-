@@ -1,10 +1,11 @@
 'use client';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '@/i18n/navigation';
 import { authApi, ApiError } from '@/app/api/auth/authApi';
 
 export default function AdminLoginPage() {
+    const t = useTranslations('adminLogin');
     const router = useRouter();
 
     const [formData, setFormData] = useState({
@@ -35,7 +36,7 @@ export default function AdminLoginPage() {
             } else if (err.message) {
                 setError(err.message);
             } else {
-                setError('An unexpected error occurred. Please try again.');
+                setError(t('errors.unexpected'));
             }
             console.error('Login error:', err);
         } finally {
@@ -68,10 +69,10 @@ export default function AdminLoginPage() {
                 </div>
 
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Admin Portal Login
+                    {t('title')}
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
-                    Suwapatha Healthcare Management
+                    {t('subtitle')}
                 </p>
             </div>
 
@@ -86,7 +87,7 @@ export default function AdminLoginPage() {
 
                         <div>
                             <label htmlFor="usernameOrEmail" className="block text-sm font-medium text-gray-700">
-                                Email Address
+                                {t('form.emailLabel')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -104,7 +105,7 @@ export default function AdminLoginPage() {
 
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                Password
+                                {t('form.passwordLabel')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -131,13 +132,13 @@ export default function AdminLoginPage() {
                                     className="h-4 w-4 text-[#94B4C1] focus:ring-[#94B4C1] border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                    Remember me
+                                    {t('form.rememberMe')}
                                 </label>
                             </div>
 
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-[#94B4C1] hover:text-[#7fa8b8]">
-                                    Forgot your password?
+                                    {t('form.forgotPassword')}
                                 </a>
                             </div>
                         </div>
@@ -148,7 +149,7 @@ export default function AdminLoginPage() {
                                 disabled={loading}
                                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#94B4C1] hover:bg-[#7fa8b8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#94B4C1] disabled:opacity-50 transition-colors"
                             >
-                                {loading ? 'Signing in...' : 'Sign in'}
+                                {loading ? t('form.signingIn') : t('form.signIn')}
                             </button>
                         </div>
                     </form>
@@ -160,7 +161,7 @@ export default function AdminLoginPage() {
                             </div>
                             <div className="relative flex justify-center text-sm">
                                 <span className="px-2 bg-white text-gray-500">
-                                    Not an admin?
+                                    {t('notAdmin')}
                                 </span>
                             </div>
                         </div>
@@ -171,7 +172,7 @@ export default function AdminLoginPage() {
                                     href="/login"
                                     className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors"
                                 >
-                                    Return to Main Login
+                                    {t('returnLogin')}
                                 </Link>
                             </div>
                         </div>

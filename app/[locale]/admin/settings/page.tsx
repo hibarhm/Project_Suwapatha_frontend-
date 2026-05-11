@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '@/app/components/adminLayout';
 import { userApi } from '@/app/api/user/userApi';
 import { UserProfile } from '@/app/api/user/userTypes';
+import {useTranslations} from 'next-intl';
 
 // ── tiny toast ──────────────────────────────────────────────────────────────
 function Toast({ msg, type }: { msg: string; type: 'success' | 'error' }) {
@@ -21,6 +22,7 @@ function Toast({ msg, type }: { msg: string; type: 'success' | 'error' }) {
 }
 
 export default function AdminSettingsPage() {
+  const t = useTranslations('adminSettingsPage');
   const router = useRouter();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -63,16 +65,16 @@ export default function AdminSettingsPage() {
 
   const handleSaveProfile = async () => {
     if (!firstName.trim() || !lastName.trim()) {
-      showToast('Name fields cannot be empty', 'error');
+      showToast(t('toasts.nameEmpty'), 'error');
       return;
     }
     setSavingProfile(true);
     try {
       const updated = await userApi.updateProfile({ firstName: firstName.trim(), lastName: lastName.trim() });
       setProfile(updated);
-      showToast('Profile updated successfully', 'success');
+      showToast(t('toasts.profileUpdated'), 'success');
     } catch (e) {
-      showToast(e instanceof Error ? e.message : 'Update failed', 'error');
+      showToast(e instanceof Error ? e.message : t('toasts.updateFailed'), 'error');
     } finally {
       setSavingProfile(false);
     }
@@ -80,20 +82,20 @@ export default function AdminSettingsPage() {
 
   const handleChangePassword = async () => {
     if (!passwords.current || !passwords.new || !passwords.confirm) {
-      showToast('All password fields are required', 'error');
+      showToast(t('toasts.passwordFieldsRequired'), 'error');
       return;
     }
     if (passwords.new !== passwords.confirm) {
-      showToast('Passwords do not match', 'error');
+      showToast(t('toasts.passwordMismatch'), 'error');
       return;
     }
     setSavingPassword(true);
     try {
       await userApi.changePassword({ currentPassword: passwords.current, newPassword: passwords.new });
       setPasswords({ current: '', new: '', confirm: '' });
-      showToast('Password updated successfully', 'success');
+      showToast(t('toasts.passwordUpdated'), 'success');
     } catch (e) {
-      showToast(e instanceof Error ? e.message : 'Password change failed', 'error');
+      showToast(e instanceof Error ? e.message : t('toasts.passwordChangeFailed'), 'error');
     } finally {
       setSavingPassword(false);
     }
@@ -105,7 +107,7 @@ export default function AdminSettingsPage() {
     router.push('/');
   };
 
-  if (loading) return <div className="p-20 text-center text-gray-500">Loading settings…</div>;
+  if (loading) return <div className="p-20 text-center text-gray-500">{t('loading')}</div>;
 
   return (
     <AdminLayout>
@@ -114,8 +116,8 @@ export default function AdminSettingsPage() {
         {/* Profile Information */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>
-            <p className="text-sm text-gray-600 mt-1">Update your photo, full name, and username.</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('profile.title')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('profile.subtitle')}</p>
           </div>
 
           {/* Profile Photo */}
@@ -124,10 +126,10 @@ export default function AdminSettingsPage() {
               {firstName?.[0]}{lastName?.[0]}
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-1">Profile Photo</h3>
-              <p className="text-xs text-gray-500 mb-3">JPG, GIF or PNG. Max size of 800K</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('profile.photoTitle')}</h3>
+              <p className="text-xs text-gray-500 mb-3">{t('profile.photoHint')}</p>
               <button className="text-sm font-medium text-[#94B4C1] hover:text-[#7fa8b8]">
-                Change Photo
+                {t('profile.changePhoto')}
               </button>
             </div>
           </div>
@@ -136,7 +138,7 @@ export default function AdminSettingsPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                First Name
+                {t('fields.firstName')}
               </label>
               <input
                 type="text"
@@ -147,7 +149,7 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Last Name
+                {t('fields.lastName')}
               </label>
               <input
                 type="text"
@@ -164,7 +166,7 @@ export default function AdminSettingsPage() {
               disabled={savingProfile}
               className="px-6 py-2.5 bg-[#94B4C1] text-white rounded-lg text-sm font-medium hover:bg-[#7fa8b8] transition-colors disabled:opacity-50 flex items-center gap-2">
               {savingProfile && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-              {savingProfile ? 'Saving…' : 'Save Changes'}
+              {savingProfile ? t('actions.saving') : t('actions.saveChanges')}
             </button>
           </div>
         </div>
@@ -172,13 +174,13 @@ export default function AdminSettingsPage() {
         {/* Email Address */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Email Address</h2>
-            <p className="text-sm text-gray-600 mt-1">Manage your primary email address and verification status.</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('email.title')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('email.subtitle')}</p>
           </div>
 
           <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-900 mb-2">
-              Email Address
+              {t('email.label')}
             </label>
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -196,9 +198,9 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="mb-6">
-            <span className="text-sm font-semibold text-gray-900 mr-3">Status:</span>
+            <span className="text-sm font-semibold text-gray-900 mr-3">{t('email.statusLabel')}</span>
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#94B4C1]/10 text-[#94B4C1]">
-              Verified
+              {t('email.verified')}
             </span>
           </div>
         </div>
@@ -206,14 +208,14 @@ export default function AdminSettingsPage() {
         {/* Password */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Password</h2>
-            <p className="text-sm text-gray-600 mt-1">Change your account password.</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('password.title')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('password.subtitle')}</p>
           </div>
 
           <div className="space-y-6 mb-6">
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Current Password
+                {t('password.current')}
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -233,7 +235,7 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                New Password
+                {t('password.new')}
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -253,7 +255,7 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Confirm New Password
+                {t('password.confirm')}
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -278,7 +280,7 @@ export default function AdminSettingsPage() {
               disabled={savingPassword}
               className="px-6 py-2.5 bg-[#94B4C1] text-white rounded-lg text-sm font-medium hover:bg-[#7fa8b8] transition-colors disabled:opacity-50 flex items-center gap-2">
               {savingPassword && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-              {savingPassword ? 'Updating…' : 'Update Password'}
+              {savingPassword ? t('actions.updating') : t('actions.updatePassword')}
             </button>
           </div>
         </div>
@@ -286,16 +288,16 @@ export default function AdminSettingsPage() {
         {/* Notification Preferences */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Notification Preferences</h2>
-            <p className="text-sm text-gray-600 mt-1">Choose how you receive updates and alerts.</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('notifications.title')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('notifications.subtitle')}</p>
           </div>
 
           <div className="space-y-6">
             {/* Email Notifications */}
             <div className="flex items-start justify-between py-3">
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-gray-900 mb-1">Email Notifications</h3>
-                <p className="text-sm text-gray-600">Receive important updates and announcements via email.</p>
+                <h3 className="text-base font-semibold text-gray-900 mb-1">{t('notifications.emailTitle')}</h3>
+                <p className="text-sm text-gray-600">{t('notifications.emailDesc')}</p>
               </div>
               <button
                 onClick={() => setNotifications({ ...notifications, email: !notifications.email })}
@@ -312,8 +314,8 @@ export default function AdminSettingsPage() {
             {/* SMS Notifications */}
             <div className="flex items-start justify-between py-3">
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-gray-900 mb-1">SMS Notifications</h3>
-                <p className="text-sm text-gray-600">Get real-time alerts and reminders on your phone.</p>
+                <h3 className="text-base font-semibold text-gray-900 mb-1">{t('notifications.smsTitle')}</h3>
+                <p className="text-sm text-gray-600">{t('notifications.smsDesc')}</p>
               </div>
               <button
                 onClick={() => setNotifications({ ...notifications, sms: !notifications.sms })}
@@ -330,8 +332,8 @@ export default function AdminSettingsPage() {
             {/* Push Notifications */}
             <div className="flex items-start justify-between py-3">
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-gray-900 mb-1">Push Notifications</h3>
-                <p className="text-sm text-gray-600">Instant notifications directly to your device or browser.</p>
+                <h3 className="text-base font-semibold text-gray-900 mb-1">{t('notifications.pushTitle')}</h3>
+                <p className="text-sm text-gray-600">{t('notifications.pushDesc')}</p>
               </div>
               <button
                 onClick={() => setNotifications({ ...notifications, push: !notifications.push })}
@@ -350,16 +352,16 @@ export default function AdminSettingsPage() {
         {/* Account Management */}
         <div className="bg-white rounded-xl border border-gray-200 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Account Management</h2>
-            <p className="text-sm text-gray-600 mt-1">Options to manage or delete your account.</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('account.title')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('account.subtitle')}</p>
           </div>
           <div className="mb-6">
             <p className="text-sm text-gray-700">
-              Permanently delete your account and all associated data. This action cannot be undone.
+              {t('account.warning')}
             </p>
           </div>
           <button className="px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors">
-            Delete Account
+            {t('account.delete')}
           </button>
         </div>
       </div>

@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import AdminLayout from '@/app/components/adminLayout';
 import { adminApi, Doctor } from '@/app/api/admin/adminApi';
 import DoctorReviewModal from '@/app/components/doctorReviewModal';
+import {useTranslations} from 'next-intl';
 
 export default function DoctorRegistrationReview() {
+  const t = useTranslations('adminDoctorRegistrationPage');
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All Statuses');
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -25,7 +26,7 @@ export default function DoctorRegistrationReview() {
       setError('');
     } catch (err) {
       console.error('Error fetching doctors:', err);
-      setError('Failed to load doctors. Please try again.');
+      setError(t('errors.loadFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +51,7 @@ export default function DoctorRegistrationReview() {
       doc.doctorId.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Exact match for status filter
-    const matchesStatus = statusFilter === 'All Statuses' || doc.status === statusFilter.toUpperCase();
+    const matchesStatus = statusFilter === 'ALL' || doc.status === statusFilter.toUpperCase();
     return matchesSearch && matchesStatus;
   });
 
@@ -73,11 +74,11 @@ export default function DoctorRegistrationReview() {
         doc.id === id ? { ...doc, status: 'APPROVED' } : doc
       ));
       
-      alert('Doctor approved successfully! Notification email has been sent.');
+      alert(t('alerts.approved'));
       handleCloseModal();
     } catch (err) {
       console.error('Error approving doctor:', err);
-      alert('Failed to approve doctor. Please try again.');
+      alert(t('alerts.approveFailed'));
       throw err; // Re-throw to let modal handle loading state
     }
   };
@@ -91,11 +92,11 @@ export default function DoctorRegistrationReview() {
         doc.id === id ? { ...doc, status: 'REJECTED' } : doc
       ));
       
-      alert('Doctor registration rejected. Notification email has been sent.');
+      alert(t('alerts.rejected'));
       handleCloseModal();
     } catch (err) {
       console.error('Error rejecting doctor:', err);
-      alert('Failed to reject doctor. Please try again.');
+      alert(t('alerts.rejectFailed'));
       throw err;
     }
   };
@@ -104,33 +105,33 @@ export default function DoctorRegistrationReview() {
     <AdminLayout>
       <div className="p-6 max-w-7xl mx-auto">
         {/* Page Title */}
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Doctor Registration Review</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('title')}</h1>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white border rounded-lg p-4 shadow-sm">
-            <div className="text-sm text-gray-600">Total Registered</div>
+            <div className="text-sm text-gray-600">{t('stats.totalRegistered')}</div>
             <div className="text-2xl font-bold text-gray-900 mt-1">{stats.total}</div>
           </div>
           <div 
             className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50"
             onClick={() => setStatusFilter('PENDING')}
           >
-            <div className="text-sm text-gray-600">Pending Review</div>
+            <div className="text-sm text-gray-600">{t('stats.pendingReview')}</div>
             <div className="text-2xl font-bold text-orange-600 mt-1">{stats.pending}</div>
           </div>
           <div 
             className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50"
             onClick={() => setStatusFilter('APPROVED')}
           >
-            <div className="text-sm text-gray-600">Approved</div>
+            <div className="text-sm text-gray-600">{t('stats.approved')}</div>
             <div className="text-2xl font-bold text-green-600 mt-1">{stats.approved}</div>
           </div>
           <div 
             className="bg-white border rounded-lg p-4 shadow-sm cursor-pointer hover:bg-gray-50"
             onClick={() => setStatusFilter('REJECTED')}
           >
-            <div className="text-sm text-gray-600">Rejected</div>
+            <div className="text-sm text-gray-600">{t('stats.rejected')}</div>
             <div className="text-2xl font-bold text-red-600 mt-1">{stats.rejected}</div>
           </div>
         </div>
@@ -139,7 +140,7 @@ export default function DoctorRegistrationReview() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <input
             type="text"
-            placeholder="Search by name or ID..."
+            placeholder={t('searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full sm:w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1] text-gray-900 placeholder-gray-400"
@@ -149,10 +150,10 @@ export default function DoctorRegistrationReview() {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:border-[#94B4C1] focus:ring-1 focus:ring-[#94B4C1]"
           >
-            <option>All Statuses</option>
-            <option value="PENDING">Pending Review</option>
-            <option value="APPROVED">Approved</option>
-            <option value="REJECTED">Rejected</option>
+            <option value="ALL">{t('filters.allStatuses')}</option>
+            <option value="PENDING">{t('filters.pendingReview')}</option>
+            <option value="APPROVED">{t('filters.approved')}</option>
+            <option value="REJECTED">{t('filters.rejected')}</option>
           </select>
         </div>
 
@@ -167,7 +168,7 @@ export default function DoctorRegistrationReview() {
           {isLoading ? (
             <div className="p-12 text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-              <p className="text-gray-600 mt-4">Loading doctors...</p>
+              <p className="text-gray-600 mt-4">{t('loading')}</p>
             </div>
           ) : (
             <>
@@ -176,19 +177,19 @@ export default function DoctorRegistrationReview() {
                   <thead className="bg-gray-50">
                     <tr>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Doctor Name
+                        {t('table.doctorName')}
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Doctor ID
+                        {t('table.doctorId')}
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Phone
+                        {t('table.phone')}
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
+                        {t('table.status')}
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
+                        {t('table.actions')}
                       </th>
                     </tr>
                   </thead>
@@ -204,7 +205,7 @@ export default function DoctorRegistrationReview() {
                             </div>
                             <div className="ml-3">
                               <p className="text-sm font-semibold text-gray-900">
-                                Dr. {doctor.firstName} {doctor.lastName}
+                                {t('doctorPrefix')} {doctor.firstName} {doctor.lastName}
                               </p>
                               <p className="text-xs text-gray-500">{doctor.email}</p>
                             </div>
@@ -226,7 +227,7 @@ export default function DoctorRegistrationReview() {
                                 : 'bg-red-100 text-red-800'
                             }`}
                           >
-                            {doctor.status || 'PENDING'}
+                            {doctor.status || t('status.pending')}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -234,7 +235,7 @@ export default function DoctorRegistrationReview() {
                             onClick={() => handleViewDetails(doctor)}
                             className="text-[#94B4C1] hover:text-[#7fa8b8] font-semibold"
                           >
-                            View Details →
+                            {t('viewDetails')}
                           </button>
                         </td>
                       </tr>
@@ -248,8 +249,8 @@ export default function DoctorRegistrationReview() {
                   <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No doctors found</h3>
-                  <p className="text-gray-600">No doctors matching your search criteria.</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('emptyTitle')}</h3>
+                  <p className="text-gray-600">{t('emptySubtitle')}</p>
                 </div>
               )}
             </>

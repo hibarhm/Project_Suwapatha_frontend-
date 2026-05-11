@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { authApi } from '@/app/api/auth/authApi';
 import {stripLocalePrefix} from '@/lib/localePath';
+import {useTranslations} from 'next-intl';
 
 type Role = 'PATIENT' | 'DOCTOR' | 'ADMIN' | 'SUPER_ADMIN' | string;
 
@@ -16,6 +17,7 @@ export default function RequireRole({
   children: ReactNode;
   redirectTo?: string;
 }) {
+  const t = useTranslations('requireRole');
   const router = useRouter();
   const pathname = usePathname();
   const normalizedPathname = stripLocalePrefix(pathname ?? '/');
@@ -49,7 +51,7 @@ export default function RequireRole({
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#94B4C1] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Checking permissions...</p>
+          <p className="mt-4 text-gray-600">{t('checkingPermissions')}</p>
         </div>
       </div>
     );

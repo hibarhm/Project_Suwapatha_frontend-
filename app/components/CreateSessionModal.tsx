@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css'; // ← default style (you can override)
 import { cn } from '@/app/lib/utils'; // ← shadcn cn helper (create if missing)
+import {useTranslations} from 'next-intl';
 
 interface CreateSessionModalProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ export default function CreateSessionModal({
   setFormData,
   onCreate,
 }: CreateSessionModalProps) {
+  const t = useTranslations('createSessionModal');
   const [showCalendar, setShowCalendar] = useState(false);
 
   if (!isOpen) return null;
@@ -67,8 +69,8 @@ export default function CreateSessionModal({
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Create New OPD Session</h2>
-              <p className="text-sm text-gray-600 mt-1">All sessions run from 08:00 to 12:00</p>
+              <h2 className="text-xl font-bold text-gray-900">{t('title')}</h2>
+              <p className="text-sm text-gray-600 mt-1">{t('headerSubtitle')}</p>
             </div>
             <button
               onClick={onClose}
@@ -86,7 +88,7 @@ export default function CreateSessionModal({
           {/* Date & Total Slots */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="relative">
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Date</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('date')}</label>
 
               {/* Custom date trigger (click to open calendar) */}
               <div
@@ -100,7 +102,7 @@ export default function CreateSessionModal({
               >
                 {formData.date
                   ? format(new Date(formData.date), 'PPP')
-                  : 'Select date'}
+                  : t('selectDate')}
                 <svg
                   className="w-5 h-5 text-gray-500"
                   fill="none"
@@ -141,11 +143,11 @@ export default function CreateSessionModal({
                 </div>
               )}
 
-              <p className="text-xs text-gray-500 mt-1.5">Up to 7 days in advance</p>
+              <p className="text-xs text-gray-500 mt-1.5">{t('advanceHint')}</p>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Total Slots</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('totalSlots')}</label>
               <input
                 type="number"
                 value={formData.totalSlots}
@@ -159,13 +161,13 @@ export default function CreateSessionModal({
           {/* Fixed Time & Slot Duration */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Session Time</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('sessionTime')}</label>
               <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 font-medium">
-                08:00 – 12:00 (fixed morning session)
+                {t('sessionTimeValue')}
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Slot Duration (minutes)</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">{t('slotDuration')}</label>
               <input
                 type="number"
                 value={formData.slotDuration}
@@ -180,7 +182,7 @@ export default function CreateSessionModal({
           {/* Note box */}
           <div className="bg-[#94B4C1]/5 border border-[#94B4C1]/20 rounded-lg p-4 text-sm">
             <p className="text-[#94B4C1] font-medium">
-              <strong>Note:</strong> General consultation only (08:00–12:00). Doctors & rooms assigned on the day. Patients cannot choose a specific doctor.
+              <strong>{t('noteLabel')}</strong> {t('note')}
             </p>
           </div>
         </div>
@@ -191,13 +193,13 @@ export default function CreateSessionModal({
             onClick={onClose}
             className="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
           >
-            Cancel
+            {t('cancel')}
           </button>
           <button
             onClick={onCreate}
             className="px-5 py-2.5 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] font-medium transition-colors"
           >
-            Create Session
+            {t('createSession')}
           </button>
         </div>
       </div>
