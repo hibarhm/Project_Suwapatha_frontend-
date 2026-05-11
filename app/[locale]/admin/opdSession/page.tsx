@@ -620,7 +620,10 @@ export default function OPDSessionManagement() {
               ) : (
                 <div className="space-y-4">
                   {todaySessions.map((session) => (
-                    <div key={session.id} className={`border-2 rounded-lg p-4 ${session.status === 'OPEN' ? 'border-green-200 bg-green-50' : 'border-gray-200'
+                    <div key={session.id} className={`border-2 rounded-lg p-4 ${
+                      session.status === 'OPEN' ? 'border-green-200 bg-green-50' : 
+                      session.status === 'COMPLETED' ? 'border-blue-200 bg-blue-50/30' : 
+                      'border-gray-200'
                       }`}>
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
@@ -630,6 +633,11 @@ export default function OPDSessionManagement() {
                               <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full flex items-center gap-1">
                                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                                 {t('common.active')}
+                              </span>
+                            )}
+                            {session.status === 'COMPLETED' && (
+                              <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full flex items-center gap-1">
+                                {t('common.completed')}
                               </span>
                             )}
                           </div>

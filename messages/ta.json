@@ -1271,7 +1271,8 @@
       "title": "Today's OPD Sessions",
       "emptyTitle": "No Sessions Today",
       "emptySubtitle": "There are no OPD sessions scheduled for today.",
-      "createFirst": "முதல் அமர்வை உருவாக்கவும்"
+      "createFirst": "முதல் அமர்வை உருவாக்கவும்",
+      "completed": "முடிக்கப்பட்ட அமர்வுகள்"
     },
     "upcoming": {
       "bookableTitle": "Upcoming Sessions (Bookable)",
@@ -1328,6 +1329,12 @@
       "cancelSession": "Failed to cancel session",
       "fetchPatients": "Failed to fetch patients",
       "loadPatientList": "Failed to load patient list"
+    },
+    "common": {
+      "refresh": "புதுப்பிக்கவும்",
+      "active": "செயலில்",
+      "completed": "முடிக்கப்பட்டது",
+      "patient": "நோயாளி"
     }
   },
   "patientSettings": {

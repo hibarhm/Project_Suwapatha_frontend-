@@ -916,12 +916,9 @@
     "todaysSessions": {
       "title": "අද සැසි",
       "noSessions": "අද ක්‍රියාකාරී සැසි නැත",
-      "empty": "අද දින OPD සැසි සැලසුම් කර නොමැත",
+      "emptySubtitle": "අද දින සඳහා OPD සැසි කිසිවක් සැලසුම් කර නොමැත.",
       "createFirst": "පළමු සැසිය සාදන්න",
-      "patients": "රෝගීන්",
-      "viewAll": "සියලුම {count} සැසි බලන්න",
-      "session": "සැසිය {date}",
-      "patientsCount": "රෝගීන් {ගණන්}"
+      "completed": "සම්පූර්ණ කළ සැසි"
     },
     "sessionManagement": {
       "title": "OPD සැසි කළමනාකරණය",
@@ -1303,7 +1300,8 @@
       "title": "අද OPD සැසි",
       "emptyTitle": "අද සැසි නැත",
       "emptySubtitle": "අද දිනට නියමිත OPD සැසි නොමැත.",
-      "createFirst": "පළමු සැසිය සාදන්න"
+      "createFirst": "පළමු සැසිය සාදන්න",
+      "completed": "සම්පූර්ණ කළ සැසි"
     },
     "upcoming": {
       "bookableTitle": "ඉදිරි සැසි (වෙන් කළ හැකි)",
@@ -1369,7 +1367,8 @@
     },
     "common": {
       "refresh": "නැවුම් කරන්න",
-      "active": "සක්‍රීය",
+      "active": "සක්‍රීයයි",
+      "completed": "සම්පූර්ණ කළා",
       "patient": "රෝගියා"
     }
   },

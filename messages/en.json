@@ -1303,7 +1303,8 @@
       "title": "Today's OPD Sessions",
       "emptyTitle": "No Sessions Today",
       "emptySubtitle": "There are no OPD sessions scheduled for today.",
-      "createFirst": "Create First Session"
+      "createFirst": "Create First Session",
+      "completed": "Completed Sessions"
     },
     "upcoming": {
       "bookableTitle": "Upcoming Sessions (Bookable)",
@@ -1370,6 +1371,7 @@
     "common": {
       "refresh": "Refresh",
       "active": "Active",
+      "completed": "Completed",
       "patient": "Patient"
     }
   },
