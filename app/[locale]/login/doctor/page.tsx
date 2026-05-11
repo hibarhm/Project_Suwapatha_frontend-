@@ -23,20 +23,11 @@ export default function DoctorLoginPage() {
     setError(null);
 
     try {
-      // Determine if it's an email or doctor ID
-      const isEmail = formData.doctorIdOrEmail.includes('@');
-
-      if (isEmail) {
-        await authApi.login({
-          email: formData.doctorIdOrEmail,
-          password: formData.password
-        });
-      } else {
-        await authApi.loginDoctor({
-          doctorId: formData.doctorIdOrEmail,
-          password: formData.password
-        });
-      }
+      // Always use loginDoctor as it now handles both email and ID on the backend
+      await authApi.loginDoctor({
+        doctorId: formData.doctorIdOrEmail,
+        password: formData.password
+      });
 
       // Redirect to doctor dashboard
       router.push('/doctor/dashboard');
