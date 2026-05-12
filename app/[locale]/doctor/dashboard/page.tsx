@@ -45,8 +45,9 @@ interface Notification {
   type: string;
   title: string;
   message: string;
-  createdAt: string;
-  read: boolean;
+  time: string;
+  isRead: boolean;
+  icon?: string;
 }
 
 export default function DoctorDashboard() {
@@ -66,6 +67,8 @@ export default function DoctorDashboard() {
     changeFromLastMonth: 0,
   });
   const [availability, setAvailability] = useState<DoctorAvailability | null>(null);
+  const [todayAppointments, setTodayAppointments] = useState<Appointment[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [patientVisitsData, setPatientVisitsData] = useState<any[]>([]);
   const [consultationsByDay, setConsultationsByDay] = useState<any[]>([]);
   const [isToggling, setIsToggling] = useState(false);
@@ -190,7 +193,7 @@ export default function DoctorDashboard() {
 
       // Update local state
       setNotifications(notifications.map(n =>
-        n.id === notificationId ? { ...n, read: true } : n
+        n.id === notificationId ? { ...n, isRead: true } : n
       ));
     } catch (err) {
       console.error('Error marking notification as read:', err);
@@ -575,7 +578,7 @@ export default function DoctorDashboard() {
                 notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`flex gap-3 p-3 rounded-lg border transition-colors ${notification.read
+                    className={`flex gap-3 p-3 rounded-lg border transition-colors ${notification.isRead
                       ? 'border-gray-100 bg-gray-50'
                       : 'border-[#94B4C1]/20 bg-[#94B4C1]/5'
                       }`}
@@ -589,12 +592,12 @@ export default function DoctorDashboard() {
                       {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm mb-1 ${notification.read ? 'text-gray-700' : 'text-gray-900 font-medium'}`}>
+                      <p className={`text-sm mb-1 ${notification.isRead ? 'text-gray-700' : 'text-gray-900 font-medium'}`}>
                         {notification.title}
                       </p>
                       <p className="text-xs text-gray-500">{notification.message}</p>
                       <p className="text-xs text-gray-400 mt-1">
-                        {new Date(notification.createdAt).toLocaleString()}
+                        {notification.time}
                       </p>
                     </div>
                     <button

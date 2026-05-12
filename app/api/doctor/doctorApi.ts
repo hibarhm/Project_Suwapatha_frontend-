@@ -20,8 +20,10 @@ export interface DoctorDashboardData {
         id: string;
         type: string;
         title: string;
+        message: string;
         time: string;
         icon: string;
+        isRead: boolean;
     }>;
     patientVisitsData: Array<{
         month: string;
