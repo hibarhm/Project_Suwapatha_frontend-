@@ -65,10 +65,9 @@ export default function DoctorDashboard() {
     changeFromLastWeek: 0,
     changeFromLastMonth: 0,
   });
-  const [upcomingAppointments, setUpcomingAppointments] = useState<Appointment[]>([]);
-  const [todayAppointments, setTodayAppointments] = useState<Appointment[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [availability, setAvailability] = useState<DoctorAvailability | null>(null);
+  const [patientVisitsData, setPatientVisitsData] = useState<any[]>([]);
+  const [consultationsByDay, setConsultationsByDay] = useState<any[]>([]);
   const [isToggling, setIsToggling] = useState(false);
 
   useEffect(() => {
@@ -100,9 +99,7 @@ export default function DoctorDashboard() {
 
       await Promise.all([
         fetchProfile(),
-        fetchTodayAppointments(),
-        fetchUpcomingAppointments(),
-        fetchNotifications(),
+        fetchDashboardData(),
         fetchAvailability()
       ]);
     } catch (err: any) {
@@ -141,81 +138,16 @@ export default function DoctorDashboard() {
     }
   };
 
-  const fetchTodayAppointments = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const token = getAuthToken();
-
-      const response = await fetch(`${API_BASE_URL}/api/doctor/appointments/today`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        console.log('Today appointments endpoint not available');
-        setTodayAppointments([]);
-        return;
-      }
-
-      const data = await response.json();
-      setTodayAppointments(data);
-
-      // Calculate stats from appointments
-      calculateStats(data);
+      const data = await doctorApi.getDashboardData();
+      setStats(data.stats);
+      setPatientVisitsData(data.patientVisitsData);
+      setConsultationsByDay(data.consultationsByDay);
+      setTodayAppointments(data.upcomingAppointments as any); // Reusing upcoming for today's view in dashboard
+      setNotifications(data.notifications as any);
     } catch (err) {
-      console.error('Error fetching today appointments:', err);
-      setTodayAppointments([]);
-    }
-  };
-
-  const fetchUpcomingAppointments = async () => {
-    try {
-      const token = getAuthToken();
-
-      const response = await fetch(`${API_BASE_URL}/api/doctor/appointments/upcoming`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        console.log('Upcoming appointments endpoint not available');
-        setUpcomingAppointments([]);
-        return;
-      }
-
-      const data = await response.json();
-      setUpcomingAppointments(data);
-    } catch (err) {
-      console.error('Error fetching upcoming appointments:', err);
-      setUpcomingAppointments([]);
-    }
-  };
-
-  const fetchNotifications = async () => {
-    try {
-      const token = getAuthToken();
-
-      const response = await fetch(`${API_BASE_URL}/api/doctor/notifications`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        console.log('Notifications endpoint not available');
-        setNotifications([]);
-        return;
-      }
-
-      const data = await response.json();
-      setNotifications(data);
-    } catch (err) {
-      console.error('Error fetching notifications:', err);
-      setNotifications([]);
+      console.error('Error fetching dashboard data:', err);
     }
   };
 
@@ -284,21 +216,6 @@ export default function DoctorDashboard() {
     }
   };
 
-  const calculateStats = (appointments: Appointment[]) => {
-    const totalToday = appointments.length;
-    const avgWait = appointments.length > 0
-      ? Math.round(appointments.reduce((sum, apt) => sum + apt.estimatedWaitMinutes, 0) / appointments.length)
-      : 0;
-
-    setStats({
-      totalPatientsToday: totalToday,
-      consultationsThisWeek: totalToday * 5, // Approximate
-      averageWaitTime: avgWait,
-      changeFromYesterday: 0, // Would need historical data
-      changeFromLastWeek: 0, // Would need historical data
-      changeFromLastMonth: 0, // Would need historical data
-    });
-  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -340,25 +257,6 @@ export default function DoctorDashboard() {
     );
   }
 
-  // Sample data for charts (would come from backend in production)
-  const patientVisitsData = [
-    { month: t('months.jan'), count: 245 },
-    { month: t('months.feb'), count: 280 },
-    { month: t('months.mar'), count: 265 },
-    { month: t('months.apr'), count: 310 },
-    { month: t('months.may'), count: 290 },
-    { month: t('months.jun'), count: 330 }
-  ];
-
-  const consultationsByDay = [
-    { day: t('days.mon'), count: 28 },
-    { day: t('days.tue'), count: 32 },
-    { day: t('days.wed'), count: 25 },
-    { day: t('days.thu'), count: 30 },
-    { day: t('days.fri'), count: 35 },
-    { day: t('days.sat'), count: 20 },
-    { day: t('days.sun'), count: 15 }
-  ];
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -517,17 +415,19 @@ export default function DoctorDashboard() {
                 <line x1="50" y1="100" x2="550" y2="100" stroke="#e5e7eb" strokeWidth="1" />
                 <line x1="50" y1="50" x2="550" y2="50" stroke="#e5e7eb" strokeWidth="1" />
                 {/* Line */}
-                <polyline
-                  points="80,120 160,90 240,110 320,60 400,80 480,40"
-                  fill="none"
-                  stroke="#94B4C1"
-                  strokeWidth="3"
-                />
+                {patientVisitsData.length > 1 && (
+                  <polyline
+                    points={patientVisitsData.map((d, i) => `${80 + i * 80},${200 - (d.visits / 400) * 150}`).join(' ')}
+                    fill="none"
+                    stroke="#94B4C1"
+                    strokeWidth="3"
+                  />
+                )}
                 {/* Y-axis labels */}
-                <text x="20" y="55" fontSize="12" fill="#6b7280">350</text>
+                <text x="20" y="55" fontSize="12" fill="#6b7280">400</text>
                 <text x="20" y="105" fontSize="12" fill="#6b7280">300</text>
-                <text x="20" y="155" fontSize="12" fill="#6b7280">250</text>
-                <text x="20" y="205" fontSize="12" fill="#6b7280">200</text>
+                <text x="20" y="155" fontSize="12" fill="#6b7280">200</text>
+                <text x="20" y="205" fontSize="12" fill="#6b7280">100</text>
                 {/* X-axis labels */}
                 {patientVisitsData.map((data, i) => (
                   <text key={i} x={70 + i * 80} y="225" fontSize="12" fill="#6b7280">{data.month}</text>
@@ -550,16 +450,19 @@ export default function DoctorDashboard() {
 
             {/* Bar Chart */}
             <div className="h-64 flex items-end justify-around gap-3 px-4">
-              {consultationsByDay.map((day, index) => (
-                <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                  <div
-                    className="w-full bg-[#94B4C1] rounded-t transition-all hover:bg-[#7fa8b8] cursor-pointer"
-                    style={{ height: `${(day.count / 35) * 100}%` }}
-                    title={t('charts.consultationsTitle', {count: day.count})}
-                  ></div>
-                  <span className="text-xs text-gray-600">{day.day}</span>
-                </div>
-              ))}
+              {consultationsByDay.map((day, index) => {
+                const maxVal = Math.max(...consultationsByDay.map(d => d.count), 10);
+                return (
+                  <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                    <div
+                      className="w-full bg-[#94B4C1] rounded-t transition-all hover:bg-[#7fa8b8] cursor-pointer"
+                      style={{ height: `${(day.count / maxVal) * 100}%` }}
+                      title={`${day.count} consultations`}
+                    ></div>
+                    <span className="text-xs text-gray-600">{day.day}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -571,7 +474,7 @@ export default function DoctorDashboard() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">{t('appointments.title')}</h3>
               <button
-                onClick={fetchTodayAppointments}
+                onClick={fetchDashboardData}
                 className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
               >
                 {t('refresh')}
@@ -659,7 +562,7 @@ export default function DoctorDashboard() {
               <h3 className="text-lg font-bold text-gray-900">{t('notifications.title')}</h3>
               {notifications.length > 0 && (
                 <button
-                  onClick={fetchNotifications}
+                  onClick={fetchDashboardData}
                   className="text-sm text-[#94B4C1] hover:text-[#7fa8b8] font-medium"
                 >
                   {t('refresh')}
