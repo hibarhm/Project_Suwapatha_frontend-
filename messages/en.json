@@ -302,7 +302,8 @@
     "status": {
       "booked": "Booked",
       "cancelled": "Cancelled",
-      "completed": "Completed"
+      "completed": "Completed",
+      "finished": "Finished"
     },
     "newUser": {
       "title": "Welcome to Suwapatha! 🎉",
@@ -378,7 +379,8 @@
     "status": {
       "booked": "Booked",
       "cancelled": "Cancelled",
-      "completed": "Completed"
+      "completed": "Completed",
+      "finished": "Finished"
     },
     "alerts": {
       "reminderTitle": "Appointment Reminder",
@@ -448,7 +450,8 @@
       "fetchFailed": "Failed to fetch medical records",
       "loadFailed": "Failed to load medical records. Please try again.",
       "filterFailed": "Failed to filter medical records",
-      "filterLoadFailed": "Failed to filter medical records. Please try again."
+      "filterLoadFailed": "Failed to filter medical records. Please try again.",
+      "downloadFailed": "Failed to generate and download the medical records PDF. Please try again later."
     },
     "alerts": {
       "downloadVisit": "Downloading PDF for visit {visitId}",

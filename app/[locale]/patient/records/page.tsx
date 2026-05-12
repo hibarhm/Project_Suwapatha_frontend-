@@ -183,13 +183,31 @@ export default function MedicalRecordsPage() {
   };
 
   const handleDownloadAllPDF = async () => {
-    // Implement download all logic
-    alert(t('alerts.downloadAll'));
-  };
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
 
-  const handleShareLink = () => {
-    // Implement share functionality
-    alert(t('alerts.shareLink'));
+      const response = await fetch(`${API_BASE_URL}/api/medical-records/download`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to download PDF');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `medical_records_${patientName.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Error downloading PDF:', err);
+      alert(t('errors.downloadFailed') || 'Failed to download PDF');
+    }
   };
 
   if (loading) {
@@ -275,15 +293,6 @@ export default function MedicalRecordsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               {t('actions.downloadAllPdf')}
-            </button>
-            <button
-              onClick={handleShareLink}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors text-sm font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              {t('actions.shareLink')}
             </button>
           </div>
         </div>

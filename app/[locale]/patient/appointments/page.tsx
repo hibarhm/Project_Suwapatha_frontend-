@@ -18,11 +18,16 @@ function StatusBadge({ status }: { status: string }) {
     BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
     CANCELLED: 'bg-red-100 text-red-700',
     COMPLETED: 'bg-green-100 text-green-700',
+    FINISHED: 'bg-gray-100 text-gray-700',
   };
   return (
     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
       ${map[status] ?? 'bg-gray-100 text-gray-600'}`}>
-      {status === 'BOOKED' ? t('booked') : status === 'CANCELLED' ? t('cancelled') : status === 'COMPLETED' ? t('completed') : status}
+      {status === 'BOOKED' ? t('booked') 
+        : status === 'CANCELLED' ? t('cancelled') 
+        : status === 'COMPLETED' ? t('completed') 
+        : status === 'FINISHED' ? t('finished')
+        : status}
     </span>
   );
 }
