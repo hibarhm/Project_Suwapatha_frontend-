@@ -411,31 +411,42 @@ export default function DoctorDashboard() {
 
             {/* Line Chart */}
             <div className="h-64">
-              <svg className="w-full h-full" viewBox="0 0 600 250">
-                {/* Grid lines */}
-                <line x1="50" y1="200" x2="550" y2="200" stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="50" y1="150" x2="550" y2="150" stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="50" y1="100" x2="550" y2="100" stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="50" y1="50" x2="550" y2="50" stroke="#e5e7eb" strokeWidth="1" />
-                {/* Line */}
-                {patientVisitsData.length > 1 && (
-                  <polyline
-                    points={patientVisitsData.map((d, i) => `${80 + i * 80},${200 - (d.visits / 400) * 150}`).join(' ')}
-                    fill="none"
-                    stroke="#94B4C1"
-                    strokeWidth="3"
-                  />
-                )}
-                {/* Y-axis labels */}
-                <text x="20" y="55" fontSize="12" fill="#6b7280">400</text>
-                <text x="20" y="105" fontSize="12" fill="#6b7280">300</text>
-                <text x="20" y="155" fontSize="12" fill="#6b7280">200</text>
-                <text x="20" y="205" fontSize="12" fill="#6b7280">100</text>
-                {/* X-axis labels */}
-                {patientVisitsData.map((data, i) => (
-                  <text key={i} x={70 + i * 80} y="225" fontSize="12" fill="#6b7280">{data.month}</text>
-                ))}
-              </svg>
+              {(() => {
+                const maxVisits = Math.max(...patientVisitsData.map(d => d.visits), 10);
+                const chartHeight = 150;
+                const chartYBase = 200;
+                
+                return (
+                  <svg className="w-full h-full" viewBox="0 0 600 250">
+                    {/* Grid lines */}
+                    <line x1="50" y1="200" x2="550" y2="200" stroke="#e5e7eb" strokeWidth="1" />
+                    <line x1="50" y1="150" x2="550" y2="150" stroke="#e5e7eb" strokeWidth="1" />
+                    <line x1="50" y1="100" x2="550" y2="100" stroke="#e5e7eb" strokeWidth="1" />
+                    <line x1="50" y1="50" x2="550" y2="50" stroke="#e5e7eb" strokeWidth="1" />
+                    
+                    {/* Line */}
+                    {patientVisitsData.length > 1 && (
+                      <polyline
+                        points={patientVisitsData.map((d, i) => `${80 + i * 80},${chartYBase - (d.visits / maxVisits) * chartHeight}`).join(' ')}
+                        fill="none"
+                        stroke="#94B4C1"
+                        strokeWidth="3"
+                      />
+                    )}
+                    
+                    {/* Y-axis labels (Dynamic based on maxVisits) */}
+                    <text x="15" y="55" fontSize="12" fill="#6b7280">{maxVisits}</text>
+                    <text x="15" y="105" fontSize="12" fill="#6b7280">{Math.round(maxVisits * 0.66)}</text>
+                    <text x="15" y="155" fontSize="12" fill="#6b7280">{Math.round(maxVisits * 0.33)}</text>
+                    <text x="15" y="205" fontSize="12" fill="#6b7280">0</text>
+                    
+                    {/* X-axis labels */}
+                    {patientVisitsData.map((data, i) => (
+                      <text key={i} x={70 + i * 80} y="225" fontSize="12" fill="#6b7280">{data.month}</text>
+                    ))}
+                  </svg>
+                );
+              })()}
             </div>
           </div>
 
