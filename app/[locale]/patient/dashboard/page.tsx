@@ -170,7 +170,7 @@ export default function PatientDashboard() {
                 <span className="text-orange-600 font-bold text-sm">!</span>
               </div>
               <p className="text-sm text-orange-800">
-                {t('penalty.countWarning', { count: profile.lateCancellationCount })}
+                {t('penalty.countWarning', { count: profile.lateCancellationCount ?? 0 })}
               </p>
             </div>
           )}
@@ -245,7 +245,7 @@ export default function PatientDashboard() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      {[t('table.date'), t('table.hospital'), t('table.doctor'), t('table.queue'), t('table.wait'), t('table.actions')].map(h => (
+                      {[t('table.date'), t('table.hospital'), t('table.doctor'), t('table.room'), t('table.queue'), t('table.wait'), t('table.actions')].map(h => (
                         <th key={h} className="text-left py-3 px-3 text-xs font-semibold text-gray-500">{h}</th>
                       ))}
                     </tr>
@@ -256,6 +256,9 @@ export default function PatientDashboard() {
                         <td className="py-4 px-3 text-sm text-gray-900 whitespace-nowrap">{apt.appointmentDate}</td>
                         <td className="py-4 px-3 text-sm text-gray-900 max-w-[140px] truncate">{apt.hospitalName}</td>
                         <td className="py-4 px-3 text-sm text-gray-600">{apt.doctorName || t('common.notAvailable')}</td>
+                        <td className="py-4 px-3 text-sm text-gray-600 font-medium">
+                          {apt.room ? `${apt.room}` : t('common.notAvailable')}
+                        </td>
                         <td className="py-4 px-3 text-sm font-bold text-[#94B4C1]">#{apt.queueNumber}</td>
                         <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap">
                           {apt.status === 'CONSULTING' ? t('table.youAreNext') : apt.isNext ? t('table.youAreNext') : t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes})}
@@ -306,6 +309,10 @@ export default function PatientDashboard() {
                         ? t('table.youAreNext')
                         : t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})}
                     </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">{t('liveQueue.room')}</p>
+                    <p className="text-sm font-semibold text-gray-900">{activeAppt.room || t('common.notAvailable')}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">{t('liveQueue.status')}</p>

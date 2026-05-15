@@ -327,6 +327,7 @@
       "doctor": "ඩොක්ටර්",
       "queue": "පෝලිම #",
       "wait": "ඉන්න",
+      "room": "OPD කාමරය",
       "actions": "ක්රියාවන්",
       "waitMinutes": "~{මිනිත්තු} විනාඩි",
       "waitOnlyMinutes": "මිනිත්තු {මිනිත්තු}",
@@ -342,6 +343,7 @@
       "hospital": "රෝහල",
       "doctor": "ඩොක්ටර්",
       "estimatedWait": "EST. ඉන්න",
+      "room": "OPD කාමරය",
       "status": "තත්ත්වය"
     },
     "vitals": {
@@ -417,6 +419,7 @@
       "minutesOnly": "මිනිත්තු {මිනිත්තු}",
       "hospital": "රෝහල",
       "doctor": "ඩොක්ටර්",
+      "room": "OPD කාමරය",
       "status": "තත්ත්වය",
       "emptyTitle": "සක්‍රිය හමුවීමක් නැත",
       "emptySubtitle": "රෝහලක් සොයන්න සහ ඉහත OPD සැසියක් වෙන්කරවා ගන්න."

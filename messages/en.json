@@ -327,6 +327,7 @@
       "doctor": "Doctor",
       "queue": "Queue #",
       "wait": "Wait",
+      "room": "OPD Room",
       "actions": "Actions",
       "waitMinutes": "~{minutes} min",
       "waitOnlyMinutes": "{minutes} min",
@@ -342,6 +343,7 @@
       "hospital": "Hospital",
       "doctor": "Doctor",
       "estimatedWait": "Est. Wait",
+      "room": "OPD Room",
       "status": "Status"
     },
     "vitals": {
@@ -417,6 +419,7 @@
       "minutesOnly": "{minutes} min",
       "hospital": "Hospital",
       "doctor": "Doctor",
+      "room": "OPD Room",
       "status": "Status",
       "emptyTitle": "No active appointment",
       "emptySubtitle": "Search a hospital and book an OPD session above."

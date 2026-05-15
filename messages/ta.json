@@ -327,6 +327,7 @@
       "doctor": "டாக்டர்",
       "queue": "வரிசை #",
       "wait": "காத்திருங்கள்",
+      "room": "OPD அறை",
       "actions": "செயல்கள்",
       "waitMinutes": "~{minutes} நிமிடம்",
       "waitOnlyMinutes": "{minutes} நிமிடம்",
@@ -342,6 +343,7 @@
       "hospital": "மருத்துவமனை",
       "doctor": "டாக்டர்",
       "estimatedWait": "Est. காத்திருங்கள்",
+      "room": "OPD அறை",
       "status": "நிலை"
     },
     "vitals": {
@@ -417,6 +419,7 @@
       "minutesOnly": "{minutes} நிமிடம்",
       "hospital": "மருத்துவமனை",
       "doctor": "டாக்டர்",
+      "room": "OPD அறை",
       "status": "நிலை",
       "emptyTitle": "செயலில் உள்ள சந்திப்பு இல்லை",
       "emptySubtitle": "ஒரு மருத்துவமனையைத் தேடி மேலே OPD அமர்வை முன்பதிவு செய்யவும்."

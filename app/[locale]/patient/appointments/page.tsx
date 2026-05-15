@@ -503,6 +503,11 @@ export default function AppointmentBookingPage() {
                         value: activeAppt.doctorName || t('common.toBeAssigned'),
                       },
                       {
+                        icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
+                        label: t('queue.room'),
+                        value: activeAppt.room || t('common.notAvailable'),
+                      },
+                      {
                         icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
                         label: t('queue.status'),
                         value: null,
