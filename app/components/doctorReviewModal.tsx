@@ -10,7 +10,7 @@ interface DoctorReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   onApprove: (doctorId: string) => void;
-  onReject: (doctorId: string) => void;
+  onReject: (doctorId: string, reason: string) => void;
 }
 
 export default function DoctorReviewModal({
@@ -23,6 +23,8 @@ export default function DoctorReviewModal({
   const t = useTranslations('doctorReviewModal');
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
+  const [showRejectionForm, setShowRejectionForm] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState('');
 
   if (!isOpen) return null;
 
@@ -39,18 +41,34 @@ export default function DoctorReviewModal({
   };
 
   const handleReject = async () => {
+    if (!showRejectionForm) {
+      setShowRejectionForm(true);
+      return;
+    }
+
+    if (!rejectionReason.trim()) {
+      alert(t('reasonRequired'));
+      return;
+    }
+
     if (!confirm(t('confirmReject'))) {
       return;
     }
+
     setIsRejecting(true);
     try {
-      await onReject(doctor.id);
+      await onReject(doctor.id, rejectionReason);
       onClose();
     } catch (error) {
       console.error('Rejection error:', error);
     } finally {
       setIsRejecting(false);
     }
+  };
+
+  const cancelRejection = () => {
+    setShowRejectionForm(false);
+    setRejectionReason('');
   };
 
   return (
@@ -162,6 +180,31 @@ export default function DoctorReviewModal({
               </div>
             </div>
           </div>
+          
+          {/* Rejection Form */}
+          {showRejectionForm && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="flex items-center gap-2 text-red-700 font-semibold mb-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                {t('rejectionReasonLabel')}
+              </div>
+              <textarea
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                placeholder={t('rejectionReasonPlaceholder')}
+                className="w-full h-32 px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 text-gray-900 placeholder-gray-400"
+                autoFocus
+              />
+              <button
+                onClick={cancelRejection}
+                className="text-sm text-red-600 hover:text-red-800 font-medium transition-colors"
+              >
+                {t('cancelRejection')}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Footer Actions */}
@@ -184,7 +227,7 @@ export default function DoctorReviewModal({
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <span>{t('reject')}</span>
+                <span>{showRejectionForm ? t('confirmRejectAction') : t('reject')}</span>
               </>
             )}
           </button>

@@ -287,7 +287,7 @@ export default function OPDSessionManagement() {
         body: JSON.stringify({
           date: formData.date,
           startTime: '08:00',
-          endTime: '12:00',
+          endTime: '20:00',
           department: 'General Consultation',
           doctorName: t('labels.pendingAssignment'),
           room: t('labels.notAssigned'),

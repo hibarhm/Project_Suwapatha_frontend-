@@ -25,6 +25,10 @@ interface TodayStats {
   activeDoctors: number;
   totalDoctors: number;
   activeSessions: number;
+  totalSessions: number;
+  monthlyActiveSessions: number;
+  monthlyTotalSessions: number;
+  monthlyCompletedPatients: number;
 }
 
 interface Doctor {
@@ -63,7 +67,11 @@ export default function AdminDashboard() {
     unallocatedPatients: 0,
     activeDoctors: 0,
     totalDoctors: 0,
-    activeSessions: 0
+    activeSessions: 0,
+    totalSessions: 0,
+    monthlyActiveSessions: 0,
+    monthlyTotalSessions: 0,
+    monthlyCompletedPatients: 0
   });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [todaySessions, setTodaySessions] = useState<Session[]>([]);
@@ -330,21 +338,18 @@ export default function AdminDashboard() {
 
   const stats = [
     {
-      title: t('stats.patientsToday'),
-      value: todayStats.totalPatients.toString(),
-      change: t('stats.allocatedWaiting', {
-        allocated: todayStats.allocatedPatients,
-        waiting: todayStats.unallocatedPatients
-      }),
+      title: t('stats.monthlyCompletedPatients'),
+      value: todayStats.monthlyCompletedPatients.toString(),
+      change: t('stats.completedThisMonth'),
       icon: (
         <img width="24" height="24" src="https://img.icons8.com/ios-filled/50/crowd.png" alt="crowd" />
       ),
       color: '#94B4C1'
     },
     {
-      title: t('stats.activeSessions'),
-      value: todayStats.activeSessions.toString(),
-      change: t('stats.totalSessionsToday', {count: todayStats.totalDoctors}),
+      title: t('stats.activeSessionsMonth'),
+      value: todayStats.monthlyActiveSessions.toString(),
+      change: t('stats.totalSessionsMonth', {count: todayStats.monthlyTotalSessions}),
       icon: (
         <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/queue.png" alt="queue" />
       ),

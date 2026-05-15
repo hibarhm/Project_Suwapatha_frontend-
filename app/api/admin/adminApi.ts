@@ -62,7 +62,7 @@ export const adminApi = {
         return response.json();
     },
 
-    rejectDoctor: async (id: string): Promise<Doctor> => {
+    rejectDoctor: async (id: string, reason?: string): Promise<Doctor> => {
         const token = localStorage.getItem('token') || localStorage.getItem('authToken');
         const response = await fetch(`${API_BASE_URL}/api/admin/doctors/${id}/reject`, {
             method: 'PUT',
@@ -70,6 +70,7 @@ export const adminApi = {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
+            body: reason ? JSON.stringify({ reason }) : undefined,
         });
 
         if (!response.ok) {

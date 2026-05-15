@@ -910,11 +910,15 @@
     "stats": {
       "totalDoctors": "Total Doctors",
       "activeSessions": "Active Sessions",
+      "activeSessionsMonth": "Active Sessions (Month)",
       "patientsToday": "Patients Today",
+      "monthlyCompletedPatients": "Completed Patients (Month)",
       "avgWaitingTime": "Avg. Waiting Time",
       "estimatedPerSession": "Estimated per session",
+      "completedThisMonth": "Total patients booked and checkup completed this month",
       "allocatedWaiting": "{allocated} allocated, {waiting} waiting",
       "totalSessionsToday": "{count} total sessions today",
+      "totalSessionsMonth": "{count} total sessions this month",
       "totalDoctorsToday": "{count} total doctors today"
     },
     "recentDoctors": {
@@ -1148,6 +1152,11 @@
   },
   "doctorReviewModal": {
     "confirmReject": "Are you sure you want to reject this doctor registration?",
+    "rejectionReasonLabel": "Reason for Rejection",
+    "rejectionReasonPlaceholder": "Please provide a clear reason for rejecting this registration...",
+    "cancelRejection": "Cancel Rejection",
+    "confirmRejectAction": "Confirm Rejection",
+    "reasonRequired": "A reason is required for rejection.",
     "pendingReview": "Pending Review",
     "registrationDetails": "Registration Details",
     "submittedOn": "Submitted on",
@@ -1267,16 +1276,16 @@
   },
   "createSessionModal": {
     "title": "Create New OPD Session",
-    "headerSubtitle": "All sessions run from 08:00 to 12:00",
+    "headerSubtitle": "All sessions run from 08:00 to 20:00",
     "date": "Date",
     "selectDate": "Select date",
     "advanceHint": "Up to 7 days in advance",
     "totalSlots": "Total Slots",
     "sessionTime": "Session Time",
-    "sessionTimeValue": "08:00 - 12:00 (fixed morning session)",
+    "sessionTimeValue": "08:00 - 20:00 (fixed session)",
     "slotDuration": "Slot Duration (minutes)",
     "noteLabel": "Note:",
-    "note": "General consultation only (08:00-12:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
+    "note": "General consultation only (08:00-20:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
     "cancel": "Cancel",
     "createSession": "Create Session"
   },

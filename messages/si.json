@@ -910,11 +910,15 @@
     "stats": {
       "totalDoctors": "සම්පූර්ණ වෛද්‍යවරු",
       "activeSessions": "ක්රියාකාරී සැසි",
+      "activeSessionsMonth": "ක්රියාකාරී සැසි (මාසික)",
       "patientsToday": "අද රෝගීන්",
+      "monthlyCompletedPatients": "සම්පූර්ණ කළ රෝගීන් (මාසික)",
       "avgWaitingTime": "සාමාන්‍ය පොරොත්තු කාලය",
       "estimatedPerSession": "එක් සැසියකට ඇස්තමේන්තු කර ඇත",
+      "completedThisMonth": "මෙම මාසය තුළ වෙන් කරවා ගෙන පරීක්ෂාව අවසන් කළ මුළු රෝගීන්",
       "allocatedWaiting": "{allocated} වෙන් කර ඇත, {waiting} රැඳී සිටී",
       "totalSessionsToday": "අද මුළු සැසි {count}",
+      "totalSessionsMonth": "මෙම මාසයේ මුළු සැසි {count}",
       "totalDoctorsToday": "අද මුළු වෛද්යවරු {count}"
     },
     "recentDoctors": {
@@ -1145,6 +1149,11 @@
   },
   "doctorReviewModal": {
     "confirmReject": "ඔබට මෙම වෛද්‍ය ලියාපදිංචිය ප්‍රතික්ෂේප කිරීමට අවශ්‍ය බව විශ්වාසද?",
+    "rejectionReasonLabel": "ප්‍රතික්ෂේප කිරීමට හේතුව",
+    "rejectionReasonPlaceholder": "කරුණාකර මෙම ලියාපදිංචිය ප්‍රතික්ෂේප කිරීම සඳහා පැහැදිලි හේතුවක් සඳහන් කරන්න...",
+    "cancelRejection": "ප්‍රතික්ෂේප කිරීම අවලංගු කරන්න",
+    "confirmRejectAction": "ප්‍රතික්ෂේප කිරීම තහවුරු කරන්න",
+    "reasonRequired": "ප්‍රතික්ෂේප කිරීම සඳහා හේතුවක් අවශ්‍ය වේ.",
     "pendingReview": "පොරොත්තු සමාලෝචනය",
     "registrationDetails": "ලියාපදිංචි විස්තර",
     "submittedOn": "මත ඉදිරිපත් කරන ලදී",
@@ -1264,16 +1273,16 @@
   },
   "createSessionModal": {
     "title": "නව OPD සැසියක් සාදන්න",
-    "headerSubtitle": "සියලුම සැසි 08:00 සිට 12:00 දක්වා පැවැත්වේ",
+    "headerSubtitle": "සියලුම සැසි 08:00 සිට 20:00 දක්වා පැවැත්වේ",
     "date": "දිනය",
     "selectDate": "දිනය තෝරන්න",
     "advanceHint": "දින 7කට පෙර",
     "totalSlots": "මුළු තව්",
     "sessionTime": "සැසි කාලය",
-    "sessionTimeValue": "08:00 - 12:00 (ස්ථාවර උදෑසන සැසිය)",
+    "sessionTimeValue": "08:00 - 20:00 (ස්ථාවර සැසිය)",
     "slotDuration": "තව් කාලය (මිනිත්තු)",
     "noteLabel": "සටහන:",
-    "note": "සාමාන්‍ය උපදේශනය පමණි (08:00-12:00). වෛද්‍යවරුන් සහ කාමර එදිනට පවරනු ලැබේ. රෝගීන්ට නිශ්චිත වෛද්යවරයෙකු තෝරා ගත නොහැක.",
+    "note": "සාමාන්‍ය උපදේශනය පමණි (08:00-20:00). වෛද්‍යවරුන් සහ කාමර එදිනට පවරනු ලැබේ. රෝගීන්ට නිශ්චිත වෛද්යවරයෙකු තෝරා ගත නොහැක.",
     "cancel": "අවලංගු කරන්න",
     "createSession": "සැසිය සාදන්න"
   },

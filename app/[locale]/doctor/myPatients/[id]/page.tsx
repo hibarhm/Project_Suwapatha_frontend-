@@ -7,6 +7,8 @@ import { useParams } from 'next/navigation';
 import DoctorLayout from '@/app/components/doctorLayout';
 import { doctorApi, PatientDetails } from '@/app/api/doctor/doctorApi';
 import RequireRole from '@/app/components/RequireRole';
+import MedicineSearch from '@/app/components/MedicineSearch';
+import { MedicineDTO } from '@/app/api/medicine/medicineApi';
 
 export default function PatientDetailsPage() {
   const t = useTranslations('doctorPatientDetails');
@@ -73,6 +75,13 @@ export default function PatientDetailsPage() {
 
   const handleAddPrescription = () => {
     if (newPrescription.medicine && newPrescription.dosage) {
+      // Avoid duplicate medicines
+      const isDuplicate = prescriptions.some(p => p.medicine.toLowerCase() === newPrescription.medicine.toLowerCase());
+      if (isDuplicate) {
+        alert(t('alerts.medicineAlreadyAdded') || 'This medicine is already in the prescription list.');
+        return;
+      }
+
       setPrescriptions([
         ...prescriptions,
         { ...newPrescription, id: Date.now(), status: 'Active' }
@@ -80,6 +89,15 @@ export default function PatientDetailsPage() {
       setNewPrescription({ medicine: '', dosage: '', frequency: '', duration: '' });
       setShowPrescriptionModal(false);
     }
+  };
+
+  const handleMedicineSelect = (medicine: MedicineDTO) => {
+    const name = medicine.brandName !== 'N/A' ? medicine.brandName : medicine.genericName;
+    setNewPrescription(prev => ({
+      ...prev,
+      medicine: name,
+      // Pre-fill dosage form if available as a hint in notes or dosage
+    }));
   };
 
   const handleSaveConsultation = async () => {
@@ -565,11 +583,8 @@ export default function PatientDetailsPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.medicineName')}</label>
-                <input
-                  type="text"
-                  value={newPrescription.medicine}
-                  onChange={(e) => setNewPrescription({ ...newPrescription, medicine: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
+                <MedicineSearch 
+                  onSelect={handleMedicineSelect}
                   placeholder={t('modal.medicinePlaceholder')}
                 />
               </div>
