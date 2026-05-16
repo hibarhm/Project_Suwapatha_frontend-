@@ -54,6 +54,7 @@ export interface DoctorPatient {
     time: string;
     status: string;
     patientId: string;
+    date?: string;
 }
 
 export interface PatientDetails {
@@ -267,6 +268,25 @@ export const doctorApi = {
         if (!response.ok) {
             throw new Error('Failed to update availability status');
         }
+        return response.json();
+    },
+
+    getPastPatients: async (): Promise<DoctorPatient[]> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        if (!token) throw new Error('Authentication token not found.');
+
+        const response = await fetch(`${API_BASE_URL}/api/doctor/patients/past`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `Failed to fetch past patients (Status: ${response.status})`);
+        }
+
         return response.json();
     },
 };

@@ -582,14 +582,24 @@
     "loading": "Loading patients...",
     "retry": "Retry",
     "emptySearch": "No patients found matching your search.",
+    "tabs": {
+      "today": "Today's Patients",
+      "past": "Past Patients (Last 7 Days)"
+    },
+    "past": {
+      "title": "Past Patients (Records)",
+      "empty": "No completed patients found in the last 7 days."
+    },
     "errors": {
-      "loadFailed": "Failed to load patients. Please try again."
+      "loadFailed": "Failed to load patients. Please try again.",
+      "loadPastFailed": "Failed to load past patients."
     },
     "table": {
       "queueNo": "Queue No.",
       "patientName": "Patient Name",
       "gender": "Gender",
       "time": "Time",
+      "date": "Date",
       "status": "Status",
       "actions": "Actions"
     },
@@ -1326,7 +1336,14 @@
     },
     "tabs": {
       "todaySessions": "Today's Sessions",
-      "upcomingSessions": "Upcoming Sessions (Next 7 Days)"
+      "upcomingSessions": "Upcoming Sessions (Next 7 Days)",
+      "pastSessions": "Past Sessions (Last 7 Days)"
+    },
+    "past": {
+      "title": "Past Sessions (Records)",
+      "subtitle": "Review completed sessions from the past 7 days.",
+      "emptyTitle": "No Past Sessions",
+      "emptySubtitle": "No sessions were recorded in the last 7 days."
     },
     "stats": {
       "totalPatientsToday": "Total Patients Today",
@@ -1399,6 +1416,7 @@
       "fetchTodayStats": "Failed to fetch today stats",
       "fetchTodaySessions": "Failed to fetch today sessions",
       "fetchUpcomingSessions": "Failed to fetch upcoming sessions",
+      "fetchPastSessions": "Failed to fetch past sessions",
       "fetchRooms": "Failed to fetch rooms",
       "assignRoom": "Failed to assign room",
       "allocatePatients": "Failed to allocate patients",

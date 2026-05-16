@@ -63,6 +63,7 @@ export default function OPDSessionManagement() {
   });
   const [todaySessions, setTodaySessions] = useState<Session[]>([]);
   const [scheduledSessions, setScheduledSessions] = useState<Session[]>([]);
+  const [pastSessions, setPastSessions] = useState<Session[]>([]);
   const [rooms, setRooms] = useState<string[]>([]);
   const [availableDoctors, setAvailableDoctors] = useState<DoctorAvailability[]>([]);
   const [selectedSessionPatients, setSelectedSessionPatients] = useState<any[]>([]);
@@ -84,8 +85,10 @@ export default function OPDSessionManagement() {
   useEffect(() => {
     if (activeTab === 'today') {
       fetchTodayData();
-    } else {
+    } else if (activeTab === 'upcoming') {
       fetchUpcomingData();
+    } else if (activeTab === 'past') {
+      fetchPastData();
     }
   }, [activeTab]);
 
@@ -209,6 +212,28 @@ export default function OPDSessionManagement() {
     }
   };
 
+  const fetchPastSessions = async () => {
+    try {
+      const token = getAuthToken();
+
+      const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/past`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(t('errors.fetchPastSessions'));
+      }
+
+      const data = await response.json();
+      setPastSessions(data);
+    } catch (err) {
+      console.error('Error fetching past sessions:', err);
+    }
+  };
+
   const fetchRooms = async () => {
     try {
       const token = getAuthToken();
@@ -272,6 +297,10 @@ export default function OPDSessionManagement() {
 
   const fetchUpcomingData = async () => {
     await fetchUpcomingSessions();
+  };
+
+  const fetchPastData = async () => {
+    await fetchPastSessions();
   };
 
   const handleCreateSession = async () => {
@@ -523,6 +552,18 @@ export default function OPDSessionManagement() {
             {t('tabs.upcomingSessions')}
             <span className="ml-2 px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
               {scheduledSessions.length}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('past')}
+            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'past'
+              ? 'border-[#94B4C1] text-[#94B4C1]'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+          >
+            {t('tabs.pastSessions')}
+            <span className="ml-2 px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
+              {pastSessions.length}
             </span>
           </button>
         </nav>
@@ -948,6 +989,100 @@ export default function OPDSessionManagement() {
                 </div>
               </div>
             ))
+          )}
+        </div>
+      )}
+
+      {/* PAST SESSIONS TAB */}
+      {activeTab === 'past' && (
+        <div className="space-y-4">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-1">{t('past.title')}</h2>
+            <p className="text-sm text-gray-600">{t('past.subtitle')}</p>
+          </div>
+
+          {pastSessions.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('past.emptyTitle')}</h3>
+              <p className="text-gray-600">{t('past.emptySubtitle')}</p>
+            </div>
+          ) : (
+            <div className="grid gap-4">
+              {pastSessions.map((session) => (
+                <div key={session.id} className="bg-white rounded-xl border border-gray-200 p-5 hover:border-[#94B4C1] transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">
+                        {session.date}
+                      </div>
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                        session.status === 'COMPLETED' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {session.status}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => fetchSessionPatients(session.id)}
+                      className="text-sm font-medium text-[#94B4C1] hover:underline"
+                    >
+                      {t('actions.viewPatients')}
+                    </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">{t('labels.doctor')}</p>
+                      <p className="font-medium text-gray-900">{session.doctorName}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">{t('labels.time')}</p>
+                      <p className="font-medium text-gray-900">{session.startTime} - {session.endTime}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">{t('labels.room')}</p>
+                      <p className="font-medium text-gray-900">{session.room}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">{t('labels.patients')}</p>
+                      <p className="font-medium text-gray-900">{session.currentQueueCount} {t('labels.patients')}</p>
+                    </div>
+                  </div>
+
+                  {/* Patient List Section */}
+                  {viewingPatientsFor === session.id && (
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <h4 className="text-sm font-bold text-gray-900 mb-3">{t('patientList.title')}</h4>
+                      {loadingPatients ? (
+                        <p className="text-sm text-gray-600">{t('patientList.loading')}</p>
+                      ) : selectedSessionPatients.length === 0 ? (
+                        <p className="text-sm text-gray-500 italic">{t('patientList.empty')}</p>
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {selectedSessionPatients.map((apt) => (
+                            <div key={apt.id} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100 text-xs">
+                              <div className="flex items-center gap-2">
+                                <span className="w-5 h-5 flex items-center justify-center bg-[#94B4C1]/20 text-[#94B4C1] rounded-full text-[10px] font-bold">
+                                  {apt.queueNumber}
+                                </span>
+                                <span className="font-medium text-gray-900 truncate max-w-[120px]">{apt.patientName || t('common.patient')}</span>
+                              </div>
+                              <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                                apt.status === 'COMPLETED' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                              }`}>
+                                {apt.status}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           )}
         </div>
       )}

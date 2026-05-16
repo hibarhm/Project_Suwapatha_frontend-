@@ -129,16 +129,9 @@ export const adminApi = {
         }
     },
 
-    createSession: async (data: {
-        date: string;
-        startTime: string;
-        endTime: string;
-        department: string;
-        maxQueueSize: number;
-        slotDuration: number;
-    }): Promise<any> => {
+    createSession: async (data: any): Promise<any> => {
         const token = localStorage.getItem('token') || localStorage.getItem('authToken');
-        const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions`, {
+        const response = await fetch(`${API_BASE_URL}/api/admin/sessions`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -151,6 +144,45 @@ export const adminApi = {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.message || 'Failed to create session');
         }
+        return response.json();
+    },
+
+    getTodaySessions: async (): Promise<any[]> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/today`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error('Failed to fetch today\'s sessions');
+        return response.json();
+    },
+
+    getUpcomingSessions: async (): Promise<any[]> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/upcoming`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error('Failed to fetch upcoming sessions');
+        return response.json();
+    },
+
+    getPastSessions: async (): Promise<any[]> => {
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        const response = await fetch(`${API_BASE_URL}/api/admin/opd/sessions/past`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error('Failed to fetch past sessions');
         return response.json();
     },
 };
