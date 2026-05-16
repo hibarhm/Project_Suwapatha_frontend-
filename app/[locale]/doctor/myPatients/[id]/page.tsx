@@ -9,6 +9,7 @@ import { doctorApi, PatientDetails } from '@/app/api/doctor/doctorApi';
 import RequireRole from '@/app/components/RequireRole';
 import MedicineSearch from '@/app/components/MedicineSearch';
 import { MedicineDTO } from '@/app/api/medicine/medicineApi';
+import LabRequestModal from '@/app/components/doctor/LabRequestModal';
 
 export default function PatientDetailsPage() {
   const t = useTranslations('doctorPatientDetails');
@@ -19,6 +20,7 @@ export default function PatientDetailsPage() {
   const [activeTab, setActiveTab] = useState('overview'); // overview, history, prescriptions
   const [isEditing, setIsEditing] = useState(false);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const [showLabRequestModal, setShowLabRequestModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [patient, setPatient] = useState<PatientDetails | null>(null);
@@ -423,15 +425,26 @@ export default function PatientDetailsPage() {
                   </div>
 
                   {isEditing && (
-                    <button
-                      onClick={() => setShowPrescriptionModal(true)}
-                      className="flex items-center gap-2 px-4 py-2 border border-slate-400 text-slate-600 rounded-lg hover:bg-slate-50 text-sm font-medium"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                      {t('addPrescription')}
-                    </button>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setShowPrescriptionModal(true)}
+                        className="flex items-center gap-2 px-4 py-2 border border-slate-400 text-slate-600 rounded-lg hover:bg-slate-50 text-sm font-medium"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        {t('addPrescription')}
+                      </button>
+                      <button
+                        onClick={() => setShowLabRequestModal(true)}
+                        className="flex items-center gap-2 px-4 py-2 border border-purple-400 text-purple-600 rounded-lg hover:bg-purple-50 text-sm font-medium"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.628.282a2 2 0 01-1.806 0l-.628-.282a6 6 0 00-3.86-.517l-2.387.477a2 2 0 00-1.022.547" />
+                        </svg>
+                        Request Lab Test
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -488,6 +501,55 @@ export default function PatientDetailsPage() {
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+
+                  {/* Lab Reports */}
+                  {record.labRequests && record.labRequests.length > 0 && (
+                    <div className="mt-6 space-y-4">
+                      <p className="text-sm font-bold text-gray-800">Laboratory Requests & Results:</p>
+                      {record.labRequests.map((req: any) => (
+                        <div key={req.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                          <div className="flex justify-between items-center mb-2">
+                            <p className="font-bold text-sm text-gray-700">{req.requestedTests.join(', ')}</p>
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                              req.status === 'COMPLETED' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {req.status}
+                            </span>
+                          </div>
+                          
+                          {req.results && req.results.length > 0 && (
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2">
+                              {req.results.map((res: any, i: number) => (
+                                <div key={i} className="text-xs">
+                                  <span className="text-gray-500">{res.testName}:</span> 
+                                  <span className="ml-1 font-semibold">{res.value} {res.unit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {req.reportUrls && req.reportUrls.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {req.reportUrls.map((url: string, i: number) => (
+                                <a
+                                  key={i}
+                                  href={`${API_BASE_URL}${url}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-blue-600 rounded-md text-[10px] font-bold border border-blue-100 hover:bg-blue-50 transition-colors"
+                                >
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  View Report {i + 1}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -672,6 +734,14 @@ export default function PatientDetailsPage() {
           </div>
         </div>
       )}
+
+      {/* Lab Request Modal */}
+      <LabRequestModal
+        isOpen={showLabRequestModal}
+        onClose={() => setShowLabRequestModal(false)}
+        patientId={patient.id}
+        patientName={patient.name}
+      />
       </DoctorLayout>
     </RequireRole>
   );

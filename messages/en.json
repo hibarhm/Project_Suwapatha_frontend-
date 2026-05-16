@@ -1450,5 +1450,87 @@
       "title": "Security",
       "changePassword": "Change Password"
     }
+  },
+  "laboratory": {
+    "dashboard": {
+      "title": "Laboratory Dashboard",
+      "subtitle": "Manage patient lab requests and results.",
+      "pending": "Pending Requests",
+      "processing": "Processing",
+      "completed": "Completed",
+      "searchPlaceholder": "Search by patient name...",
+      "filterStatus": "Filter by Status",
+      "noRequests": "No lab requests found.",
+      "requestDate": "Request Date",
+      "priority": "Priority",
+      "patient": "Patient",
+      "doctor": "Doctor",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "updateStatus": "Update Status"
+    },
+    "requestDetails": {
+      "title": "Request Details",
+      "backToDashboard": "Back to Dashboard",
+      "patientInfo": "Patient Information",
+      "doctorInfo": "Doctor Information",
+      "requestedTests": "Requested Tests",
+      "notes": "Doctor's Notes",
+      "results": "Test Results",
+      "addResult": "Add Result",
+      "testName": "Test Name",
+      "value": "Value",
+      "unit": "Unit",
+      "referenceRange": "Reference Range",
+      "remarks": "Remarks",
+      "uploadReports": "Upload Reports",
+      "dropFiles": "Drop files here or click to upload",
+      "supportedFormats": "Supported formats: PDF, JPG, PNG",
+      "submitResults": "Submit Results",
+      "submitting": "Submitting...",
+      "success": "Results submitted successfully!",
+      "error": "Failed to submit results."
+    },
+    "requestModal": {
+      "title": "Request Lab Test",
+      "selectTests": "Select Tests",
+      "priority": "Priority",
+      "normal": "Normal",
+      "urgent": "Urgent",
+      "notes": "Instructions/Notes",
+      "notesPlaceholder": "Add specific instructions for the lab staff...",
+      "request": "Request Test",
+      "requesting": "Requesting...",
+      "success": "Lab request sent successfully!",
+      "error": "Failed to send lab request."
+    },
+    "login": {
+      "brand": "Suwapatha Laboratory",
+      "title": "Laboratory Portal",
+      "subtitle": "Access the laboratory management system.",
+      "imageAlt": "Laboratory Staff",
+      "form": {
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "Enter your professional email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "loginButton": "Login to Portal",
+        "loggingIn": "Signing in...",
+        "notRegistered": "Don't have an account?",
+        "contactAdmin": "Contact your administrator to request access."
+      },
+      "errors": {
+        "invalidCredentials": "The email or password you entered is incorrect.",
+        "notApproved": "Your account is not yet approved."
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "sample_collected": "Collected",
+      "processing": "Processing",
+      "completed": "Completed"
+    }
   }
 }

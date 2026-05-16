@@ -7,4 +7,5 @@ export const authEndpoints = {
     LOGIN_DOCTOR: `${API_BASE_URL}/api/auth/login/doctor`,
     LOGIN_ADMIN: `${API_BASE_URL}/api/auth/login/admin`,
     LOGIN_SUPER_ADMIN: `${API_BASE_URL}/api/auth/login/super-admin`,
+    LOGIN_LABORATORY: `${API_BASE_URL}/api/auth/login/laboratory`,
 };

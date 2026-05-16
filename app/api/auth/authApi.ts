@@ -113,6 +113,17 @@ export const authApi = {
         return result;
     },
 
+    loginLaboratory: async (data: LoginRequest): Promise<AuthResponse> => {
+        const response = await fetch(authEndpoints.LOGIN_LABORATORY, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await handleResponse<AuthResponse>(response);
+        persistAuth(result);
+        return result;
+    },
+
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
