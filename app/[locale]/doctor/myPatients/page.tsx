@@ -11,15 +11,21 @@ export default function MyPatientsPage() {
   const t = useTranslations('doctorMyPatients');
   const router = useRouter();
   const [patients, setPatients] = useState<DoctorPatient[]>([]);
+  const [activeTab, setActiveTab] = useState<'today' | 'past'>('today');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
 
   useEffect(() => {
-    fetchPatients();
-  }, []);
+    if (activeTab === 'today') {
+      fetchPatients();
+    } else {
+      fetchPastPatients();
+    }
+    setCurrentPage(1);
+  }, [activeTab]);
 
   const fetchPatients = async () => {
     try {
@@ -30,6 +36,20 @@ export default function MyPatientsPage() {
     } catch (err: any) {
       console.error('Error fetching patients:', err);
       setError(err.message || t('errors.loadFailed'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPastPatients = async () => {
+    try {
+      setLoading(true);
+      const data = await doctorApi.getPastPatients();
+      setPatients(data);
+      setError(null);
+    } catch (err: any) {
+      console.error('Error fetching past patients:', err);
+      setError(err.message || t('errors.loadPastFailed'));
     } finally {
       setLoading(false);
     }
@@ -101,9 +121,33 @@ export default function MyPatientsPage() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">{t('totalPatientsToday')}</span>
+          <span className="text-sm text-gray-600">{activeTab === 'today' ? t('totalPatientsToday') : t('past.title')}</span>
           <span className="text-2xl font-bold text-[#94B4C1]">{patients.length}</span>
         </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-gray-200 mb-6">
+        <button
+          onClick={() => setActiveTab('today')}
+          className={`px-6 py-3 text-sm font-medium transition-colors border-b-2 ${
+            activeTab === 'today'
+              ? 'border-[#94B4C1] text-[#94B4C1]'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          }`}
+        >
+          {t('tabs.today')}
+        </button>
+        <button
+          onClick={() => setActiveTab('past')}
+          className={`px-6 py-3 text-sm font-medium transition-colors border-b-2 ${
+            activeTab === 'past'
+              ? 'border-[#94B4C1] text-[#94B4C1]'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          }`}
+        >
+          {t('tabs.past')}
+        </button>
       </div>
 
       {/* Search Bar */}
@@ -144,7 +188,7 @@ export default function MyPatientsPage() {
           </div>
         ) : filteredPatients.length === 0 ? (
           <div className="p-12 text-center text-gray-500">
-            {t('emptySearch')}
+            {activeTab === 'past' && searchQuery === '' ? t('past.empty') : t('emptySearch')}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -154,6 +198,9 @@ export default function MyPatientsPage() {
                   <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.queueNo')}</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.patientName')}</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.gender')}</th>
+                  {activeTab === 'past' && (
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.date')}</th>
+                  )}
                   <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.time')}</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">{t('table.status')}</th>
                   <th className="text-right py-4 px-6 text-sm font-semibold text-gray-700">{t('table.actions')}</th>
@@ -176,6 +223,9 @@ export default function MyPatientsPage() {
                       </div>
                     </td>
                     <td className="py-4 px-6 text-sm text-gray-700">{patient.gender}</td>
+                    {activeTab === 'past' && (
+                      <td className="py-4 px-6 text-sm text-gray-700">{patient.date}</td>
+                    )}
                     <td className="py-4 px-6 text-sm text-gray-700">{patient.time}</td>
                     <td className="py-4 px-6">
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(patient.status)}`}>
@@ -209,11 +259,22 @@ export default function MyPatientsPage() {
 
                         {/* Complete/Check */}
                         <button
-                          onClick={(e) => {
+                          onClick={async (e) => {
                             e.stopPropagation();
-                            alert(t('alerts.markComplete', {name: patient.name}));
+                            if (confirm(t('alerts.markComplete', {name: patient.name}))) {
+                              try {
+                                setLoading(true);
+                                await doctorApi.updateAppointmentStatus(patient.id, 'COMPLETED');
+                                fetchPatients();
+                              } catch (err: any) {
+                                alert(err.message || 'Failed to complete consultation');
+                              } finally {
+                                setLoading(false);
+                              }
+                            }
                           }}
-                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          disabled={patient.status === 'COMPLETED'}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-30"
                           title={t('actions.markComplete')}
                         >
                           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

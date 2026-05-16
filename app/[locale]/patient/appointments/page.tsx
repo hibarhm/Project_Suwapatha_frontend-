@@ -18,11 +18,16 @@ function StatusBadge({ status }: { status: string }) {
     BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
     CANCELLED: 'bg-red-100 text-red-700',
     COMPLETED: 'bg-green-100 text-green-700',
+    FINISHED: 'bg-gray-100 text-gray-700',
   };
   return (
     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
       ${map[status] ?? 'bg-gray-100 text-gray-600'}`}>
-      {status === 'BOOKED' ? t('booked') : status === 'CANCELLED' ? t('cancelled') : status === 'COMPLETED' ? t('completed') : status}
+      {status === 'BOOKED' ? t('booked') 
+        : status === 'CANCELLED' ? t('cancelled') 
+        : status === 'COMPLETED' ? t('completed') 
+        : status === 'FINISHED' ? t('finished')
+        : status}
     </span>
   );
 }
@@ -262,7 +267,7 @@ export default function AppointmentBookingPage() {
 
   /* ── derived display values ───────────────────────────────────────────── */
 
-  const isNextInQueue = activeAppt && activeAppt.estimatedWaitMinutes === 0;
+  const isNextInQueue = activeAppt && (activeAppt.isNext || activeAppt.status === 'CONSULTING');
   const getSessionStatusLabel = (status: string) => {
     if (status === 'OPEN') return t('sessions.statusOpen');
     if (status === 'FULL') return t('sessions.statusFull');
@@ -483,7 +488,7 @@ export default function AppointmentBookingPage() {
                       {
                         icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
                         label: t('queue.estimatedAppointment'),
-                        value: isNextInQueue
+                        value: (activeAppt.status === 'CONSULTING' || activeAppt.isNext)
                           ? t('queue.nextProceed')
                           : (utcAppointmentTime ?? t('queue.minutesOnly', {minutes: activeAppt.estimatedWaitMinutes})),
                       },
@@ -496,6 +501,11 @@ export default function AppointmentBookingPage() {
                         icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
                         label: t('queue.doctor'),
                         value: activeAppt.doctorName || t('common.toBeAssigned'),
+                      },
+                      {
+                        icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
+                        label: t('queue.room'),
+                        value: activeAppt.room || t('common.notAvailable'),
                       },
                       {
                         icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',

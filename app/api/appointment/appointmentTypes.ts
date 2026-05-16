@@ -8,6 +8,12 @@ export interface HospitalResponse {
     type: string;
     address: string;
     phone: string;
+    latitude?: number;
+    longitude?: number;
+}
+
+export interface NearbyHospitalResponse extends HospitalResponse {
+    distanceKm: number;
 }
 
 export interface OpdSessionResponse {
@@ -38,6 +44,7 @@ export interface AppointmentResponse {
     sessionStartTime: string; // HH:mm, session start time from OpdSession
     slotDuration: number;     // minutes per slot
     createdAt: string;
+    isNext: boolean;
 }
 
 export interface BookAppointmentRequest {

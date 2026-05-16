@@ -289,13 +289,21 @@
       "notAvailable": "—",
       "toBeAssigned": "To be assigned"
     },
+    "penalty": {
+      "title": "Account Warning",
+      "redMarkTitle": "Account Disabled",
+      "redMarkDescription": "Your account has been disabled due to multiple last-minute cancellations. Please contact support.",
+      "countWarning": "You have {count} late cancellation(s). Maximum 3 are allowed before account suspension.",
+      "lastMinuteWarning": "Note: Cancellations within 12 hours of the session incur a penalty."
+    },
     "alerts": {
       "cancelFailed": "Failed to cancel."
     },
     "status": {
       "booked": "Booked",
       "cancelled": "Cancelled",
-      "completed": "Completed"
+      "completed": "Completed",
+      "finished": "Finished"
     },
     "newUser": {
       "title": "Welcome to Suwapatha! 🎉",
@@ -319,6 +327,7 @@
       "doctor": "Doctor",
       "queue": "Queue #",
       "wait": "Wait",
+      "room": "OPD Room",
       "actions": "Actions",
       "waitMinutes": "~{minutes} min",
       "waitOnlyMinutes": "{minutes} min",
@@ -334,6 +343,7 @@
       "hospital": "Hospital",
       "doctor": "Doctor",
       "estimatedWait": "Est. Wait",
+      "room": "OPD Room",
       "status": "Status"
     },
     "vitals": {
@@ -371,7 +381,8 @@
     "status": {
       "booked": "Booked",
       "cancelled": "Cancelled",
-      "completed": "Completed"
+      "completed": "Completed",
+      "finished": "Finished"
     },
     "alerts": {
       "reminderTitle": "Appointment Reminder",
@@ -408,6 +419,7 @@
       "minutesOnly": "{minutes} min",
       "hospital": "Hospital",
       "doctor": "Doctor",
+      "room": "OPD Room",
       "status": "Status",
       "emptyTitle": "No active appointment",
       "emptySubtitle": "Search a hospital and book an OPD session above."
@@ -441,7 +453,8 @@
       "fetchFailed": "Failed to fetch medical records",
       "loadFailed": "Failed to load medical records. Please try again.",
       "filterFailed": "Failed to filter medical records",
-      "filterLoadFailed": "Failed to filter medical records. Please try again."
+      "filterLoadFailed": "Failed to filter medical records. Please try again.",
+      "downloadFailed": "Failed to generate and download the medical records PDF. Please try again later."
     },
     "alerts": {
       "downloadVisit": "Downloading PDF for visit {visitId}",
@@ -471,9 +484,16 @@
     },
     "visit": {
       "followUpRequired": "Follow-up Required",
+      "diagnosis": "Diagnosis",
       "consultationNotes": "Consultation Notes",
       "prescriptions": "Prescriptions",
-      "labReports": "Lab Reports & Images"
+      "labReports": "Lab Reports & Images",
+      "vitals": {
+        "bp": "Blood Pressure",
+        "temp": "Temperature",
+        "pulse": "Pulse",
+        "weight": "Weight"
+      }
     }
   },
   "doctorDashboard": {
@@ -562,14 +582,24 @@
     "loading": "Loading patients...",
     "retry": "Retry",
     "emptySearch": "No patients found matching your search.",
+    "tabs": {
+      "today": "Today's Patients",
+      "past": "Past Patients (Last 7 Days)"
+    },
+    "past": {
+      "title": "Past Patients (Records)",
+      "empty": "No completed patients found in the last 7 days."
+    },
     "errors": {
-      "loadFailed": "Failed to load patients. Please try again."
+      "loadFailed": "Failed to load patients. Please try again.",
+      "loadPastFailed": "Failed to load past patients."
     },
     "table": {
       "queueNo": "Queue No.",
       "patientName": "Patient Name",
       "gender": "Gender",
       "time": "Time",
+      "date": "Date",
       "status": "Status",
       "actions": "Actions"
     },
@@ -596,7 +626,11 @@
     "goBack": "Go Back",
     "cancel": "Cancel",
     "saveConsultation": "Save Consultation",
+    "stop": "Stop",
+    "continue": "Continue",
     "startConsultation": "Start Consultation",
+    "continueConsultation": "Continue Consultation",
+    "markComplete": "Mark as Complete",
     "currentConsultation": "Current Consultation",
     "diagnosis": "Diagnosis",
     "diagnosisPlaceholder": "Enter diagnosis...",
@@ -612,7 +646,8 @@
     "prescriptions": "Prescriptions",
     "notAvailable": "N/A",
     "status": {
-      "active": "Active"
+      "active": "Active",
+      "stopped": "Stopped"
     },
     "patientId": "Patient ID: {id}",
     "queue": "Queue: {queue}",
@@ -648,6 +683,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "Please enter diagnosis and consultation notes",
       "consultationSaved": "Consultation saved successfully!",
+      "markedAsCompleted": "Consultation marked as completed!",
+      "markComplete": "Are you sure you want to mark {name} as complete? This will end the active session.",
       "saveFailed": "Failed to save consultation. Please try again."
     },
     "modal": {
@@ -889,11 +926,15 @@
     "stats": {
       "totalDoctors": "Total Doctors",
       "activeSessions": "Active Sessions",
+      "activeSessionsMonth": "Active Sessions (Month)",
       "patientsToday": "Patients Today",
+      "monthlyCompletedPatients": "Completed Patients (Month)",
       "avgWaitingTime": "Avg. Waiting Time",
       "estimatedPerSession": "Estimated per session",
+      "completedThisMonth": "Total patients booked and checkup completed this month",
       "allocatedWaiting": "{allocated} allocated, {waiting} waiting",
       "totalSessionsToday": "{count} total sessions today",
+      "totalSessionsMonth": "{count} total sessions this month",
       "totalDoctorsToday": "{count} total doctors today"
     },
     "recentDoctors": {
@@ -960,6 +1001,21 @@
     },
     "footer": {
       "rights": "© 2026 Suwapatha. All rights reserved."
+    },
+    "nearbyHospitals": {
+      "title": "Nearby Hospitals",
+      "subtitle": "Find and navigate to the closest healthcare centers",
+      "loading": "Finding nearby hospitals...",
+      "locationNotFound": "Location Not Found",
+      "locationError": "Location not available. Please allow location access during login.",
+      "distance": "{distance} km",
+      "viewRoute": "View Route",
+      "focusOnMap": "Focus",
+      "yourLocation": "Your Location",
+      "estimatedTravel": "Estimated Travel",
+      "mins": "mins",
+      "noHospitals": "No hospitals found nearby.",
+      "refresh": "Refresh Location"
     },
     "errors": {
       "fetchHospitalInfo": "Failed to fetch hospital info",
@@ -1127,6 +1183,11 @@
   },
   "doctorReviewModal": {
     "confirmReject": "Are you sure you want to reject this doctor registration?",
+    "rejectionReasonLabel": "Reason for Rejection",
+    "rejectionReasonPlaceholder": "Please provide a clear reason for rejecting this registration...",
+    "cancelRejection": "Cancel Rejection",
+    "confirmRejectAction": "Confirm Rejection",
+    "reasonRequired": "A reason is required for rejection.",
     "pendingReview": "Pending Review",
     "registrationDetails": "Registration Details",
     "submittedOn": "Submitted on",
@@ -1246,16 +1307,16 @@
   },
   "createSessionModal": {
     "title": "Create New OPD Session",
-    "headerSubtitle": "All sessions run from 08:00 to 12:00",
+    "headerSubtitle": "All sessions run from 08:00 to 20:00",
     "date": "Date",
     "selectDate": "Select date",
     "advanceHint": "Up to 7 days in advance",
     "totalSlots": "Total Slots",
     "sessionTime": "Session Time",
-    "sessionTimeValue": "08:00 - 12:00 (fixed morning session)",
+    "sessionTimeValue": "08:00 - 20:00 (fixed session)",
     "slotDuration": "Slot Duration (minutes)",
     "noteLabel": "Note:",
-    "note": "General consultation only (08:00-12:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
+    "note": "General consultation only (08:00-20:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
     "cancel": "Cancel",
     "createSession": "Create Session"
   },
@@ -1275,7 +1336,14 @@
     },
     "tabs": {
       "todaySessions": "Today's Sessions",
-      "upcomingSessions": "Upcoming Sessions (Next 7 Days)"
+      "upcomingSessions": "Upcoming Sessions (Next 7 Days)",
+      "pastSessions": "Past Sessions (Last 7 Days)"
+    },
+    "past": {
+      "title": "Past Sessions (Records)",
+      "subtitle": "Review completed sessions from the past 7 days.",
+      "emptyTitle": "No Past Sessions",
+      "emptySubtitle": "No sessions were recorded in the last 7 days."
     },
     "stats": {
       "totalPatientsToday": "Total Patients Today",
@@ -1292,7 +1360,8 @@
       "title": "Today's OPD Sessions",
       "emptyTitle": "No Sessions Today",
       "emptySubtitle": "There are no OPD sessions scheduled for today.",
-      "createFirst": "Create First Session"
+      "createFirst": "Create First Session",
+      "completed": "Completed Sessions"
     },
     "upcoming": {
       "bookableTitle": "Upcoming Sessions (Bookable)",
@@ -1347,6 +1416,7 @@
       "fetchTodayStats": "Failed to fetch today stats",
       "fetchTodaySessions": "Failed to fetch today sessions",
       "fetchUpcomingSessions": "Failed to fetch upcoming sessions",
+      "fetchPastSessions": "Failed to fetch past sessions",
       "fetchRooms": "Failed to fetch rooms",
       "assignRoom": "Failed to assign room",
       "allocatePatients": "Failed to allocate patients",
@@ -1359,6 +1429,7 @@
     "common": {
       "refresh": "Refresh",
       "active": "Active",
+      "completed": "Completed",
       "patient": "Patient"
     }
   },
@@ -1378,6 +1449,88 @@
     "security": {
       "title": "Security",
       "changePassword": "Change Password"
+    }
+  },
+  "laboratory": {
+    "dashboard": {
+      "title": "Laboratory Dashboard",
+      "subtitle": "Manage patient lab requests and results.",
+      "pending": "Pending Requests",
+      "processing": "Processing",
+      "completed": "Completed",
+      "searchPlaceholder": "Search by patient name...",
+      "filterStatus": "Filter by Status",
+      "noRequests": "No lab requests found.",
+      "requestDate": "Request Date",
+      "priority": "Priority",
+      "patient": "Patient",
+      "doctor": "Doctor",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "updateStatus": "Update Status"
+    },
+    "requestDetails": {
+      "title": "Request Details",
+      "backToDashboard": "Back to Dashboard",
+      "patientInfo": "Patient Information",
+      "doctorInfo": "Doctor Information",
+      "requestedTests": "Requested Tests",
+      "notes": "Doctor's Notes",
+      "results": "Test Results",
+      "addResult": "Add Result",
+      "testName": "Test Name",
+      "value": "Value",
+      "unit": "Unit",
+      "referenceRange": "Reference Range",
+      "remarks": "Remarks",
+      "uploadReports": "Upload Reports",
+      "dropFiles": "Drop files here or click to upload",
+      "supportedFormats": "Supported formats: PDF, JPG, PNG",
+      "submitResults": "Submit Results",
+      "submitting": "Submitting...",
+      "success": "Results submitted successfully!",
+      "error": "Failed to submit results."
+    },
+    "requestModal": {
+      "title": "Request Lab Test",
+      "selectTests": "Select Tests",
+      "priority": "Priority",
+      "normal": "Normal",
+      "urgent": "Urgent",
+      "notes": "Instructions/Notes",
+      "notesPlaceholder": "Add specific instructions for the lab staff...",
+      "request": "Request Test",
+      "requesting": "Requesting...",
+      "success": "Lab request sent successfully!",
+      "error": "Failed to send lab request."
+    },
+    "login": {
+      "brand": "Suwapatha Laboratory",
+      "title": "Laboratory Portal",
+      "subtitle": "Access the laboratory management system.",
+      "imageAlt": "Laboratory Staff",
+      "form": {
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "Enter your professional email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "loginButton": "Login to Portal",
+        "loggingIn": "Signing in...",
+        "notRegistered": "Don't have an account?",
+        "contactAdmin": "Contact your administrator to request access."
+      },
+      "errors": {
+        "invalidCredentials": "The email or password you entered is incorrect.",
+        "notApproved": "Your account is not yet approved."
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "sample_collected": "Collected",
+      "processing": "Processing",
+      "completed": "Completed"
     }
   }
 }

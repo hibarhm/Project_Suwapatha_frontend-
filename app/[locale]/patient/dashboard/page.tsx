@@ -6,6 +6,22 @@ import {Link} from '@/i18n/navigation';
 import PatientLayout from '@/app/components/patientLayout';
 import { appointmentApi } from '@/app/api/appointment/appointmentApi';
 import { AppointmentResponse } from '@/app/api/appointment/appointmentTypes';
+import { userApi } from '@/app/api/user/userApi';
+import { UserProfile } from '@/app/api/user/userTypes';
+import { medicalRecordApi } from '@/app/api/medicalRecord/medicalRecordApi';
+import { MedicalRecordResponse } from '@/app/api/medicalRecord/medicalRecordTypes';
+import dynamic from 'next/dynamic';
+import LocationPermissionModal from '@/app/components/LocationPermissionModal';
+
+const NearbyHospitals = dynamic(() => import('@/app/components/NearbyHospitals'), { 
+  ssr: false,
+  loading: () => (
+    <div className="bg-white rounded-xl border border-gray-200 p-8 flex flex-col items-center justify-center min-h-[400px]">
+      <div className="w-10 h-10 border-4 border-[#94B4C1] border-t-transparent rounded-full animate-spin mb-4" />
+      <p className="text-gray-500 font-medium">Loading Map...</p>
+    </div>
+  )
+});
 
 function Spinner() {
   return (
@@ -21,11 +37,16 @@ function StatusBadge({ status }: { status: string }) {
     BOOKED: 'bg-[#94B4C1]/10 text-[#94B4C1]',
     CANCELLED: 'bg-red-100 text-red-600',
     COMPLETED: 'bg-green-100 text-green-700',
+    FINISHED: 'bg-gray-100 text-gray-700',
   };
   return (
     <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium
       ${map[status] ?? 'bg-gray-100 text-gray-500'}`}>
-      {status === 'BOOKED' ? t('booked') : status === 'CANCELLED' ? t('cancelled') : status === 'COMPLETED' ? t('completed') : status}
+      {status === 'BOOKED' ? t('booked') 
+        : status === 'CANCELLED' ? t('cancelled') 
+        : status === 'COMPLETED' ? t('completed') 
+        : status === 'FINISHED' ? t('finished')
+        : status}
     </span>
   );
 }
@@ -38,9 +59,16 @@ export default function PatientDashboard() {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [isNewUser, setIsNewUser] = useState(false);
+  const [showNearby, setShowNearby] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    // Check location permission
+    const permission = localStorage.getItem('locationPermission');
+    if (permission === 'granted') {
+      setShowNearby(true);
+    }
 
     // Primary source: the full user object stored by authApi
     const storedUser = (() => {
@@ -67,18 +95,24 @@ export default function PatientDashboard() {
   // ── real appointments ─────────────────────────────────────────────────────
   const [appointments, setAppointments] = useState<AppointmentResponse[]>([]);
   const [activeAppt, setActiveAppt] = useState<AppointmentResponse | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [medicalRecords, setMedicalRecords] = useState<MedicalRecordResponse[]>([]);
   const [loadingAppts, setLoadingAppts] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
-  const refreshAppointments = useCallback(async () => {
+  const refreshData = useCallback(async () => {
     setLoadingAppts(true);
     try {
-      const [all, active] = await Promise.all([
+      const [all, active, prof, records] = await Promise.all([
         appointmentApi.getAll(),
         appointmentApi.getActive(),
+        userApi.getProfile(),
+        medicalRecordApi.getAll(),
       ]);
       setAppointments(all);
       setActiveAppt(active);
+      setProfile(prof);
+      setMedicalRecords(records);
     } catch {
       // not logged in or backend not running
     } finally {
@@ -86,13 +120,13 @@ export default function PatientDashboard() {
     }
   }, []);
 
-  useEffect(() => { refreshAppointments(); }, [refreshAppointments]);
+  useEffect(() => { refreshData(); }, [refreshData]);
 
   const handleCancel = async (id: string) => {
     setCancelling(id);
     try {
       await appointmentApi.cancel(id);
-      await refreshAppointments();
+      await refreshData();
     } catch (e) {
       alert(e instanceof Error ? e.message : t('alerts.cancelFailed'));
     } finally {
@@ -133,6 +167,32 @@ export default function PatientDashboard() {
 
         {/* ── Left Column ──────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-6">
+
+          {/* Penalty Warnings */}
+          {profile && profile.hasRedMark && (
+            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-5 flex items-start gap-4 shadow-sm animate-pulse">
+              <div className="w-10 h-10 bg-red-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-bold text-red-800 text-base">{t('penalty.redMarkTitle')}</p>
+                <p className="text-red-700 text-sm mt-0.5">{t('penalty.redMarkDescription')}</p>
+              </div>
+            </div>
+          )}
+
+          {profile && !profile.hasRedMark && (profile.lateCancellationCount ?? 0) > 0 && (
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center gap-3">
+              <div className="w-8 h-8 bg-orange-100 rounded-full flex-shrink-0 flex items-center justify-center">
+                <span className="text-orange-600 font-bold text-sm">!</span>
+              </div>
+              <p className="text-sm text-orange-800">
+                {t('penalty.countWarning', { count: profile.lateCancellationCount ?? 0 })}
+              </p>
+            </div>
+          )}
 
           {/* First-login welcome banner */}
           {isNewUser && (
@@ -180,6 +240,13 @@ export default function PatientDashboard() {
               </Link>
             </div>
 
+            <p className="text-xs text-orange-600 font-medium mb-4 bg-orange-50 p-2 rounded-lg border border-orange-100 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {t('penalty.lastMinuteWarning')}
+            </p>
+
             {loadingAppts ? <Spinner /> : bookedAppointments.length === 0 ? (
               <div className="flex flex-col items-center py-10 text-center">
                 <svg className="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +264,7 @@ export default function PatientDashboard() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      {[t('table.date'), t('table.hospital'), t('table.doctor'), t('table.queue'), t('table.wait'), t('table.actions')].map(h => (
+                      {[t('table.date'), t('table.hospital'), t('table.doctor'), t('table.room'), t('table.queue'), t('table.wait'), t('table.actions')].map(h => (
                         <th key={h} className="text-left py-3 px-3 text-xs font-semibold text-gray-500">{h}</th>
                       ))}
                     </tr>
@@ -208,9 +275,12 @@ export default function PatientDashboard() {
                         <td className="py-4 px-3 text-sm text-gray-900 whitespace-nowrap">{apt.appointmentDate}</td>
                         <td className="py-4 px-3 text-sm text-gray-900 max-w-[140px] truncate">{apt.hospitalName}</td>
                         <td className="py-4 px-3 text-sm text-gray-600">{apt.doctorName || t('common.notAvailable')}</td>
+                        <td className="py-4 px-3 text-sm text-gray-600 font-medium">
+                          {apt.room ? `${apt.room}` : t('common.notAvailable')}
+                        </td>
                         <td className="py-4 px-3 text-sm font-bold text-[#94B4C1]">#{apt.queueNumber}</td>
                         <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap">
-                          {apt.estimatedWaitMinutes > 0 ? t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes}) : t('table.youAreNext')}
+                          {apt.status === 'CONSULTING' ? t('table.youAreNext') : apt.isNext ? t('table.youAreNext') : t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes})}
                         </td>
                         <td className="py-4 px-3">
                           <button
@@ -233,6 +303,14 @@ export default function PatientDashboard() {
             )}
           </div>
 
+          {/* Nearby Hospitals Section (Map + List) */}
+          <NearbyHospitals />
+
+          <LocationPermissionModal 
+            onAllow={() => setShowNearby(true)} 
+            onDecline={() => setShowNearby(false)} 
+          />
+
           {/* Active Queue Status (compact) */}
           {activeAppt && (
             <div className="bg-white rounded-xl border-2 border-[#94B4C1]/30 p-6">
@@ -254,10 +332,14 @@ export default function PatientDashboard() {
                   <div>
                     <p className="text-xs text-gray-500">{t('liveQueue.estimatedWait')}</p>
                     <p className="text-sm font-semibold text-gray-900">
-                      {activeAppt.estimatedWaitMinutes > 0
-                        ? t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})
-                        : t('table.youAreNext')}
+                      {activeAppt.status === 'CONSULTING' ? t('table.youAreNext') : activeAppt.isNext
+                        ? t('table.youAreNext')
+                        : t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})}
                     </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">{t('liveQueue.room')}</p>
+                    <p className="text-sm font-semibold text-gray-900">{activeAppt.room || t('common.notAvailable')}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">{t('liveQueue.status')}</p>
@@ -268,21 +350,7 @@ export default function PatientDashboard() {
             </div>
           )}
 
-          {/* Vitals Trend — empty state (no vitals API yet) */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <div className="mb-4">
-              <h2 className="text-xl font-bold text-gray-900">{t('vitals.title')}</h2>
-              <p className="text-sm text-gray-500">{t('vitals.subtitle')}</p>
-            </div>
-            <div className="flex flex-col items-center justify-center py-10 text-center">
-              <svg className="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              <p className="text-gray-500 text-sm font-medium">{t('vitals.emptyTitle')}</p>
-              <p className="text-gray-400 text-xs mt-1">{t('vitals.emptySubtitle')}</p>
-            </div>
-          </div>
+
         </div>
 
         {/* ── Right Column ──────────────────────────────────────────── */}
@@ -335,9 +403,9 @@ export default function PatientDashboard() {
                         {t('notifications.itemLine', {
                           hospital: apt.hospitalName,
                           queue: apt.queueNumber,
-                          wait: apt.estimatedWaitMinutes > 0
-                            ? t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
-                            : t('notifications.nextNow')
+                          wait: apt.status === 'CONSULTING' ? t('notifications.nextNow') : apt.isNext
+                            ? t('notifications.nextNow')
+                            : t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
                         })}
                       </p>
                       <p className="text-xs text-gray-400">{apt.appointmentDate}</p>
@@ -387,6 +455,115 @@ export default function PatientDashboard() {
                   : <div key={label}>{inner}</div>;
               })}
             </div>
+          </div>
+
+          {/* Vitals Trend — Real data from medical records (Moved and Shrunk) */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">{t('vitals.title')}</h3>
+                <p className="text-xs text-gray-500 mb-3">{t('vitals.subtitle')}</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4 mb-4">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-[#94B4C1]"></div>
+                <span className="text-xs font-medium text-gray-600">BP</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-[#6B8D9C]"></div>
+                <span className="text-xs font-medium text-gray-600">Pulse</span>
+              </div>
+            </div>
+
+            {loadingAppts ? <Spinner /> : medicalRecords.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <svg className="w-8 h-8 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <p className="text-gray-500 text-xs font-medium">{t('vitals.emptyTitle')}</p>
+              </div>
+            ) : (
+              <div className="h-40 mt-2">
+                <svg className="w-full h-full" viewBox="0 0 600 220" preserveAspectRatio="none">
+                  {/* Grid Lines */}
+                  {[0, 50, 100, 150, 200].map(y => (
+                    <line key={y} x1="40" y1={200 - y} x2="580" y2={200 - y} stroke="#f3f4f6" strokeWidth="1" />
+                  ))}
+                  
+                  {/* Data Processing */}
+                  {(() => {
+                    const data = [...medicalRecords].reverse().slice(-7); // Last 7 records
+                    const padding = 60;
+                    const width = 500;
+                    const step = width / (Math.max(data.length - 1, 1));
+                    
+                    const pointsBP = data.map((d, i) => {
+                      const bp = d.bp?.split('/') || ['0', '0'];
+                      const sys = parseInt(bp[0]) || 0;
+                      const dia = parseInt(bp[1]) || 0;
+                      // Normalize: 0-200 range
+                      return {
+                        x: padding + i * step,
+                        ySys: 200 - (sys / 200) * 180,
+                        yDia: 200 - (dia / 200) * 180,
+                        val: `${sys}/${dia}`
+                      };
+                    });
+
+                    const pointsPulse = data.map((d, i) => {
+                      const pulse = parseInt(d.pulse) || 0;
+                      return {
+                        x: padding + i * step,
+                        y: 200 - (pulse / 200) * 180,
+                        val: pulse
+                      };
+                    });
+
+                    return (
+                      <>
+                        {/* Y-Axis Labels */}
+                        <text x="5" y="25" fontSize="10" fill="#9ca3af">200</text>
+                        <text x="5" y="115" fontSize="10" fill="#9ca3af">100</text>
+                        <text x="5" y="205" fontSize="10" fill="#9ca3af">0</text>
+
+                        {/* BP Line (Systolic) */}
+                        <polyline
+                          points={pointsBP.map(p => `${p.x},${p.ySys}`).join(' ')}
+                          fill="none" stroke="#94B4C1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                        />
+                        {/* BP Line (Diastolic) */}
+                        <polyline
+                          points={pointsBP.map(p => `${p.x},${p.yDia}`).join(' ')}
+                          fill="none" stroke="#94B4C1" strokeWidth="1.5" strokeDasharray="4 2" strokeLinecap="round"
+                        />
+                        {/* Pulse Line */}
+                        <polyline
+                          points={pointsPulse.map(p => `${p.x},${p.y}`).join(' ')}
+                          fill="none" stroke="#6B8D9C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                        />
+
+                        {/* Data Points */}
+                        {pointsBP.map((p, i) => (
+                          <g key={`bp-${i}`}>
+                            <circle cx={p.x} cy={p.ySys} r="3.5" fill="white" stroke="#94B4C1" strokeWidth="2" />
+                            <circle cx={p.x} cy={p.yDia} r="2.5" fill="white" stroke="#94B4C1" strokeWidth="1.5" />
+                            <text x={p.x} y={218} fontSize="10" fill="#6b7280" textAnchor="middle">
+                              {data[i].date.split(',')[0]}
+                            </text>
+                          </g>
+                        ))}
+                        {pointsPulse.map((p, i) => (
+                          <circle key={`pulse-${i}`} cx={p.x} cy={p.y} r="3.5" fill="white" stroke="#6B8D9C" strokeWidth="2" />
+                        ))}
+                      </>
+                    );
+                  })()}
+                </svg>
+              </div>
+            )}
           </div>
 
         </div>

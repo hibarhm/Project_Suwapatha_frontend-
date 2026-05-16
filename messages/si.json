@@ -289,13 +289,21 @@
       "notAvailable": "-",
       "toBeAssigned": "පැවරීමට"
     },
+    "penalty": {
+      "title": "ගිණුම පිළිබඳ අනතුරු ඇඟවීම",
+      "redMarkTitle": "ගිණුම අත්හිටුවා ඇත",
+      "redMarkDescription": "අන්තිම මොහොතේ අවලංගු කිරීම් කිහිපයක් හේතුවෙන් ඔබේ ගිණුම අත්හිටුවා ඇත. කරුණාකර සහාය අමතන්න.",
+      "countWarning": "ඔබට ප්‍රමාද වී අවලංගු කිරීම් {count} ක් ඇත. ගිණුම අත්හිටුවීමට පෙර උපරිම අවලංගු කිරීම් 3ක් සඳහා අවසර දෙනු ලැබේ.",
+      "lastMinuteWarning": "සටහන: සැසියට පැය 12ක් ඇතුළත අවලංගු කිරීම් සඳහා දඩයක් අය කෙරේ."
+    },
     "alerts": {
       "cancelFailed": "අවලංගු කිරීමට අසමත් විය."
     },
     "status": {
       "booked": "වෙන්කර ඇත",
       "cancelled": "අවලංගු කළා",
-      "completed": "සම්පූර්ණ කළා"
+      "completed": "සම්පූර්ණ කළා",
+      "finished": "අවසන්"
     },
     "newUser": {
       "title": "සුවපත වෙත ඔබව සාදරයෙන් පිළිගනිමු! 🎉",
@@ -319,6 +327,7 @@
       "doctor": "ඩොක්ටර්",
       "queue": "පෝලිම #",
       "wait": "ඉන්න",
+      "room": "OPD කාමරය",
       "actions": "ක්රියාවන්",
       "waitMinutes": "~{මිනිත්තු} විනාඩි",
       "waitOnlyMinutes": "මිනිත්තු {මිනිත්තු}",
@@ -334,6 +343,7 @@
       "hospital": "රෝහල",
       "doctor": "ඩොක්ටර්",
       "estimatedWait": "EST. ඉන්න",
+      "room": "OPD කාමරය",
       "status": "තත්ත්වය"
     },
     "vitals": {
@@ -371,7 +381,8 @@
     "status": {
       "booked": "වෙන්කර ඇත",
       "cancelled": "අවලංගු කළා",
-      "completed": "සම්පූර්ණ කළා"
+      "completed": "සම්පූර්ණ කළා",
+      "finished": "අවසන්"
     },
     "alerts": {
       "reminderTitle": "පත්වීම් මතක් කිරීම",
@@ -408,6 +419,7 @@
       "minutesOnly": "මිනිත්තු {මිනිත්තු}",
       "hospital": "රෝහල",
       "doctor": "ඩොක්ටර්",
+      "room": "OPD කාමරය",
       "status": "තත්ත්වය",
       "emptyTitle": "සක්‍රිය හමුවීමක් නැත",
       "emptySubtitle": "රෝහලක් සොයන්න සහ ඉහත OPD සැසියක් වෙන්කරවා ගන්න."
@@ -441,7 +453,8 @@
       "fetchFailed": "වෛද්‍ය වාර්තා ලබා ගැනීමට අපොහොසත් විය",
       "loadFailed": "වෛද්‍ය වාර්තා පූරණය කිරීමට අපොහොසත් විය. කරුණාකර නැවත උත්සාහ කරන්න.",
       "filterFailed": "වෛද්‍ය වාර්තා පෙරීමට අපොහොසත් විය",
-      "filterLoadFailed": "වෛද්‍ය වාර්තා පෙරීමට අපොහොසත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
+      "filterLoadFailed": "වෛද්‍ය වාර්තා පෙරීමට අපොහොසත් විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+      "downloadFailed": "වෛද්‍ය වාර්තා PDF එක ජනනය කර බාගත කිරීමට අපොහොසත් විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න."
     },
     "alerts": {
       "downloadVisit": "{visitId} වෙත පිවිසීම සඳහා PDF බාගත කරමින්",
@@ -470,10 +483,17 @@
       "subtitle": "ඔබට තවමත් වෛද්‍ය වාර්තා කිසිවක් නොමැත."
     },
     "visit": {
-      "followUpRequired": "පසු විපරම් කිරීම අවශ්ය වේ",
+      "followUpRequired": "අනුගමනය කිරීම අවශ්‍ය වේ",
+      "diagnosis": "රෝග විනිශ්චය",
       "consultationNotes": "උපදේශන සටහන්",
       "prescriptions": "බෙහෙත් වට්ටෝරු",
-      "labReports": "රසායනාගාර වාර්තා සහ පින්තූර"
+      "labReports": "රසායනාගාර වාර්තා සහ පින්තූර",
+      "vitals": {
+        "bp": "රුධිර පීඩනය",
+        "temp": "උෂ්ණත්වය",
+        "pulse": "නාඩි වේගය",
+        "weight": "බර"
+      }
     }
   },
   "doctorDashboard": {
@@ -597,6 +617,8 @@
     "cancel": "අවලංගු කරන්න",
     "saveConsultation": "උපදේශනය සුරකින්න",
     "startConsultation": "උපදේශනය ආරම්භ කරන්න",
+    "continueConsultation": "උපදේශනය දිගටම කරගෙන යන්න",
+    "markComplete": "සම්පූර්ණයි ලෙස ලකුණු කරන්න",
     "currentConsultation": "වත්මන් උපදේශනය",
     "diagnosis": "රෝග විනිශ්චය",
     "diagnosisPlaceholder": "රෝග විනිශ්චය ඇතුලත් කරන්න...",
@@ -648,6 +670,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "කරුණාකර රෝග විනිශ්චය සහ උපදේශන සටහන් ඇතුළත් කරන්න",
       "consultationSaved": "උපදේශනය සාර්ථකව සුරකින ලදී!",
+      "markedAsCompleted": "උපදේශනය සම්පූර්ණ කළා!",
+      "markComplete": "{name} සම්පූර්ණයි ලෙස සලකුණු කිරීමට ඔබට විශ්වාසද? මෙයින් මෙම සැසිය අවසන් වනු ඇත.",
       "saveFailed": "උපදේශනය සුරැකීමට අසමත් විය. කරුණාකර නැවත උත්සාහ කරන්න."
     },
     "modal": {
@@ -889,11 +913,15 @@
     "stats": {
       "totalDoctors": "සම්පූර්ණ වෛද්‍යවරු",
       "activeSessions": "ක්රියාකාරී සැසි",
+      "activeSessionsMonth": "ක්රියාකාරී සැසි (මාසික)",
       "patientsToday": "අද රෝගීන්",
+      "monthlyCompletedPatients": "සම්පූර්ණ කළ රෝගීන් (මාසික)",
       "avgWaitingTime": "සාමාන්‍ය පොරොත්තු කාලය",
       "estimatedPerSession": "එක් සැසියකට ඇස්තමේන්තු කර ඇත",
+      "completedThisMonth": "මෙම මාසය තුළ වෙන් කරවා ගෙන පරීක්ෂාව අවසන් කළ මුළු රෝගීන්",
       "allocatedWaiting": "{allocated} වෙන් කර ඇත, {waiting} රැඳී සිටී",
       "totalSessionsToday": "අද මුළු සැසි {count}",
+      "totalSessionsMonth": "මෙම මාසයේ මුළු සැසි {count}",
       "totalDoctorsToday": "අද මුළු වෛද්යවරු {count}"
     },
     "recentDoctors": {
@@ -905,12 +933,9 @@
     "todaysSessions": {
       "title": "අද සැසි",
       "noSessions": "අද ක්‍රියාකාරී සැසි නැත",
-      "empty": "අද දින OPD සැසි සැලසුම් කර නොමැත",
+      "emptySubtitle": "අද දින සඳහා OPD සැසි කිසිවක් සැලසුම් කර නොමැත.",
       "createFirst": "පළමු සැසිය සාදන්න",
-      "patients": "රෝගීන්",
-      "viewAll": "සියලුම {count} සැසි බලන්න",
-      "session": "සැසිය {date}",
-      "patientsCount": "රෝගීන් {ගණන්}"
+      "completed": "සම්පූර්ණ කළ සැසි"
     },
     "sessionManagement": {
       "title": "OPD සැසි කළමනාකරණය",
@@ -958,8 +983,23 @@
       "location": "ස්ථානය",
       "phone": "දුරකථනය"
     },
+    "nearbyHospitals": {
+      "title": "අසල ඇති රෝහල්",
+      "subtitle": "ළඟම ඇති සෞඛ්‍ය මධ්‍යස්ථාන සොයාගෙන මාර්ගය ලබා ගන්න",
+      "loading": "අසල ඇති රෝහල් සොයමින්...",
+      "locationNotFound": "ස්ථානය සොයාගත නොහැකි විය",
+      "locationError": "ස්ථානය ලබා ගත නොහැක. කරුණාකර පිවිසීමේදී ස්ථාන ප්‍රවේශයට ඉඩ දෙන්න.",
+      "distance": "{distance} කි.මී.",
+      "viewRoute": "මාර්ගය බලන්න",
+      "focusOnMap": "යොමු වන්න",
+      "yourLocation": "ඔබේ ස්ථානය",
+      "estimatedTravel": "ඇස්තමේන්තුගත ගමන් කාලය",
+      "mins": "විනාඩි",
+      "noHospitals": "අසල රෝහල් කිසිවක් හමු නොවීය.",
+      "refresh": "ස්ථානය අලුත් කරන්න"
+    },
     "footer": {
-      "rights": "© 2026 සුවපත. සියලු හිමිකම් ඇවිරිණි."
+      "rights": "© 2026 සුවපත. සියලුම හිමිකම් ඇවිරිණි."
     },
     "errors": {
       "fetchHospitalInfo": "රෝහලේ තොරතුරු ලබා ගැනීමට අසමත් විය",
@@ -1127,6 +1167,11 @@
   },
   "doctorReviewModal": {
     "confirmReject": "ඔබට මෙම වෛද්‍ය ලියාපදිංචිය ප්‍රතික්ෂේප කිරීමට අවශ්‍ය බව විශ්වාසද?",
+    "rejectionReasonLabel": "ප්‍රතික්ෂේප කිරීමට හේතුව",
+    "rejectionReasonPlaceholder": "කරුණාකර මෙම ලියාපදිංචිය ප්‍රතික්ෂේප කිරීම සඳහා පැහැදිලි හේතුවක් සඳහන් කරන්න...",
+    "cancelRejection": "ප්‍රතික්ෂේප කිරීම අවලංගු කරන්න",
+    "confirmRejectAction": "ප්‍රතික්ෂේප කිරීම තහවුරු කරන්න",
+    "reasonRequired": "ප්‍රතික්ෂේප කිරීම සඳහා හේතුවක් අවශ්‍ය වේ.",
     "pendingReview": "පොරොත්තු සමාලෝචනය",
     "registrationDetails": "ලියාපදිංචි විස්තර",
     "submittedOn": "මත ඉදිරිපත් කරන ලදී",
@@ -1246,16 +1291,16 @@
   },
   "createSessionModal": {
     "title": "නව OPD සැසියක් සාදන්න",
-    "headerSubtitle": "සියලුම සැසි 08:00 සිට 12:00 දක්වා පැවැත්වේ",
+    "headerSubtitle": "සියලුම සැසි 08:00 සිට 20:00 දක්වා පැවැත්වේ",
     "date": "දිනය",
     "selectDate": "දිනය තෝරන්න",
     "advanceHint": "දින 7කට පෙර",
     "totalSlots": "මුළු තව්",
     "sessionTime": "සැසි කාලය",
-    "sessionTimeValue": "08:00 - 12:00 (ස්ථාවර උදෑසන සැසිය)",
+    "sessionTimeValue": "08:00 - 20:00 (ස්ථාවර සැසිය)",
     "slotDuration": "තව් කාලය (මිනිත්තු)",
     "noteLabel": "සටහන:",
-    "note": "සාමාන්‍ය උපදේශනය පමණි (08:00-12:00). වෛද්‍යවරුන් සහ කාමර එදිනට පවරනු ලැබේ. රෝගීන්ට නිශ්චිත වෛද්යවරයෙකු තෝරා ගත නොහැක.",
+    "note": "සාමාන්‍ය උපදේශනය පමණි (08:00-20:00). වෛද්‍යවරුන් සහ කාමර එදිනට පවරනු ලැබේ. රෝගීන්ට නිශ්චිත වෛද්යවරයෙකු තෝරා ගත නොහැක.",
     "cancel": "අවලංගු කරන්න",
     "createSession": "සැසිය සාදන්න"
   },
@@ -1292,7 +1337,8 @@
       "title": "අද OPD සැසි",
       "emptyTitle": "අද සැසි නැත",
       "emptySubtitle": "අද දිනට නියමිත OPD සැසි නොමැත.",
-      "createFirst": "පළමු සැසිය සාදන්න"
+      "createFirst": "පළමු සැසිය සාදන්න",
+      "completed": "සම්පූර්ණ කළ සැසි"
     },
     "upcoming": {
       "bookableTitle": "ඉදිරි සැසි (වෙන් කළ හැකි)",
@@ -1358,7 +1404,8 @@
     },
     "common": {
       "refresh": "නැවුම් කරන්න",
-      "active": "සක්‍රීය",
+      "active": "සක්‍රීයයි",
+      "completed": "සම්පූර්ණ කළා",
       "patient": "රෝගියා"
     }
   },
@@ -1378,6 +1425,66 @@
     "security": {
       "title": "ආරක්ෂාව",
       "changePassword": "මුරපදය වෙනස් කරන්න"
+    }
+  },
+  "laboratory": {
+    "dashboard": {
+      "title": "පරීක්ෂණාගාර උපකරණ පුවරුව",
+      "subtitle": "රෝගීන්ගේ පරීක්ෂණ ඉල්ලීම් සහ ප්‍රතිඵල කළමනාකරණය කරන්න.",
+      "pending": "පොරොත්තු ඉල්ලීම්",
+      "processing": "සැකසෙමින් පවතී",
+      "completed": "අවසන් කරන ලද",
+      "searchPlaceholder": "රෝගියාගේ නමෙන් සොයන්න...",
+      "filterStatus": "තත්ත්වය අනුව පෙරන්න",
+      "noRequests": "පරීක්ෂණ ඉල්ලීම් කිසිවක් හමු නොවීය.",
+      "requestDate": "ඉල්ලීම් දිනය",
+      "priority": "ප්‍රමුඛතාවය",
+      "patient": "රෝගියා",
+      "doctor": "වෛද්‍යවරයා",
+      "actions": "ක්‍රියාකාරකම්",
+      "viewDetails": "විස්තර බලන්න",
+      "updateStatus": "තත්ත්වය යාවත්කාලීන කරන්න"
+    },
+    "requestDetails": {
+      "title": "ඉල්ලීම් විස්තර",
+      "backToDashboard": "නැවත උපකරණ පුවරුව වෙත",
+      "patientInfo": "රෝගියාගේ තොරතුරු",
+      "doctorInfo": "වෛද්‍යවරයාගේ තොරතුරු",
+      "requestedTests": "ඉල්ලා ඇති පරීක්ෂණ",
+      "notes": "වෛද්‍යවරයාගේ සටහන්",
+      "results": "පරීක්ෂණ ප්‍රතිඵල",
+      "addResult": "ප්‍රතිඵල එක් කරන්න",
+      "testName": "පරීක්ෂණයේ නම",
+      "value": "අගය",
+      "unit": "ඒකකය",
+      "referenceRange": "විමර්ශන පරාසය",
+      "remarks": "සටහන්",
+      "uploadReports": "වාර්තා උඩුගත කරන්න",
+      "dropFiles": "ගොනු මෙහි අතහරින්න හෝ උඩුගත කිරීමට ක්ලික් කරන්න",
+      "supportedFormats": "සහය දක්වන ආකෘති: PDF, JPG, PNG",
+      "submitResults": "ප්‍රතිඵල ඉදිරිපත් කරන්න",
+      "submitting": "ඉදිරිපත් කරමින්...",
+      "success": "ප්‍රතිඵල සාර්ථකව ඉදිරිපත් කරන ලදී!",
+      "error": "ප්‍රතිඵල ඉදිරිපත් කිරීමට අපොහොසත් විය."
+    },
+    "requestModal": {
+      "title": "පරීක්ෂණයක් ඉල්ලන්න",
+      "selectTests": "පරීක්ෂණ තෝරන්න",
+      "priority": "ප්‍රමුඛතාවය",
+      "normal": "සාමාන්‍ය",
+      "urgent": "හදිසි",
+      "notes": "උපදෙස්/සටහන්",
+      "notesPlaceholder": "පරීක්ෂණාගාර කාර්ය මණ්ඩලය සඳහා විශේෂ උපදෙස් ඇත්නම් එක් කරන්න...",
+      "request": "පරීක්ෂණය ඉල්ලන්න",
+      "requesting": "ඉල්ලමින් පවතී...",
+      "success": "පරීක්ෂණ ඉල්ලීම සාර්ථකයි!",
+      "error": "පරීක්ෂණ ඉල්ලීම අපොහොසත් විය."
+    },
+    "status": {
+      "pending": "පොරොත්තු",
+      "sample_collected": "සාම්පල ලබාගත්තා",
+      "processing": "සැකසෙමින්",
+      "completed": "අවසන්"
     }
   }
 }

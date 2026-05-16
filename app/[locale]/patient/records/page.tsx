@@ -17,10 +17,16 @@ interface MedicalVisit {
   hospital: string;
   doctor: string;
   followUpRequired: boolean;
+  diagnosis: string;
   consultationNotes: string;
+  bp: string;
+  temp: string;
+  pulse: string;
+  weight: string;
   prescriptions: Prescription[];
   labReports: number;
   labReportUrls?: string[];
+  labRequests?: any[];
 }
 
 export default function MedicalRecordsPage() {
@@ -178,13 +184,31 @@ export default function MedicalRecordsPage() {
   };
 
   const handleDownloadAllPDF = async () => {
-    // Implement download all logic
-    alert(t('alerts.downloadAll'));
-  };
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
 
-  const handleShareLink = () => {
-    // Implement share functionality
-    alert(t('alerts.shareLink'));
+      const response = await fetch(`${API_BASE_URL}/api/medical-records/download`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to download PDF');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `medical_records_${patientName.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Error downloading PDF:', err);
+      alert(t('errors.downloadFailed') || 'Failed to download PDF');
+    }
   };
 
   if (loading) {
@@ -271,15 +295,6 @@ export default function MedicalRecordsPage() {
               </svg>
               {t('actions.downloadAllPdf')}
             </button>
-            <button
-              onClick={handleShareLink}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-[#94B4C1] hover:text-[#94B4C1] transition-colors text-sm font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              {t('actions.shareLink')}
-            </button>
           </div>
         </div>
 
@@ -347,6 +362,32 @@ export default function MedicalRecordsPage() {
               {/* Expanded Content */}
               {expandedVisit === visit.id && (
                 <div className="px-6 pb-6 space-y-6 border-t border-gray-200 pt-6">
+                  {/* Diagnosis */}
+                  <div>
+                    <h4 className="text-base font-bold text-gray-900 mb-2">{t('visit.diagnosis')}</h4>
+                    <p className="text-sm font-medium text-[#94B4C1] leading-relaxed">{visit.diagnosis}</p>
+                  </div>
+
+                  {/* Vitals */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.bp')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.bp || '--'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.temp')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.temp || '--'} °F</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.pulse')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.pulse || '--'} bpm</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('visit.vitals.weight')}</p>
+                      <p className="text-sm font-bold text-gray-900">{visit.weight || '--'} kg</p>
+                    </div>
+                  </div>
+
                   {/* Consultation Notes */}
                   <div>
                     <h4 className="text-base font-bold text-gray-900 mb-2">{t('visit.consultationNotes')}</h4>
@@ -371,18 +412,67 @@ export default function MedicalRecordsPage() {
                   {/* Lab Reports & Images */}
                   <div>
                     <h4 className="text-base font-bold text-gray-900 mb-3">{t('visit.labReports')}</h4>
-                    <div className="flex gap-3 flex-wrap">
-                      {Array.from({ length: visit.labReports }).map((_, index) => (
-                        <div
-                          key={index}
-                          className="w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center"
-                        >
-                          <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        </div>
-                      ))}
-                    </div>
+                    
+                    {/* Real Lab Requests */}
+                    {visit.labRequests && visit.labRequests.length > 0 && (
+                      <div className="space-y-4 mb-4">
+                        {visit.labRequests.map((req: any) => (
+                          <div key={req.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <div className="flex justify-between items-center mb-2">
+                              <p className="font-bold text-sm text-gray-800">{req.requestedTests.join(', ')}</p>
+                              <span className={`text-xs px-2 py-1 rounded-full ${
+                                req.status === 'COMPLETED' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                              }`}>
+                                {req.status}
+                              </span>
+                            </div>
+                            {req.results && req.results.length > 0 && (
+                              <div className="mt-2 space-y-1">
+                                {req.results.map((res: any, i: number) => (
+                                  <p key={i} className="text-xs text-gray-600">
+                                    <span className="font-medium">{res.testName}:</span> {res.value} {res.unit} 
+                                    <span className="ml-2 text-gray-400">({res.referenceRange})</span>
+                                  </p>
+                                ))}
+                              </div>
+                            )}
+                            {req.reportUrls && req.reportUrls.length > 0 && (
+                              <div className="mt-3 flex gap-2">
+                                {req.reportUrls.map((url: string, i: number) => (
+                                  <a
+                                    key={i}
+                                    href={`${API_BASE_URL}${url}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs text-blue-600 hover:underline flex items-center gap-1"
+                                  >
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Report {i + 1}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {!visit.labRequests || visit.labRequests.length === 0 && (
+                      <div className="flex gap-3 flex-wrap">
+                        {Array.from({ length: visit.labReports }).map((_, index) => (
+                          <div
+                            key={index}
+                            className="w-40 h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center"
+                          >
+                            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <button
                       onClick={() => handleDownloadVisitPDF(visit.id)}
                       className="mt-4 flex items-center gap-2 px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] transition-colors text-sm font-medium"

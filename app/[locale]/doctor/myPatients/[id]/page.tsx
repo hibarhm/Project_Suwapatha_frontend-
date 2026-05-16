@@ -7,6 +7,9 @@ import { useParams } from 'next/navigation';
 import DoctorLayout from '@/app/components/doctorLayout';
 import { doctorApi, PatientDetails } from '@/app/api/doctor/doctorApi';
 import RequireRole from '@/app/components/RequireRole';
+import MedicineSearch from '@/app/components/MedicineSearch';
+import { MedicineDTO } from '@/app/api/medicine/medicineApi';
+import LabRequestModal from '@/app/components/doctor/LabRequestModal';
 
 export default function PatientDetailsPage() {
   const t = useTranslations('doctorPatientDetails');
@@ -17,6 +20,7 @@ export default function PatientDetailsPage() {
   const [activeTab, setActiveTab] = useState('overview'); // overview, history, prescriptions
   const [isEditing, setIsEditing] = useState(false);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const [showLabRequestModal, setShowLabRequestModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [patient, setPatient] = useState<PatientDetails | null>(null);
@@ -73,6 +77,13 @@ export default function PatientDetailsPage() {
 
   const handleAddPrescription = () => {
     if (newPrescription.medicine && newPrescription.dosage) {
+      // Avoid duplicate medicines
+      const isDuplicate = prescriptions.some(p => p.medicine.toLowerCase() === newPrescription.medicine.toLowerCase());
+      if (isDuplicate) {
+        alert(t('alerts.medicineAlreadyAdded') || 'This medicine is already in the prescription list.');
+        return;
+      }
+
       setPrescriptions([
         ...prescriptions,
         { ...newPrescription, id: Date.now(), status: 'Active' }
@@ -80,6 +91,25 @@ export default function PatientDetailsPage() {
       setNewPrescription({ medicine: '', dosage: '', frequency: '', duration: '' });
       setShowPrescriptionModal(false);
     }
+  };
+
+  const handleMedicineSelect = (medicine: MedicineDTO) => {
+    const name = medicine.brandName !== 'N/A' ? medicine.brandName : medicine.genericName;
+    setNewPrescription(prev => ({
+      ...prev,
+      medicine: name,
+      dosage: medicine.dosageForm !== 'N/A' ? medicine.dosageForm : '',
+    }));
+  };
+
+  const handleToggleMedicineStatus = (id: string | number) => {
+    setPrescriptions(prev => prev.map(p => {
+      if (p.id === id) {
+        const newStatus = p.status === 'Active' ? 'Stopped' : 'Active';
+        return { ...p, status: newStatus };
+      }
+      return p;
+    }));
   };
 
   const handleSaveConsultation = async () => {
@@ -105,9 +135,11 @@ export default function PatientDetailsPage() {
           dosage: p.dosage,
           frequency: p.frequency,
           duration: p.duration,
-          status: 'Active'
+          status: p.status || 'Active'
         })),
-        followUpRequired: false // Default
+        followUpRequired: false, // Default
+        hospitalName: patient.hospitalName || 'Central Hospital', // Fallback or get from patient details if available
+        appointmentId: patient.currentAppointmentId
       });
 
       alert(t('alerts.consultationSaved'));
@@ -131,6 +163,9 @@ export default function PatientDetailsPage() {
   const getPrescriptionStatusLabel = (status: string) => {
     if (status === 'Active' || status === 'ACTIVE') {
       return t('status.active');
+    }
+    if (status === 'Stopped' || status === 'STOPPED') {
+      return t('status.stopped');
     }
     return status;
   };
@@ -199,18 +234,56 @@ export default function PatientDetailsPage() {
               </button>
               <button
                 onClick={handleSaveConsultation}
-                className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
+                className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] text-sm font-medium"
               >
                 {t('saveConsultation')}
               </button>
             </>
           ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-slate-400 text-white rounded-lg hover:bg-slate-500 text-sm font-medium"
-            >
-              {t('startConsultation')}
-            </button>
+            <div className="flex gap-2">
+              {patient.currentStatus !== 'COMPLETED' && (
+                <button
+                  onClick={async () => {
+                    if (patient.currentAppointmentId && (patient.currentStatus === 'BOOKED' || patient.currentStatus === 'CHECKED_IN')) {
+                      try {
+                        await doctorApi.updateAppointmentStatus(patient.currentAppointmentId, 'CONSULTING');
+                        setPatient({ ...patient, currentStatus: 'CONSULTING' });
+                      } catch (err) {
+                        console.error('Failed to update status:', err);
+                      }
+                    }
+                    setIsEditing(true);
+                  }}
+                  className="px-4 py-2 bg-[#94B4C1] text-white rounded-lg hover:bg-[#7fa8b8] text-sm font-medium"
+                >
+                  {patient.currentStatus === 'CONSULTING' ? t('continueConsultation') : t('startConsultation')}
+                </button>
+              )}
+              {patient.currentAppointmentId && (patient.currentStatus === 'CONSULTING' || patient.currentStatus === 'CHECKED_IN') && (
+                <button
+                  onClick={async () => {
+                    if (confirm(t('alerts.markComplete', { name: patient.name }))) {
+                      try {
+                        setLoading(true);
+                        await doctorApi.updateAppointmentStatus(patient.currentAppointmentId!, 'COMPLETED');
+                        alert(t('alerts.markedAsCompleted'));
+                        router.push('/doctor/myPatients');
+                      } catch (err: any) {
+                        alert(err.message || 'Failed to complete consultation');
+                      } finally {
+                        setLoading(false);
+                      }
+                    }
+                  }}
+                  className="px-4 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm font-medium flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  {t('markComplete')}
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -352,15 +425,26 @@ export default function PatientDetailsPage() {
                   </div>
 
                   {isEditing && (
-                    <button
-                      onClick={() => setShowPrescriptionModal(true)}
-                      className="flex items-center gap-2 px-4 py-2 border border-slate-400 text-slate-600 rounded-lg hover:bg-slate-50 text-sm font-medium"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                      {t('addPrescription')}
-                    </button>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setShowPrescriptionModal(true)}
+                        className="flex items-center gap-2 px-4 py-2 border border-slate-400 text-slate-600 rounded-lg hover:bg-slate-50 text-sm font-medium"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        {t('addPrescription')}
+                      </button>
+                      <button
+                        onClick={() => setShowLabRequestModal(true)}
+                        className="flex items-center gap-2 px-4 py-2 border border-purple-400 text-purple-600 rounded-lg hover:bg-purple-50 text-sm font-medium"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.628.282a2 2 0 01-1.806 0l-.628-.282a6 6 0 00-3.86-.517l-2.387.477a2 2 0 00-1.022.547" />
+                        </svg>
+                        Request Lab Test
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -419,6 +503,55 @@ export default function PatientDetailsPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Lab Reports */}
+                  {record.labRequests && record.labRequests.length > 0 && (
+                    <div className="mt-6 space-y-4">
+                      <p className="text-sm font-bold text-gray-800">Laboratory Requests & Results:</p>
+                      {record.labRequests.map((req: any) => (
+                        <div key={req.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                          <div className="flex justify-between items-center mb-2">
+                            <p className="font-bold text-sm text-gray-700">{req.requestedTests.join(', ')}</p>
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                              req.status === 'COMPLETED' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {req.status}
+                            </span>
+                          </div>
+                          
+                          {req.results && req.results.length > 0 && (
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2">
+                              {req.results.map((res: any, i: number) => (
+                                <div key={i} className="text-xs">
+                                  <span className="text-gray-500">{res.testName}:</span> 
+                                  <span className="ml-1 font-semibold">{res.value} {res.unit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {req.reportUrls && req.reportUrls.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {req.reportUrls.map((url: string, i: number) => (
+                                <a
+                                  key={i}
+                                  href={`${API_BASE_URL}${url}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-blue-600 rounded-md text-[10px] font-bold border border-blue-100 hover:bg-blue-50 transition-colors"
+                                >
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  View Report {i + 1}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -448,9 +581,27 @@ export default function PatientDetailsPage() {
                       <p className="font-semibold text-gray-900">{rx.medicine}</p>
                       <p className="text-sm text-gray-600">{rx.dosage} • {rx.frequency} • {rx.duration}</p>
                     </div>
-                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
-                      {getPrescriptionStatusLabel(rx.status)}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                        rx.status === 'Active' || rx.status === 'ACTIVE'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}>
+                        {getPrescriptionStatusLabel(rx.status)}
+                      </span>
+                      {isEditing && (
+                        <button
+                          onClick={() => handleToggleMedicineStatus(rx.id!)}
+                          className={`text-xs font-medium px-2 py-1 rounded hover:bg-gray-100 transition-colors ${
+                            rx.status === 'Active' || rx.status === 'ACTIVE'
+                              ? 'text-red-600 hover:text-red-800'
+                              : 'text-green-600 hover:text-green-800'
+                          }`}
+                        >
+                          {rx.status === 'Active' || rx.status === 'ACTIVE' ? t('stop') : t('continue')}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -525,11 +676,8 @@ export default function PatientDetailsPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">{t('modal.medicineName')}</label>
-                <input
-                  type="text"
-                  value={newPrescription.medicine}
-                  onChange={(e) => setNewPrescription({ ...newPrescription, medicine: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-400 text-sm"
+                <MedicineSearch 
+                  onSelect={handleMedicineSelect}
                   placeholder={t('modal.medicinePlaceholder')}
                 />
               </div>
@@ -586,6 +734,14 @@ export default function PatientDetailsPage() {
           </div>
         </div>
       )}
+
+      {/* Lab Request Modal */}
+      <LabRequestModal
+        isOpen={showLabRequestModal}
+        onClose={() => setShowLabRequestModal(false)}
+        patientId={patient.id}
+        patientName={patient.name}
+      />
       </DoctorLayout>
     </RequireRole>
   );

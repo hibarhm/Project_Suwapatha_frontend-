@@ -83,9 +83,9 @@ export default function DoctorRegistrationReview() {
     }
   };
 
-  const handleReject = async (id: string) => {
+  const handleReject = async (id: string, reason?: string) => {
     try {
-      await adminApi.rejectDoctor(id);
+      await adminApi.rejectDoctor(id, reason);
       
       // Update local state
       setDoctors(doctors.map(doc =>

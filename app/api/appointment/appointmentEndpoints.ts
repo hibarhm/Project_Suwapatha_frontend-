@@ -5,6 +5,8 @@ const BASE = API_BASE_URL;
 export const APPOINTMENT_ENDPOINTS = {
     // Patient — hospitals
     HOSPITALS: `${BASE}/api/hospitals`,
+    NEARBY_HOSPITALS: (lat: number, lng: number) =>
+        `${BASE}/api/hospitals/nearby?lat=${lat}&lng=${lng}`,
     HOSPITAL_SESSIONS: (hospitalId: string) =>
         `${BASE}/api/hospitals/${hospitalId}/sessions`,
 

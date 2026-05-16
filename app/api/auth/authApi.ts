@@ -90,46 +90,36 @@ export const authApi = {
         return result;
     },
 
-    login: async (data: LoginRequest): Promise<AuthResponse> => {
-        const response = await fetch(authEndpoints.LOGIN, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-        const result = await handleResponse<AuthResponse>(response);
-        persistAuth(result);
-        return result;
-    },
 
     loginAdmin: async (data: LoginRequest): Promise<AuthResponse> => {
-        const response = await fetch(authEndpoints.LOGIN, { // Reusing general login endpoint
+        const response = await fetch(authEndpoints.LOGIN_ADMIN, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
-
-        // Client-side verification for role (optional but good for UX)
-        if (result.role !== 'ADMIN') {
-            throw new Error('Unauthorized: Access restricted to administrators.');
-        }
-
         persistAuth(result);
         return result;
     },
 
     loginSuperAdmin: async (data: LoginRequest): Promise<AuthResponse> => {
-        const response = await fetch(authEndpoints.LOGIN, {
+        const response = await fetch(authEndpoints.LOGIN_SUPER_ADMIN, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
         });
         const result = await handleResponse<AuthResponse>(response);
+        persistAuth(result);
+        return result;
+    },
 
-        if (result.role !== 'SUPER_ADMIN') {
-            throw new Error('Unauthorized: Access restricted to super administrators.');
-        }
-
+    loginLaboratory: async (data: LoginRequest): Promise<AuthResponse> => {
+        const response = await fetch(authEndpoints.LOGIN_LABORATORY, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await handleResponse<AuthResponse>(response);
         persistAuth(result);
         return result;
     },

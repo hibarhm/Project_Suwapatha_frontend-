@@ -289,13 +289,21 @@
       "notAvailable": null,
       "toBeAssigned": "ஒதுக்க வேண்டும்"
     },
+    "penalty": {
+      "title": "கணக்கு எச்சரிக்கை",
+      "redMarkTitle": "கணக்கு முடக்கப்பட்டது",
+      "redMarkDescription": "பல கடைசி நிமிட ரத்துகள் காரணமாக உங்கள் கணக்கு முடக்கப்பட்டுள்ளது. ஆதரவைத் தொடர்பு கொள்ளவும்.",
+      "countWarning": "உங்களிடம் {count} தாமதமான ரத்துகள் உள்ளன. கணக்கு இடைநிறுத்தப்படுவதற்கு முன்பு அதிகபட்சமாக 3 முறை அனுமதிக்கப்படும்.",
+      "lastMinuteWarning": "குறிப்பு: அமர்வுக்கு 12 மணி நேரத்திற்குள் ரத்து செய்தால் அபராதம் விதிக்கப்படும்."
+    },
     "alerts": {
       "cancelFailed": "ரத்துசெய்ய முடியவில்லை."
     },
     "status": {
       "booked": "முன்பதிவு செய்யப்பட்டது",
       "cancelled": "ரத்து செய்யப்பட்டது",
-      "completed": "முடிக்கப்பட்டது"
+      "completed": "முடிக்கப்பட்டது",
+      "finished": "முடிந்தது"
     },
     "newUser": {
       "title": "சுவபாதாவிற்கு வருக! 🎉",
@@ -319,6 +327,7 @@
       "doctor": "டாக்டர்",
       "queue": "வரிசை #",
       "wait": "காத்திருங்கள்",
+      "room": "OPD அறை",
       "actions": "செயல்கள்",
       "waitMinutes": "~{minutes} நிமிடம்",
       "waitOnlyMinutes": "{minutes} நிமிடம்",
@@ -334,6 +343,7 @@
       "hospital": "மருத்துவமனை",
       "doctor": "டாக்டர்",
       "estimatedWait": "Est. காத்திருங்கள்",
+      "room": "OPD அறை",
       "status": "நிலை"
     },
     "vitals": {
@@ -371,7 +381,8 @@
     "status": {
       "booked": "முன்பதிவு செய்யப்பட்டது",
       "cancelled": "ரத்து செய்யப்பட்டது",
-      "completed": "முடிக்கப்பட்டது"
+      "completed": "முடிக்கப்பட்டது",
+      "finished": "முடிந்தது"
     },
     "alerts": {
       "reminderTitle": "சந்திப்பு நினைவூட்டல்",
@@ -408,6 +419,7 @@
       "minutesOnly": "{minutes} நிமிடம்",
       "hospital": "மருத்துவமனை",
       "doctor": "டாக்டர்",
+      "room": "OPD அறை",
       "status": "நிலை",
       "emptyTitle": "செயலில் உள்ள சந்திப்பு இல்லை",
       "emptySubtitle": "ஒரு மருத்துவமனையைத் தேடி மேலே OPD அமர்வை முன்பதிவு செய்யவும்."
@@ -441,7 +453,8 @@
       "fetchFailed": "மருத்துவப் பதிவுகளைப் பெற முடியவில்லை",
       "loadFailed": "மருத்துவப் பதிவுகளை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
       "filterFailed": "மருத்துவ பதிவுகளை வடிகட்ட முடியவில்லை",
-      "filterLoadFailed": "மருத்துவ பதிவுகளை வடிகட்ட முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
+      "filterLoadFailed": "மருத்துவ பதிவுகளை வடிகட்ட முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+      "downloadFailed": "மருத்துவப் பதிவுகள் PDF ஐ உருவாக்கி தரவிறக்கம் செய்ய முடியவில்லை. சிறிது நேரம் கழித்து மீண்டும் முயற்சிக்கவும்."
     },
     "alerts": {
       "downloadVisit": "வருகைக்கான PDF ஐப் பதிவிறக்குகிறது {visitId}",
@@ -470,10 +483,17 @@
       "subtitle": "உங்களிடம் இதுவரை மருத்துவப் பதிவுகள் எதுவும் இல்லை."
     },
     "visit": {
-      "followUpRequired": "பின்தொடர்தல் தேவை",
+      "followUpRequired": "தொடர் சிகிச்சை தேவை",
+      "diagnosis": "நோய் கண்டறிதல்",
       "consultationNotes": "ஆலோசனை குறிப்புகள்",
       "prescriptions": "மருந்துச்சீட்டுகள்",
-      "labReports": "ஆய்வக அறிக்கைகள் & படங்கள்"
+      "labReports": "ஆய்வக அறிக்கைகள் & படங்கள்",
+      "vitals": {
+        "bp": "இரத்த அழுத்தம்",
+        "temp": "உடல் வெப்பநிலை",
+        "pulse": "நாடித் துடிப்பு",
+        "weight": "எடை"
+      }
     }
   },
   "doctorDashboard": {
@@ -595,8 +615,10 @@
   "doctorPatientDetails": {
     "goBack": "திரும்பி செல்",
     "cancel": "ரத்து செய்",
-    "saveConsultation": "ஆலோசனையைச் சேமிக்கவும்",
-    "startConsultation": "ஆலோசனையைத் தொடங்குங்கள்",
+    "saveConsultation": "ஆலோசனையைச் சேமி",
+    "startConsultation": "ஆலோசனையைத் தொடங்கு",
+    "continueConsultation": "ஆலோசனையைத் தொடரவும்",
+    "markComplete": "முடிந்தது என குறிக்கவும்",
     "currentConsultation": "தற்போதைய ஆலோசனை",
     "diagnosis": "நோய் கண்டறிதல்",
     "diagnosisPlaceholder": "நோயறிதலை உள்ளிடவும்...",
@@ -648,6 +670,8 @@
     "alerts": {
       "enterDiagnosisAndNotes": "நோயறிதல் மற்றும் ஆலோசனை குறிப்புகளை உள்ளிடவும்",
       "consultationSaved": "ஆலோசனை வெற்றிகரமாக சேமிக்கப்பட்டது!",
+      "markedAsCompleted": "ஆலோசனை முடிந்தது என குறிக்கப்பட்டது!",
+      "markComplete": "{name} ஐ முடிந்தது எனக் குறிக்க விரும்புகிறீர்களா? இது செயலில் உள்ள அமர்வை முடிக்கும்.",
       "saveFailed": "ஆலோசனையைச் சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
     },
     "modal": {
@@ -889,9 +913,16 @@
     "stats": {
       "totalDoctors": "மொத்த மருத்துவர்கள்",
       "activeSessions": "செயலில் உள்ள அமர்வுகள்",
+      "activeSessionsMonth": "செயலில் உள்ள அமர்வுகள் (மாதாந்திர)",
       "patientsToday": "இன்று நோயாளிகள்",
+      "monthlyCompletedPatients": "முடிக்கப்பட்ட நோயாளிகள் (மாதாந்திர)",
       "avgWaitingTime": "சராசரி காத்திருக்கும் நேரம்",
-      "estimatedPerSession": "ஒரு அமர்வுக்கு மதிப்பிடப்பட்டுள்ளது"
+      "estimatedPerSession": "ஒரு அமர்வுக்கு மதிப்பிடப்பட்டுள்ளது",
+      "completedThisMonth": "இந்த மாதத்தில் முன்பதிவு செய்து பரிசோதனை முடித்த மொத்த நோயாளிகள்",
+      "allocatedWaiting": "{allocated} ஒதுக்கப்பட்டது, {waiting} காத்திருக்கிறது",
+      "totalSessionsToday": "இன்று மொத்தம் {count} அமர்வுகள்",
+      "totalSessionsMonth": "இந்த மாதத்தில் மொத்தம் {count} அமர்வுகள்",
+      "totalDoctorsToday": "இன்று மொத்தம் {count} மருத்துவர்கள்"
     },
     "recentDoctors": {
       "title": "சமீபத்திய மருத்துவர் பதிவுகள்",
@@ -947,6 +978,21 @@
     },
     "footer": {
       "rights": "© 2026 சுவபாதா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+    },
+    "nearbyHospitals": {
+      "title": "Nearby Hospitals",
+      "subtitle": "Find and navigate to the closest healthcare centers",
+      "loading": "Finding nearby hospitals...",
+      "locationNotFound": "Location Not Found",
+      "locationError": "Location not available. Please allow location access during login.",
+      "distance": "{distance} km",
+      "viewRoute": "View Route",
+      "focusOnMap": "Focus",
+      "yourLocation": "Your Location",
+      "estimatedTravel": "Estimated Travel",
+      "mins": "mins",
+      "noHospitals": "No hospitals found nearby.",
+      "refresh": "Refresh Location"
     }
   },
   "adminSettings": {
@@ -1100,14 +1146,19 @@
     "checkingPermissions": "Checking permissions..."
   },
   "doctorReviewModal": {
-    "confirmReject": "Are you sure you want to reject this doctor registration?",
-    "pendingReview": "Pending Review",
-    "registrationDetails": "Registration Details",
-    "submittedOn": "Submitted on",
-    "rejecting": "Rejecting...",
+    "confirmReject": "இந்த மருத்துவர் பதிவை நிராகரிக்க விரும்புகிறீர்களா?",
+    "rejectionReasonLabel": "நிராகரிப்பதற்கான காரணம்",
+    "rejectionReasonPlaceholder": "பதிவை நிராகரிப்பதற்கான தெளிவான காரணத்தை வழங்கவும்...",
+    "cancelRejection": "நிராகரிப்பை ரத்துசெய்",
+    "confirmRejectAction": "நிராகரிப்பை உறுதிப்படுத்து",
+    "reasonRequired": "நிராகரிக்க காரணம் தேவை.",
+    "pendingReview": "மதிப்பாய்விற்காக காத்திருக்கிறது",
+    "registrationDetails": "பதிவு விவரங்கள்",
+    "submittedOn": "சமர்ப்பிக்கப்பட்டது",
+    "rejecting": "நிராகரிக்கப்படுகிறது...",
     "reject": "நிராகரிக்கவும்",
-    "approving": "Approving...",
-    "approveRegistration": "Approve Registration",
+    "approving": "அங்கீகரிக்கப்படுகிறது...",
+    "approveRegistration": "பதிவை அங்கீகரிக்கவும்",
     "fields": {
       "firstName": "முதல் பெயர்",
       "lastName": "கடைசி பெயர்",
@@ -1220,16 +1271,16 @@
   },
   "createSessionModal": {
     "title": "Create New OPD Session",
-    "headerSubtitle": "All sessions run from 08:00 to 12:00",
+    "headerSubtitle": "All sessions run from 08:00 to 20:00",
     "date": "தேதி",
     "selectDate": "Select date",
     "advanceHint": "Up to 7 days in advance",
     "totalSlots": "Total Slots",
     "sessionTime": "Session Time",
-    "sessionTimeValue": "08:00 - 12:00 (fixed morning session)",
+    "sessionTimeValue": "08:00 - 20:00 (fixed session)",
     "slotDuration": "Slot Duration (minutes)",
     "noteLabel": "Note:",
-    "note": "General consultation only (08:00-12:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
+    "note": "General consultation only (08:00-20:00). Doctors and rooms are assigned on the day. Patients cannot choose a specific doctor.",
     "cancel": "ரத்து செய்",
     "createSession": "Create Session"
   },
@@ -1260,7 +1311,8 @@
       "title": "Today's OPD Sessions",
       "emptyTitle": "No Sessions Today",
       "emptySubtitle": "There are no OPD sessions scheduled for today.",
-      "createFirst": "முதல் அமர்வை உருவாக்கவும்"
+      "createFirst": "முதல் அமர்வை உருவாக்கவும்",
+      "completed": "முடிக்கப்பட்ட அமர்வுகள்"
     },
     "upcoming": {
       "bookableTitle": "Upcoming Sessions (Bookable)",
@@ -1317,6 +1369,12 @@
       "cancelSession": "Failed to cancel session",
       "fetchPatients": "Failed to fetch patients",
       "loadPatientList": "Failed to load patient list"
+    },
+    "common": {
+      "refresh": "புதுப்பிக்கவும்",
+      "active": "செயலில்",
+      "completed": "முடிக்கப்பட்டது",
+      "patient": "நோயாளி"
     }
   },
   "patientSettings": {

@@ -76,6 +76,33 @@ export default function LoginPage() {
       ...formData,
       useLocation: choice,
     });
+
+    if (choice === 'Yes') {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            localStorage.setItem('userLat', latitude.toString());
+            localStorage.setItem('userLng', longitude.toString());
+            localStorage.setItem('locationPermission', 'granted');
+            console.log('Location captured:', latitude, longitude);
+          },
+          (error) => {
+            console.error('Geolocation error:', error);
+            localStorage.setItem('locationPermission', 'denied');
+            // We can show a toast or alert if needed, but the user requirement just says capture if possible
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      } else {
+        console.error('Geolocation not supported');
+        localStorage.setItem('locationPermission', 'unsupported');
+      }
+    } else {
+      localStorage.setItem('locationPermission', 'denied');
+      localStorage.removeItem('userLat');
+      localStorage.removeItem('userLng');
+    }
   };
 
   return (
