@@ -8,6 +8,12 @@ export interface HospitalResponse {
     type: string;
     address: string;
     phone: string;
+    latitude?: number;
+    longitude?: number;
+}
+
+export interface NearbyHospitalResponse extends HospitalResponse {
+    distanceKm: number;
 }
 
 export interface OpdSessionResponse {

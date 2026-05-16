@@ -616,6 +616,8 @@
     "goBack": "Go Back",
     "cancel": "Cancel",
     "saveConsultation": "Save Consultation",
+    "stop": "Stop",
+    "continue": "Continue",
     "startConsultation": "Start Consultation",
     "continueConsultation": "Continue Consultation",
     "markComplete": "Mark as Complete",
@@ -634,7 +636,8 @@
     "prescriptions": "Prescriptions",
     "notAvailable": "N/A",
     "status": {
-      "active": "Active"
+      "active": "Active",
+      "stopped": "Stopped"
     },
     "patientId": "Patient ID: {id}",
     "queue": "Queue: {queue}",
@@ -988,6 +991,21 @@
     },
     "footer": {
       "rights": "© 2026 Suwapatha. All rights reserved."
+    },
+    "nearbyHospitals": {
+      "title": "Nearby Hospitals",
+      "subtitle": "Find and navigate to the closest healthcare centers",
+      "loading": "Finding nearby hospitals...",
+      "locationNotFound": "Location Not Found",
+      "locationError": "Location not available. Please allow location access during login.",
+      "distance": "{distance} km",
+      "viewRoute": "View Route",
+      "focusOnMap": "Focus",
+      "yourLocation": "Your Location",
+      "estimatedTravel": "Estimated Travel",
+      "mins": "mins",
+      "noHospitals": "No hospitals found nearby.",
+      "refresh": "Refresh Location"
     },
     "errors": {
       "fetchHospitalInfo": "Failed to fetch hospital info",

@@ -96,7 +96,17 @@ export default function PatientDetailsPage() {
     setNewPrescription(prev => ({
       ...prev,
       medicine: name,
-      // Pre-fill dosage form if available as a hint in notes or dosage
+      dosage: medicine.dosageForm !== 'N/A' ? medicine.dosageForm : '',
+    }));
+  };
+
+  const handleToggleMedicineStatus = (id: string | number) => {
+    setPrescriptions(prev => prev.map(p => {
+      if (p.id === id) {
+        const newStatus = p.status === 'Active' ? 'Stopped' : 'Active';
+        return { ...p, status: newStatus };
+      }
+      return p;
     }));
   };
 
@@ -123,7 +133,7 @@ export default function PatientDetailsPage() {
           dosage: p.dosage,
           frequency: p.frequency,
           duration: p.duration,
-          status: 'Active'
+          status: p.status || 'Active'
         })),
         followUpRequired: false, // Default
         hospitalName: patient.hospitalName || 'Central Hospital', // Fallback or get from patient details if available
@@ -151,6 +161,9 @@ export default function PatientDetailsPage() {
   const getPrescriptionStatusLabel = (status: string) => {
     if (status === 'Active' || status === 'ACTIVE') {
       return t('status.active');
+    }
+    if (status === 'Stopped' || status === 'STOPPED') {
+      return t('status.stopped');
     }
     return status;
   };
@@ -506,9 +519,27 @@ export default function PatientDetailsPage() {
                       <p className="font-semibold text-gray-900">{rx.medicine}</p>
                       <p className="text-sm text-gray-600">{rx.dosage} • {rx.frequency} • {rx.duration}</p>
                     </div>
-                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
-                      {getPrescriptionStatusLabel(rx.status)}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                        rx.status === 'Active' || rx.status === 'ACTIVE'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}>
+                        {getPrescriptionStatusLabel(rx.status)}
+                      </span>
+                      {isEditing && (
+                        <button
+                          onClick={() => handleToggleMedicineStatus(rx.id!)}
+                          className={`text-xs font-medium px-2 py-1 rounded hover:bg-gray-100 transition-colors ${
+                            rx.status === 'Active' || rx.status === 'ACTIVE'
+                              ? 'text-red-600 hover:text-red-800'
+                              : 'text-green-600 hover:text-green-800'
+                          }`}
+                        >
+                          {rx.status === 'Active' || rx.status === 'ACTIVE' ? t('stop') : t('continue')}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

@@ -1,6 +1,7 @@
 import { APPOINTMENT_ENDPOINTS } from './appointmentEndpoints';
 import {
     HospitalResponse,
+    NearbyHospitalResponse,
     OpdSessionResponse,
     AppointmentResponse,
     BookAppointmentRequest,
@@ -35,6 +36,14 @@ export const appointmentApi = {
             : APPOINTMENT_ENDPOINTS.HOSPITALS;
         const res = await fetch(url, { headers: authHeaders() });
         return handleResponse<HospitalResponse[]>(res);
+    },
+
+    /** Get nearby hospitals based on lat/lng */
+    getNearbyHospitals: async (lat: number, lng: number): Promise<NearbyHospitalResponse[]> => {
+        const res = await fetch(APPOINTMENT_ENDPOINTS.NEARBY_HOSPITALS(lat, lng), {
+            headers: authHeaders(),
+        });
+        return handleResponse<NearbyHospitalResponse[]>(res);
     },
 
     /** Upcoming OPEN sessions for a hospital */

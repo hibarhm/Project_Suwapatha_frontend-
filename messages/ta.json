@@ -978,6 +978,21 @@
     },
     "footer": {
       "rights": "© 2026 சுவபாதா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+    },
+    "nearbyHospitals": {
+      "title": "Nearby Hospitals",
+      "subtitle": "Find and navigate to the closest healthcare centers",
+      "loading": "Finding nearby hospitals...",
+      "locationNotFound": "Location Not Found",
+      "locationError": "Location not available. Please allow location access during login.",
+      "distance": "{distance} km",
+      "viewRoute": "View Route",
+      "focusOnMap": "Focus",
+      "yourLocation": "Your Location",
+      "estimatedTravel": "Estimated Travel",
+      "mins": "mins",
+      "noHospitals": "No hospitals found nearby.",
+      "refresh": "Refresh Location"
     }
   },
   "adminSettings": {

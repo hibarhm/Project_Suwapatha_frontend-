@@ -10,6 +10,18 @@ import { userApi } from '@/app/api/user/userApi';
 import { UserProfile } from '@/app/api/user/userTypes';
 import { medicalRecordApi } from '@/app/api/medicalRecord/medicalRecordApi';
 import { MedicalRecordResponse } from '@/app/api/medicalRecord/medicalRecordTypes';
+import dynamic from 'next/dynamic';
+import LocationPermissionModal from '@/app/components/LocationPermissionModal';
+
+const NearbyHospitals = dynamic(() => import('@/app/components/NearbyHospitals'), { 
+  ssr: false,
+  loading: () => (
+    <div className="bg-white rounded-xl border border-gray-200 p-8 flex flex-col items-center justify-center min-h-[400px]">
+      <div className="w-10 h-10 border-4 border-[#94B4C1] border-t-transparent rounded-full animate-spin mb-4" />
+      <p className="text-gray-500 font-medium">Loading Map...</p>
+    </div>
+  )
+});
 
 function Spinner() {
   return (
@@ -47,9 +59,16 @@ export default function PatientDashboard() {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [isNewUser, setIsNewUser] = useState(false);
+  const [showNearby, setShowNearby] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    // Check location permission
+    const permission = localStorage.getItem('locationPermission');
+    if (permission === 'granted') {
+      setShowNearby(true);
+    }
 
     // Primary source: the full user object stored by authApi
     const storedUser = (() => {
@@ -283,6 +302,14 @@ export default function PatientDashboard() {
               </div>
             )}
           </div>
+
+          {/* Nearby Hospitals Section (Map + List) */}
+          <NearbyHospitals />
+
+          <LocationPermissionModal 
+            onAllow={() => setShowNearby(true)} 
+            onDecline={() => setShowNearby(false)} 
+          />
 
           {/* Active Queue Status (compact) */}
           {activeAppt && (
