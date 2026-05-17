@@ -316,7 +316,7 @@ export default function OPDSessionManagement() {
         body: JSON.stringify({
           date: formData.date,
           startTime: '08:00',
-          endTime: '20:00',
+          endTime: '21:00',
           department: 'General Consultation',
           doctorName: t('labels.pendingAssignment'),
           room: t('labels.notAssigned'),
@@ -331,7 +331,10 @@ export default function OPDSessionManagement() {
       }
 
       // Refresh data
-      await fetchUpcomingData();
+      await Promise.all([
+        fetchTodayData(),
+        fetchUpcomingData()
+      ]);
 
       setShowCreateModal(false);
       setFormData({
