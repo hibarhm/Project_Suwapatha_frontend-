@@ -38,6 +38,7 @@ function StatusBadge({ status }: { status: string }) {
     CANCELLED: 'bg-red-100 text-red-600',
     COMPLETED: 'bg-green-100 text-green-700',
     FINISHED: 'bg-gray-100 text-gray-700',
+    PENDING_ALLOCATION: 'bg-orange-100 text-orange-700',
   };
   return (
     <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium
@@ -46,6 +47,7 @@ function StatusBadge({ status }: { status: string }) {
         : status === 'CANCELLED' ? t('cancelled') 
         : status === 'COMPLETED' ? t('completed') 
         : status === 'FINISHED' ? t('finished')
+        : status === 'PENDING_ALLOCATION' ? t('pending_allocation')
         : status}
     </span>
   );
@@ -159,7 +161,7 @@ export default function PatientDashboard() {
     });
   })();
 
-  const bookedAppointments = appointments.filter(a => a.status === 'BOOKED');
+  const bookedAppointments = appointments.filter(a => a.status === 'BOOKED' || a.status === 'PENDING_ALLOCATION');
 
   return (
     <PatientLayout onLogout={handleLogout}>
@@ -274,13 +276,19 @@ export default function PatientDashboard() {
                       <tr key={apt.id} className="border-b border-gray-100 hover:bg-gray-50">
                         <td className="py-4 px-3 text-sm text-gray-900 whitespace-nowrap">{apt.appointmentDate}</td>
                         <td className="py-4 px-3 text-sm text-gray-900 max-w-[140px] truncate">{apt.hospitalName}</td>
-                        <td className="py-4 px-3 text-sm text-gray-600">{apt.doctorName || t('common.notAvailable')}</td>
-                        <td className="py-4 px-3 text-sm text-gray-600 font-medium">
-                          {apt.room ? `${apt.room}` : t('common.notAvailable')}
+                        <td className="py-4 px-3 text-sm text-gray-600">
+                          {apt.allocationStatus === 'PENDING' ? t('common.toBeAssigned') : (apt.doctorName || t('common.notAvailable'))}
                         </td>
-                        <td className="py-4 px-3 text-sm font-bold text-[#94B4C1]">#{apt.queueNumber}</td>
+                        <td className="py-4 px-3 text-sm text-gray-600 font-medium">
+                          {apt.allocationStatus === 'PENDING' ? t('common.toBeAssigned') : (apt.room ? `${apt.room}` : t('common.notAvailable'))}
+                        </td>
+                        <td className="py-4 px-3 text-sm font-bold text-[#94B4C1]">
+                          {apt.allocationStatus === 'PENDING' ? t('common.toBeAssigned') : (apt.queueNo || apt.queueNumber)}
+                        </td>
                         <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap">
-                          {apt.status === 'CONSULTING' ? t('table.youAreNext') : apt.isNext ? t('table.youAreNext') : t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes})}
+                          {apt.allocationStatus === 'PENDING' 
+                            ? t('common.toBeAssigned') 
+                            : (apt.status === 'CONSULTING' ? t('table.youAreNext') : apt.isNext ? t('table.youAreNext') : apt.estimatedConsultationTime ? apt.estimatedConsultationTime : t('table.waitMinutes', {minutes: apt.estimatedWaitMinutes}))}
                         </td>
                         <td className="py-4 px-3">
                           <button
@@ -315,38 +323,52 @@ export default function PatientDashboard() {
           {activeAppt && (
             <div className="bg-white rounded-xl border-2 border-[#94B4C1]/30 p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">{t('liveQueue.title')}</h2>
-              <div className="flex items-center gap-6 flex-wrap">
-                <div className="text-center">
-                  <p className="text-xs text-gray-500 mb-1">{t('liveQueue.queue')}</p>
-                  <p className="text-5xl font-bold text-[#94B4C1]">{activeAppt.queueNumber}</p>
+              {activeAppt.allocationStatus === 'PENDING' ? (
+                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
+                    <span className="font-bold text-orange-800 text-sm">
+                      {t('status.pending_allocation')}
+                    </span>
+                  </div>
+                  <p className="text-orange-700 text-sm">
+                    {t('common.pendingMessage')}
+                  </p>
                 </div>
-                <div className="flex-1 grid grid-cols-2 gap-4 min-w-[200px]">
-                  <div>
-                    <p className="text-xs text-gray-500">{t('liveQueue.hospital')}</p>
-                    <p className="text-sm font-semibold text-gray-900">{activeAppt.hospitalName}</p>
+              ) : (
+                <div className="flex items-center gap-6 flex-wrap">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 mb-1">{t('liveQueue.queue')}</p>
+                    <p className="text-5xl font-bold text-[#94B4C1]">{activeAppt.queueNo || activeAppt.queueNumber}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-500">{t('liveQueue.doctor')}</p>
-                    <p className="text-sm font-semibold text-gray-900">{activeAppt.doctorName || t('common.toBeAssigned')}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">{t('liveQueue.estimatedWait')}</p>
-                    <p className="text-sm font-semibold text-gray-900">
-                      {activeAppt.status === 'CONSULTING' ? t('table.youAreNext') : activeAppt.isNext
-                        ? t('table.youAreNext')
-                        : t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">{t('liveQueue.room')}</p>
-                    <p className="text-sm font-semibold text-gray-900">{activeAppt.room || t('common.notAvailable')}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">{t('liveQueue.status')}</p>
-                    <StatusBadge status={activeAppt.status} />
+                  <div className="flex-1 grid grid-cols-2 gap-4 min-w-[200px]">
+                    <div>
+                      <p className="text-xs text-gray-500">{t('liveQueue.hospital')}</p>
+                      <p className="text-sm font-semibold text-gray-900">{activeAppt.hospitalName}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('liveQueue.doctor')}</p>
+                      <p className="text-sm font-semibold text-gray-900">{activeAppt.doctorName || t('common.toBeAssigned')}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('liveQueue.estimatedWait')}</p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {activeAppt.status === 'CONSULTING' ? t('table.youAreNext') : activeAppt.isNext
+                          ? t('table.youAreNext')
+                          : activeAppt.estimatedConsultationTime ? activeAppt.estimatedConsultationTime : t('table.waitOnlyMinutes', {minutes: activeAppt.estimatedWaitMinutes})}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('liveQueue.room')}</p>
+                      <p className="text-sm font-semibold text-gray-900">{activeAppt.room || t('common.notAvailable')}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{t('liveQueue.status')}</p>
+                      <StatusBadge status={activeAppt.status} />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
 
@@ -398,15 +420,18 @@ export default function PatientDashboard() {
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900">{t('notifications.upcomingTitle')}</p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {t('notifications.itemLine', {
-                          hospital: apt.hospitalName,
-                          queue: apt.queueNumber,
-                          wait: apt.status === 'CONSULTING' ? t('notifications.nextNow') : apt.isNext
-                            ? t('notifications.nextNow')
-                            : t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
-                        })}
+                      <p className="text-xs text-gray-500 truncate font-medium">
+                        {apt.allocationStatus === 'PENDING' ? (
+                          <span className="text-orange-600">{t('common.pendingMessage')}</span>
+                        ) : (
+                          t('notifications.itemLine', {
+                            hospital: apt.hospitalName,
+                            queue: apt.queueNo || apt.queueNumber,
+                            wait: apt.status === 'CONSULTING' ? t('notifications.nextNow') : apt.isNext
+                              ? t('notifications.nextNow')
+                              : t('notifications.waitMinutes', {minutes: apt.estimatedWaitMinutes})
+                          })
+                        )}
                       </p>
                       <p className="text-xs text-gray-400">{apt.appointmentDate}</p>
                     </div>

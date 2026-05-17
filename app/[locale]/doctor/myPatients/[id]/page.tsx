@@ -10,6 +10,7 @@ import RequireRole from '@/app/components/RequireRole';
 import MedicineSearch from '@/app/components/MedicineSearch';
 import { MedicineDTO } from '@/app/api/medicine/medicineApi';
 import LabRequestModal from '@/app/components/doctor/LabRequestModal';
+import API_BASE_URL from '@/app/api/api';
 
 export default function PatientDetailsPage() {
   const t = useTranslations('doctorPatientDetails');

@@ -287,7 +287,8 @@
     "common": {
       "patient": "Patient",
       "notAvailable": "—",
-      "toBeAssigned": "To be assigned"
+      "toBeAssigned": "To be assigned",
+      "pendingMessage": "Queue allocation will begin before the session starts. Please check again later."
     },
     "penalty": {
       "title": "Account Warning",
@@ -303,7 +304,8 @@
       "booked": "Booked",
       "cancelled": "Cancelled",
       "completed": "Completed",
-      "finished": "Finished"
+      "finished": "Finished",
+      "pending_allocation": "Pending Allocation"
     },
     "newUser": {
       "title": "Welcome to Suwapatha! 🎉",
@@ -382,12 +384,13 @@
       "booked": "Booked",
       "cancelled": "Cancelled",
       "completed": "Completed",
-      "finished": "Finished"
+      "finished": "Finished",
+      "pending_allocation": "Pending Allocation"
     },
     "alerts": {
       "reminderTitle": "Appointment Reminder",
       "reminderMessage": "Reminder: Your appointment at {hospital} starts in 10 minutes!",
-      "bookedSuccess": "Booked! Your queue number has been assigned.",
+      "bookedSuccess": "Booked! Your queue number and consultation time will be assigned before the session starts.",
       "bookingFailed": "Booking failed. Please try again.",
       "cancelFailed": "Failed to cancel appointment."
     },
@@ -422,7 +425,8 @@
       "room": "OPD Room",
       "status": "Status",
       "emptyTitle": "No active appointment",
-      "emptySubtitle": "Search a hospital and book an OPD session above."
+      "emptySubtitle": "Search a hospital and book an OPD session above.",
+      "pendingMessage": "Queue allocation will begin before the session starts. Please check again later."
     },
     "actions": {
       "cancelling": "Cancelling...",

@@ -39,12 +39,22 @@ export interface AppointmentResponse {
     queueNumber: number;
     doctorName: string;
     room: string;
-    status: string;       // BOOKED | CANCELLED | COMPLETED
+    status: string;       // BOOKED | CANCELLED | COMPLETED | PENDING_ALLOCATION
     estimatedWaitMinutes: number;
     sessionStartTime: string; // HH:mm, session start time from OpdSession
     slotDuration: number;     // minutes per slot
     createdAt: string;
     isNext: boolean;
+
+    // Allocation workflow fields
+    allocationStatus?: string;
+    assignedDoctorId?: string;
+    finalQueueNumber?: string;
+    queueNo?: string;
+    estimatedConsultationTime?: string;
+    allocatedAt?: string;
+    liveQueueStatus?: string;
+    priorityLevel?: number;
 }
 
 export interface BookAppointmentRequest {

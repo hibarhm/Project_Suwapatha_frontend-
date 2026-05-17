@@ -19,6 +19,7 @@ function StatusBadge({ status }: { status: string }) {
     CANCELLED: 'bg-red-100 text-red-700',
     COMPLETED: 'bg-green-100 text-green-700',
     FINISHED: 'bg-gray-100 text-gray-700',
+    PENDING_ALLOCATION: 'bg-orange-100 text-orange-700',
   };
   return (
     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
@@ -27,6 +28,7 @@ function StatusBadge({ status }: { status: string }) {
         : status === 'CANCELLED' ? t('cancelled') 
         : status === 'COMPLETED' ? t('completed') 
         : status === 'FINISHED' ? t('finished')
+        : status === 'PENDING_ALLOCATION' ? t('pending_allocation')
         : status}
     </span>
   );
@@ -469,9 +471,23 @@ export default function AppointmentBookingPage() {
             {loadingActive ? <Spinner /> : activeAppt ? (
               <>
                 <div className="bg-gradient-to-br from-gray-50 to-[#94B4C1]/5 rounded-xl p-8 mb-6">
-                  <div className="text-center mb-6">
-                    <p className="text-sm text-gray-600 mb-2">{t('queue.yourNumber')}</p>
-                    <p className="text-6xl font-bold text-[#94B4C1]">{activeAppt.queueNumber}</p>
+                  {activeAppt.allocationStatus === 'PENDING' ? (
+                    <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
+                        <span className="font-bold text-orange-800 text-sm">
+                          {t('status.pending_allocation')}
+                        </span>
+                      </div>
+                      <p className="text-orange-700 text-sm">
+                        {t('queue.pendingMessage')}
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-center mb-6">
+                        <p className="text-sm text-gray-600 mb-2">{t('queue.yourNumber')}</p>
+                        <p className="text-6xl font-bold text-[#94B4C1]">{activeAppt.queueNo || activeAppt.queueNumber}</p>
 
                     {/* "You're next!" badge — only shown for the immediately next patient */}
                     {isNextInQueue && (
@@ -490,7 +506,7 @@ export default function AppointmentBookingPage() {
                         label: t('queue.estimatedAppointment'),
                         value: (activeAppt.status === 'CONSULTING' || activeAppt.isNext)
                           ? t('queue.nextProceed')
-                          : (utcAppointmentTime ?? t('queue.minutesOnly', {minutes: activeAppt.estimatedWaitMinutes})),
+                          : (activeAppt.estimatedConsultationTime ? activeAppt.estimatedConsultationTime : (utcAppointmentTime ?? t('queue.minutesOnly', {minutes: activeAppt.estimatedWaitMinutes}))),
                       },
                       {
                         icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5',
@@ -525,6 +541,8 @@ export default function AppointmentBookingPage() {
                       </div>
                     ))}
                   </div>
+                    </>
+                  )}
                 </div>
                 <button
                   onClick={() => handleCancel(activeAppt.id)}
@@ -579,10 +597,12 @@ export default function AppointmentBookingPage() {
                       <StatusBadge status={apt.status} />
                     </div>
                     <p className="text-xs text-gray-500 mb-2">
-                      {t('history.itemMeta', {date: apt.appointmentDate, queue: apt.queueNumber})}
-                      {apt.doctorName ? ` · ${apt.doctorName}` : ''}
+                      {apt.allocationStatus === 'PENDING'
+                        ? `${apt.appointmentDate} · ${t('status.pending_allocation')}`
+                        : t('history.itemMeta', {date: apt.appointmentDate, queue: apt.queueNo || apt.queueNumber})}
+                      {apt.allocationStatus !== 'PENDING' && apt.doctorName ? ` · ${apt.doctorName}` : ''}
                     </p>
-                    {apt.status === 'BOOKED' && (
+                    {(apt.status === 'BOOKED' || apt.status === 'PENDING_ALLOCATION') && (
                       <button
                         onClick={() => handleCancel(apt.id)}
                         disabled={cancelling === apt.id}
